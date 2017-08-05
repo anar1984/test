@@ -1,0 +1,43 @@
+
+
+
+<div class="row  align-center apd-page " id="page_signup">
+    <div class="medium-6 columns">
+        <h1 class="text-center">Sign up</h1>
+        <form id="form_signupPersonal" class="apd-form" method="POST" action="nasrv/serviceCrSignupPersonal">
+            <input id="username" type="text" class="apd-form-input" name="username" placeholder="Username" />
+            <input id="email1" type="email" class="apd-form-email" name="email1" placeholder="E-mail" />
+            <input id="password" type="password" class="apd-form-input" name="password" placeholder="Password" aria-describedby="passwordHelpText"/>
+            <p class="help-text hide" id="passwordHelpText">Your password must have at least 8 characters, a number, and an Emoji.</p>
+            <input id="password2" type="password" class="apd-form-input" name="password2" placeholder="Retype password" />
+
+            <hr>
+
+            <input id="userPersonName" type="text" class="apd-form-input" name="userPersonName" placeholder="First name">
+            <input id="userPersonSurname" type="text" class="apd-form-input" name="userPersonSurname" placeholder="Last name">
+            <select id="companyCountry" class="apd-form-select" has_null="true" name="companyCountry" select_text="itemValue" select_value="itemKey"  srv_url="nali/country" placeholder="Country">
+            </select>
+
+            <select class="apd-form-select" id="sex" name="sex" has_null="true" select_text="itemValue" select_value="itemKey" srv_url="nali/sex" placeholder="Gender">
+            </select>
+
+            <input type="text" class="apd-form-input" id="mobile1"   name="mobile1" placeholder="Contact phone">
+
+
+
+
+            <button id="btnSignup" class="button expanded apd-form-btn" type="button" apd-clear-form-data="true">Sign me up</button>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        init();
+        $(".apd-form-select").each(function () {
+            fillCombobox(this);
+        });
+    });
+</script>

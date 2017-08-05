@@ -1,0 +1,119 @@
+<div class="row apd-page" id="page_organpoint">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label>Organ Points</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetOrganPointList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_organpoint_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewOrganPoint' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewOrganPoint">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "organpointlist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewOrganPoint" apd-form-reload-button-id='serviceCrGetOrganPointList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert New OrganPoint</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewOrganPoint" class="apd-form" method="POST" action="srv/serviceCrInsertNewOrganPoint">
+                        <div class="form-group col-md-12">
+                            <label class="float">Organ Point Name</label>
+                            <input class="form-control apd-form-input" type="text" id="organPointName"
+                                   name="organPointName" placeholder="Organ Point Name"  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Parent Organ Point</label>
+                            <select class="form-control apd-form-select" id="fkParentOrganPointId" name="fkParentOrganPointId"
+                                    select_text="organPointName" select_value="id" has_null="true"
+                                    srv_url="srv/serviceCrGetOrganPointList">
+                            </select>
+                        </div> 
+                        <div class="form-group col-md-6">
+                            <label>Status</label>
+                            <select class="form-control apd-form-select" id="organPointStatus" name="organPointStatus"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/pa">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label >Organ Point Description</label>
+                            <textarea class="form-control apd-form-textarea" id="organPointDescription" 
+                                      name="organPointDescription" placeholder=""></textarea>
+                        </div> 
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateOrganPoint" apd-form-reload-button-id='serviceCrGetOrganPointList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update OrganPoint</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateOrganPoint" class="apd-form" method="POST" action="srv/serviceCrUpdateOrganPoint">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="OrganPoint Code"  >
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="float">Organ Point Name</label>
+                            <input class="form-control apd-form-input" type="text" id="organPointName"
+                                   name="organPointName" placeholder="Organ Point Name"  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Parent Organ Point</label>
+                            <select class="form-control apd-form-select" id="fkParentOrganPointId" name="fkParentOrganPointId"
+                                    select_text="organPointName" select_value="id" has_null="true"
+                                    srv_url="srv/serviceCrGetOrganPointList">
+                            </select>
+                        </div> 
+                        <div class="form-group col-md-6">
+                            <label>Status</label>
+                            <select class="form-control apd-form-select" id="organPointStatus" name="organPointStatus"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/pa">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label >Organ Point Description</label>
+                            <textarea class="form-control apd-form-textarea" id="organPointDescription" 
+                                      name="organPointDescription" placeholder=""></textarea>
+                        </div> 
+
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

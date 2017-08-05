@@ -1,0 +1,139 @@
+{
+    "kv": {
+        "attributeCode": "444",
+        "attributeStatus": "A",
+        "isGeneral": "y",
+        "attributeName": "Are you hungary",
+        "attributeDescription": "no desc",
+        "lang": "AZE"
+    },
+    "tbl": {
+        "Response": {
+            "r": [
+                {
+                    "attributeCode": "444",
+                    "attributeStatus": "A",
+                    "modificationDate": "",
+                    "isGeneral": "y",
+                    "insertDate": "20170417",
+                    "attributeDescription": "no desc",
+                    "attributeName": "",
+                    "id": "201704172306560915",
+                    "status": "A"
+                },
+                {
+                    "attributeCode": "444",
+                    "attributeStatus": "A",
+                    "modificationDate": "",
+                    "isGeneral": "y",
+                    "insertDate": "20170417",
+                    "attributeDescription": "no desc",
+                    "attributeName": "Are you hungary",
+                    "id": "201704172308220890",
+                    "status": "A"
+                },
+                {
+                    "attributeCode": "444",
+                    "attributeStatus": "A",
+                    "modificationDate": "",
+                    "isGeneral": "y",
+                    "insertDate": "20170418",
+                    "attributeDescription": "no desc",
+                    "attributeName": "Are you hungary",
+                    "id": "201704180959500295",
+                    "status": "A"
+                },
+                {
+                    "attributeCode": "444",
+                    "attributeStatus": "A",
+                    "modificationDate": "",
+                    "isGeneral": "y",
+                    "insertDate": "20170418",
+                    "attributeDescription": "no desc",
+                    "attributeName": "Are you hungary",
+                    "id": "201704181001120951",
+                    "status": "A"
+                },
+                {
+                    "attributeCode": "444",
+                    "attributeStatus": "A",
+                    "modificationDate": "",
+                    "isGeneral": "y",
+                    "insertDate": "20170418",
+                    "attributeDescription": "no desc",
+                    "attributeName": "Are you hungary",
+                    "id": "201704181003350819",
+                    "status": "A"
+                },
+                {
+                    "attributeCode": "444",
+                    "attributeStatus": "A",
+                    "modificationDate": "",
+                    "isGeneral": "y",
+                    "insertDate": "20170418",
+                    "attributeDescription": "no desc",
+                    "attributeName": "Are you hungary",
+                    "id": "201704181015360714",
+                    "status": "A"
+                }
+            ],
+            "c": [
+                {
+                    "t": "STRING",
+                    "i": "attributeCode",
+                    "n": "attributeCode"
+                },
+                {
+                    "t": "STRING",
+                    "i": "attributeStatus",
+                    "n": "attributeStatus"
+                },
+                {
+                    "t": "STRING",
+                    "i": "modificationDate",
+                    "n": "modificationDate"
+                },
+                {
+                    "t": "STRING",
+                    "i": "isGeneral",
+                    "n": "isGeneral"
+                },
+                {
+                    "t": "STRING",
+                    "i": "insertDate",
+                    "n": "insertDate"
+                },
+                {
+                    "t": "STRING",
+                    "i": "attributeDescription",
+                    "n": "attributeDescription"
+                },
+                {
+                    "t": "STRING",
+                    "i": "attributeName",
+                    "n": "attributeName"
+                },
+                {
+                    "t": "ID",
+                    "i": "id",
+                    "n": "ID"
+                },
+                {
+                    "t": "STRING",
+                    "i": "status",
+                    "n": "status"
+                }
+            ]
+        }
+    },
+    "err": [
+        {
+            "val": "error text",
+            "code": "error text"
+        },
+        {
+            "val": "main text ola biler",
+            "code": "main text ola biler"
+        }
+    ]
+}

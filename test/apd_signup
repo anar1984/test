@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/apd/login.html" />
+<title>apd_signup</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">apd_signup</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/apd/login.html</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=reg-btn-company</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=companyName</td>
+	<td>lor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=companyDomain</td>
+	<td>lor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=address</td>
+	<td>baku</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=username</td>
+	<td>lor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=username</td>
+	<td>nikli</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=userShortId</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=userPersonName</td>
+	<td>nikli</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=userPersonSurname</td>
+	<td>nikli</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=userPersonMiddlename</td>
+	<td>nikli</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=userBirthPlace</td>
+	<td>baku</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=userBirthDate</td>
+	<td>20170707</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=expireDate</td>
+	<td>20170101</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=occupation</td>
+	<td>azeri</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=mobile1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=mobile2</td>
+	<td>321</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=telephone1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=telephone2</td>
+	<td>432</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=email1</td>
+	<td>ilkin@esrefli.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=email2</td>
+	<td>ilkin@esrefli.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=btnSignup</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertAlert</td>
+	<td>Something went wrong!!!</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

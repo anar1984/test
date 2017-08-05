@@ -1,0 +1,127 @@
+<div class="row apd-page" id="page_attribute">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label>Attributes</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetAttributeList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_attribute_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewAttribute' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewAttribute">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "attributelist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewAttribute" apd-form-reload-button-id='serviceCrGetAttributeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert New Attribute</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewAttribute" class="apd-form" method="POST" action="srv/serviceCrInsertNewAttribute">
+                        <div class="form-group col-md-6">
+                            <label class="float">Attribute Code</label>
+                            <input class="form-control apd-form-input" type="text" id="attributeCode"
+                                   name="attributeCode" placeholder="Attribute Code"  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Attribute Name</label>
+                            <input type="text" class="form-control apd-form-input" id="attributeName" 
+                                   name="attributeName" placeholder="Attribute Name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Status</label>
+                            <select class="form-control apd-form-select" id="liAttributeStatus" name="liAttributeStatus"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/attributeStatus">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Is General?</label>
+                            <select class="form-control apd-form-select" id="liIsGeneral" name="liIsGeneral"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/yesno">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label >Attribute Description</label>
+                            <textarea class="form-control apd-form-textarea" id="attributeDescription" 
+                                      name="attributeDescription" placeholder=""></textarea>
+                        </div> 
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateAttribute" apd-form-reload-button-id='serviceCrGetAttributeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Attribute</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateAttribute" class="apd-form" method="POST" action="srv/serviceCrUpdateAttribute">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="Attribute Code"  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Attribute Code</label>
+                            <input class="form-control apd-form-input" type="text" id="attributeCode"
+                                   name="attributeCode" placeholder="Attribute Code"  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Attribute Name</label>
+                            <input type="text" class="form-control apd-form-input" id="attributeName" 
+                                   name="attributeName" placeholder="Attribute Name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Status</label>
+                            <select class="form-control apd-form-select" id="liAttributeStatus" name="liAttributeStatus"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/attributeStatus">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Is General?</label>
+                            <select class="form-control apd-form-select" id="liIsGeneral" name="liIsGeneral"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/yesno">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label >Attribute Description</label>
+                            <textarea class="form-control apd-form-textarea" id="attributeDescription" 
+                                      name="attributeDescription" placeholder=""></textarea>
+                        </div> 
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

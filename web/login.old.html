@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Login To APDVoice.com</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="resource/css/bootstrap.css" type="text/css"> 
+      
+        <link rel="icon" type="image/png" href="resource/img/apple.png">
+        <script src="resource/js/jquery.min.js" ></script>
+        
+        <style>
+            *{
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;    
+            }
+
+            body{
+                background:#272c32;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size:15px;
+                padding-top: 20px;;
+            }
+
+            h1{
+                color:#272c32;
+                display:block;
+                text-align:center;
+                font-size:2em;
+                margin:0;
+                margin-bottom:25px;
+
+            }
+
+            .login-form{
+                width:400px;
+                padding:20px;
+                margin:auto;
+                background:#fff;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border-radius: 3px;
+            }
+
+            .login-form fieldset{
+                border:0;
+                margin:0;
+                padding:0;
+                position:relative;
+            }
+
+            .login-form input[type="text"], input[type="password"]{
+                border: 1px solid #dadada;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border-radius: 3px;
+                width:100%;
+                padding: 10px;
+                color:#272c32;
+                margin-bottom:5px;
+            }
+
+            .login-form input[type="text"]:focus, input[type="password"]:focus{
+                border:1px solid #4cb182;
+                outline:0;
+            }
+
+            .login-button{
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border-radius: 3px;
+                background:#4cb182;
+                border:0;
+                padding: 10px 0;
+                color:#fff;
+                float: left;
+                font-weight:800;
+                display: inline;
+                width:45%;
+                font-size:16px
+            }
+            .signup-button{
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border-radius: 3px;
+                display: inline;
+                background:#4cb182;
+                border:0;
+                padding: 10px 0;
+                color:#fff;
+                font-weight:800;
+                float: right;
+                width:45%;
+                font-size:16px
+            }
+
+            .login-form button:hover{
+                background:#408F6A;
+            }
+
+            .login-form input[type="text"]:after{
+                content:'ddd';
+                background:#ccc;
+                height:40px;
+                width:40px;
+            }
+            .login-form a{
+                color: #7f7f7f;
+                display: inline-block;
+                font: 12px/1 sans-serif;
+                position: relative;
+                text-decoration: none;
+                top: 5px;
+                transition: color .4s;
+            }
+
+            .login-form a:hover { 
+                color: #3b3b3b 
+            }
+
+            .alert {
+                background-color: #f44336;
+                display: none;
+                width:400px;
+                padding: 10px;
+                margin:auto;
+                margin-top: 20px;
+                color: white;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border-radius: 3px;
+            }
+
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .closebtn:hover {
+                color: black;
+            }
+            .inputError{
+                background-color: #f4bfbf;
+                border: 1px solid #d03e3e;
+                color: #d03e3e;
+            }
+            .inputError::-webkit-input-placeholder{
+                color: #d03e3e;
+            }
+            h2{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="login-form" class="login-form" method="POST">
+            <h2>APDVoice.com</h2>
+            <fieldset>
+                <input class="form-control" type="text" id="domain" 
+                       name="domain" placeholder="Domain" 
+                       value="" autocomplete="off"/>
+            </fieldset>
+            <fieldset>
+                <input class="form-control" type="text" id="username" 
+                       name="username" placeholder="Username" 
+                       value="admin1" autocomplete="off"/>
+            </fieldset>
+            <fieldset>
+                <input class="form-control" type="password" 
+                       id="password" name="password" placeholder="Password" 
+                       autocomplete="off" readonly  
+                       value="a"
+                       onfocus="this.removeAttribute('readonly');"/>
+            </fieldset>
+            <fieldset>
+                <select class="form-control" id="lang" name="lang">
+                    <option value="ENG">English</option>
+                    <option value="AZE">Azərbaycan</option>
+                </select>
+            </fieldset>
+            <br>
+            <fieldset>
+                <button  class="login-button" id="btn">Login</button>
+                <button  class="signup-button" id="reg-btn-company">Company Sign Up</button>
+                <button  class="signup-button" id="reg-btn-personal">Personal Sign Up</button>
+            </fieldset>
+            <fieldset>
+                <a href="forget">Forget Password?</a>
+            </fieldset>
+        </form>
+        <div class="alert" id="login-alert">
+            <span class="closebtn" onclick="this.parentElement.style.display = 'none';">×</span> 
+            <strong>Oops!</strong> Username or password is incorrect.
+        </div>
+        <script>
+            $('#btn').click(function () {
+                var username = $('#username').val();
+                var password = $('#password').val();
+                var lang = $('#lang').find(":selected").val();
+                var json = {kv: {}};
+                json.kv.username = username;
+                json.kv.password = password;
+                json.kv.lang = lang;
+
+                var data = JSON.stringify(json);
+                //console.log(data);
+                $.ajax({
+                    url: "api/post/login",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    success: function () {
+                        document.location = "index.html";
+                    },
+                    error: function (res, status) {
+                        showAlert();
+                    }
+                });
+                return false;
+            });
+            $("#reg-btn-company").click(function () {
+                window.location = 'signup.html#company';
+                return false;
+            });
+            
+            $("#reg-btn-personal").click(function () {
+                window.location = 'signup.html#personal';
+                return false;
+            });
+
+            function showAlert() {
+                document.getElementById('login-alert').style.display = 'block';
+            }
+        </script>
+    </body>
+</html>

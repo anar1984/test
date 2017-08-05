@@ -1,0 +1,131 @@
+/* 
+    Created on : Dec 2, 2016, 4:45:36 PM
+    Author     : Narmin
+*/
+.multi-select-list{
+    border: 1px solid #4da089 !important;
+    border-radius: 3px;
+}
+._cont_{
+    height: 200px;
+    width: 100%;
+    display: inline-flex;
+}
+._cont_ span{
+    font-size: 14px;
+    color: #777676;
+}
+._alc_ , ._slc_{
+    height: calc(100% - 2px);
+    width: 46%;
+    background: #F7F7F7;
+    border: 1px solid #DEDEDE;
+}
+._bc_{
+    height: 200px;
+    width: 6%;
+    display: flex;
+    justify-content: center;
+}
+
+._bp_{
+    align-self: center;
+}
+._bp_ button{
+    display: block;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    cursor: pointer;
+    border: 1px solid #EFEFEF;
+    background: #EFEFEF;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    color: #84848C;
+    outline: none;
+}
+._bp_ button:hover{
+    background: #5DC3A7;
+    color: white;
+}
+._bp_ button i{
+    pointer-events: none;
+    height: auto;
+    width: auto;
+    margin: 0;
+}
+._slist_,
+._alist_{
+    display: block;
+    border-top: 1px solid #DEDEDE;
+    height: calc(100% - 30px);
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+}
+._alist_ ul,
+._slist_ ul{
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /*display: block;*/
+    height: calc(100% - 20px);
+    width: 100%;
+}
+._alist_ li,
+._slist_ li{
+    padding: 5px;
+    border-bottom: 1px solid #DEDEDE;
+    cursor: pointer;
+}
+._alist_ li:nth-child(even),
+._slist_ li:nth-child(even){
+    background: #F7F7F7;
+}
+._alist_ li:nth-child(odd),
+._slist_ li:nth-child(odd){
+    background: white;
+}
+
+._alist_ ul li:hover,
+._slist_ ul li:hover{
+    background: #eaeaea;
+}
+
+._alist_ li div,
+._slist_ li div{
+    display: inline-block;
+    pointer-events: none;
+    white-space: nowrap;
+}
+.selected{
+    background: #5DC3A7 !important;
+}
+._cont_ input[type=text]{
+    display: block;
+    width: 100%;
+    height: 24px;
+    padding: 2px 3px;
+}
+._aname_,
+._sname_{
+    margin-left: 5px;
+}
+._cont_ .msl-header{
+    display: inline-flex;
+    background: #eaeaea;
+    pointer-events: none;
+    padding: 5px;
+    height: 20px;
+    border-bottom: 1px solid #DEDEDE;
+    width: 100%;
+}
+._cont_ .msl-header div{
+    display: inline-block;
+}
+.ah,
+.sh{
+    padding: 3px;
+    display: block;
+}

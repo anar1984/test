@@ -1,0 +1,211 @@
+<div class="row apd-page" id="page_submoduleattribute">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label>Submodule Attributes</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetSubmoduleAttributeList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_submoduleattribute_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewSubmoduleAttribute' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewSubmoduleAttribute">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "submoduleattributelist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewSubmoduleAttribute" apd-form-reload-button-id='serviceCrGetSubmoduleAttributeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert New Submodule Attribute</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewSubmoduleAttribute" class="apd-form" method="POST" action="srv/serviceCrInsertNewSubmoduleAttribute">
+                        <div class="form-group col-md-6">
+                            <label>Submodule</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkSubmoduleId" name="fkSubmoduleId"
+                                    select_text="submoduleName" select_value="id" 
+                                    srv_url="srv/serviceCrGetSubmoduleList">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Attribute</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkAttributeId" name="fkAttributeId"
+                                    select_text="attributeName" select_value="id" 
+                                    srv_url="srv/serviceCrGetAttributeList">
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Value Type</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkValueTypeId" name="fkValueTypeId"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/valueType">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Organ Point</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkOrganPointId" name="fkOrganPointId"
+                                    select_text="organPointName" select_value="id" 
+                                    srv_url="srv/serviceCrGetOrganPointList">
+                            </select>
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label class="float">Submodule Value</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="submoduleValue" name="submoduleValue" 
+                                   placeholder="Submodule Value">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Order No</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="sortBy" name="sortBy" 
+                                   placeholder="Order No">
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label>Has Other</label>
+                            <select class="form-control apd-form-select" 
+                                    id="hasOther" name="hasOther"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/yesno">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Is Visible?</label>
+                            <select class="form-control apd-form-select"
+                                    id="isVisible" name="isVisible"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/yesno">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label >Description</label>
+                            <textarea class="form-control apd-form-textarea" 
+                                      id="submoduleDescription" 
+                                      name="submoduleDescription"></textarea>
+                        </div> 
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateSubmoduleAttribute" apd-form-reload-button-id='serviceCrGetSubmoduleAttributeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Submodule Attribute</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateSubmoduleAttribute" class="apd-form" method="POST" action="srv/serviceCrUpdateSubmoduleAttribute">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="SubmoduleAttribute Code"  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Submodule</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkSubmoduleId" name="fkSubmoduleId"
+                                    select_text="submoduleName" select_value="id" 
+                                    srv_url="srv/serviceCrGetSubmoduleList">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Attribute</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkAttributeId" name="fkAttributeId"
+                                    select_text="attributeName" select_value="id" 
+                                    srv_url="srv/serviceCrGetAttributeList">
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Value Type</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkValueTypeId" name="fkValueTypeId"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/valueType">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Organ Point</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkOrganPointId" name="fkOrganPointId"
+                                    select_text="organPointName" select_value="id" 
+                                    srv_url="srv/serviceCrGetOrganPointList">
+                            </select>
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label class="float">Submodule Value</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="submoduleValue" name="submoduleValue" 
+                                   placeholder="Submodule Value">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Order No</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="sortBy" name="sortBy" 
+                                   placeholder="Order No">
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label>Has Other</label>
+                            <select class="form-control apd-form-select" 
+                                    id="hasOther" name="hasOther"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/yesno">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Is Visible?</label>
+                            <select class="form-control apd-form-select"
+                                    id="isVisible" name="isVisible"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/yesno">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label >Description</label>
+                            <textarea class="form-control apd-form-textarea" 
+                                      id="submoduleDescription" 
+                                      name="submoduleDescription"></textarea>
+                        </div> 
+                        
+                        
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

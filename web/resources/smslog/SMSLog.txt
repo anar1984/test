@@ -1,0 +1,126 @@
+----------------------------------------------------------------------------------------- 
+## 
+ -->Fri Oct 21 12:15:44 GET 2016::EKSP1::  
+ numbers->0705254039,::  
+ message->FAB Odeme, Hormetli Anar Rüst?mov Mür?üd, Odeme Qaime N-______, Tarix: 21.10.2016, Saat: 12:15:13, Odenilen mebleg: 5250.0 AZN , Umumi qaliq borc: 0.0 AZN , Xirdavat uzre: 0.0 AZN , Boya uzre: 0.0 AZN , Boru uzre: 0.0 AZN , Toz-Boya uzre: 0.0 AZN , Oboy uzre: 0.0 AZN, Tesekkur edirik;:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="0" restxt="Missing XML nodes" charge="0"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Fri Oct 21 12:45:32 GET 2016::eksp1::  
+ numbers->0705254039,::  
+ message->FAB Odeme, Hormetli Anar RÃ¼stÉ™mov MÃ¼rÅŸÃ¼d, Odeme Qaime N-______, Tarix: 21.10.2016, Saat: 12:24:43, Odenilen mebleg: 5250.0 AZN , Umumi qaliq borc: 0.0 AZN , Xirdavat uzre: -10500.0 AZN , Boya uzre: 0.0 AZN , Boru uzre: 0.0 AZN , Toz-Boya uzre: 0.0 AZN , Oboy uzre: 0.0 AZN, Tesekkur edirik;:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="90" restxt="Exceeded message size limit" charge="0"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Fri Oct 21 12:55:18 GET 2016::eksp1::  
+ numbers->0705254039,::  
+ message->FAB Odeme, Hormetli Anar RÃ¼stÉ™mov MÃ¼rÅŸÃ¼d, Tarix: 21.10.2016, Saat: 12:53:54, Odenilen mebleg: 5250.0 AZN Tesekkur edirik:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161021240000" valid="1" charge="2" balance="10684"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Fri Oct 21 16:52:12 GET 2016::eksp1::  
+ numbers->0705254039,::  
+ message->FAB Odeme, Hormetli Anar Rüst?mov Mür?üd, Tarix: 21.10.2016, Saat: 16:51:59, Odenilen mebleg: 4287.0 AZN Tesekkur edirik:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="0" restxt="Missing XML nodes" charge="0"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Fri Oct 21 17:05:21 GET 2016::eksp1::  
+ numbers->0556201900,::  
+ message->FAB Odeme, Hormetli Rzayev Allahverdi, Tarix: 21.10.2016, Saat: 17:05:07, Odenilen mebleg: 1.0 AZN Tesekkur edirik:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161021240000" valid="1" charge="1" balance="10683"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Sat Nov 05 04:40:05 GET 2016::admin1::  
+ numbers->0551110000,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161105240000" valid="1" charge="1" balance="10466"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Sat Nov 05 04:45:22 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161105240000" valid="1" charge="1" balance="10465"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Mon Nov 07 09:00:07 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161107240000" valid="1" charge="1" balance="10444"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Wed Nov 09 20:14:29 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161109240000" valid="1" charge="1" balance="10381"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Wed Nov 09 20:30:33 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161109240000" valid="1" charge="1" balance="10376"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Wed Nov 09 20:32:54 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161109240000" valid="1" charge="1" balance="10375"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Wed Nov 09 20:59:24 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161109240000" valid="1" charge="1" balance="10374"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Wed Nov 09 22:19:33 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161109240000" valid="1" charge="1" balance="10373"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Thu Nov 10 06:26:43 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161110240000" valid="1" charge="1" balance="10372"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Thu Nov 10 06:29:21 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161110240000" valid="1" charge="1" balance="10371"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Thu Nov 10 06:29:46 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161110240000" valid="1" charge="1" balance="10370"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Thu Nov 10 13:53:47 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161110240000" valid="1" charge="1" balance="10355"/></SMS-Response>;
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- 
+## 
+ -->Thu Nov 10 14:25:47 GET 2016::admin1::  
+ numbers->0705254039,::  
+ message->:: 
+ output-><?xml version="1.0" encoding="utf-8"?><SMS-Response>	<STATUS res="100" restxt="OK" id="318161110240000" valid="1" charge="1" balance="10352"/></SMS-Response>;
+-----------------------------------------------------------------------------------------

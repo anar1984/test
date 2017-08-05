@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>FAB Boya İnformasiya idarəetmə sistemi</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="resource/img/logo.png"/>
+
+        <link rel="stylesheet" href="resource/css/general.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/acnis.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/reporting.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/autocomplete.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/acnis-datalist.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/multi-select-list.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/customselect.css" type="text/css">
+        <link type="text/css" rel="stylesheet" href="resource/css/icon.css">
+
+
+        <script src="resource/js/jquery.min.js" type="text/javascript"></script>
+        <script src="resource/js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="resource/js/highcharts.js" type="text/javascript"></script>
+        <script src="resource/js/exporting.js" type="text/javascript"></script>
+        <script src="resource/js/offline-exporting.js" type="text/javascript"></script>
+        <script src="resource/js/customselect.js" type="text/javascript"></script>
+        <script src="resource/js/general.js" type="text/javascript"></script>
+        <script src="resource/js/reporting.js" type="text/javascript"></script>
+        <script src="resource/js/acnis.js" type="text/javascript"></script>
+        <script src="resource/js/acnis-datalist.js" type="text/javascript"></script>
+        <script src="resource/js/autocomplete.js" type="text/javascript"></script>
+        <script src="resource/js/customselect.js" type="text/javascript"></script>
+        <script src="resource/js/multi-select-list.js" type="text/javascript"></script>
+        <script type="text/javascript" src="resource/js/xlsx.full.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "api/post/getContent",
+                    type: "GET",
+                    contentType: 'text/html',
+                    success: function (data) {
+                        $('body').empty();
+                        $('body').append(data);
+//                        init();
+                    },
+                    error: function () {
+                        alert("Something went wrong. This might be caused by duplicate table.");
+                    }
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+
+        <div style="
+             height: 100vh;
+             display: block;
+             top: 0;
+             margin: 0;
+             padding: 0;
+             ">
+            <img src="resource/img/loader.gif" alt="loader" style="
+                 margin: auto;
+                 margin-top: 48vh;
+                 display: flex;
+                 ">
+        </div>
+    </body>
+
+
+</html>

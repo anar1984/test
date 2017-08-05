@@ -1,0 +1,130 @@
+<div class="row apd-page" id="page_pricelist">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label qlang>priceList</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetPriceListList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_pricelist_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewPriceList' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewPriceList">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "pricelistlist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewPriceList" apd-form-reload-button-id='serviceCrGetPriceListList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>newPriceList</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewAttribute" class="apd-form" method="POST" 
+                          action="srv/serviceCrInsertNewPriceList">
+                        <div class="form-group col-md-7">
+                            <label qlang>paymentName</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="paymentName" name="paymentName"  >
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label qlang>price</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    step="0.00001" min="0"
+                                    id="price" name="price"  >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select" select_text="value" 
+                                    select_value="key" id="currency" name="currency" 
+                                    srv_url="srv/serviceCrGetCurrencyOfCompany">
+                            </select> 
+                        </div >
+
+                        <div class="form-group col-md-9">
+                            <label class="float" qlang>description</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="description" name="description" >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label qlang>listStatus</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="listStatus" name="listStatus" srv_url="li/pa">
+                            </select> 
+                        </div>
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updatePriceList" apd-form-reload-button-id='serviceCrGetPriceListList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>updatePriceList</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updatePriceList" class="apd-form" method="POST" action="srv/serviceCrUpdatePriceList">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id"    >
+                        </div>
+                        <div class="form-group col-md-7">
+                            <label qlang>paymentName</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="paymentName" name="paymentName"  >
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label qlang>price</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    step="0.00001" min="0"
+                                    id="price" name="price"  >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select" select_text="value" 
+                                    select_value="key" id="currency" name="currency" 
+                                    srv_url="srv/serviceCrGetCurrencyOfCompany">
+                            </select> 
+                        </div >
+
+                        <div class="form-group col-md-9">
+                            <label class="float" qlang>description</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="description" name="description" >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label qlang>listStatus</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="listStatus" name="listStatus" srv_url="li/pa">
+                            </select> 
+                        </div>
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

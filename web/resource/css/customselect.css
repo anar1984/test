@@ -1,0 +1,88 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 5, 2016, 1:32:05 PM
+    Author     : Jamal Ismayilzade
+*/
+
+.custom-select{
+    width: 200px;
+}
+.cs-container{
+    width: 100%;
+    position: relative;
+    padding: 0;
+    margin-bottom: 0px;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    cursor: default;
+    display: block;
+     border-radius: 3px;
+}
+.cs-container .cs-input{
+    height: 100%;
+    border: 0;
+    box-shadow: none;
+    -webkit-transition: none;
+    outline: none;
+    width: calc(100% - 27px);
+    display: block;
+    padding: 4px 6px;
+    line-height: normal;
+    overflow: hidden;
+    border-radius: 3px 0 0 3px;
+    float: left;
+}
+.cs-container .cs-input:focus{
+    border: none
+}
+.cs-container .cs-trigger{
+    height: 100%;
+    display: inline-block;
+    width: 27px;
+    border-left: 1px solid #CCC;
+    background: #EEE;
+    cursor: pointer;
+    border-radius: 0 3px 3px 0;
+}
+.cs-container .cs-button:hover .cs-trigger-icon{
+    background-position: 0 -4px;
+}
+.cs-container .cs-trigger .cs-trigger-icon{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: top;
+    border-top: 4px solid gray;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+    margin-left: 9px;
+    margin-top: 11px;
+}
+.cs-container ul{
+    position: absolute;
+    list-style: none;
+    width: calc(100% - 27px);
+    overflow: auto;
+    border: 1px solid #CCC;
+    background-color: #fff;
+    padding: 0;
+    z-index: 999;
+    left: -1px;
+    margin: 0;
+    box-shadow: 0px 5px 12px #ccc;
+}
+.cs-container ul li{
+    padding: 3px;
+    cursor: pointer;
+}
+.cs-container ul li:nth-child(odd){
+    background-color: whitesmoke;
+}
+.cs-container ul li:hover{
+    background-color: #5dc3a7;
+}

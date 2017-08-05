@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    </head>
+    <body>
+
+        <div>
+            <div>
+                <label for="filePicker">Choose or drag a file:</label><br>
+                <input type="file" id="filePicker" name="">
+            </div>
+            <br>
+            <div>
+                <h1>Base64 encoded version</h1>
+                <textarea id="base64textarea" placeholder="Base64 will appear here" cols="50" rows="5"></textarea>
+            </div>
+            <button id="uploadFile"  disabled>Upload</button>
+            <span id="uploadedFileName"></span>
+        </div>
+
+
+        <script>
+            var handleFileSelect = function (evt) {
+                var files = evt.target.files;
+                var file = files[0];
+
+                var filename = file['name'].split('.')[0];
+                var fileext = file['name'].split('.').pop();
+
+                if (files && file) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (readerEvt) {
+                        var binaryString = readerEvt.target.result;
+                        document.getElementById("base64textarea").value = btoa(binaryString);
+                        uploadFile(fileext, btoa(binaryString));
+                    };
+
+                    reader.readAsBinaryString(file);
+                }
+            };
+
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
+            } else {
+                alert('The File APIs are not fully supported in this browser.');
+            }
+
+            function uploadFile(fileext, file_base_64) {
+                var d = new Object();
+                d.file_base_64 = file_base_64;
+                d.file_extension = fileext;
+
+                conf = JSON.parse('{"kv":{}}');
+                conf['kv'] = d;
+
+                console.log(conf);
+
+                var dat = JSON.stringify(conf);
+
+                $.ajax({
+                    url: "api/post/upload",
+                    type: "POST",
+                    data: dat,
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(JSON.stringify(date));
+                        var res = data['kv'];
+                        $('#uploadedFileName').value = res['uploaded_file_name'];
+                        $('#uploadedFileName').html(res['uploaded_file_name']);
+                        document.getElementById('filePicker').setAttribute('name', res['uploaded_file_name']);
+
+                        console.log($('#filePicker'));
+                    },
+                    error: function () {
+                        alert("Something went wrong. This might be caused by duplicate table.");
+                    }
+                });
+            }
+
+        </script>
+
+    </body>
+</html>

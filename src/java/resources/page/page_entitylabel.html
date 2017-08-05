@@ -1,0 +1,129 @@
+<div class="row apd-page" id="page_entitylabel">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label>Entity Label</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetEntityLabelList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_entitylabel_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewEntityLabel' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewEntityLabel">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "entitylabellist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewEntityLabel" apd-form-reload-button-id='serviceCrGetEntityLabelList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert New Entity Label</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewAttribute" class="apd-form" method="POST" 
+                          action="srv/serviceCrInsertNewEntityLabel">
+                        <div class="form-group col-md-6">
+                            <label>entityName</label>
+                            <select class=" form-control apd-form-select" id="entityName" name="entityName"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/entityList">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>entityLabel</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="fieldName" name="fieldName" placeholder="entityLabel">
+                        </div >
+                        <div class="form-group col-md-4">
+                            <label>Type</label>
+                            <select class=" form-control apd-form-select" id="labelType" name="labelType"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/entityLabelType">
+                            </select>
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label>description</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="description" name="description" placeholder="description">
+                        </div >
+                        <div class="form-group col-md-2">
+                            <label>Dil</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateEntityLabel" apd-form-reload-button-id='serviceCrGetEntityLabelList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Attribute</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateAttribute" class="apd-form" method="POST" action="srv/serviceCrUpdateEntityLabel">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="Attribute Code"  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>entityName</label>
+                            <select class=" form-control apd-form-select" id="entityName" name="entityName"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/entityList">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>entityLabel</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="fieldName" name="fieldName" placeholder="entityLabel">
+                        </div >
+                        <div class="form-group col-md-4">
+                            <label>Type</label>
+                            <select class=" form-control apd-form-select" id="labelType" name="labelType"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/entityLabelType">
+                            </select>
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label>description</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="description" name="description" placeholder="description">
+                        </div >
+                        <div class="form-group col-md-2">
+                            <label>Dil</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

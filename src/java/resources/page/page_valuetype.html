@@ -1,0 +1,129 @@
+<div class="row apd-page" id="page_valuetype">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label>ValueTypes</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetValueTypeList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_valuetype_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewValueType' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewValueType">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "valuetypelist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewValueType" apd-form-reload-button-id='serviceCrGetValueTypeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert New Value Type</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewValueType" class="apd-form" method="POST" action="srv/serviceCrInsertNewValueType">
+                        <div class="form-group col-md-9">
+                            <label class="float">Value Type Name</label>
+                            <input class="form-control apd-form-input" type="text" id="valueTypeName"
+                                   name="valueTypeName" placeholder="Value Type Name"  >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Status</label>
+                            <select class="form-control apd-form-select" id="valueTypeStatus" name="valueTypeStatus"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/pa">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Value Type Param 1</label>
+                            <input type="text" class="form-control apd-form-input" id="valueTypeParam1" 
+                                   name="valueTypeParam1" placeholder="Value Type Param 1">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Value Type Param 2</label>
+                            <input type="text" class="form-control apd-form-input" id="valueTypeParam2" 
+                                   name="valueTypeParam2" placeholder="Value Type Param 2">
+                        </div>
+
+
+                        <div class="form-group col-md-12">
+                            <label >Value Type Description</label>
+                            <textarea class="form-control apd-form-textarea" id="valueTypeDescription" 
+                                      name="valueTypeDescription" placeholder=""></textarea>
+                        </div> 
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateValueType" apd-form-reload-button-id='serviceCrGetValueTypeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Value Type</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateValueType" class="apd-form" method="POST" action="srv/serviceCrUpdateValueType">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="ValueType Code"  >
+                        </div>
+                        <div class="form-group col-md-9">
+                            <label class="float">Value Type Name</label>
+                            <input class="form-control apd-form-input" type="text" id="valueTypeName"
+                                   name="valueTypeName" placeholder="Value Type Name"  >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Status</label>
+                            <select class="form-control apd-form-select" id="valueTypeStatus" name="valueTypeStatus"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/pa">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Value Type Param 1</label>
+                            <input type="text" class="form-control apd-form-input" id="valueTypeParam1" 
+                                   name="valueTypeParam1" placeholder="Value Type Param 1">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">Value Type Param 2</label>
+                            <input type="text" class="form-control apd-form-input" id="valueTypeParam2" 
+                                   name="valueTypeParam2" placeholder="Value Type Param 2">
+                        </div>
+
+
+                        <div class="form-group col-md-12">
+                            <label >Value Type Description</label>
+                            <textarea class="form-control apd-form-textarea" id="valueTypeDescription" 
+                                      name="valueTypeDescription" placeholder=""></textarea>
+                        </div>
+
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

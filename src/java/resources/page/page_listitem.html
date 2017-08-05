@@ -1,0 +1,169 @@
+<div class="row apd-page" id="page_listitem">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label>List Item</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetListItemList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_listitem_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewListItem' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewListItem">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "listitemlist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewListItem" apd-form-reload-button-id='serviceCrGetListItemList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert New List Item</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewAttribute" class="apd-form" method="POST" 
+                          action="srv/serviceCrInsertNewListItem">
+                        <div class="form-group col-md-12">
+                            <label qlang>code</label>
+                            <select class=" form-control apd-form-select" id="itemCode" name="itemCode"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/coreListItem">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label qlang>key</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="itemKey" name="itemKey"  >
+                        </div >
+                        <div class="form-group col-md-12">
+                            <label qlang>value</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="itemValue" name="itemValue"  >
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>lang</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label class="float" qlang>parameter1</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="param1" name="param1" >
+                        </div >
+                        <div class="fform-group col-md-6">
+                            <label class="float" qlang>parameter2</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param2" name="param2"  >
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label class="float" qlang>parameter3</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param3" name="param3"  >
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label class="float"  qlang>parameter4</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param4" name="param4"  >
+                        </div >
+                        <div class="form-group col-md-6"  >
+                            <label class="float"qlang>parameter5</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param5" name="param5"  >
+                        </div >
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" 
+                                    apd-clear-form-data="true" qlang>insert</button>
+                            <button type="button" class="btn btn-default" 
+                                    data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateListItem" apd-form-reload-button-id='serviceCrGetListItemList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Attribute</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateAttribute" class="apd-form" method="POST" action="srv/serviceCrUpdateListItem">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="Attribute Code"  >
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label qlang>code</label>
+                            <select class=" form-control apd-form-select" id="itemCode" name="itemCode"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/coreListItem">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label qlang>key</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="itemKey" name="itemKey"  >
+                        </div >
+                        <div class="form-group col-md-12">
+                            <label qlang>value</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="itemValue" name="itemValue"  >
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>lang</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label class="float" qlang>parameter1</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="param1" name="param1" >
+                        </div >
+                        <div class="fform-group col-md-6">
+                            <label class="float" qlang>parameter2</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param2" name="param2"  >
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label class="float" qlang>parameter3</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param3" name="param3"  >
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label class="float"  qlang>parameter4</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param4" name="param4"  >
+                        </div >
+                        <div class="form-group col-md-6"  >
+                            <label class="float"qlang>parameter5</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="param5" name="param5"  >
+                        </div >
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" 
+                                    apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

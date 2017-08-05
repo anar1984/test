@@ -1,0 +1,361 @@
+<div class="row apd-page" id="page_user">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label qlang>users</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetUserList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_user_list')">List
+        </button>
+        <button id='btn_serviceCrInsertNewUser' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewUser">Insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "userlist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewUser" apd-form-reload-button-id='serviceCrGetUserList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert New User</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewUser" class="apd-form" method="POST" action="srv/serviceCrInsertNewUser">
+
+
+                        <div class="form-group col-md-6">
+                            <label class="float">username</label>
+                            <input class="form-control apd-form-input" type="text" id="username"
+                                   name="username"    >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">password</label>
+                            <input class="form-control apd-form-input" type="password" id="password"
+                                   name="password" placeholder=""  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userShortId</label>
+                            <input type="text" class="form-control apd-form-input-file"  file_type="image"
+                                   id="userShortId" name="userShortId" >
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="float">userPersonName</label>
+                            <input type="text" class="form-control apd-form-input" id="userPersonName" 
+                                   name="userPersonName" placeholder="">
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label class="float">userPersonSurname</label>
+                            <input type="text" class="form-control apd-form-input" id="userPersonSurname" 
+                                   name="userPersonSurname" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userPersonMiddlename</label>
+                            <input type="text" class="form-control apd-form-input" id="userPersonMiddlename" 
+                                   name="userPersonMiddlename" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float" qlang>userImage</label>
+                            <div class="fileuploader">
+                                <div class="col-md-11">
+                                    <input id="userImage" name="userImage" 
+                                           class="form-control apd-form-input-file" 
+                                           type="file" file_type="image" value="">
+                                </div>
+                                <div class="col-md-1">
+                                    <img style="display: none;" class="  apd-image-spinner" 
+                                         src="resources/upload/spinner.gif" height="20px" 
+                                         width="20px">
+                                    <img style="display: none; " class="  
+                                         apd-image-uploaded" src="resources/upload/uploaded.png"
+                                         height="20px" width="20px">
+                                    <i style="display: none; font-size: 22px; color: red;" 
+                                       class="fa fa-warning apd-image-upload-error">
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userBirthPlace</label>
+                            <input type="text" class="form-control apd-form-input" id="userBirthPlace" 
+                                   name="userBirthPlace" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userBirthDate</label>
+                            <input type="date" class="form-control apd-form-date" id="userBirthDate" 
+                                   name="userBirthDate" placeholder=" ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">expireDate</label>
+                            <input type="date" class="form-control apd-form-date" id="expireDate" 
+                                   name="expireDate" placeholder=" ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">liUserPermissionCode</label>
+                            <select class="form-control apd-form-select" id="liUserPermissionCode"
+                                    name="liUserPermissionCode"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/userPermissionCode">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">sex</label>
+                            <select class="form-control apd-form-select" id="sex" name="sex"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/sex">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">occupation</label>
+                            <input type="text" class="form-control apd-form-input" id="occupation" 
+                                   name="occupation" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">mobile1</label>
+                            <input type="text" class="form-control apd-form-input" id="mobile1" 
+                                   name="mobile1">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">mobile2</label>
+                            <input type="text" class="form-control apd-form-input" id="mobile2" 
+                                   name="mobile2" >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">telephone1</label>
+                            <input type="text" class="form-control apd-form-input" id="telephone1" 
+                                   name="telephone1" placeholder=" ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">telephone2</label>
+                            <input type="text" class="form-control apd-form-input" id="telephone2" 
+                                   name="telephone2" placeholder=" ">
+                        </div>
+
+                        <div class="form-group col-md-6 ">
+                            <label class="float">email1</label>
+                            <input type="email" class="form-control apd-form-email" id="email1" 
+                                   name="email1" placeholder=" ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">email2</label>
+                            <input type="email" class="form-control apd-form-email" id="email2" 
+                                   name="email2" placeholder=" ">
+                        </div>
+                        
+                        
+                        <div class="form-group col-md-6">
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading">Role & Rules</div>
+                               
+                                
+                                <select class="form-control apd-form-select" placeholder="Roles"
+                                        id="fkRoleId" name="fkRoleId" has_all="1"
+                                        select_text="roleName" select_value="id" 
+                                        srv_url="srv/serviceCrGetRoleList">
+                                </select>
+
+                                
+                                
+                                <!-- List group -->
+                                <ul id="ruleId" send_data="id=-," class="list-group apd-form-switch-list"  select_id="id" tn="permission" dependence_id="fkRoleId"
+                                    name="ruleId" select_text="ruleName" select_value="ruleAccess" 
+                                        srv_url="srv/serviceCrGetUserRuleList">
+
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateUser" apd-form-reload-button-id='serviceCrGetUserList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update User</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewUser" class="apd-form" method="POST" action="srv/serviceCrUpdateUser">
+                        <div class="form-group hidden col-md-6">
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="hidden" id="id"
+                                   name="id"    >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">username</label>
+                            <input class="form-control apd-form-input" type="text" id="username"
+                                   name="username"    >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">password</label>
+                            <input class="form-control apd-form-input" type="password" id="password"
+                                   name="password" placeholder=""  >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userShortId</label>
+                            <input type="text" class="form-control apd-form-input-file"  file_type="image"
+                                   id="userShortId" name="userShortId" >
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="float">userPersonName</label>
+                            <input type="text" class="form-control apd-form-input" id="userPersonName" 
+                                   name="userPersonName" placeholder="">
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label class="float">userPersonSurname</label>
+                            <input type="text" class="form-control apd-form-input" id="userPersonSurname" 
+                                   name="userPersonSurname" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userPersonMiddlename</label>
+                            <input type="text" class="form-control apd-form-input" id="userPersonMiddlename" 
+                                   name="userPersonMiddlename" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float" qlang>userImage</label>
+                            <div class="fileuploader">
+                                <div class="col-md-11">
+                                    <input id="userImage" name="userImage" 
+                                           class="form-control apd-form-input-file" 
+                                           type="file" file_type="image" value="">
+                                </div>
+                                <div class="col-md-1">
+                                    <img style="display: none;" class="  apd-image-spinner" 
+                                         src="resources/upload/spinner.gif" height="20px" 
+                                         width="20px">
+                                    <img style="display: none; " class="  
+                                         apd-image-uploaded" src="resources/upload/uploaded.png"
+                                         height="20px" width="20px">
+                                    <i style="display: none; font-size: 22px; color: red;" 
+                                       class="fa fa-warning apd-image-upload-error">
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userBirthPlace</label>
+                            <input type="text" class="form-control apd-form-input" id="userBirthPlace" 
+                                   name="userBirthPlace" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">userBirthDate</label>
+                            <input type="date" class="form-control apd-form-date" id="userBirthDate" 
+                                   name="userBirthDate" placeholder=" ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">expireDate</label>
+                            <input type="date" class="form-control apd-form-date" id="expireDate" 
+                                   name="expireDate" placeholder=" ">
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label class="float">sex</label>
+                            <select class="form-control apd-form-select" id="sex" name="sex"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/sex">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">occupation</label>
+                            <input type="text" class="form-control apd-form-input" id="occupation" 
+                                   name="occupation" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">mobile1</label>
+                            <input type="text" class="form-control apd-form-input" id="mobile1" 
+                                   name="mobile1">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">mobile2</label>
+                            <input type="text" class="form-control apd-form-input" id="mobile2" 
+                                   name="mobile2" >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">telephone1</label>
+                            <input type="text" class="form-control apd-form-input" id="telephone1" 
+                                   name="telephone1" placeholder=" ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">telephone2</label>
+                            <input type="text" class="form-control apd-form-input" id="telephone2" 
+                                   name="telephone2" placeholder=" ">
+                        </div>
+
+                        <div class="form-group col-md-6 ">
+                            <label class="float">email1</label>
+                            <input type="email" class="form-control apd-form-email" id="email1" 
+                                   name="email1" placeholder=" ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">email2</label>
+                            <input type="email" class="form-control apd-form-email" id="email2" 
+                                   name="email2" placeholder=" ">
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                             
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading">Role & Rules</div>
+                               
+                                
+                                <select class="form-control apd-form-select" placeholder="Roles"
+                                        id="fkRoleId" name="fkRoleId" has_all="1"
+                                        select_text="roleName" select_value="id" 
+                                        srv_url="srv/serviceCrGetRoleList">
+                                </select>
+                        
+
+                                <!-- List group -->
+                                <ul id="ruleId" class="list-group apd-form-switch-list"  select_id="id" tn="permission" dependence_id="fkRoleId"
+                                    name="ruleId" select_text="ruleName" select_value="ruleAccess" 
+                                        srv_url="srv/serviceCrGetUserRuleList">
+
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,6 +23,157 @@ function init() {
     tableVideoBtnListener();
     youtubeListener();
     apopoverListener();  
+    tableColumnCheckListener();
+    tableSortAscListener();
+    tableSortDescListener();
+    tableColumnFilterListener();
+    tableGeneralFilterListener();
+    tableNavNextListener();
+    tableNavPreviousListener();
+    tableNavFirstListener();
+    tableNavLastListener();
+    tableNavPerPageListener();
+
+
+}
+
+
+
+function tableNavPerPageListener() {
+    $(document).on("change", '.table-per-page', function (evt) {
+        //end limiti sifirla
+        var el = $(evt.target);
+        var var_tablename = el.closest('[global_var]').attr('global_var');
+        var vl = el.val();
+        g_tbl[var_tablename].end_limit = vl;
+        g_tbl[var_tablename].start_limit = 0;
+        var div = el.closest('div[class="custom-table"]');
+        console.log(g_tbl[var_tablename].start_limit + ' - ' + g_tbl[var_tablename].end_limit);
+        div.find(".table-filter-comp").first().change();
+    });
+}
+
+
+function tableNavPreviousListener() {
+    $(document).on("click", '.apd-tbl-nav-prvs', function (evt) {
+        var el = $(evt.target);
+        var var_tablename = el.closest('[global_var]').attr('global_var');
+        var per_page = el.closest('div[class=apd-tbl-nav').
+                find('.table-per-page').val();
+        var end_limit = g_tbl[var_tablename].start_limit;
+        end_limit = typeof end_limit === 'undefined' || !end_limit ? per_page
+                : parseInt(end_limit) - 1;
+        var start_limit = end_limit > per_page
+                ? parseInt(end_limit) - parseInt(per_page) + 1
+                : 0;
+        g_tbl[var_tablename].start_limit = start_limit;
+        g_tbl[var_tablename].end_limit = end_limit;
+        var div = el.closest('div[class="custom-table"]');
+        console.log(g_tbl[var_tablename].start_limit + ' - ' + g_tbl[var_tablename].end_limit);
+        div.find(".table-filter-comp").first().change();
+    });
+}
+
+function tableNavFirstListener() {
+    $(document).on("click", '.apd-tbl-nav-frst', function (evt) {
+        var el = $(evt.target);
+        var var_tablename = el.closest('[global_var]').attr('global_var');
+        var per_page = el.closest('div[class=apd-tbl-nav').
+                find('.table-per-page').val();
+        var end_limit = per_page;
+        var start_limit = 0;
+        g_tbl[var_tablename].start_limit = start_limit;
+        g_tbl[var_tablename].end_limit = end_limit;
+        var div = el.closest('div[class="custom-table"]');
+        console.log(g_tbl[var_tablename].start_limit + ' - ' + g_tbl[var_tablename].end_limit);
+        div.find(".table-filter-comp").first().change();
+    });
+}
+
+function tableNavLastListener() {
+    $(document).on("click", '.apd-tbl-nav-lst', function (evt) {
+
+    });
+}
+
+function tableNavNextListener() {
+    $(document).on("click", '.apd-tbl-nav-nxt', function (evt) {
+        var el = $(evt.target);
+        var var_tablename = el.closest('[global_var]').attr('global_var');
+        var per_page = el.closest('div[class=apd-tbl-nav').
+                find('.table-per-page').val();
+        var start_limit = g_tbl[var_tablename].end_limit;
+        start_limit = typeof start_limit === 'undefined' || !start_limit ? 0
+                : parseInt(start_limit) + 1;
+        var end_limit = parseInt(start_limit) + parseInt(per_page);
+        end_limit = start_limit === 0 ? end_limit : end_limit - 1;
+        g_tbl[var_tablename].start_limit = start_limit;
+        g_tbl[var_tablename].end_limit = end_limit;
+        var div = el.closest('div[class="custom-table"]');
+        console.log(g_tbl[var_tablename].start_limit + ' - ' + g_tbl[var_tablename].end_limit);
+        div.find(".table-filter-comp").first().change();
+    });
+}
+
+function tableGeneralFilterListener() {
+    $(document).on("click", '.apd-table-general-filter', function (evt) {
+        $('.table-filter-comp').first().change();
+    });
+}
+
+
+
+function tableColumnFilterListener() {
+    $(document).on("click", '.apd-table-col-filter', function (evt) {
+        var el = $(evt.target);
+        var cname = el.attr("cnm");
+        var tid = el.closest("table").attr("id");
+        $('#' + tid).find('.table-filter').show();
+        el.closest("table").find("#" + cname).focus();
+    });
+}
+
+
+
+function tableColumnCheckListener() {
+    $(document).on("click", '.apd-table-cols', function (evt) {
+        var el = $(evt.target);
+        var cn = el.attr("cn");
+        if (el.is(":checked")) {
+            $("." + cn).show();
+        } else {
+            $("." + cn).hide();
+        }
+    });
+}
+
+function tableSortAscListener() {
+    $(document).on("click", '.apd-table-sasc', function (evt) {
+        var el = $(evt.target);
+        var tid = el.closest("table").attr("id");
+        var cn = el.attr("cn");
+        $('.apd-table-sasc').attr("style", "color:#0f7ba7");
+        $('.apd-table-sdesc').attr("style", "color:#0f7ba7");
+        el.attr("style", "color:red");
+        sortTable(tid, cn, false);
+    });
+}
+
+function tableSortDescListener() {
+    $(document).on("click", '.apd-table-sdesc', function (evt) {
+        var el = $(evt.target);
+        var tid = el.closest("table").attr("id");
+        var cn = el.attr("cn");
+        $('.apd-table-sasc').attr("style", "color:#0f7ba7");
+        $('.apd-table-sdesc').attr("style", "color:#0f7ba7");
+        el.attr("style", "color:red");
+        sortTable(tid, cn, true);
+    });
+}
+
+function clearSortIcons() {
+    $('.apd-table-sasc').attr("style", "color:#0f7ba7");
+    $('.apd-table-sdesc').attr("style", "color:#0f7ba7");
 }
 
 function refreshPatientListener() {
@@ -140,7 +291,7 @@ function uploadFile(fileext, file_base_64, filepicker, file_type) {
         type: "POST",
         data: dat,
         contentType: "application/json",
-        async: false,
+        async: true,
         success: function (data) {
             var res = data['kv'];
             if (res.msg) {
@@ -166,6 +317,7 @@ function uploadFile(fileext, file_base_64, filepicker, file_type) {
 function selectHasOtherChangeListener() {
     $(document).on("change", '.apd-form-select-ho', function (e) {
         var el = $(e.target);
+        var val = el.find(":selected").val();
         var id = el.attr("id");
         var val = el.find(":selected").val();
         if (val === '__2__') {
@@ -210,7 +362,8 @@ function matrixItemEditClickListener() {
 
                     var tr = $('<tr></tr>')
                             .append("<td ><span class=\"glyphicon glyphicon-move\"></span>" + (i + 1) + "</td>")
-                            .append("<td cn='fkSubmoduleAttibutesId' style=\"display:none;\">" + rd[i].fkSubmoduleAttributeId + "</td>")
+                            .append("<td cn='fkSubmoduleAttibutesId' style=\"display:none;\">" + 
+                            rd[i].fkSubmoduleAttributeId + "</td>")
                             .append("<td >" + rd[i].attributeName + "</td>")
                             .append("<td cn='shortName'>" + rd[i].shortName + "</td>")
                             .append("<td > <i class=\"fa fa-remove\" \n\
@@ -247,9 +400,15 @@ function matrixItemClickListener() {
             loadTable('tbl_inspectiomatrix_list', json);
             disableSubmoduleDiv();
             hideAndDisableAddInspection();
+            fillStatisticField(id);
+            setMatrixItemName(el.html());
         }
 
     });
+}
+
+function setMatrixItemName(name){
+    $('#matrixListName').html(name);
 }
 
 function matrixDeleteBtnClickListener() {
@@ -433,16 +592,16 @@ function s_h_sm_attribute_buttons() {
 
 
 function tablePatientClickExecutor() {
-    var len = $('.apd-table-checkbox:checked').length;
-    if (len > 1) {
-        $('#inspectionCode').attr('disabled', 'disabled');
-        fillInspectionComboByTableClick("");
-    } else {
-        var pid = $('.apd-table-checkbox:checked').val();
-        $('#inspectionCode').removeAttr('disabled');
-        fillInspectionComboByTableClick(pid);
-    }
-    $('#inspectionCode').click();
+//    var len = $('.apd-table-checkbox:checked').length;
+//    if (len > 1) {
+//        $('#inspectionCode').attr('disabled', 'disabled');
+//        fillInspectionComboByTableClick("");
+//    } else {
+//        var pid = $('.apd-table-checkbox:checked').val();
+//        $('#inspectionCode').removeAttr('disabled');
+//        fillInspectionComboByTableClick(pid);
+//    }
+//    $('#inspectionCode').click();
 }
 
 function toggleReportLine() {
@@ -468,43 +627,43 @@ function toggleReportLine() {
 }
 
 function fillInspectionComboByTableClick(fkPatientId) {
-    var pid = '-1';
-    if (fkPatientId) {
-        pid = fkPatientId;
-    }
-    var mdid = $('#fkModuleId').val();
-    var json = {kv: {}};
-    json.kv.fkPatientId = pid;
-    json.kv.fkModuleId = mdid;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: "api/post/srv/serviceCrGetInspectionCodeList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            isResultRedirect(JSON.stringify(res));
-            var obj = res.tbl[0].r;
-            var e = $('#inspectionCode');
-            e.empty();
-            for (var j = 0; j < obj.length; j++) {
-                var k = obj[j].inspectionCode;
-                var v = obj[j].inspectionValue;
-                $(e).append($("<option />").val(k).text(v));
-            }
-
-            $(e).find('option[value=-2]').attr("selected", "selected");
-            $(e).addClass('selectpicker');
-            $(e).attr("data-show-subtext", "true");
-            $(e).attr("data-live-search", "true");
-            $('.selectpicker').selectpicker('refresh');
-        },
-        error: function (res, status) {
-            alert(getMessage('somethingww'));
-        }
-    });
+//    var pid = '-1';
+//    if (fkPatientId) {
+//        pid = fkPatientId;
+//    }
+//    var mdid = $('#fkModuleId').val();
+//    var json = {kv: {}};
+//    json.kv.fkPatientId = pid;
+//    json.kv.fkModuleId = mdid;
+//    var data = JSON.stringify(json);
+//    $.ajax({
+//        url: "api/post/srv/serviceCrGetInspectionCodeList",
+//        type: "POST",
+//        data: data,
+//        contentType: "application/json",
+//        crossDomain: true,
+//        async: false,
+//        success: function (res) {
+//            isResultRedirect(JSON.stringify(res));
+//            var obj = res.tbl[0].r;
+//            var e = $('#inspectionCode');
+//            e.empty();
+//            for (var j = 0; j < obj.length; j++) {
+//                var k = obj[j].inspectionCode;
+//                var v = obj[j].inspectionValue;
+//                $(e).append($("<option />").val(k).text(v));
+//            }
+//
+//            $(e).find('option[value=-2]').attr("selected", "selected");
+//            $(e).addClass('selectpicker');
+//            $(e).attr("data-show-subtext", "true");
+//            $(e).attr("data-live-search", "true");
+//            $('.selectpicker').selectpicker('refresh');
+//        },
+//        error: function (res, status) {
+//            alert(getMessage('somethingww'));
+//        }
+//    });
 }
 
 function fillInspectionMatrixList() {
@@ -863,11 +1022,19 @@ function formButtonListener() {
                         clearForm(formId);
                     }
                     //get id of reload div 
-                    var reloadDiv = el.closest("[apd-form-reload-button-id]").attr('apd-form-reload-button-id');
+                    var i = 1;
+                    var a = el.closest("div[class='row apd-page']").find(".table-filter-comp").each(function () {
+                        if (i < 3) {
+                            $(this).change();
+                        }
+                        i++;
+                    });
+//                    var reloadDiv = el.closest("[apd-form-reload-button-id]").attr('apd-form-reload-button-id');
+//                   
                     //get onclick fuct name
-                    var func = $('#' + reloadDiv).attr('onclick');
+//                    var func = $('#' + reloadDiv).attr('onclick');
                     //execute function
-                    eval(func);
+//                    eval(func);
                     //show successful message
                     alert(getMessage('successOperation'));
                     if (el.attr('id')==='insertNewPatientBtn'){
@@ -927,6 +1094,16 @@ function menuListenerActivies(page_id) {
             fillCombobox($('#fkReportId'));
 //            fillInspectionComboByTableClick("");
             break;
+        case "page_statistic":
+            fillCombobox($('#fkModuleId'));
+            $('#fkModuleId').click();
+            fillCombobox($('#fkDoctorUserId'));
+            fillCombobox($('#fkPatientId'));  
+            fillCombobox($('#fkReportId'));
+            fillInspectionMatrixList();
+            clickFirstElementOfMatritList();
+//            fillInspectionComboByTableClick("");
+            break;
         case "page_patient":
             fillCombobox($('#fkModuleId'));
 //            fillCombobox($('#fkReportId'));
@@ -939,6 +1116,10 @@ function menuListenerActivies(page_id) {
     }
 }
 
+function clickFirstElementOfMatritList(){
+    $('.apd-patient-matrix-item:eq(1)').click();
+}
+ 
 function loadRemotePage(pageid) {
     var json = {kv: {}};
     json.kv["page"] = pageid;
@@ -963,10 +1144,8 @@ function loadRemotePage(pageid) {
 
 function panelListener() {
     $('.main_panel').hide(function (e) {
-        console.log("gizlendi");
     });
     $('.main_panel').show(function (e) {
-        console.log("gorsendi");
     });
 }
 
@@ -1021,32 +1200,24 @@ function tableFilterListener() {
         var var_tablename = element.closest('[global_var]').attr('global_var');
         var tableId = var_tablename;
         var div = element.closest('div[class="custom-table"]');
-        var per_page = div.find(".table-filter-comp[name=per_page]").val();
-        var page_count = div.find(".table-filter-comp[name=page_count]").val();
-        page_count = (page_count) ? page_count : 1;
-        var start_ind = per_page * (page_count - 1);
-        var sLimit = per_page * (page_count - 1);
-        var eLimit = per_page * (page_count);
+//        var per_page = div.find(".table-filter-comp[name=per_page]").val();
+//        var page_count = div.find(".table-filter-comp[name=page_count]").val();
+//        page_count = (page_count) ? page_count : 1;
+//        var start_ind = per_page * (page_count - 1);
+//        var sLimit = per_page * (page_count - 1);
+//        var eLimit = per_page * (page_count);
+        var sLimit = g_tbl[var_tablename].start_limit;
+        var eLimit = g_tbl[var_tablename].end_limit;
         json.kv["startLimit"] = sLimit;
         json.kv['endLimit'] = eLimit;
         div.find(".table-filter-comp").each(function () {
             var k = $(this).attr("name");
             var v = $(this).val();
             if (v) {
-                if (k != "per_page" && k != "page_count") {
+//                if (k != "per_page" && k != "page_count") {
                     json.kv[k] = v;
-                }
+//                }
             }
-        });
-        div.find(".table-filter-combo").each(function () {
-            var k = $(this).attr('id');
-            var v = $(this).val();
-            var l = "";
-            for (var i in v) {
-                l += v[i] + "%IN%";
-            }
-            l = l.substring(0, l.length - 4);
-            json.kv[k] = l;
         });
         var data = JSON.stringify(json);
         $.ajax({
@@ -1058,17 +1229,23 @@ function tableFilterListener() {
             async: false,
             success: function (res) {
                 isResultRedirect(JSON.stringify(res));
+                clearSortIcons();
                 var obj = res.tbl;
                 if (obj.length === 0) {
-                    $('#' + tableId).find('tbody').html('');
-                    changePageNumberOfTable(per_page, 1, page_count, div);
+                    var tr = '<tr role="row"><td class="et" colspan="220">';
+                    tr += getMessage('nothingFound');
+                    tr += '</td></tr>';
+                    $('#' + tableId).find('tbody').html(tr);
+                    //bu hisseni hazirlamaq lazimdir.
+//                    addEmptyRow(tableId);    
+//                    changePageNumberOfTable(per_page, 1, page_count, div);
                 } else {
                     for (var i = 0; i < obj.length; i++) {
                         var tn = obj[i]['tn'];
                         if (tn === g_tbl[var_tablename].response_tn) {
                             var rc = obj[i]['rowCount'];
-                            changePageNumberOfTable(per_page, rc, page_count, div);
-                            fillTableBodyByid(var_tablename, obj[i], start_ind);
+//                            changePageNumberOfTable(per_page, rc, page_count, div);
+                            fillTableBodyByid(var_tablename, obj[i], sLimit);
                             break;
                         }
                     }
@@ -1078,25 +1255,8 @@ function tableFilterListener() {
                 alert(getMessage('somethingww'));
             }
         });
-        div.find(".table-filter-combo").each(function () {
-            var json4 = json;
-            json4.kv["startLimit"] = 0;
-            json4.kv['endLimit'] = 250;
-            var k = $(this).attr("name");
-            var v = $(this).val();
-            v = (v) ? v : "";
-            json4.kv.distinctFields = k;
-            //combonu dolduranda oz id-sini nezere almamalidir
-            delete json4.kv[k];
-            //get checked values
-            var l = "";
-            for (var i in v) {
-                l += v[i] + "|";
-            }
-            l = l.substring(0, l.length - 1);
-            fillComboInTableFilter(json4, url, this, k, l);
-            json4.kv[k] = l;
-        });
+
+
     }));
 }
 
@@ -1150,7 +1310,7 @@ function formSelectListeners() {
         
         
         element.closest('.apd-form').find('select[dependence_id=' + id + ']').each(function () {
-            //var e_id = $(this).attr('id');
+            var e_id = $(this).attr('id');
             fillCombobox(this, json);
         });
         element.closest('.apd-form').find('ul[dependence_id=' + id + ']').each(function () {

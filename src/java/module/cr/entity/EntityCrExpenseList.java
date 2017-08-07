@@ -17,12 +17,22 @@ public class EntityCrExpenseList extends CoreEntity {
     public static String DESCRIPTION = "description";
     public static String EXPENSE_CURRENCY = "expenseCurrency";
     public static String EXPENSE_CURRENCY_NAME = "expenseCurrencyName";
+    public static String EXPENSE_PURPOSE = "expensePurpose";
     
+    private String expensePurpose = "";
     private String expenseCurrencyName = "";
     private String expenseCurrency = "";
     private String expenseDate = "";
     private String expenseAmount = "";
     private String description = "";
+
+    public void setExpensePurpose(String expensePurpose) {
+        this.expensePurpose = expensePurpose;
+    }
+
+    public String getExpensePurpose() {
+        return expensePurpose;
+    }
 
     public String getExpenseCurrencyName() {
         return expenseCurrencyName;

@@ -1,0 +1,257 @@
+<div class="row apd-page" id="page_statistic">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label id="headertitle" qlang>statistics</label>
+        </div>
+    </div> 
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#rawdata" qlang>rawdata</a></li>
+            <li><a data-toggle="tab" href="#stat" qlang>basicstatistic</a></li>
+            <li><a data-toggle="tab" href="#figure" qlang>figure</a></li> 
+            <li><a data-toggle="tab" href="#regression" qlang>regression</a></li>
+
+        </ul>
+    </div>
+
+
+    <div class="tab-content">
+        <!--raw data-->
+        <div id="rawdata" class="col-md-12  tab-pane fade in active    ">
+            <br>
+            <div class="col-md-12">
+                <div class="col-md-2">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" >
+                            <span qlang>matrixList</span>
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu  apd-patient-matrix-list" id="inspectionMatrixMain"  >
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-10" style="text-align:center">
+                    <label style="font-size: 18px" id="matrixListName"></label>
+                </div>
+            </div>
+            <div class="col-md-2    ">
+                <br>
+            </div>
+            <div  id= "patientlist" class="col-md-12 apd-page-body"> 
+            </div>  
+
+
+
+
+        </div>
+        <!--basic statistics-->
+        <div id="stat" class="col-md-12  tab-pane fade    ">
+            <br>
+            <div class="col-md-12">
+                <div class="col-md-12  ">
+                    <div class="col-md-6">
+                        <label   qlang>field</label>
+                        <select id="f4statistic" class="form-control" onchange="fillStatistic(this)">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="col-md-12">
+                    <label qlang>statisticResult</label>
+                </div>
+
+                <div class="col-md-12" id="basicStatInfo">
+                </div>
+            </div>
+            <div class="col-md-1"  >
+            </div>
+
+            <div class="col-md-6    ">
+                <div class="col-md-12">
+                    <label qlang>confedendeLevelInfo</label>
+                </div>
+                <div class="col-md-12" id="confedendeLevelInfo">
+
+                </div>
+            </div>
+        </div>
+
+        <!--        figure tap-->
+        <div id="figure" class="col-md-12  tab-pane fade      ">
+            <br>
+            <div class="col-md-12  ">
+                <div class="col-md-5">
+                    <label   qlang>field</label>
+                    <select id="f4figure" class="form-control" multiple>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!--        regression tab-->
+        <div id="regression" class="col-md-12  tab-pane fade      ">
+            <br>
+            <div class="col-md-6  ">
+                <span qlang>command</span><br>
+                <textarea class="form-control"></textarea>
+            </div>
+            <div class="col-md-6  ">
+                <span qlang>result</span><br>
+                <div id="result" style=" border-style: solid; border-width: 1px;border-color: #4da089">
+                    asdf
+                </div>
+            </div>
+        </div>
+    </div>  
+
+
+
+
+
+</div>
+
+<div id="insertNewInspectionMatrix"   class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Inspection Matrix</h4>
+            </div>
+            <div class="modal-body-1">
+                <form id="form_insertNewReportLine" class="apd-form" method="POST" 
+                      action="srv/serviceCrInsertNewInspectionMatrix">
+                    <div class="form-group col-md-12 hidden">
+                        <label>id</label>
+                        <input class="form-control apd-form-input"
+                               type="text" id="id" name="id" value=""
+                               placeholder="id" >  
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label qlang >matrixName</label>
+                        <input class="form-control apd-form-input"
+                               type="text" id="matrixName" name="matrixName"
+                               placeholder="matrixName" >  
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label  qlang class="float">module</label>
+                        <select class="form-control apd-form-select" id="fkMainModuleId" name="fkMainModuleId"
+                                select_text="moduleName" select_value="id"  
+                                srv_url="srv/serviceCrGetModuleList">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label qlang>attribute</label>
+                        <select class="form-control apd-form-select" 
+                                id="fkSubmoduleAttibutesId" name="fkSubmoduleAttibutesId"
+                                select_text="attributeName" select_value="id" 
+                                dependence_id="fkMainModuleId"
+                                srv_url="srv/serviceCrGetSubmoduleAttributeList">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label qlang>shortName</label>
+                        <input class="form-control apd-form-input"
+                               type="text" id="shortName" name="shortName"
+                               >       
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <br> 
+                        <button type="button" class="btn btn-default apd-form-matrix-btn"  style="margin-top: 6px;" qlang>add</button>
+                    </div>
+                    <div class="form-group col-md-12 " id="matrix_div">
+
+                        <table class="table table-sortable apd-form-table" id="matrixTbl">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th qlang>attributeName</th>
+                                    <th qlang>shortName</th>
+                                    <th style="display:none;">fkSubmoduleAttibutesId</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group col-md-12" align="right">
+                        <button type="button" class="btn btn-default apd-form-btn" qlang>Insert</button>
+                        <button type="button" class="btn btn-default apd-form-matrix-delete-btn" qlang>Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>Close</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div id="apdImageViewer"   class="modal fade col-md-12" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">imageViewer</h4>
+            </div>
+            <div class="modal-body-1">
+                <div id="myCarousel211" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators" >
+                    </ol>
+                    <div class="carousel-inner">
+                    </div>
+                    <a class="left carousel-control" href="#myCarousel211" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel211" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="apdVideoPlayer"   class="modal fade col-md-12" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">videoPlayer</h4>
+            </div>
+            <div class="modal-body-1">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+</div>
+
+<script>
+    $(function () {
+        $(".youtube").YouTubeModal({autoplay: 0, width: 640, height: 480});
+    });
+
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>

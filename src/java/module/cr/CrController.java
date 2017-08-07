@@ -6,6 +6,7 @@
 package module.cr;
 
 import controllerpool.ControllerPool;
+import static module.cr.CrModel.getSubmoduleAttributeList;
 import module.cr.entity.*;
 import utility.Carrier;
 import utility.QException;
@@ -217,8 +218,8 @@ public class CrController {
             carrier.addController(EntityCrEntityLabel.FIELD_NAME, cp.hasValue(carrier, EntityCrEntityLabel.FIELD_NAME));
             carrier.addController(EntityCrEntityLabel.DESCRIPTION, cp.hasValue(carrier, EntityCrEntityLabel.DESCRIPTION));
             carrier.addController(EntityCrEntityLabel.LABEL_TYPE, cp.hasValue(carrier, EntityCrEntityLabel.LABEL_TYPE));
-            carrier.addController(EntityCrEntityLabel.FIELD_NAME,
-                    cp.isNotExistInEntity(new EntityCrEntityLabel(), EntityCrEntityLabel.FIELD_NAME, carrier.getValue(EntityCrEntityLabel.FIELD_NAME).toString()));
+//            carrier.addController(EntityCrEntityLabel.FIELD_NAME,
+//                    cp.isNotExistInEntity(new EntityCrEntityLabel(), EntityCrEntityLabel.FIELD_NAME, carrier.getValue(EntityCrEntityLabel.FIELD_NAME).toString()));
 
             return carrier;
         } catch (Exception ex) {
@@ -377,6 +378,8 @@ public class CrController {
                 cp.hasValue(carrier, EntityCrAttribute.ATTRIBUTE_NAME));
         carrier.addController(EntityCrAttribute.ATTRIBUTE_CODE,
                 cp.hasValue(carrier, EntityCrAttribute.ATTRIBUTE_CODE));
+        carrier.addController(EntityCrAttribute.ATTRIBUTE_NAME,
+                cp.hasValue(carrier, EntityCrAttribute.LANG));
 
         return carrier;
     }
@@ -389,6 +392,8 @@ public class CrController {
                 cp.hasValue(carrier, EntityCrAttribute.ATTRIBUTE_NAME));
         carrier.addController(EntityCrAttribute.ATTRIBUTE_CODE,
                 cp.hasValue(carrier, EntityCrAttribute.ID));
+        carrier.addController(EntityCrAttribute.ATTRIBUTE_NAME,
+                cp.hasValue(carrier, EntityCrAttribute.LANG));
 
         return carrier;
     }
@@ -402,6 +407,10 @@ public class CrController {
     }
 
     public Carrier getAttributeList(Carrier carrier) {
+        return carrier;
+    }
+
+    public Carrier getAttributeMainList(Carrier carrier) {
         return carrier;
     }
 
@@ -509,7 +518,6 @@ public class CrController {
         return carrier;
     }
         
-        
     public Carrier insertNewSubmodule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrSubmodule.SUBMODULE_NAME,
@@ -541,6 +549,10 @@ public class CrController {
     }
 
     public Carrier getSubmoduleList(Carrier carrier) {
+        return carrier;
+    }
+
+    public Carrier getSubmoduleMainList(Carrier carrier) {
         return carrier;
     }
 
@@ -603,6 +615,8 @@ public class CrController {
 
     public Carrier insertNewSubmoduleAttribute(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
+        carrier.addController("fkModuleId",
+                cp.hasValue(carrier, "fkModuleId"));
         carrier.addController(EntityCrSubmoduleAttribute.SUBMODULE_VALUE,
                 cp.hasValue(carrier, EntityCrSubmoduleAttribute.SUBMODULE_VALUE));
         carrier.addController(EntityCrSubmoduleAttribute.FK_ATTRIBUTE_ID,
@@ -619,8 +633,10 @@ public class CrController {
 
     public Carrier updateSubmoduleAttribute(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
-        carrier.addController(EntityCrSubmoduleAttribute.ID,
-                cp.hasValue(carrier, EntityCrSubmoduleAttribute.ID));
+        carrier.addController(EntityCrSubmoduleAttribute.SUBMODULE_VALUE,
+                cp.hasValue(carrier, "id"));
+        carrier.addController(EntityCrSubmoduleAttribute.SUBMODULE_VALUE,
+                cp.hasValue(carrier, "fkModuleId"));
         carrier.addController(EntityCrSubmoduleAttribute.SUBMODULE_VALUE,
                 cp.hasValue(carrier, EntityCrSubmoduleAttribute.SUBMODULE_VALUE));
         carrier.addController(EntityCrSubmoduleAttribute.FK_ATTRIBUTE_ID,
@@ -738,6 +754,14 @@ public class CrController {
         carrier.addController("general",
                 cp.isExistInEntity(new EntityCrAppointment(),
                         "id", carrier.getValue("fkSessionId").toString()));
+        return carrier;
+    }
+
+    public static Carrier getSubmoduleAttributeList4Matrix(Carrier carrier)
+            throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("general",
+                cp.hasValue(carrier, "fkMainModuleId"));
         return carrier;
     }
 
@@ -928,6 +952,10 @@ public class CrController {
                 cp.hasValue(carrier, EntityCrPayment.PAYMENT_AMOUNT));
         carrier.addController(EntityCrPayment.PAYMENT_STATUS,
                 cp.hasValue(carrier, EntityCrPayment.PAYMENT_STATUS));
+        carrier.addController(EntityCrPayment.PAYMENT_DISCOUNT,
+                cp.hasValue(carrier, EntityCrPayment.PAYMENT_DISCOUNT));
+        carrier.addController(EntityCrPayment.PAYMENT_DISCOUNT,
+                cp.isPercent(carrier, EntityCrPayment.PAYMENT_DISCOUNT));
 
         return carrier;
     }
@@ -946,7 +974,10 @@ public class CrController {
                 cp.hasValue(carrier, EntityCrPayment.PAYMENT_AMOUNT));
         carrier.addController(EntityCrPayment.PAYMENT_STATUS,
                 cp.hasValue(carrier, EntityCrPayment.PAYMENT_STATUS));
-
+        carrier.addController(EntityCrPayment.PAYMENT_DISCOUNT,
+                cp.hasValue(carrier, EntityCrPayment.PAYMENT_DISCOUNT));
+        carrier.addController(EntityCrPayment.PAYMENT_DISCOUNT,
+                cp.isPercent(carrier, EntityCrPayment.PAYMENT_DISCOUNT));
         return carrier;
     }
 
@@ -995,6 +1026,12 @@ public class CrController {
         return carrier;
     }
 
+	public Carrier getDiscountedPrice(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    
+
     public Carrier getExpenseList(Carrier carrier) {
         return carrier;
     }
@@ -1004,6 +1041,29 @@ public class CrController {
     }
 
     public Carrier getUserFullname(Carrier carrier) {
+        return carrier;
+    }
+
+public Carrier getLabel(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("general",
+                cp.hasValue(carrier, "code"));
+        return carrier;
+    }
+    
+    public static Carrier getVoiceAnalyse(Carrier carrier)  throws QException{
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("general",
+                cp.hasValue(carrier, "filename"));
+        return carrier;
+    }
+    
+     public static Carrier getBasicStatistics(Carrier carrier)  throws QException{
+        ControllerPool cp = new ControllerPool();
+//        carrier.addController("general",
+//                cp.hasValue(carrier, "fkMatrixId"));
+//        carrier.addController("general",
+//                cp.hasValue(carrier, "fkSubmoduleAttributeId"));
         return carrier;
     }
     

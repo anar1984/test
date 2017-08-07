@@ -27,15 +27,25 @@
                 </div>
                 <div class="modal-body-1">
                     <form id="form_insertNewSubmoduleAttribute" class="apd-form" method="POST" action="srv/serviceCrInsertNewSubmoduleAttribute">
-                        <div class="form-group col-md-6">
+
+                        <div class="form-group col-md-4">
+                            <label qlang>module</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkModuleId" name="fkModuleId"
+                                    select_text="moduleName" select_value="id" 
+                                    srv_url="srv/serviceCrGetModuleList">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
                             <label>Submodule</label>
                             <select class="form-control apd-form-select" 
                                     id="fkSubmoduleId" name="fkSubmoduleId"
                                     select_text="submoduleName" select_value="id" 
+                                    dependence_id="fkModuleId"
                                     srv_url="srv/serviceCrGetSubmoduleList">
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Attribute</label>
                             <select class="form-control apd-form-select" 
                                     id="fkAttributeId" name="fkAttributeId"
@@ -74,7 +84,7 @@
                                    id="sortBy" name="sortBy" 
                                    placeholder="Order No">
                         </div>
-                        
+
                         <div class="form-group col-md-6">
                             <label>Has Other</label>
                             <select class="form-control apd-form-select" 
@@ -124,15 +134,24 @@
                             <label class="float">id</label>
                             <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="SubmoduleAttribute Code"  >
                         </div>
-                        <div class="form-group col-md-6">
+                       <div class="form-group col-md-4">
+                            <label qlang>module</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkModuleId" name="fkModuleId"
+                                    select_text="moduleName" select_value="id" 
+                                    srv_url="srv/serviceCrGetModuleList">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
                             <label>Submodule</label>
                             <select class="form-control apd-form-select" 
                                     id="fkSubmoduleId" name="fkSubmoduleId"
                                     select_text="submoduleName" select_value="id" 
+                                    dependence_id="fkModuleId"
                                     srv_url="srv/serviceCrGetSubmoduleList">
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Attribute</label>
                             <select class="form-control apd-form-select" 
                                     id="fkAttributeId" name="fkAttributeId"
@@ -171,7 +190,7 @@
                                    id="sortBy" name="sortBy" 
                                    placeholder="Order No">
                         </div>
-                        
+
                         <div class="form-group col-md-6">
                             <label>Has Other</label>
                             <select class="form-control apd-form-select" 
@@ -194,8 +213,8 @@
                                       id="submoduleDescription" 
                                       name="submoduleDescription"></textarea>
                         </div> 
-                        
-                        
+
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>

@@ -54,6 +54,7 @@ public abstract class CoreEntity {
     private final ArrayList functionParams;
     private final ArrayList<String> andStatementField;
     private final ArrayList<String> andOrStatementField;
+    private final ArrayList<String> orStatementField;
     private final ArrayList<String> deepWhereStatementField;
     private boolean sortByAsc;
     private boolean setAndStatAll;
@@ -86,6 +87,7 @@ public abstract class CoreEntity {
         functionParams = new ArrayList();
         andStatementField = new ArrayList<>();
         andOrStatementField = new ArrayList<>();
+        orStatementField = new ArrayList<>();
         deepWhereStatementField = new ArrayList<>();
         this.connection = null;
         setAndStatAll = false;
@@ -119,6 +121,10 @@ public abstract class CoreEntity {
         andStatementField.add(field);
     }
 
+    public void addOrStatementField(String field) {
+        orStatementField.add(field);
+    }
+
     public void addDeepWhereStatementField(String field) {
         deepWhereStatementField.add(field);
     }
@@ -137,6 +143,10 @@ public abstract class CoreEntity {
         return andStatementField.size() > 0;
     }
 
+    public boolean hasOrStatementField() {
+        return orStatementField.size() > 0;
+    }
+
     public boolean hasDeepWhereStatementField() {
         return deepWhereStatementField.size() > 0;
     }
@@ -144,6 +154,11 @@ public abstract class CoreEntity {
     public int selectDeepWhereStatementFieldSize() {
         return deepWhereStatementField.size();
     }
+
+    public int selectDeepWhereStatementKeySize() {
+        return deepWhereStatementKey.size();
+    }
+
 
     public String selectDeepWhereStatementFieldName(int key) {
         return deepWhereStatementField.get(key);
@@ -241,6 +256,16 @@ public abstract class CoreEntity {
         }
     }
 
+    public void splitOrStatementField() throws QException {
+        if (!hasOrStatementField()) {
+            return;
+        }
+
+        for (String orStatementField1 : orStatementField) {
+            convertFieldIntoOrStatement(orStatementField1);
+        }
+    }
+
     public void splitDeepWhereStatementField() throws QException {
         if (!hasDeepWhereStatementField()) {
             return;
@@ -250,10 +275,19 @@ public abstract class CoreEntity {
         for (int i = 0; i < rc; i++) {
             String key = this.selectDeepWhereStatementFieldName(i);
             String val = this.selectEntityValue(key);
+            if (val.contains(CoreLabel.IN)) {
+                String[] v1 = val.split(CoreLabel.IN);
+                for (String v : v1) {
+                    this.deepWhereStatementKey.add(key);
+                    this.deepWhereStatementValue.add(v);
+                }
+                this.setEntityValue(key, "");
+            } else {
             this.deepWhereStatementKey.add(key);
             this.deepWhereStatementValue.add(val);
             this.setEntityValue(key, "");
         }
+    }
     }
 
     public String selectDeepWhereStatementKey(int key) throws QException {
@@ -353,6 +387,30 @@ public abstract class CoreEntity {
             if (n.trim().length() != 0) {
                 String tvalue = CoreLabel.FAIZ + n + CoreLabel.FAIZ;
                 this.addAndOrStatement(fieldName, tvalue);
+            }
+        }
+        setEntityValue(this, fieldName, "");
+    }
+
+    private void convertFieldIntoOrStatement(String fieldName) throws QException {
+        String value = selectEntityValue(this, fieldName);
+
+        if (value.trim().length() == 0) {
+            return;
+        }
+
+        //eger %IN% deyeri olmamalidir
+        if (value.trim().contains(CoreLabel.IN)) {
+            return;
+        }
+
+        value = value.replace(CoreLabel.FAIZ, "");
+        String[] subValue = value.trim().split(" ");
+
+        for (String n : subValue) {
+            if (n.trim().length() != 0) {
+                String tvalue = CoreLabel.FAIZ + n + CoreLabel.FAIZ;
+                this.addOrStatement(fieldName, tvalue);
             }
         }
         setEntityValue(this, fieldName, "");

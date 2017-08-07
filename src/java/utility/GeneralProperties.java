@@ -85,7 +85,7 @@ public class GeneralProperties {
         String fullPath = URLDecoder.decode(path, "UTF-8");
         String pathArr[] = fullPath.split("/build/web/WEB-INF/classes/");
         fullPath = pathArr[0];
-        return fullPath+"/";
+        return fullPath;
     }
 
     private String getConfigFile() throws UnsupportedEncodingException {

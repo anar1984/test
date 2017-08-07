@@ -10,11 +10,15 @@ import utility.QException;
 import static j2html.TagCreator.*;
 import j2html.tags.ContainerTag;
 import j2html.tags.Tag;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import label.CoreLabel;
+import module.cr.CrModel;
 import module.cr.entity.EntityCrAppointment;
 import module.cr.entity.EntityCrAppointmentList;
 import module.cr.entity.EntityCrInspection;
@@ -23,6 +27,7 @@ import module.cr.entity.EntityCrModule;
 import module.cr.entity.EntityCrSubmodule;
 import module.cr.entity.EntityCrSubmoduleAttribute;
 import module.cr.entity.EntityCrSubmoduleAttributeList;
+import utility.QUtility;
 import utility.SessionManager;
 import utility.sqlgenerator.EntityManager;
 import utility.sqlgenerator.IdGenerator;
@@ -56,6 +61,9 @@ public class PgModel {
     public static final String VALUE_TYPE_VIDEO_URL = "1";
     public static final String VALUE_TYPE_RANGE_INTEGER_MULTI = "15";
     public static final String VALUE_TYPE_YOUTUBE_URL = "17";
+    public static final String VALUE_TYPE_SOUND_URL = "18";
+    public static final String VALUE_TYPE_SOUND_UPLOAD = "19";
+    public static final String VALUE_TYPE_DATE = "20";
 
     public static final String SUBMODULE_BUTTON_COLOR_IF_EMPTY = "#ABB2B9";
     public static final String SUBMODULE_BUTTON_COLOR_IF_FULL = "#00b289";
@@ -119,7 +127,7 @@ public class PgModel {
         for (int i = 0; i < rc; i++) {
             EntityManager.mapCarrierToEntity(c, tn, i, ent);
             try {
-                sum += Double.parseDouble(ent.getFinalValue());
+                sum += Double.parseDouble(ent.getInspectionValue());
             } catch (Exception e) {
             }
         }
@@ -168,21 +176,21 @@ public class PgModel {
             return "";
         }
 
-        String insCode = IdGenerator.getId();
+        String insCode = "";
 
-        EntityCrModule entMod = new EntityCrModule();
-        entMod.setDeepWhere(false);
-        entMod.setId(fkModuleId);
-        EntityManager.select(entMod);
+//        EntityCrSubmodule ent = new EntityCrSubmodule();
+//        ent.setDeepWhere(false);
+//        ent.setFkModuleId(fkModuleId);
+//        ent.setLang(SessionManager.getCurrentLang());
+//        ent.addSortBy(EntityCrSubmodule.SORT_BY);
+//        ent.setSortByAsc(true);
+//        Carrier carrier = EntityManager.select(ent);
+        Carrier carrier = new Carrier();
+        carrier.setValue("fkModuleId", fkModuleId);
+        carrier.setValue("asc", "sortBy");
+        carrier = CrModel.getSubmoduleList(carrier);
 
-        EntityCrSubmodule ent = new EntityCrSubmodule();
-        ent.setDeepWhere(false);
-        ent.setFkModuleId(fkModuleId);
-        ent.addSortBy(EntityCrSubmodule.SORT_BY);
-        ent.setSortByAsc(true);
-        Carrier carrier = EntityManager.select(ent);
-
-        String tn = ent.toTableName();
+        String tn = CoreLabel.RESULT_SET;
         int rc = carrier.getTableRowCount(tn);
         List<CsSubmodule> entArr = new ArrayList<>();
 
@@ -232,12 +240,12 @@ public class PgModel {
             entArr.add(cs);
         }
 
-        String ln = getSubmoduleHtml(entArr, entMod.getModuleName(), entMod.getId(), insCode);
+        String ln = getSubmoduleHtml(entArr, insCode);
 
         return ln;
     }
 
-    private static String getSubmoduleHtml(List<CsSubmodule> entArr, String title, String moduleid, String insCode) {
+    private static String getSubmoduleHtml(List<CsSubmodule> entArr, String insCode) {
 
         String ln
                 = div().with(
@@ -258,18 +266,26 @@ public class PgModel {
         return ln;
     }
 
-    public static String getSubmoduleFormBody(String fkSubmoduleId, String fkSessionId) throws QException {
-        EntityCrSubmoduleAttributeList ent = new EntityCrSubmoduleAttributeList();
-        ent.setDeepWhere(false);
-        ent.setFkSubmoduleId(fkSubmoduleId);
-        ent.addSortBy(EntityCrSubmoduleAttributeList.SORT_BY);
-        ent.setSortByAsc(true);
-        Carrier carrier = EntityManager.select(ent);
+    public static String getSubmoduleFormBody(String fkSubmoduleId,
+            String fkSessionId) throws QException {
+//        EntityCrSubmoduleAttributeList ent = new EntityCrSubmoduleAttributeList();
+//        ent.setDeepWhere(false);
+//        ent.setFkSubmoduleId(fkSubmoduleId);
+//        ent.addSortBy(EntityCrSubmoduleAttributeList.SORT_BY);
+//        ent.setSortByAsc(true);
+//        Carrier carrier = EntityManager.select(ent);
 
-        String tn = ent.toTableName();
+        Carrier carrier = new Carrier();
+        carrier.setValue("fkSubmoduleId", fkSubmoduleId);
+        carrier.setValue("asc", "sortBy");
+        carrier = CrModel.getSubmoduleAttributeList(carrier);
+        String tn = CoreLabel.RESULT_SET;
+
         int rc = carrier.getTableRowCount(tn);
         ArrayList<CsTag> tags = new ArrayList<>();
         for (int i = 0; i < rc; i++) {
+            EntityCrSubmoduleAttributeList ent
+                    = new EntityCrSubmoduleAttributeList();
             EntityManager.mapCarrierToEntity(carrier, tn, i, ent);
             CsTag tag = new CsTag();
             Tag val = null;
@@ -307,13 +323,23 @@ public class PgModel {
                 val = generatePictureUrlAttributeVal(ent);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_YOUTUBE_URL)) {
                 val = generateYoutubeUrlAttributeVal(ent);
+            } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_SOUND_UPLOAD)) {
+                val = generateSoundUploadAttributeVal(ent);
+            } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_DATE)) {
+                val = generateDateAttributeVal(ent);
             }
 
             tag.setHeader(ent.getAttributeName());
             tag.setVal(val);
             tags.add(tag);
         }
-        return generateSubmoduleFormElementBody(tags, fkSessionId);
+        String ln = generateSubmoduleFormElementBody(tags, fkSessionId, fkSubmoduleId);
+        try {
+            ln = QUtility.checkLangLabel(ln);
+        } catch (IOException ex) {
+
+        }
+        return ln;
     }
 
     private static Tag generatePictureAttributeVal(EntityCrSubmoduleAttributeList ent) {
@@ -386,26 +412,80 @@ public class PgModel {
         return ln;
     }
 
-    private static String generateSubmoduleFormElementBody(ArrayList<CsTag> tagArr, String fkSessionId) throws QException {
-        EntityCrAppointmentList ent = new EntityCrAppointmentList();
-        ent.setDeepWhere(false);
-        ent.setId(fkSessionId);
-        EntityManager.select(ent);
-        String patientFullname = ent.getPatientName() + " "
-                + ent.getPatientSurname() + " " + ent.getPatientMiddleName();
+    private static Tag generateSoundUploadAttributeVal(EntityCrSubmoduleAttributeList ent) {
+        Tag ln = div()
+                .withClass("fileuploader")
+                .with(
+                        div().withClass("col-md-11")
+                        .with(
+                                input().
+                                withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                                withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                                withClass("form-control apd-form-input-file").
+                                withType("file").
+                                attr("file_type", "audio")
+                        ),
+                        div().withClass("col-md-1")
+                        .with(
+                                img().attr("style", "display: none; ")
+                                .withClass("  apd-image-spinner")
+                                .attr("src", "resources/upload/spinner.gif")
+                                .attr("height", "20px")
+                                .attr("width", "20px"),
+                                img()
+                                .attr("style", "display: none; ")
+                                .withClass("  apd-image-uploaded")
+                                .attr("src", "resources/upload/uploaded.png")
+                                .attr("height", "20px")
+                                .attr("width", "20px"),
+                                i()
+                                .attr("style", "font-size:22px;color:red;display: none; ")
+                                .withClass("fa fa-warning apd-image-upload-error")
+                        )
+                );
 
+        return ln;
+    }
+
+    private static String generateSubmoduleFormElementBody(ArrayList<CsTag> tagArr,
+            String fkSessionId) throws QException {
+        return generateSubmoduleFormElementBody(tagArr, fkSessionId, "");
+    }
+
+    private static String generateSubmoduleFormElementBody(ArrayList<CsTag> tagArr,
+            String fkSessionId, String fkSubmoduleId) throws QException {
+//        EntityCrAppointment ent = new EntityCrAppointmentList();
+//        ent.setDeepWhere(false);
+//        ent.setId(fkSessionId);
+//        EntityManager.select(ent);
+
+        Carrier c = new Carrier();
+        c.setValue("id", fkSessionId);
+        c = CrModel.getAppointmentList(c);
+
+        String patientFullname
+                = c.getValue(CoreLabel.RESULT_SET, 0, "patientName").toString() + " "
+                + c.getValue(CoreLabel.RESULT_SET, 0, "patientSurname").toString() + " "
+                + c.getValue(CoreLabel.RESULT_SET, 0, "patientMiddleName").toString();
+
+        String fkPatientId
+                = c.getValue(CoreLabel.RESULT_SET, 0, "fkPatientId").toString();
         String ln = div()
                 .with(
                         div().withClass("form-group col-md-12")
                         .with(
-                                formLabel("patientName"),
+                                formLabel("patientName").attr("qlang", ""),
                                 formInput("", patientFullname)
+                                .attr("readonly", "readonly")
                         ),
+                        getVoiceAnalyseDiv(fkSubmoduleId),
+                        //ses analiz hissesi hal hazirda static yazilibdir. 
+                        //lakin bu hisse dinamik yazilmalidir
                         div().withClass("form-group col-md-12 hidden")
                         .with(
-                                formLabel(ent.FK_PATIENT_ID),
-                                formInput(ent.FK_PATIENT_ID, ent.FK_PATIENT_ID)
-                                .withValue(ent.getFkPatientId())
+                                formLabel("fkPatientId"),
+                                formInput("fkPatientId", "fkPatientId")
+                                .withValue(fkPatientId)
                                 .withType("hidden")
                         ),
                         div().withClass("form-group col-md-12 hidden")
@@ -415,6 +495,7 @@ public class PgModel {
                         ),
                         each(tagArr, tag
                                 -> div().withClass("form-group col-md-6")
+                                .attr("style", "min-height: 60px")
                                 .with(
                                         label(tag.getHeader()).withClass("float"),
                                         tag.getVal()
@@ -467,6 +548,16 @@ public class PgModel {
                 withClass("form-control apd-form-input").
                 withType("number").
                 attr("step", "1").
+                withPlaceholder(ent.getAttributeName());
+        return ln;
+    }
+
+    private static Tag generateDateAttributeVal(EntityCrSubmoduleAttributeList ent) {
+        Tag ln = input().
+                withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                withClass("form-control apd-form-input").
+                withType("date").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
@@ -1102,6 +1193,41 @@ public class PgModel {
                 ).render();
 
         return ln;
+    }
+
+    //<audio id="wavtag" controls style="vertical-align: middle;">
+      //      <source src="resources/upload/file_2CC9C60622A5BD3.wav" type="audio/mpeg">
+     //       Your browser does not support the audio element.
+     //   </audio>
+    public static Tag getVoiceAnalyseDiv(String submoduleId) {
+        //bu hisse dinamik yazilmalidir
+        if (submoduleId.equals("201707071617340418")) {
+            return div()
+                    .withClass("form-group col-md-12")
+                    .attr("style","margin-bottom:20px") 
+                    .with(
+                            label("recording").attr("qlang",""),
+                            a()
+                            .withClass("button recordButton")
+                            .withId("record")
+                            .attr("qlang", "")
+                            .withText("record"),
+                            a()
+                            .withClass("button disabled one")
+                            .withId("save")
+                            .attr("qlang", "")
+                            .withText("stopAndAnalyse"),
+                            audio().withId("wavtag")
+                            .attr("controls","")
+                            .attr("style","vertical-align: middle;")
+                            .with(
+                                    source().withSrc("").withType("audio/mpeg")                                    
+                            )
+                    );
+        } else {
+            return div();
+        }
+
     }
 
     public static Tag formInput(String id, String placeholder) {

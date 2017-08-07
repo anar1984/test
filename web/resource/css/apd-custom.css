@@ -1,0 +1,404 @@
+/**********************************
+Responsive navbar-brand image CSS
+- Remove navbar-brand padding for firefox bug workaround
+- add 100% height and width auto ... similar to how bootstrap img-responsive class works
+***********************************/
+.container{
+    margin: 0 auto;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.navbar-brand {
+    padding: 0px;
+}
+.navbar-brand>img {
+    padding-left: 10px;
+    height:100%;
+    width:auto;
+}
+
+.menu-size{
+    font-size: 17px;
+    font-family: "Brandon Text", Helvetica, Arial, sans-serif;
+
+}
+
+.task-button{
+    color:white;
+    background-color: #00b289;
+    border-color: #00b289;
+}
+
+.module-heading{
+    font-size: 19px;
+    padding-top: 15px;
+    padding-bottom:20px
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+    }
+}
+
+.vendorListHeading th {
+    background-color: #1a4567 !important;
+    color: white !important;   
+}
+
+
+.apd-form-error-msg{
+    color: red;
+    font-size: 12px;
+
+}
+
+
+
+td {
+    text-align: center;
+    width: auto !important;
+}
+
+
+
+.table td {
+    padding: 0 0px;
+    margin-bottom: 0px; 
+}
+
+
+.apd-table-td{
+    word-wrap:break-word;
+    max-width:160px; 
+}
+
+.apd-subm-attr-button {
+    padding:5px;
+    margin-top:3px;
+    margin-bottom: 3px;
+    margin-right: 3px;
+    color: #fff;
+    background-color: #00b289;
+    border-color: #00b289;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 22px;
+}
+
+.switch input {display:none;}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 1px;
+    bottom: 1px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+
+#wrap {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+#external-events {
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    text-align: left;
+}
+
+#external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+}
+
+.external-event { /* try to mimick the look of a real event */
+    margin: 10px 0;
+    padding: 2px 4px;
+    background: #3366CC;
+    color: #fff;
+    font-size: .85em;
+    cursor: pointer;
+}
+
+#external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+}
+
+#external-events p input {
+    margin: 0;
+    vertical-align: middle;
+}
+
+#calendar {
+    /* 		float: right; */
+    margin: 0 auto;
+    width: 900px;
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px #C3C3C3;
+    -webkit-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
+    -moz-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
+    box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
+}
+
+.table-filter{
+    background-color:#fafafa;
+}
+
+tfoot{
+    background-color:#fafafa;
+}
+
+.table-filter-comp{
+    background : white;
+    border-radius:0 !important;
+    border-width: 1px;
+}
+
+
+.apd-table-combo {
+    padding: 3px;
+    height: 100%;
+    border: none;
+    border-right: 1px solid #ccc;
+    /*border-left: 1px solid #ccc;*/
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    margin:0px;
+}
+
+
+ul.apd-table-ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    cursor:pointer;
+    z-index:999;
+}
+ul.apd-table-ul li {
+    display: inline-block;
+    z-index:999;
+}
+ul.apd-table-ul li:hover {;color:#5da792 ;z-index:999;}
+ul.apd-table-ul li:hover ul {display: block;z-index:999;}
+ul.apd-table-ul li ul {
+    position: absolute;
+    width: 200px;
+    display: none;
+    z-index:999;
+}
+ul.apd-table-ul li ul li { 
+    background: #5da792; 
+    color:white;
+    display: block; 
+    z-index:999;
+} 
+ul.apd-table-ul li ul li:hover {background: blue;color:white;}
+
+li.apd-table-li{
+    padding:3px;
+}
+
+select:hover {
+    background: #5da792; 
+    color:white;
+}
+
+/* selected link */
+select:active {
+    background: #5da792; 
+    color:white;
+}
+
+
+
+.apd-span-nav:hover {
+    color: white;
+    background: #5da792;
+}
+
+/* selected link */
+.apd-span-nav:active {
+    color: white;
+    background: #5da792;
+}
+
+.apd-span-nav {
+    padding-left: 6px;
+    padding-right: 6px;
+    height: 100%;
+    border: none;
+    border-right: 1px solid #ccc;
+    border-left: 0px solid #ccc;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+    margin: 0px;
+}
+
+.apd-span-space {
+    padding-left: 0px;
+    padding-right: 0px;
+    height: 100%;
+    border: none;
+    border-right: 1px solid #ccc;
+    border-left: 0px solid #ccc;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    color:transparent;
+    font-size: 16px;
+    margin: 0px;
+}
+
+.apd-sicon   {
+    float: left;
+    margin-right: 2px;
+    display: inline-block;
+    vertical-align: top;
+    cursor:pointer;
+    /* width: 12px; */
+    /* height: 12px; */
+    color: #0f7ba7;
+}
+
+
+.apd-ficon   {
+    float: left;
+    width: 12px;
+    vertical-align: top;
+    display: inline-block;
+    height: 12px;
+    color: #0f7ba7;
+}
+
+.apd-table-sasc:hover {
+    color: red;
+}
+
+.apd-table-sdesc:hover {
+    color: red;
+}
+
+.apd-table-col-filter:hover {
+    color: red;
+}
+
+
+.apd-h-content {
+    float: inside;
+    vertical-align: middle;
+    width: auto;
+    height: 12px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.et{
+    font-size: 20px;
+    color:red;
+}
+
+.button{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 5px;
+    padding: 5px 12px;
+    cursor: pointer;
+    outline: none;
+    font-size: 13px;
+    text-decoration: none !important;
+    text-align: center;
+    color:#fff;
+    background-color: #4D90FE;
+    background-image: linear-gradient(top,#4D90FE, #4787ED);
+    background-image: -ms-linear-gradient(top,#4D90FE, #4787ED);
+    background-image: -o-linear-gradient(top,#4D90FE, #4787ED);
+    background-image: linear-gradient(top,#4D90FE, #4787ED);
+    border: 1px solid #4787ED;
+    box-shadow: 0 1px 3px #BFBFBF;
+}
+a.button{
+    color: #fff;
+}
+.button:hover{
+    box-shadow: inset 0px 1px 1px #8C8C8C;
+}
+.button.disabled{
+    box-shadow:none;
+    opacity:0.7;
+}
+canvas{
+    display: block;
+}
+
+.table_stat {
+    white-space: normal;
+    line-height: normal;
+    font-weight: normal;
+    font-size: medium;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+    text-align: start;
+    font-variant: normal normal;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border-color: grey;
+}

@@ -22,6 +22,8 @@ public class EntityCrSubmoduleAttribute extends CoreEntity {
     public static String SORT_BY = "sortBy";
     public static String IS_VISIBLE = "isVisible";
     public static String LANG = "lang";
+    public static String FK_MODULE_ID = "fkModuleId";
+    private String fkModuleId = "";
 
     private String fkOrganPointId = "";
     private String fkAttributeId = "";
@@ -33,6 +35,14 @@ public class EntityCrSubmoduleAttribute extends CoreEntity {
     private String sortBy = "";
     private String isVisible = "";
     private String lang = "";
+
+    public String getFkModuleId() {
+        return fkModuleId;
+    }
+
+    public void setFkModuleId(String fkModuleId) {
+        this.fkModuleId = fkModuleId;
+    }
 
     public String getFkOrganPointId() {
         return fkOrganPointId;

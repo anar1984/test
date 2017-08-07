@@ -27,7 +27,8 @@
         </div>
         <div class="col-md-2 text-right">
             <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">matrixList
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" >
+                    <span qlang>matrixList</span>
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu  apd-patient-matrix-list" id="inspectionMatrixMain" >
                 </ul>
@@ -89,7 +90,7 @@
             <div class="form-group col-md-1" align="left">
                 <label qlang><span style="opacity: 0;">_________________________    </span> </label>
                 <input class="apd-form-check" type="checkbox" id="currentTime"
-                       name="currentTime" onclick="toggleSessionDate(this)">Now
+                       name="currentTime" onclick="toggleSessionDate(this)"><span qlang>Now</span>
             </div>
             <div class="form-group col-md-3" align="left">
                 <br>  
@@ -99,14 +100,14 @@
                 </button> 
 
                 <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                        data-toggle="modal" qlang data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)">viewAgenda
+                        data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
                 </button>
 
                 <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                        data-toggle="modal" qlan data-target="#insertNewPatient">newPatient
+                        data-toggle="modal"   data-target="#insertNewPatient" qlang>newPatient
                 </button>
 
-                <button id='serviceCrGetPatientList' qlang type="button" style='margin-top:5px;'
+                <button id='serviceCrGetPatientList' qlang type="button" style='margin-top:0px;'
                         class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                         onclick="loadTable('tbl_patient_list')">patientList
                 </button>
@@ -261,21 +262,21 @@
                                    placeholder="id" >  
                         </div>
                         <div class="form-group col-md-12">
-                            <label>matrixName</label>
+                            <label qlang >matrixName</label>
                             <input class="form-control apd-form-input"
                                    type="text" id="matrixName" name="matrixName"
                                    placeholder="matrixName" >  
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label class="float">Module</label>
+                            <label  qlang class="float">module</label>
                             <select class="form-control apd-form-select" id="fkMainModuleId" name="fkMainModuleId"
                                     select_text="moduleName" select_value="id"  
                                     srv_url="srv/serviceCrGetModuleList">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Attribute</label>
+                            <label qlang>attribute</label>
                             <select class="form-control apd-form-select" 
                                     id="fkSubmoduleAttibutesId" name="fkSubmoduleAttibutesId"
                                     select_text="attributeName" select_value="id" 
@@ -283,16 +284,16 @@
                                     srv_url="srv/serviceCrGetSubmoduleAttributeList">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>shortName</label>
+                        <div class="form-group col-md-3">
+                            <label qlang>shortName</label>
                             <input class="form-control apd-form-input"
                                    type="text" id="shortName" name="shortName"
-                                   placeholder="shortName" >       
+                                     >       
                         </div>
 
-                        <div class="form-group col-md-1">
+                        <div class="form-group col-md-2">
                             <br> 
-                            <input type="button" class="btn btn-default apd-form-matrix-btn" style="margin-top: 6px;" value="add"> 
+                            <button type="button" class="btn btn-default apd-form-matrix-btn"  style="margin-top: 6px;" qlang>add</button>
                         </div>
                         <div class="form-group col-md-12 " id="matrix_div">
 
@@ -300,8 +301,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th >attributeName</th>
-                                        <th>shortName</th>
+                                        <th qlang>attributeName</th>
+                                        <th qlang>shortName</th>
                                         <th style="display:none;">fkSubmoduleAttibutesId</th>
                                         <th></th>
                                     </tr>
@@ -311,9 +312,9 @@
                             </table>
                         </div>
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn">Insert</button>
-                            <button type="button" class="btn btn-default apd-form-matrix-delete-btn">Delete</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn" qlang>Insert</button>
+                            <button type="button" class="btn btn-default apd-form-matrix-delete-btn" qlang>Delete</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>Close</button>
                         </div>
                     </form>
                 </div>

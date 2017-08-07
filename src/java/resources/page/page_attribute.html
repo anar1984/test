@@ -1,15 +1,17 @@
 <div class="row apd-page" id="page_attribute">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
-            <label>Attributes</label>
+            <label qlang >attributes</label>
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
-        <button id='serviceCrGetAttributeList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                onclick="loadTable('tbl_attribute_list')">List
+        <button id='serviceCrGetAttributeList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_attribute_list')"  qlang >list
         </button>
-        <button id='btn_serviceCrInsertNewAttribute' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                data-toggle="modal" data-target="#insertNewAttribute">Insert
+        <button id='btn_serviceCrInsertNewAttribute' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewAttribute" qlang >insert
         </button>
         <hr>
     </div>
@@ -23,38 +25,50 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Insert New Attribute</h4>
+                    <h4 class="modal-title" qlang >insertNewAttribute</h4>
                 </div>
                 <div class="modal-body-1">
                     <form id="form_insertNewAttribute" class="apd-form" method="POST" action="srv/serviceCrInsertNewAttribute">
-                        <div class="form-group col-md-6">
-                            <label class="float">Attribute Code</label>
-                            <input class="form-control apd-form-input" type="text" id="attributeCode"
-                                   name="attributeCode" placeholder="Attribute Code"  >
+                        <div class="form-group col-md-3">
+                            <label  class="float" qlang>attributeCode</label>
+                            <input class="form-control apd-form-input" type="text" 
+                                   id="attributeCode" name="attributeCode"    >
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="float">Attribute Name</label>
+                            <label  class="float" qlang>attributeName</label>
                             <input type="text" class="form-control apd-form-input" id="attributeName" 
                                    name="attributeName" placeholder="Attribute Name">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Status</label>
+                         <div class="form-group col-md-3">
+                            <label qlang>attributeUniqueId</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="attributeUniqueId" name="attributeUniqueId" readonly >
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label qlang>status</label>
                             <select class="form-control apd-form-select" id="liAttributeStatus" name="liAttributeStatus"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/attributeStatus">
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Is General?</label>
-                            <select class="form-control apd-form-select" id="liIsGeneral" name="liIsGeneral"
+                        <div class="form-group col-md-4">
+                            <label qlang>isGeneral</label>
+                            <select class="form-control apd-form-select" 
+                                    id="liIsGeneral" name="liIsGeneral"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/yesno">
                             </select>
                         </div>
+                         <div class="form-group col-md-4">
+                            <label qlang>lang</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
+                        </div >
                         <div class="form-group col-md-12">
-                            <label >Attribute Description</label>
+                            <label qlang >description</label>
                             <textarea class="form-control apd-form-textarea" id="attributeDescription" 
-                                      name="attributeDescription" placeholder=""></textarea>
+                                      name="attributeDescription" ></textarea>
                         </div> 
 
                         <div class="form-group col-md-12" align="right">
@@ -80,38 +94,50 @@
                 <div class="modal-body-1">
                     <form id="form_updateAttribute" class="apd-form" method="POST" action="srv/serviceCrUpdateAttribute">
                         <div class="form-group col-md-6 hidden"> 
-                            <label class="float">id</label>
+                            <label  class="float" qlang>id</label>
                             <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="Attribute Code"  >
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="float">Attribute Code</label>
+                        <div class="form-group col-md-3">
+                            <label  class="float" qlang>Attribute Code</label>
                             <input class="form-control apd-form-input" type="text" id="attributeCode"
                                    name="attributeCode" placeholder="Attribute Code"  >
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="float">Attribute Name</label>
+                            <label  class="float" qlang>Attribute Name</label>
                             <input type="text" class="form-control apd-form-input" id="attributeName" 
                                    name="attributeName" placeholder="Attribute Name">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Status</label>
+                         <div class="form-group col-md-3">
+                            <label qlang>attributeUniqueId</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="attributeUniqueId" name="attributeUniqueId" readonly >
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label qlang>Status</label>
                             <select class="form-control apd-form-select" id="liAttributeStatus" name="liAttributeStatus"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/attributeStatus">
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Is General?</label>
+                        <div class="form-group col-md-4">
+                            <label qlang>Is General?</label>
                             <select class="form-control apd-form-select" id="liIsGeneral" name="liIsGeneral"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/yesno">
                             </select>
                         </div>
+                         <div class="form-group col-md-4">
+                            <label qlang>lang</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
+                        </div >
                         <div class="form-group col-md-12">
                             <label >Attribute Description</label>
                             <textarea class="form-control apd-form-textarea" id="attributeDescription" 
                                       name="attributeDescription" placeholder=""></textarea>
                         </div> 
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>

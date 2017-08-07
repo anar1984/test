@@ -1,4 +1,4 @@
-package rp.module.entity;
+package module.rp.entity;
 
 import utility.CoreEntity;
 

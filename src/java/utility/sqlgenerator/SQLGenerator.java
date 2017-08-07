@@ -532,7 +532,7 @@ public class SQLGenerator {
         //add limit 
         String slimit = coreEnt.selectStartLimit();
         String elimit = coreEnt.selectEndLimit();
-        int idx = Integer.parseInt(elimit) - Integer.parseInt(slimit);
+        int idx = Integer.parseInt(elimit) - Integer.parseInt(slimit)+1;
         selectSql += " LIMIT " + slimit + ", " + idx;
         return selectSql;
     }
@@ -566,13 +566,17 @@ public class SQLGenerator {
                     String val = values[i].trim();
                     String atrName = getAttributeNameFromMethodName(methodNames[i]);
                     String operation = EQUAL;
-                    String key = seperateTableFieldNameWithUnderscore(atrName).toUpperCase();
+                    String key = seperateTableFieldNameWithUnderscore(atrName)
+                            .toUpperCase();
                     String singleClause = "";
                     if (!key.trim().equals(sumByField)) {
-                        singleClause = coreEnt.isDeepWhere()
+                        singleClause = coreEnt.isDeepWhere() &&
+                                !val.contains(CoreLabel.IN)
                                 ? new WhereSingle(key, val, valueArr).exec()
-                                : getSingleClausOfWherePartOfSelect(tablename, key, val, valueArr, addEntityNameToAS);
-                        singleClause = singleClause.trim().length() == 0 ? singleClause : singleClause + AND;
+                                : getSingleClausOfWherePartOfSelect(tablename, 
+                                        key, val, valueArr, addEntityNameToAS);
+                        singleClause = singleClause.trim().length() == 0 
+                                ? singleClause : singleClause + AND;
                         whereCondition = whereCondition + singleClause + SPACE;
                     }
 
@@ -611,7 +615,7 @@ public class SQLGenerator {
 
             //add deepWhere statement
             if (coreEnt.hasDeepWhereStatementField()) {
-                int rc = coreEnt.selectDeepWhereStatementFieldSize();
+                int rc = coreEnt.selectDeepWhereStatementKeySize();
                 for (int i = 0; i < rc; i++) {
                     String key = coreEnt.selectDeepWhereStatementKey(i);
                     String val = coreEnt.selectDeepWhereStatementValue(i); 

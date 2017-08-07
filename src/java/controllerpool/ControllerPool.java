@@ -12,7 +12,7 @@ public class ControllerPool {
     final int codeDogru = 200;
     final String SPACE = " ";
 
-    public String isInteger(String value) throws Exception {
+    public String isInteger(String value) throws QException {
         if (value.trim().equals("")) {
             return OK;
         }
@@ -57,7 +57,7 @@ public class ControllerPool {
         }
     }
 
-    public String isFloat(String value) throws Exception {
+    public String isFloat(String value) throws QException {
         if (value.trim().equals("")) {
             return OK;
         }
@@ -70,7 +70,28 @@ public class ControllerPool {
         }
     }
 
-    public String isInteger(Carrier carrier, String key) throws Exception {
+    public String isPercent(String value) throws QException {
+        if (value.trim().equals("")) {
+            return OK;
+        }
+        try {
+            double i = Double.valueOf(value);
+            if ((i < 0) || (i > 100)) {
+                String s = EntityManager.getMessageText("isNotPercent");
+                return s;
+            }
+            return OK;
+        } catch (Exception e) {
+            String s = EntityManager.getMessageText("isNotPercent");
+            return s;
+        }
+    }
+    
+    public String isPercent(Carrier carrier, String key) throws QException {
+         return isPercent(carrier.getValue(key).toString());
+    }
+
+    public String isInteger(Carrier carrier, String key) throws QException {
         try {
             if (carrier.isKeyExist(key)) {
                 return isInteger(carrier.getValue(key).toString());
@@ -86,7 +107,7 @@ public class ControllerPool {
         }
     }
 
-    public String hasSpace(Carrier carrier, String key) throws Exception {
+    public String hasSpace(Carrier carrier, String key) throws QException {
         try {
             if (carrier.isKeyExist(key)) {
                 return hasSpace(carrier.getValue(key).toString());

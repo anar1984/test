@@ -18,35 +18,44 @@ import utility.sqlgenerator.IdGenerator;
  */
 public class FileUpload {
 
-    public synchronized  String uploadImage(String base64String, String ext) throws QException {
-        String userId= SessionManager.getCurrentUserId();
+    public synchronized String uploadImage(String base64String, String ext) throws QException {
+        System.out.println("1");
+        String userId = "111111";
+        try {
+            userId = SessionManager.getCurrentUserId();
+        } catch (Exception e) {
+
+        }
+System.out.println("2");
         String id = IdGenerator.getId();
-        long num = Long.parseLong(id)+Long.parseLong(userId)+214521;
+        long num = Long.parseLong(id) + Long.parseLong(userId) + 214521;
         String hexId = QUtility.convertDecimalToHex(num);
         String fileName = "file_" + hexId + "." + ext.replaceAll("^\"|\"$", "");
-
+System.out.println("3");
 //        System.out.println("ext -> " + ext);
-        //FileOutputStream imageOutFile;
-        String fname = this.getUploadPath() + fileName;
-        try(FileOutputStream imageOutFile = new FileOutputStream(fname)) {
+        FileOutputStream imageOutFile;
+        System.out.println("4");
+        try {
             // Decode String using Base64 Class
             byte[] imageByteArray = Base64.decodeBase64(base64String);
-
+System.out.println("5");
             // Write Image into File system - Make sure you update the path
-            //String fname = this.getUploadPath() + fileName;
-            System.out.println("file uploaded to ->"+fname);
-            //imageOutFile = new FileOutputStream(fname);
+            String fname = this.getUploadPath() + fileName;
+            System.out.println("file uploaded to ->" + fname);
+            imageOutFile = new FileOutputStream(fname);
             imageOutFile.write(imageByteArray);
-
-            //imageOutFile.close();
+System.out.println("return file");
+            imageOutFile.close();
             return fileName;
         } catch (FileNotFoundException ex) {
+            System.out.println("6");
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("7");
         }
-
-        return QDate.getCurrentDate()+QDate.getCurrentTime()+"temp_file.png";
+System.out.println("8");
+        return QDate.getCurrentDate() + QDate.getCurrentTime() + "temp_file.png";
     }
 
     public String getUploadPath() {
@@ -54,9 +63,8 @@ public class FileUpload {
         try {
             UploadConfigurationProperties prop = new UploadConfigurationProperties();
             file = prop.coreFullPath() + prop.getProperty(CoreLabel.UPLOAD_PATH);
-            System.out.println("file uploaded------->"+file);
-            
-          
+            System.out.println("file uploaded------->" + file);
+
             return file;
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,7 +72,7 @@ public class FileUpload {
         return file;
     }
 
-    public  String getCurrentDateTime() {
+    public String getCurrentDateTime() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 

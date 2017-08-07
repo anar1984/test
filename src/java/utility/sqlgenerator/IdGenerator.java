@@ -10,7 +10,7 @@ import label.LabelSqlQueryIds;
 import utility.Carrier;
 import utility.CoreEntity;
 import utility.DBConfigurationProperties;
-import rp.module.entity.EntityCrSqlPool;
+import module.rp.entity.EntityCrSqlPool;
 import utility.QDate;
 import utility.QException;
 

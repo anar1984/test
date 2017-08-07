@@ -10,15 +10,15 @@ public class ManipulateImage {
     // Decode String into an Image
     public static void convertStringtoImage(String encodedImageStr, String fileName) {
  
-        try(FileOutputStream imageOutFile = new FileOutputStream("E://" + fileName)) {
+        try {
             // Decode String using Base64 Class
             byte[] imageByteArray = null;//Base64.decodeBase64(encodedImageStr); 
  
             // Write Image into File system - Make sure you update the path
-            //FileOutputStream imageOutFile = new FileOutputStream("E://" + fileName);
+            FileOutputStream imageOutFile = new FileOutputStream("E://" + fileName);
             imageOutFile.write(imageByteArray);
  
-            //imageOutFile.close();
+            imageOutFile.close();
  
 //            System.out.println("Image Successfully Stored");
         } catch (FileNotFoundException fnfe) {

@@ -2,7 +2,7 @@
 <div class="row apd-page" id="page_submodule">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
-            <label>Submodule</label>
+            <label qlang>Submodule</label>
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
@@ -29,20 +29,26 @@
                 <div class="modal-body-1">
                     <form id="form_insertNewSubmodule" class="apd-form" method="POST" 
                           action="srv/serviceCrInsertNewSubmodule">
-                        <div class="form-group col-md-6">
-                            <label>Module Name</label>
+                        
+                        <div class="form-group col-md-5">
+                            <label qlang>name</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="submoduleName" name="submoduleName"  >
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label qlang>moduleName</label>
                             <select class="form-control apd-form-select" select_text="moduleName" 
                                     select_value="id" id="fkModuleId"
                                     name="fkModuleId" srv_url="srv/serviceCrGetModuleList">
                             </select> 
                         </div >
-                        <div class="form-group col-md-6">
-                            <label>Name</label>
+                        <div class="form-group col-md-3">
+                            <label qlang>submoduleUniqueId</label>
                             <input  class="form-control apd-form-input" type="text" 
-                                    id="submoduleName" name="submoduleName" placeholder="submoduleName">
+                                    id="submoduleUniqueId" name="submoduleUniqueId" readonly >
                         </div>
                         <div class="form-group col-md-4">
-                            <label qlang>Status</label>
+                            <label qlang>status</label>
                             <select class="form-control apd-form-select" select_text="itemValue" 
                                     select_value="itemKey" id="liSubmoduleStatus" name="liSubmoduleStatus" srv_url="li/pa">
                             </select> 
@@ -54,18 +60,27 @@
                             </select> 
                         </div >
                         <div class="form-group col-md-4">
-                            <label>Order No</label>
+                            <label qlang>orderNo</label>
                             <input  class="form-control apd-form-input" type="number"  
-                                    id="sortBy" name="sortBy" placeholder="Order No">
+                                    id="sortBy" name="sortBy"  >
                         </div>
-                        <div class="form-group col-md-12">
-                            <label class="float">Description</label>
-                            <textarea  class="form-control apd-form-textarea" type="text" 
-                                       id="submoduleDescription" name="submoduleDescription"></textarea>
+                        <div class="form-group col-md-10">
+                            <label qlang class="float">description</label>
+                             <input  class="form-control apd-form-input" type="number"  
+                                    id="submoduleDescription" name="submoduleDescription"  >
+                           
+                        </div >
+                        <div class="form-group col-md-2">
+                            <label qlang>lang</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
                         </div >
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn" 
+                                    apd-clear-form-data="true" lang>insert</button>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal"  role="button" lang>close</button>
                         </div>
                     </form>
                 </div>
@@ -89,20 +104,26 @@
                             <label class="float">id</label>
                             <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="Attribute Code"  >
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Module Name</label>
+                         
+                        <div class="form-group col-md-5">
+                            <label qlang>name</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="submoduleName" name="submoduleName"  >
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label qlang>moduleName</label>
                             <select class="form-control apd-form-select" select_text="moduleName" 
                                     select_value="id" id="fkModuleId"
                                     name="fkModuleId" srv_url="srv/serviceCrGetModuleList">
                             </select> 
                         </div >
-                        <div class="form-group col-md-6">
-                            <label>Name</label>
+                        <div class="form-group col-md-3">
+                            <label qlang>submoduleUniqueId</label>
                             <input  class="form-control apd-form-input" type="text" 
-                                    id="submoduleName" name="submoduleName" placeholder="submoduleName">
+                                    id="submoduleUniqueId" name="submoduleUniqueId" readonly >
                         </div>
                         <div class="form-group col-md-4">
-                            <label qlang>Status</label>
+                            <label qlang>status</label>
                             <select class="form-control apd-form-select" select_text="itemValue" 
                                     select_value="itemKey" id="liSubmoduleStatus" name="liSubmoduleStatus" srv_url="li/pa">
                             </select> 
@@ -110,22 +131,31 @@
                         <div class="form-group col-md-4">
                             <label qlang>submoduleType</label>
                             <select class="form-control apd-form-select" select_text="itemValue" 
-                                        select_value="itemKey" id="submoduleType" name="submoduleType" srv_url="li/submoduleType">
+                                    select_value="itemKey" id="submoduleType" name="submoduleType" srv_url="li/submoduleType">
                             </select> 
                         </div >
                         <div class="form-group col-md-4">
-                            <label>Order No</label>
+                            <label qlang>orderNo</label>
                             <input  class="form-control apd-form-input" type="number"  
-                                    id="sortBy" name="sortBy" placeholder="Order No">
+                                    id="sortBy" name="sortBy"  >
                         </div>
-                        <div class="form-group col-md-12">
-                            <label class="float">Description</label>
-                            <textarea  class="form-control apd-form-textarea" type="text" 
-                                       id="submoduleDescription" name="submoduleDescription"></textarea>
+                        <div class="form-group col-md-10">
+                            <label qlang class="float">description</label>
+                             <input  class="form-control apd-form-input" type="number"  
+                                    id="submoduleDescription" name="submoduleDescription"  >
+                           
+                        </div >
+                        <div class="form-group col-md-2">
+                            <label qlang>lang</label>
+                            <select class="form-control apd-form-select" select_text="itemValue" 
+                                    select_value="itemKey" id="lang" name="lang" srv_url="li/language">
+                            </select> 
                         </div >
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn" 
+                                    apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" 
+                                    data-dismiss="modal"  role="button" qlang>close</button>
                         </div>
                     </form>
                 </div>

@@ -25,6 +25,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import label.CoreLabel;
+import module.cr.CrModel;
+import module.cr.entity.EntityCrInspectionMatrix;
+import module.cr.entity.EntityCrSubmoduleAttribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -1304,24 +1307,61 @@ public class Carrier {
     }
 
     private Carrier getColNamesDefination(String[] cols) throws QException {
+        if (cols.length == 0) {
+            return new Carrier();
+        }
         Carrier c = EntityManager.getEntityFieldType(cols);
         String carrTable = "crEntityLabel";
 
         if (this.getMatrixId().length() > 0) {
 
-            Carrier tc = EntityManager.getEntityFieldTypeByMatrixId(
-                    this.getMatrixId(), cols);
-            String colName = tc.getValueLine(carrTable, "columnName", ",");
-            tc = tc.getKeyValuesPairFromTable(carrTable, "columnName", "shortName");
+                EntityCrInspectionMatrix entInsMat = new EntityCrInspectionMatrix();
+            entInsMat.setFkParentId(this.getMatrixId());
+            Carrier cInsMat = EntityManager.select(entInsMat);
+            Carrier cprInsMat = cInsMat.getKeyValuesPairFromTable(
+                    entInsMat.toTableName(), "fkSubmoduleAttributeId", "shortName");
+            String saIds = cInsMat.getValueLine(entInsMat.toTableName(), "fkSubmoduleAttributeId");
 
-            int rc = c.getTableRowCount(carrTable);
-            for (int i = 0; i < rc; i++) {
-                String fname = c.getValue(carrTable, i, "fieldName").toString();
-                if (colName.contains(fname)) {
-                    c.setValue(carrTable, i, "description", tc.getValue(fname));
+            EntityCrSubmoduleAttribute entSA = new EntityCrSubmoduleAttribute();
+            entSA.setId(saIds);
+            Carrier cSA = EntityManager.select(entSA);
+            Carrier cprSA = cSA.getKeyValuesPairFromTable(entSA.toTableName(),
+                    "fkAttributeId", "id");
+            String attrIds = cSA.getValueLine(entSA.toTableName(),
+                    EntityCrSubmoduleAttribute.FK_ATTRIBUTE_ID);
+
+            Carrier cAttr = new Carrier();
+            cAttr.setValue("id", attrIds);
+            cAttr = CrModel.getAttributeList(cAttr);
+            Carrier cprAttr = cAttr.getKeyValuesPairFromTable(
+                    CoreLabel.RESULT_SET, "attributeCode", "id");
+            Carrier cprAttrCode = cAttr.getKeyValuesPairFromTable(
+                    CoreLabel.RESULT_SET, "attributeCode", "attributeName");
+
+//            Carrier tc = EntityManager.getEntityFieldTypeByMatrixId(
+//                    this.getMatrixId(), cols);
+//            String colName = tc.getValueLine(carrTable, "columnName", ",");
+//            tc = tc.getKeyValuesPairFromTable(carrTable, "columnName", "shortName");
+            for (String col : cols) {
+                //attribute code entityLabel-de olmadigi ucun bu deyerler yeni 
+                //setir kimi elave edilir
+                if (col.startsWith("sa_")) {
+                    int rc = c.getTableRowCount(carrTable);
+                    
+                    String desc = cprAttr.getValue(col).toString();
+                    desc = cprSA.getValue(desc).toString();
+                    desc = cprInsMat.getValue(desc).toString();
+                    if (desc.trim().length()==0){
+                        desc = cprAttrCode.getValue(col).toString();
+                    }
+                    
+                    c.setValue(carrTable, rc, "fieldName", col);
+                    c.setValue(carrTable, rc, "labelType", "INTEGER");
+                    c.setValue(carrTable, rc, "description", desc);
                 }
             }
         }
+
         return c;
     }
 
@@ -1489,7 +1529,8 @@ public class Carrier {
             this.jsonRootObject.add(CoreLabel.KEY_VALUE_TABLE, ojbKV);
 
             JsonArray arrayTbl = new JsonArray();
-            for (String tn : this.tableNamesArray) {
+            for (int n = 0; n < this.tableCount; n++) {
+                String tn = this.tableNamesArray[n];
                 if (tn != null && !tn.equals("USER_ERROR_TABLE")) {
                     JsonObject ojbres = parser.parse(this.toJson(tn)).getAsJsonObject();
                     arrayTbl.add(ojbres);
@@ -1608,15 +1649,19 @@ public class Carrier {
         return getValueLine(tableName, columnName, CoreLabel.IN);
     }
 
-    public String getValueLine(String tableName, String columnName, String seperator) throws QException {
+    public String getValueLine(String tableName, String columnName,
+            String seperator) throws QException {
         try {
             int row = this.getTableRowCount(tableName);
             String res = "";
+            ArrayList<String> ls = new ArrayList<>();
+
             for (int i = 0; i < row; i++) {
                 try {
                     String val = this.getValue(tableName, i, columnName).toString();
-                    if (!val.trim().isEmpty()) {
+                    if (!val.trim().isEmpty() && !ls.contains(val)) {
                         res = res + val + seperator;
+                        ls.add(val);
                     }
                 } catch (Exception e) {
                 }
@@ -1637,16 +1682,21 @@ public class Carrier {
         return CallDispatcher.executeDispatcher(moduleName, this);
     }
 
-    public Carrier getKVFromTable(String tablename, String keyColumnName, String valueColumnName) throws QException {
+    public Carrier getKVFromTable(String tablename, String keyColumnName,
+            String valueColumnName) throws QException {
         return getKeyValuesPairFromTable(tablename, keyColumnName, valueColumnName);
     }
 
-    public Carrier getKeyValuesPairFromTable(String tablename, String keyColumnName, String valueColumnName) throws QException {
-        return getKeyValuesPairFromTable(tablename, new String[]{keyColumnName}, "", new String[]{valueColumnName}, "");
+    public Carrier getKeyValuesPairFromTable(String tablename, String keyColumnName,
+            String valueColumnName) throws QException {
+        return getKeyValuesPairFromTable(tablename, new String[]{keyColumnName},
+                "", new String[]{valueColumnName}, "");
     }
 
-    public Carrier getKeyValuesPairFromTable(String tablename, String keyColumnName[], String valueColumnName) throws QException {
-        return getKeyValuesPairFromTable(tablename, keyColumnName, "", new String[]{valueColumnName}, "");
+    public Carrier getKeyValuesPairFromTable(String tablename, String keyColumnName[],
+            String valueColumnName) throws QException {
+        return getKeyValuesPairFromTable(tablename, keyColumnName, "",
+                new String[]{valueColumnName}, "");
     }
 
     public Carrier getKeyValuesPairFromTable(String tablename, String keyColumnName[],
@@ -1655,8 +1705,10 @@ public class Carrier {
                 valueColumnName, "");
     }
 
-    public Carrier getKeyValuesPairFromTable(String tablename, String keyColumnName, String[] valueColumnName) throws QException {
-        return getKeyValuesPairFromTable(tablename, new String[]{keyColumnName}, "", valueColumnName, " ");
+    public Carrier getKeyValuesPairFromTable(String tablename,
+            String keyColumnName, String[] valueColumnName) throws QException {
+        return getKeyValuesPairFromTable(tablename, new String[]{keyColumnName},
+                "", valueColumnName, " ");
     }
 
     public Carrier getKeyValuesPairFromTable(String tablename, String[] keyColumnName,
@@ -1669,13 +1721,15 @@ public class Carrier {
                 //get key field
                 String key = "";
                 for (String keyColumnName1 : keyColumnName) {
-                    key += this.getValue(tablename, i, keyColumnName1).toString() + keySeperator;
+                    key += this.getValue(tablename, i,
+                            keyColumnName1).toString() + keySeperator;
                 }
                 key = key.substring(0, key.length() - keySeperator.length());
 
                 String value = "";
                 for (String valueColumnName1 : valueColumnName) {
-                    value += this.getValue(tablename, i, valueColumnName1).toString() + valueSeperator;
+                    value += this.getValue(tablename, i,
+                            valueColumnName1).toString() + valueSeperator;
                 }
                 value = value.substring(0, value.length() - valueSeperator.length());
                 c.setValue(key, value);
@@ -1689,22 +1743,41 @@ public class Carrier {
         }
     }
 
-    public void mergeCarrier(String sourceTablename,
+  public void mergeCarrier(String sourceTablename,
             String sourceRelatedColName, String newColumnName, Carrier carrier)
             throws QException {
         mergeCarrier(sourceTablename,
-                new String[]{sourceRelatedColName}, "", newColumnName, carrier);
+                new String[]{sourceRelatedColName}, "", newColumnName,
+                carrier, false);
+    }
+
+    public void mergeCarrier(String sourceTablename,
+            String sourceRelatedColName, String newColumnName,
+            Carrier carrier, boolean keepOriginal)
+            throws QException {
+        mergeCarrier(sourceTablename,
+                new String[]{sourceRelatedColName}, "", newColumnName,
+                carrier, keepOriginal);
     }
 
     public void mergeCarrier(String sourceTablename,
             String[] sourceRelatedColName, String newColumnName, Carrier carrier)
             throws QException {
-        mergeCarrier(sourceTablename, sourceRelatedColName, "", newColumnName, carrier);
+        mergeCarrier(sourceTablename, sourceRelatedColName, "", newColumnName,
+                carrier, false);
+    }
+
+    public void mergeCarrier(String sourceTablename,
+            String[] sourceRelatedColName, String newColumnName,
+            Carrier carrier, boolean keepOriginal)
+            throws QException {
+        mergeCarrier(sourceTablename, sourceRelatedColName, "", newColumnName,
+                carrier, keepOriginal);
     }
 
     public void mergeCarrier(String sourceTablename,
             String sourceRelatedColName[], String sourceSeperator,
-            String newColumnName, Carrier carrier)
+            String newColumnName, Carrier carrier, boolean keepOriginal)
             throws QException {
 
          
@@ -1722,11 +1795,92 @@ public class Carrier {
             }
             if (tc.isKeyExist(val)) {
                 this.setValue(coreTablename, i, newCol, tc.getValue(val));
+            } else if (keepOriginal) {
+                this.setValue(coreTablename, i, newCol, "");
             } else {
                 this.removeRow(coreTablename, i);
                 i--;
                 rc--;
             }
+        }
+    }
+
+    public void mergeCarrier(String sourceTablename,
+            String sourceRelatedColName[], Carrier carrier, String destTablename,
+            String destRelatedColName[], String destColName[], String seperator)
+            throws QException {
+        mergeCarrier(sourceTablename, sourceRelatedColName, carrier, destTablename,
+                destRelatedColName, destColName, seperator, false);
+    }
+
+    public void mergeCarrier(String sourceTablename,
+            String sourceRelatedColName[], Carrier carrier, String destTablename,
+            String destRelatedColName[], String destColName[])
+            throws QException {
+        mergeCarrier(sourceTablename, sourceRelatedColName, carrier, destTablename,
+                destRelatedColName, destColName, "", false);
+    }
+
+    public void mergeCarrier(String sourceTablename,
+            String sourceRelatedColName, Carrier carrier, String destTablename,
+            String destRelatedColName, String destColName[])
+            throws QException {
+        mergeCarrier(sourceTablename, new String[]{sourceRelatedColName}, carrier, destTablename,
+                new String[]{destRelatedColName}, destColName, "", false);
+    }
+
+    public void mergeCarrier(String sourceTablename,
+            String sourceRelatedColName[], Carrier carrier, String destTablename,
+            String destRelatedColName[], String destColName[], String seperator,
+            boolean keepOriginal)
+            throws QException {
+
+        //create KV pair by destination carrier
+        Carrier ckpPairDest[] = new Carrier[destColName.length];
+        for (int j = 0; j < destColName.length; j++) {
+            ckpPairDest[j] = new Carrier();
+        }
+
+        int rcd = carrier.getTableRowCount(destTablename);
+        for (int i = 0; i < rcd; i++) {
+            String k = "";
+            for (int j = 0; j < destRelatedColName.length; j++) {
+                k += carrier.getValue(destTablename, i,
+                        destRelatedColName[j]).toString();
+                k += j + 1 < destRelatedColName.length ? seperator : "";
+            }
+
+            for (int j = 0; j < destColName.length; j++) {
+                String v = carrier.getValue(destTablename, i,
+                        destColName[j]).toString();
+                ckpPairDest[j].setValue(k, v);
+            }
+        }
+
+        Carrier tc = carrier;
+        int rc = this.getTableRowCount(sourceTablename);
+        for (int i = 0; i < rc; i++) {
+            String val = "";
+            for (int k = 0; k < sourceRelatedColName.length; k++) {
+                val += this.getValue(sourceTablename, i,
+                        sourceRelatedColName[k]).toString();
+                val += k + 1 < sourceRelatedColName.length ? seperator : "";
+            }
+
+            for (int j = 0; j < destColName.length; j++) {
+                this.setValue(sourceTablename, i, destColName[j],
+                        ckpPairDest[j].getValue(val));
+
+                if (!ckpPairDest[j].isKeyExist(val)) {
+                    if (!keepOriginal) {
+                        this.removeRow(sourceTablename, i);
+                        i--;
+                        rc--;
+                        break;
+                    }
+                }
+            }
+
         }
     }
 

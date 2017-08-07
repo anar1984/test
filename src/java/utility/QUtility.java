@@ -5,12 +5,19 @@
  */
 package utility;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import label.CoreLabel;
 import module.cr.entity.EntityCrEntityLabel;
 import module.cr.entity.EntityCrListItem;
 import module.cr.entity.EntityCrListItemList;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import utility.sqlgenerator.EntityManager;
 
 /**
@@ -88,15 +95,110 @@ public class QUtility {
         return tc;
     }
     
-    public static Carrier getListItem(String code, String itemValue) throws QException{
+    public static String getListItemValue(String code, String key) throws QException {
+        EntityCrListItem ent = new EntityCrListItem();
+        ent.setDeepWhere(false);
+        ent.setLang(SessionManager.getCurrentLang());
+        ent.setItemCode(code);
+        ent.setItemKey(key);
+        EntityManager.select(ent);
+        return ent.getItemValue();
+    }
+
+    public static Carrier getListItem(String code, String itemValue4Search) throws QException {
         EntityCrListItem  ent = new EntityCrListItem();
         ent.setDeepWhere(false);
         ent.setLang(SessionManager.getCurrentLang());
-        ent.setItemValue(itemValue);
+        ent.setItemValue(itemValue4Search);
         ent.addDeepWhereStatementField("itemValue");
         ent.setItemCode(code);
-        Carrier tc = EntityManager.select(ent).
-                getKVFromTable(ent.toTableName(), "itemKey","itemValue");
+        Carrier tc = EntityManager.select(ent);
+
+        if (tc.getTableRowCount(ent.toTableName()) == 0) {
+            ent.setLang("ENG");
+            tc = EntityManager.select(ent);
+        }
+
+        tc = tc.getKVFromTable(ent.toTableName(), "itemKey", "itemValue");
         return tc;
+    }
+
+    public static String checkLangLabel(File arg) throws QException, IOException {
+        Document doc = Jsoup.parse(arg, "UTF-8");
+
+        Elements elements = doc.getElementsByAttribute("qlang");
+        String langs = "";
+        for (Element element : elements) {
+            String val = element.html().trim();
+            langs += val + CoreLabel.IN;
+        }
+
+        EntityCrEntityLabel ent = new EntityCrEntityLabel();
+        ent.setFieldName(langs);
+        ent.setLang(SessionManager.getCurrentLang());
+        Carrier c = EntityManager.select(ent);
+
+        c = c.getKeyValuesPairFromTable(ent.toTableName(),
+                EntityCrEntityLabel.FIELD_NAME, EntityCrEntityLabel.DESCRIPTION);
+
+        for (Element element : elements) {
+            String val = element.html().trim();
+            String nv = c.isKeyExist(val) ? c.getValue(val).toString() : val;
+            element.html(nv);
+        }
+
+        return doc.toString();
+    }
+
+    public static String checkLangLabel(Document doc) throws QException, IOException {
+        Elements elements = doc.getElementsByAttribute("qlang");
+        String langs = "";
+        for (Element element : elements) {
+            String val = element.html().trim();
+            langs += val + CoreLabel.IN;
+        }
+
+        EntityCrEntityLabel ent = new EntityCrEntityLabel();
+        ent.setFieldName(langs);
+        ent.setLang(SessionManager.getCurrentLang());
+        Carrier c = EntityManager.select(ent);
+
+        c = c.getKeyValuesPairFromTable(ent.toTableName(),
+                EntityCrEntityLabel.FIELD_NAME, EntityCrEntityLabel.DESCRIPTION);
+
+        for (Element element : elements) {
+            String val = element.html().trim();
+            String nv = c.isKeyExist(val) ? c.getValue(val).toString() : val;
+            element.html(nv);
+        }
+
+        return doc.toString();
+    }
+
+    public static String checkLangLabel(String arg) throws QException, IOException {
+         Document doc = Jsoup.parse(arg, "UTF-8");
+         
+        Elements elements = doc.getElementsByAttribute("qlang");
+        String langs = "";
+        for (Element element : elements) {
+            String val = element.html().trim();
+            langs += val + CoreLabel.IN;
+        }
+
+        EntityCrEntityLabel ent = new EntityCrEntityLabel();
+        ent.setFieldName(langs);
+        ent.setLang(SessionManager.getCurrentLang());
+        Carrier c = EntityManager.select(ent);
+
+        c = c.getKeyValuesPairFromTable(ent.toTableName(),
+                EntityCrEntityLabel.FIELD_NAME, EntityCrEntityLabel.DESCRIPTION);
+
+        for (Element element : elements) {
+            String val = element.html().trim();
+            String nv = c.isKeyExist(val) ? c.getValue(val).toString() : val;
+            element.html(nv);
+        }
+
+        return doc.toString();
     }
 }

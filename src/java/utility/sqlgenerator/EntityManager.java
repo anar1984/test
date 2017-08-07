@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import label.CoreLabel;
-import rp.module.entity.EntityCrSqlPool;
+import module.rp.entity.EntityCrSqlPool;
 import utility.ListSequenceConfigurationProperties;
 import utility.QException;
 import utility.SessionManager;
@@ -706,13 +706,13 @@ public class EntityManager {
             line += " AND FIELD_NAME IN (" + inLine + ")";
             line += entityName.trim().length() > 0 ? " AND ENTITY_NAME ='" + entityName + "'" : "";
             
-            line += " UNION ";
-            
-            line += " SELECT  'STRING' AS LABEL_TYPE,ATTRIBUTE_NAME AS DESCRIPTION,CONCAT('sa',ID) AS FIELD_NAME ";
-            line += " FROM CR_SUBMODULE_ATTRIBUTE_LIST ";
-            line += " WHERE STATUS='A' ";
-            line += " AND LANG='" + SessionManager.getCurrentLang() + "'";
-            line += " AND CONCAT('sa',ID) IN (" + inLine + ")";
+//            line += " UNION ";
+//            
+//            line += " SELECT  'STRING' AS LABEL_TYPE,ATTRIBUTE_NAME AS DESCRIPTION,CONCAT('sa',ID) AS FIELD_NAME ";
+//            line += " FROM CR_SUBMODULE_ATTRIBUTE_LIST ";
+//            line += " WHERE STATUS='A' ";
+//            line += " AND LANG='" + SessionManager.getCurrentLang() + "'";
+//            line += " AND CONCAT('sa',ID) IN (" + inLine + ")";
 
             Carrier carrier = SQLConnection.execSelectSql(line,
                     new EntityCrEntityLabel().toTableName(), CoreLabel.DB_PRIMARY, new ArrayList());
@@ -730,7 +730,7 @@ public class EntityManager {
         try {
             String res = "";
             if (matrixId.length() == 0) {
-                return null;
+                return new Carrier();
             }
 
             String inLine = "";

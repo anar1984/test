@@ -14,6 +14,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import utility.CallDispatcher;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -29,6 +32,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import label.CoreLabel;
+import org.glassfish.jersey.CommonProperties;
 import module.cr.CrModel;
 import org.jose4j.lang.JoseException;
 import utility.Carrier;
@@ -39,6 +43,7 @@ import utility.QException;
 import utility.SessionManager;
 import utility.UserController;
 import utility.sqlgenerator.DBConnection;
+import utility.sqlgenerator.EntityManager;
 import utility.sqlgenerator.QLogger;
 //import smssender.Config;
 //import smssender.SMSSender;
@@ -78,7 +83,7 @@ public class PostServices {
     public Response doPostRequestUpload(@Context HttpHeaders headers, String jsonData) throws Exception {
         System.out.println("geldi");
         Carrier carrier = new Carrier();
-        System.out.println("uploaded file json->" + jsonData);
+//        System.out.println("uploaded file json->" + jsonData);
         carrier.fromJson(jsonData);
 
         CommonConfigurationProperties prop = new CommonConfigurationProperties();

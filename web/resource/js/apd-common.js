@@ -154,7 +154,7 @@ var g_tbl = {
     },
     "tbl_attribute_list": {
         "response_tn": "Response",
-        "list_url": "srv/serviceCrGetAttributeList",
+        "list_url": "srv/serviceCrGetAttributeMainList",
         "delete_url": "srv/serviceCrDeleteAttribute",
         "result_div_id": "attributelist",
         "form_update_popup_id": "updateAttribute",
@@ -174,7 +174,7 @@ var g_tbl = {
     },
     "tbl_submodule_list": {
         "response_tn": "Response",
-        "list_url": "srv/serviceCrGetSubmoduleList",
+        "list_url": "srv/serviceCrGetSubmoduleMainList",
         "delete_url": "srv/serviceCrDeleteSubmodule",
         "result_div_id": "listsubmodule",
         "form_update_popup_id": "updateSubmodule",
@@ -330,7 +330,7 @@ function loadSession(e) {
     loadTable('tbl_appointment_list');
     enableSubmoduleDiv();
     showAddInspection();
-    $('#tbl_appointment_list .apd-table-checkbox').click();
+//    $('#tbl_appointment_list .apd-table-checkbox').click();
 }
 
 function finishSession(e) {
@@ -448,6 +448,30 @@ function getMessage(key) {
     var data = JSON.stringify(json);
     $.ajax({
         url: "api/post/nasrv/serviceCrGetMessageText",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            text = res.kv.text;
+
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+    return text;
+}
+
+function getLabel(key) {
+    var text = "";
+    var json = {kv: {}};
+    json.kv.code = key;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrGetLabel",
         type: "POST",
         data: data,
         contentType: "application/json",
@@ -593,10 +617,7 @@ function fillCombobox(e, inData) {
     var dependence_id = $(e).attr('dependence_id');
     var main_id = $(e).attr('id');
     var kv = $(e).attr('apd-form-fill-kv');
-    console.log("fillCombobox: "+kv);
-    console.log("fillCombobox: "+JSON.stringify(inData));
-    console.log("fillCombobox: "+main_id);
-    console.log("fillCombobox: "+dependence_id);
+    
     //dependence_id varsa ve inData yoxdursa o zaman sorgu gondermeyecek
     if (dependence_id && !inData) {
         return;
@@ -781,6 +802,33 @@ function getAgendaOfDoctor(fkDoctorUserId) {
     return r;
 }
 
+function getDiscountedPrice(e) {
+    var paymentDiscount = $(e).closest("form").find('#paymentDiscount').val();
+    var fkPriceListId = $(e).closest("form").find('#fkPriceListId').val();
+    var json = {kv: {}};
+    json.kv.paymentDiscount = paymentDiscount;
+    json.kv.fkPriceListId = fkPriceListId;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrGetDiscountedPrice",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            if (res.kv.price) {
+                $(e).closest("form").find('#paymentAmount').val(res.kv.price);
+            }
+
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+}
+
 function showAgenda() {
     var doctorId = $('#fkDoctorUserId').val();
 
@@ -799,6 +847,196 @@ function showAgenda() {
     });
     $('.fc-button.fc-button-agendaWeek.fc-state-default').click();
     $('.fc-button.fc-button-month.fc-state-default').click();
+}
+
+function fillStatisticField(matrixId) {
+    $('#f4statistic').html("");
+    $('#f4figure').html("");
+    
+    $('#tbl_inspectiomatrix_list').closest('div[class=custom-table]').find('.apd-table-cols').each(function () {
+        var el = $(this);
+        var cn = el.attr("cn");
+        console.log(cn);
+        var cnm = el.attr("cnm");
+
+//        if (!el.is(":checked")) {
+//             console.log('lolo- '+cn);
+        $('#f4statistic').append($("<option />")
+                .val(cn)
+                .text(getLabel(cnm)));
+        $('#f4figure').append($("<option />")
+                .val(cn)
+                .text(getLabel(cnm)));
+        $('#f4figure').multiselect('rebuild');
+//        }
+
+
+    });
+
+//    var json = {kv: {}};
+//    json.kv.id = matrixId;
+//    var data = JSON.stringify(json);
+//    $.ajax({
+//        url: "api/post/srv/serviceCrGetInspectionMatrixList",
+//        type: "POST",
+//        data: data,
+//        contentType: "application/json",
+//        crossDomain: true,
+//        async: false,
+//        success: function (res) {
+//            isResultRedirect(JSON.stringify(res));
+//            if (res.tbl[0].r.length === 0) {
+//                return;
+//            }
+//            var matrixName = res.tbl[0].r[0].matrixName;
+////            $('#f4statistic').clear();
+//            $('#f4statistic').html("");
+//
+//            var rd = res.tbl[0].r;
+//            for (var i = 0; i < rd.length; i++) {
+//                var txt = (rd[i].shortName) ? rd[i].shortName
+//                        : rd[i].attributeName;
+//
+//                $('#f4statistic').append($("<option />")
+//                        .val(rd[i].fkSubmoduleAttributeId)
+//                        .text(txt));
+//
+//            }
+//        },
+//        error: function (res, status) {
+//            alert(getMessage('somethingww'));
+//        }
+//    });
+}
+
+function getVoiceAnalyse(filename) {
+    if (!filename) {
+        return '';
+    }
+    var res = {};
+    var json = {kv: {}};
+    json.kv.filename = filename;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrGetVoiceAnalyse",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            console.log(JSON.stringify(res));
+            if (res.kv) {
+                $('#sa_201707081329440581').val(res.kv.median);
+                $('#sa_201707081330020388').val(res.kv.jitter_loc);
+                $('#sa_201707081540110846').val(res.kv.min);
+                $('#sa_201707081403510470').val(res.kv.max);
+                $('#sa_201707081330200120').val(res.kv.shimmer_loc);
+                $('#sa_201707081403160657').val(res.kv.std);
+                $('#sa_201707081541200471').val(res.kv.hnr);
+                $('#sa_201707081330340526').val(res.kv.mean);
+                //sound 1
+                $('#sa_201707081544140842').attr("file_value", filename);
+                $('#sa_201707081544140842').closest(".fileuploader")
+                        .find(".apd-image-uploaded").show();
+            }
+//            return res;
+//            if (res.kv.price) {
+//                $(e).closest("form").find('#paymentAmount').val(res.kv.price);
+//            }
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+    return res;
+}
+
+function createArrayFromTableCol(e) {
+    var r = [];
+    var cn = $(e).val();
+    $('#tbl_inspectiomatrix_list').find('.' + cn).each(function () {
+        var el = $(this);
+        var val = el.html();
+        var arg = parseFloat(val);
+        if (!isNaN(arg)) {
+            r.push(arg);
+        }
+    });
+    return r;
+}
+
+function fillStatistic(e) {
+    var n = createArrayFromTableCol(e);
+    console.log(JSON.stringify(n))
+//    var n = [44, 55, 66, 77];
+    var mean = jStat.mean(n);
+    var min = jStat.min(n);
+    var max = jStat.max(n);
+    var popsd = jStat.stdev(n);
+    var vr_popsd = popsd * popsd;
+    var sampsd = jStat.stdev(n, true);
+    var vr_sampsd = sampsd * sampsd;
+    var N = jStat.rows(n);
+    var sum = jStat.sum(n);
+    var se = sampsd / Math.sqrt(N);
+
+    var table = $('<table></table>').addClass(' table ');
+
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("sampsd")))
+            .append($('<td></td>').append(sampsd)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("vr_sampsd")))
+            .append($('<td></td>').append(vr_sampsd)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("popsd")))
+            .append($('<td></td>').append(popsd)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("vr_popsd")))
+            .append($('<td></td>').append(vr_popsd)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("total_number")))
+            .append($('<td></td>').append(N)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("summarize")))
+            .append($('<td></td>').append(sum)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("mean")))
+            .append($('<td></td>').append(mean)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("minimum")))
+            .append($('<td></td>').append(min)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("maximum")))
+            .append($('<td></td>').append(max)));
+    table.append($('<tr></tr>').append($('<td></td>').append(getLabel("sdandard_error")))
+            .append($('<td></td>').append(se)));
+
+    var div = $('<div></div>').append(table);
+    $('#basicStatInfo').html(div.html());
+
+    var table1 = $('<table></table>').addClass(' table ');
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("68.3%, SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 1 * se) + ' - ' + parseFloat(mean + 1 * se))));
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("90%, 1.645*SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 1.645 * se) + ' - ' + parseFloat(mean + 1.645 * se))));
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("95%, 1.960*SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 1.960 * se) + ' - ' + parseFloat(mean + 1.960 * se))));
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("99%, 2.576*SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 2.576 * se) + ' - ' + parseFloat(mean + 2.576 * se))));
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("99.9%, 3.291*SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 3.291 * se) + ' - ' + parseFloat(mean +3.291 * se))));
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("99.99%, 3.891*SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 3.891 * se) + ' - ' + parseFloat(mean + 3.891 * se))));
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("99.999%, 4.417*SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 4.417 * se) + ' - ' + parseFloat(mean + 4.417 * se))));
+    table1.append($('<tr></tr>')
+            .append($('<td></td>').append(("99.9999%, 4.892*SE_x̄")))
+            .append($('<td></td>').append(parseFloat(mean - 4.892 * se) + ' - ' + parseFloat(mean + 4.892 * se))));
+
+    var div1 = $('<div></div>').append(table1);
+    $('#confedendeLevelInfo').html(div1.html());
+
 }
 
 (function ($) {

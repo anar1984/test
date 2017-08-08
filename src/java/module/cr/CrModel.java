@@ -3220,9 +3220,10 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             entCompany.setStatus(EntityCrCompany.CompanyStatus.PENDING.toString());
             EntityManager.update(entCompany);
             
+            CompanyJob.execute(null);
             
             //Create a new Job 
-            JobKey jobKey = JobKey.jobKey("CompanyCreatorJob", "APDVoice");
+            /*JobKey jobKey = JobKey.jobKey("CompanyCreatorJob", "APDVoice");
             JobDetail job = JobBuilder.newJob(CompanyJob.class).withIdentity(jobKey).storeDurably().build();
             
             StdSchedulerFactory stdSchedulerFactory = new StdSchedulerFactory();
@@ -3232,7 +3233,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             scheduler.addJob(job, true);
 
             //Immediately fire the Job MyJob.class
-            scheduler.triggerJob(jobKey);
+            scheduler.triggerJob(jobKey);*/
 
             return carrier;
         } catch (Exception ex) {

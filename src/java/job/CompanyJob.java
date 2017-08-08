@@ -29,20 +29,20 @@ import utility.sqlgenerator.QLogger;
  *
  * @author nikli
  */
-public class CompanyJob implements Job {
+public class CompanyJob /*implements Job*/ {
 
-    @Override
-    public void execute(JobExecutionContext jec) throws JobExecutionException {
+    //@Override
+    public static void execute(JobExecutionContext jec) throws QException {
         /*try {
         MailSender.send("ilkin@esrefli.com", "Company registered", "Your company "+"<test>" + " registered successfully.");
         } catch (Throwable e) {
             e.printStackTrace();
             System.out.println("send mail error: "+e.getMessage());
         }*/
-        Connection conn = null;
+        //Connection conn = null;
         try {
-            conn = new DBConnection().getConnection();
-            conn.setAutoCommit(false);
+            Connection conn = SessionManager.getCurrentConnection();//new DBConnection().getConnection();
+            //conn.setAutoCommit(false);
             //SessionManager.setConnection(Thread.currentThread().getId(), conn);
 
             PreparedStatement pst = conn.prepareStatement("select lower(table_name) table_name from cr_user_tables where type='t'");
@@ -79,7 +79,7 @@ public class CompanyJob implements Job {
                 psu.setString(1, EntityCrCompany.CompanyStatus.CREATE.toString());
                 psu.setString(2, id);
                 psu.executeUpdate();
-                conn.commit();
+                //conn.commit();
 
                 Statement stmt = conn.createStatement();
 
@@ -114,7 +114,7 @@ public class CompanyJob implements Job {
                 psu.setString(2, id);
                 psu.setString(3, EntityCrCompany.CompanyStatus.CREATE.toString());
                 psu.executeUpdate();
-                conn.commit();
+                //conn.commit();
 
                 MailSender.send(email, "Company registered", "Your company " + companyDb + " registered successfully.");
 
@@ -123,15 +123,16 @@ public class CompanyJob implements Job {
             }
 
             //System.out.println("Java web application + Quartz 2.2.1");
-        } catch (QException ex) {
-            DBConnection.rollbackConnection(conn);
-            QLogger.saveExceptions("CompanyJob", "createConnection", ex.getMessage());
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
+            //DBConnection.rollbackConnection(conn);
+            //QLogger.saveExceptions("CompanyJob", "createConnection", ex.getMessage());
+            throw new QException(ex);
+        }/* catch (SQLException ex) {
             DBConnection.rollbackConnection(conn);
             QLogger.saveExceptions("CompanyJob", "createCompany", ex.getMessage());
-        } finally {
+        } /*finally {
             DBConnection.closeConnection(conn);
-        }
+        }*/
 
     }
 

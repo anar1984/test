@@ -1083,6 +1083,10 @@ public Carrier getLabel(Carrier carrier) throws QException {
                 cp.isNotExistInEntity(new EntityCrCompany(), EntityCrCompany.COMPANY_NAME,
                         carrier.getValue(EntityCrCompany.COMPANY_NAME).toString()));
             
+            carrier.addController(EntityCrUser.USERNAME,
+                cp.isNotExistInEntity(new EntityCrUser(), EntityCrUser.USERNAME,
+                        carrier.getValue(EntityCrUser.USERNAME).toString()));
+            
             carrier.addController(EntityCrUser.USERNAME, cp.hasValue(carrier, EntityCrUser.USERNAME));
             carrier.addController(EntityCrUser.EMAIL_1, cp.hasValue(carrier, EntityCrUser.EMAIL_1));
             carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));

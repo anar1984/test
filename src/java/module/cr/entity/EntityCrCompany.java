@@ -61,8 +61,8 @@ public class EntityCrCompany extends CoreEntity {
     }
     
     public enum CompanyType {
-        PERSONAL("p"),
-        COMPANY("c");
+        PERSONAL("P"),
+        COMPANY("C");
         private final String type;
 
         CompanyType(String type) {

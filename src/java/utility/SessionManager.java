@@ -292,6 +292,10 @@ public class SessionManager {
         return subject.isPermitted("post:srv:"+serviceName);
     }
     
+    public static boolean isSysAdmin() throws QException {
+        return hasRole("SYSADMIN");
+    }
+    
     public static boolean hasRole(String roleName) throws QException {
         Subject subject = permissionMap.get(getCurrentUsername());
         if (subject == null) {

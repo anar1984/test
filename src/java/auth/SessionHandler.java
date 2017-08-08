@@ -72,12 +72,15 @@ public class SessionHandler {
             user.setUsername(username.trim());
             EntityManager.select(user);
             
+            
+            
             EntityCrCompany company = new EntityCrCompany();
             company.setDeepWhere(false);
             company.setId(user.getFkCompanyId());
             EntityManager.select(company);
-            
+
             user.setDbname(company.getCompanyDb());
+            
 
             
             if (user.getPassword().trim().equals("")

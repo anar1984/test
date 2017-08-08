@@ -31,10 +31,10 @@ public class JobListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("Context Initialized");
 
-        try {
+        /*try {
             // Setup the Job class and the Job group
             JobDetail job = newJob(CompanyJob.class).withIdentity(
-                    "CronQuartzJob", "Group").build();
+                    "CompanyCreatorJob", "APDVoice").build();
 
             // Create a Trigger that fires every 5 minutes.
             Trigger trigger = newTrigger()
@@ -48,17 +48,17 @@ public class JobListener implements ServletContextListener {
             scheduler.scheduleJob(job, trigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         System.out.println("Context Destroyed");
-        try {
+        /*try {
             scheduler.shutdown();
         } catch (SchedulerException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 }

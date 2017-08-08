@@ -867,7 +867,15 @@ function buttonTaskTriggerListener() {
 function formButtonListener() {
     $(document).on("click", '.apd-form-btn', function (e) {
         
+        
+        
         var el = $(e.target);
+        
+        /*el.closest("form[class='apd-form']").on("forminvalid.zf.abide", function(ev,frm) {
+                    alert("Form is invalid, finally!");
+                    return false;
+                    // do something perhaps
+                });*/
          
         //remove all error message from form
         el.closest("form[class='apd-form']").find(".apd-form-error-msg").each(function () {

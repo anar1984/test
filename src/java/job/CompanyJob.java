@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import module.cr.entity.EntityCrCompany;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -51,7 +52,7 @@ public class CompanyJob implements Job {
                 tableList.add(rst.getString(1));
             }
             
-            pst = conn.prepareStatement("SELECT ut.table_script FROM cr_user_tables ut WHERE ut.type='v'");
+            pst = conn.prepareStatement("SELECT ut.table_script FROM cr_user_tables ut WHERE ut.type='v' ORDER BY SEQNUM");
             rst = pst.executeQuery();
             List<String> viewList = new ArrayList<>();
             while (rst.next()) {
@@ -63,6 +64,9 @@ public class CompanyJob implements Job {
                     + "where c.status = ?  and c.id=u.fk_company_id order by c.insert_date");
             ps.setString(1, EntityCrCompany.CompanyStatus.PENDING.toString());
             ResultSet rs = ps.executeQuery();
+            
+            Pattern p = Pattern.compile("\\$\\{companyDb\\}");
+
 
             while (rs.next()) {
                 String companyDb = rs.getString("company_db");
@@ -84,14 +88,18 @@ public class CompanyJob implements Job {
                 //conn.setCatalog("apd_"+companyDomain);
                 for (String tableName : tableList) {
                     stmt.executeUpdate("CREATE TABLE " + companyDb + "." + tableName + " LIKE apdvoice." + tableName);
+                    System.out.println("table created: "+companyDb + "." + tableName);
                 }
                 
                 
                 for (String viewScript : viewList) {
-                    stmt.executeUpdate(viewScript);
+                    //stmt.executeUpdate(viewScript.replace("${companyDb}", companyDb));
+                    String vs = p.matcher(viewScript).replaceAll(companyDb);
+                    stmt.executeUpdate(vs);
+                    System.out.println("view created: "+vs);
                 }
 
-                if (companyType.equals(EntityCrCompany.CompanyType.COMPANY.toString())) {
+                /*if (companyType.equals(EntityCrCompany.CompanyType.COMPANY.toString())) {
                     psu = conn.prepareStatement("INSERT INTO " + companyDb + ".cr_user SELECT * from apdvoice.cr_user WHERE id=?");
                     psu.setString(1, userId);
                     psu.executeUpdate();
@@ -99,7 +107,7 @@ public class CompanyJob implements Job {
                     psu = conn.prepareStatement("DELETE FROM apdvoice.cr_user WHERE id=?");
                     psu.setString(1, userId);
                     psu.executeUpdate();
-                }
+                }*/
 
                 psu = conn.prepareStatement("UPDATE cr_company SET status=? WHERE id=? AND status=?");
                 psu.setString(1, EntityCrCompany.CompanyStatus.ACTIVE.toString());
@@ -114,7 +122,7 @@ public class CompanyJob implements Job {
 
             }
 
-            System.out.println("Java web application + Quartz 2.2.1");
+            //System.out.println("Java web application + Quartz 2.2.1");
         } catch (QException ex) {
             DBConnection.rollbackConnection(conn);
             QLogger.saveExceptions("CompanyJob", "createConnection", ex.getMessage());

@@ -4,8 +4,15 @@
 <div class="row  align-center apd-page " id="page_signup">
     <div class="medium-6 columns">
         <h1 class="text-center">Sign up</h1>
-        <form id="form_signupPersonal" class="apd-form" method="POST" action="nasrv/serviceCrSignupPersonal">
-            <input id="username" type="text" class="apd-form-input" name="username" placeholder="Username" />
+        
+        <form id="form_signupPersonal" class="apd-form" method="POST" action="nasrv/serviceCrSignupPersonal" data-abide novalidate>
+            <div data-abide-error class="alert callout" style="display: none;">
+                <p><i class="fi-alert"></i> There are some errors in your form.</p>
+            </div>
+            
+            <input id="username" type="text" class="apd-form-input" name="username" placeholder="Username" required pattern="alpha_numeric"/>
+            <span class="form-error"  data-form-error-for="username">This field is required.</span>
+            
             <input id="email1" type="email" class="apd-form-email" name="email1" placeholder="E-mail" />
             <input id="password" type="password" class="apd-form-input" name="password" placeholder="Password" aria-describedby="passwordHelpText"/>
             <p class="help-text hide" id="passwordHelpText">Your password must have at least 8 characters, a number, and an Emoji.</p>

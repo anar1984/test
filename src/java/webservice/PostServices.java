@@ -511,7 +511,11 @@ public class PostServices {
             //conn.close();
             
             if (servicename.equals("serviceCrSignupPersonal")||servicename.equals("serviceCrSignupCompany")){
-                return Response.temporaryRedirect(new URI("/apd/activation.html")).build();
+                return Response.temporaryRedirect(new URI("/apd/activation.html?id="+c.getValue(EntityCrUser.ID).toString())).build();
+            }
+            
+            if (servicename.equals("serviceCrActivateCompany")){
+                return Response.temporaryRedirect(new URI("/apd/activated.html")).build();
             }
             return res;
         } catch (JoseException ex) {

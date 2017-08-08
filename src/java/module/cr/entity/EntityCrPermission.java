@@ -26,7 +26,7 @@ public class EntityCrPermission extends CoreEntity {
     public static String PERMISSION_TYPE = "permissionType";
     
     private String permissionString = "";
-    private PermissionType permissionType = PermissionType.PERMISSION;
+    private String permissionType = "";
     
     public enum PermissionType {
        PERMISSION("P"), MODEL("M"), SUB_MODEL("S");
@@ -69,7 +69,7 @@ public class EntityCrPermission extends CoreEntity {
             JSONObject obj = new JSONObject(data);
             this.setId(obj.getString(ID));
             this.setPermissionString(obj.getString(PERMISSION_STRING));
-            this.setPermissionType((PermissionType)obj.get(PERMISSION_TYPE));
+            this.setPermissionType(obj.getString(PERMISSION_TYPE));
         } catch (JSONException ex) {
             Logger.getLogger(EntityCrPermission.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,14 +83,14 @@ public class EntityCrPermission extends CoreEntity {
     /**
      * @return the permissionType
      */
-    public PermissionType getPermissionType() {
+    public String getPermissionType() {
         return permissionType;
     }
 
     /**
      * @param permissionType the permissionType to set
      */
-    public void setPermissionType(PermissionType permissionType) {
+    public void setPermissionType(String permissionType) {
         this.permissionType = permissionType;
     }
 

@@ -1070,8 +1070,27 @@ public Carrier getLabel(Carrier carrier) throws QException {
     public Carrier signupCompany(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
-            //carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));
-            //carrier.addController(EntityCrUser.USERNAME, cp.hasValue(carrier, EntityCrUser.USERNAME));
+            carrier.addController(EntityCrCompany.COMPANY_NAME, cp.hasValue(carrier, EntityCrCompany.COMPANY_NAME));
+            carrier.addController(EntityCrCompany.COMPANY_DOMAIN, cp.hasValue(carrier, EntityCrCompany.COMPANY_DOMAIN));
+            carrier.addController(EntityCrCompany.COMPANY_COUNTRY, cp.hasValue(carrier, EntityCrCompany.COMPANY_COUNTRY));
+            carrier.addController(EntityCrCompany.COMPANY_ADDRESS, cp.hasValue(carrier, EntityCrCompany.COMPANY_ADDRESS));
+            
+            carrier.addController(EntityCrCompany.COMPANY_DOMAIN,
+                cp.isNotExistInEntity(new EntityCrCompany(), EntityCrCompany.COMPANY_DOMAIN,
+                        carrier.getValue(EntityCrCompany.COMPANY_DOMAIN).toString()));
+            
+            carrier.addController(EntityCrCompany.COMPANY_NAME,
+                cp.isNotExistInEntity(new EntityCrCompany(), EntityCrCompany.COMPANY_NAME,
+                        carrier.getValue(EntityCrCompany.COMPANY_NAME).toString()));
+            
+            carrier.addController(EntityCrUser.USERNAME, cp.hasValue(carrier, EntityCrUser.USERNAME));
+            carrier.addController(EntityCrUser.EMAIL_1, cp.hasValue(carrier, EntityCrUser.EMAIL_1));
+            carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));
+            carrier.addController(EntityCrUser.USER_PERSON_NAME, cp.hasValue(carrier, EntityCrUser.USER_PERSON_NAME));
+            carrier.addController(EntityCrUser.USER_PERSON_SURNAME, cp.hasValue(carrier, EntityCrUser.USER_PERSON_SURNAME));
+            
+            carrier.addController(EntityCrUser.SEX, cp.hasValue(carrier, EntityCrUser.SEX));
+            carrier.addController(EntityCrUser.MOBILE_1, cp.hasValue(carrier, EntityCrUser.MOBILE_1));
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -1085,6 +1104,10 @@ public Carrier getLabel(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
             carrier.addController(EntityCrUser.USERNAME, cp.hasValue(carrier, EntityCrUser.USERNAME));
+            carrier.addController(EntityCrUser.USERNAME,
+                cp.isNotExistInEntity(new EntityCrUser(), EntityCrUser.USERNAME,
+                        carrier.getValue(EntityCrUser.USERNAME).toString()));
+            
             carrier.addController(EntityCrUser.EMAIL_1, cp.hasValue(carrier, EntityCrUser.EMAIL_1));
             carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));
             carrier.addController(EntityCrUser.USER_PERSON_NAME, cp.hasValue(carrier, EntityCrUser.USER_PERSON_NAME));
@@ -1105,7 +1128,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
             //carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));
-            //carrier.addController(EntityCrUser.USERNAME, cp.hasValue(carrier, EntityCrUser.USERNAME));
+            carrier.addController(EntityCrCompany.ACTIVATION_ID, cp.hasValue(carrier, EntityCrCompany.ACTIVATION_ID));
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {

@@ -31,6 +31,7 @@ import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import job.CompanyJob;
 import label.CoreLabel;
 import module.cr.entity.*;
 import module.pg.PgModel;
@@ -39,6 +40,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.impl.StdSchedulerFactory;
 import utility.CallDispatcher;
 import utility.Carrier;
 import utility.CommonConfigurationProperties;
@@ -106,7 +112,7 @@ public class CrModel {
     public static final String VALUE_TYPE_RANGE_INTEGER_MULTI = "15";
     public static final String VALUE_TYPE_YOUTUBE_URL = "17";
     
-	public Carrier getPage(Carrier carrier) throws QException {
+    public Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
         String ln = "";
         if (page.startsWith(LOAD_PAGE_BEGINNER_PAGE_DINAMIC)) {
@@ -3154,7 +3160,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             entUser.setUserShortId(IdGenerator.getId());
             entUser.setFkCompanyId(entCompany.getId());//SessionManager.getCurrentUserId()
             EntityManager.insert(entUser);
-            carrier.setValue(EntityCrPerson.ID, entUser.getId());
+            carrier.setValue(EntityCrUser.ID, entUser.getId());
 
             MailSender.send(entUser.getEmail1(), "Company registered",
                     "Activate company " + entCompany.getCompanyName() + "  http://localhost:8080/apd/api/post/signup/activate/" + activationId);
@@ -3208,6 +3214,20 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             EntityManager.select(entCompany);
             entCompany.setStatus(EntityCrCompany.CompanyStatus.PENDING.toString());
             EntityManager.update(entCompany);
+            
+            
+            //Create a new Job 
+            JobKey jobKey = JobKey.jobKey("CompanyCreatorJob", "APDVoice");
+            JobDetail job = JobBuilder.newJob(CompanyJob.class).withIdentity(jobKey).storeDurably().build();
+            
+            StdSchedulerFactory stdSchedulerFactory = new StdSchedulerFactory();
+            Scheduler scheduler = stdSchedulerFactory.getScheduler();
+
+            //Register this job to the scheduler
+            scheduler.addJob(job, true);
+
+            //Immediately fire the Job MyJob.class
+            scheduler.triggerJob(jobKey);
 
             return carrier;
         } catch (Exception ex) {
@@ -3248,8 +3268,8 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
     public static Carrier getPermissionList(Carrier carrier) throws QException {
         try {
             EntityCrPermission ent = new EntityCrPermission();
-            ent.setDeepWhere(false);
             EntityManager.mapCarrierToEntity(carrier, ent);
+            ent.setDeepWhere(false);
             carrier = EntityManager.select(ent);
             //carrier.removeColoumn(ent.toTableName(), EntityCrUser.PASSWORD);
             carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);

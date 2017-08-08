@@ -361,10 +361,18 @@ and open the template in the editor.
         <script src="resource/js/Base.esapi.properties.js" type="text/javascript"></script> 
 
         <script src="resource/js/foundation.min.js"></script>
-        <script src="resource/js/app.js"></script>
+        
 
         <script type="text/javascript" language="JavaScript">
+            $(document).foundation();
+            
+            
             $(document).ready(function () {
+                
+                
+                
+                
+                
                 org.owasp.esapi.ESAPI.initialize();
                 var parts = document.location.href.split("#");
                 var type = $ESAPI.encoder().encodeForURL(parts[parts.length - 1]);

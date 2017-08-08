@@ -2576,38 +2576,35 @@ public class CrModel {
     }
 
     public static void main(String[] arg) {
-        getPraatAnalyseResult("a.wav") ;
-//        Connection conn = null;
-                //0.4
-                //        try {
-                //            conn = new DBConnection().getConnection();
-                //            conn.setAutoCommit(false);
-                //            SessionManager.setConnection(Thread.currentThread().getId(), conn);
-                //            String json = " {\"kv\":{\"id\":\"201706060832030053\","
-                //                    + "\"fkSessionId\":\"201706110823490222 \","
-                //                    + "\"fkModuleId\":\"201706221522420346\"}}";
-                //            String servicename = "serviceCrGetReportLineList4Print";
-                ////
+//        getPraatAnalyseResult("a.wav") ;
+        Connection conn = null;
+                        try {
+                            conn = new DBConnection().getConnection();
+                            conn.setAutoCommit(false);
+                            SessionManager.setConnection(Thread.currentThread().getId(), conn);
+                            String json = " {\"kv\":{\"companyName\":\"Dr voice11111\",\"companyDomain\":\"drvoice432\",\"address\":\";laskdf\",\"username\":\"anar31\",\"password\":\"tur\",\"password2\":\"tur\",\"userPersonName\":\"ana\",\"userPersonSurname\":\"a;lskdfj\",\"mobile1\":\"asdfasdf\",\"email1\":\"anarasldkfj@alsjf.com\",\"companyCountry\":\"1\",\"sex\":\"2\"},\"tbl\":[]}";
+                            String servicename = "serviceCrSignupCompany";
                 //
-                //            Carrier c = new Carrier();
-                //            c.setServiceName(servicename);
-                //            c.fromJson(json);
+                
+                            Carrier c = new Carrier();
+                            c.setServiceName(servicename);
+                            c.fromJson(json);
+                            System.out.println(c.getJson());
                 //            System.out.println(c.getJson());
-                ////            System.out.println(c.getJson());
-                //            CallDispatcher.callService(c);
-                //            conn.commit();
-                //            conn.close();
-                //    }
-                //    catch (Exception ex
-                //
-                //    
-                //        ) {
-                //            try {
-                //            conn.rollback();
-                //            conn.close();
-                //        } catch (SQLException ex1) {
-                //        }
-                //    }
+                            CallDispatcher.callService(c);
+                            conn.commit();
+                            conn.close();
+                    }
+                    catch (Exception ex
+                
+                    
+                        ) {
+                            try {
+                            conn.rollback();
+                            conn.close();
+                        } catch (SQLException ex1) {
+                        }
+                    }
     }
 
 	public static Carrier getVoiceAnalyse(Carrier carrier)  throws QException{
@@ -3162,9 +3159,14 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             EntityManager.insert(entUser);
             carrier.setValue(EntityCrUser.ID, entUser.getId());
 
-            MailSender.send(entUser.getEmail1(), "Company registered",
-                    "Activate company " + entCompany.getCompanyName() + "  http://localhost:8080/apd/api/post/signup/activate/" + activationId);
-
+//            try{
+//                MailSender.send(entUser.getEmail1(), "Company registered",
+//                    "Activate company " + entCompany.getCompanyName() +
+//                            "  http://localhost:8080/apd/api/post/signup/activate/" 
+//                            + activationId);
+//            }catch(Exception e){
+//                System.out.println("excepiton oldu");
+//            }    
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -3194,12 +3196,15 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             EntityManager.insert(entUser);
             carrier.setValue(EntityCrPerson.ID, entUser.getId());
 
-            MailSender.send(entUser.getEmail1(), "Your account created",
-                    "Activate account " + entCompany.getCompanyName() + "  http://localhost:8080/apd/api/post/signup/activate/" + activationId);
-
+//            try{
+//                MailSender.send(entUser.getEmail1(), "Your account created",
+//                    "Activate account " + entCompany.getCompanyName() + "  http://localhost:8080/apd/api/post/signup/activate/" + activationId);
+//            }catch(Exception e){
+//                System.out.println("exception oldu");
+//            }
             return carrier;
         } catch (Exception ex) {
-            throw new QException(new Object() {
+            throw new QException(new Object(){
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
                     }.getClass().getEnclosingMethod().getName(), ex);

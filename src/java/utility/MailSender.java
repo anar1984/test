@@ -37,7 +37,7 @@ public class MailSender {
             message.setSubject(subject);
             message.setContent(text, "text/plain");
             Transport.send(message);
-        } catch (NamingException | MessagingException ex) {
+        } catch (Exception ex) {
             System.out.println("Mail couldn't send: "+ex.getMessage());
             Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();

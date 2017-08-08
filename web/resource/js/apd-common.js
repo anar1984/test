@@ -1039,6 +1039,8 @@ function fillStatistic(e) {
 
 }
 
+
+
 (function ($) {
     $.fn.extend({
         tableAddCounter: function (options) {

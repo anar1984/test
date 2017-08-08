@@ -148,7 +148,7 @@ and open the template in the editor.
                                 <input type="password" id="cPassword" name="password" placeholder="Password" autocomplete="off" value="a" />
                             </div>
 
-                           
+
                             <div class="floated-label-wrapper">
                                 <button id="btnSignInCompany" class="expanded button" type="submit" value="Sign in">Sign in</button>
                             </div>
@@ -168,14 +168,14 @@ and open the template in the editor.
         </div>
         <script src="resource/js/jquery.min.js" ></script>
         <script src="resource/js/foundation.min.js"></script>
-        <script src="resource/js/app.js"></script>
+
         <script>
 
-
+                        $(document).foundation();
                         $('#btnSignInPersonal').click(function () {
                             var username = $('#pUsername').val();
                             var password = $('#pPassword').val();
-                            var lang = $('#pLang').find(":selected").val();
+                            var lang = $('#lang').find(":selected").val();
                             var json = {kv: {}};
                             json.kv.username = username;
                             json.kv.password = password;
@@ -202,7 +202,7 @@ and open the template in the editor.
                             var domain = $('#domain').val();
                             var username = $('#cUsername').val();
                             var password = $('#cPassword').val();
-                            var lang = $('#cLang').find(":selected").val();
+                            var lang = $('#lang').find(":selected").val();
                             var json = {kv: {}};
                             json.kv.username = username;
                             json.kv.password = password;
@@ -229,6 +229,7 @@ and open the template in the editor.
                         function showAlert() {
                             document.getElementById('login-alert').style.display = 'block';
                         }
+
         </script>
     </body>
 </html>

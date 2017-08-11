@@ -3259,11 +3259,9 @@ public class CrModel {
             EntityManager.select(entCompany);
             entCompany.setStatus(EntityCrCompany.CompanyStatus.PENDING.toString());
             EntityManager.update(entCompany);
-
-            System.out.println("crmodule 1");
-
+            
             CompanyJob.execute(null);
-            System.out.println("crmodule 2");
+            
             //Create a new Job 
             /*JobKey jobKey = JobKey.jobKey("CompanyCreatorJob", "APDVoice");
             JobDetail job = JobBuilder.newJob(CompanyJob.class).withIdentity(jobKey).storeDurably().build();
@@ -3276,6 +3274,7 @@ public class CrModel {
 
             //Immediately fire the Job MyJob.class
             scheduler.triggerJob(jobKey);*/
+
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {

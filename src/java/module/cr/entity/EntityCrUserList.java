@@ -286,9 +286,5 @@ public class EntityCrUserList extends CoreEntity {
         }
     }
     
-    @Override
-    public String selectDbname() {
-        return "apdvoice";//temp
-    }
-
+    
 }

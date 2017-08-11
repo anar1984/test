@@ -110,10 +110,10 @@ public class PgModel {
     private static double getValueOfAggregateSubmodule(
             String fkSessionId, String fkSubmoduleId) throws QException {
         double res = 0;
-        if (fkSessionId.length()==0){
+        if (fkSessionId.length() == 0) {
             return 0;
         }
-        
+
         EntityCrInspectionList ent = new EntityCrInspectionList();
         ent.setDeepWhere(false);
         ent.setInspectionCode(fkSessionId);
@@ -141,10 +141,10 @@ public class PgModel {
             String fkSessionId, String fkSubmoduleId) throws QException {
         double res = 0;
 
-        if (fkSessionId.length()==0){
+        if (fkSessionId.length() == 0) {
             return 0;
         }
-        
+
         EntityCrInspectionList ent = new EntityCrInspectionList();
         ent.setDeepWhere(false);
         ent.setInspectionCode(fkSessionId);
@@ -210,7 +210,6 @@ public class PgModel {
                 double ave = getValueOfAverageSubmodule(fkSessionId, entTmp.getId());
                 DecimalFormat df = new DecimalFormat("#.####");
                 ave = Double.valueOf(df.format(ave));
-                System.out.println("ave val=" + ave);
 
                 String name = ave > 0 ? entTmp.getSubmoduleName() + "(" + ave + ")"
                         : entTmp.getSubmoduleName();
@@ -259,6 +258,7 @@ public class PgModel {
                                         attr("submodule_id", ent.getSubmodule().getId()).
                                         attr("style", "background-color:" + ent.getColor() + ";border-color:" + ent.getColor()).
                                         attr("ins_id", insCode).
+                                        attr("sort_by", ent.getSubmodule().getSortBy()).
                                         withClass("btn apd-subm-attr-button btn-primary btn-md")),
                                 hr()
                         )
@@ -458,6 +458,11 @@ public class PgModel {
 //        ent.setDeepWhere(false);
 //        ent.setId(fkSessionId);
 //        EntityManager.select(ent);
+        EntityCrSubmodule entSM = new EntityCrSubmodule();
+        entSM.setId(fkSubmoduleId);
+        EntityManager.select(entSM);
+
+        String sortByNo = entSM.getSortBy();
 
         Carrier c = new Carrier();
         c.setValue("id", fkSessionId);
@@ -477,6 +482,7 @@ public class PgModel {
                                 formLabel("patientName").attr("qlang", ""),
                                 formInput("", patientFullname)
                                 .attr("readonly", "readonly")
+                                .attr("dont_clear", "")
                         ),
                         getVoiceAnalyseDiv(fkSubmoduleId),
                         //ses analiz hissesi hal hazirda static yazilibdir. 
@@ -486,12 +492,22 @@ public class PgModel {
                                 formLabel("fkPatientId"),
                                 formInput("fkPatientId", "fkPatientId")
                                 .withValue(fkPatientId)
+                                .attr("dont_clear", "")
+                                .withType("hidden")
+                        ),
+                        div().withClass("form-group col-md-12 hidden")
+                        .with(
+                                formLabel("sort_by"),
+                                formInput("smOrderNo", "smOrderNo")
+                                .withValue(sortByNo)
+                                .attr("dont_clear", "")
                                 .withType("hidden")
                         ),
                         div().withClass("form-group col-md-12 hidden")
                         .with(
                                 formLabel(""),
                                 formHiddenInput(fkSessionId)
+                                .attr("dont_clear", "")
                         ),
                         each(tagArr, tag
                                 -> div().withClass("form-group col-md-6")
@@ -502,7 +518,7 @@ public class PgModel {
                                 )
                         )
                 ).render();
-        System.out.println("sa body-" + ln);
+//        System.out.println("sa body-" + ln);
         return ln;
     }
 
@@ -688,6 +704,7 @@ public class PgModel {
                         .attr("select_value", "itemKey")
                         .attr("srv_url", "li/" + ent.getSubmoduleValue())
                         .attr("has_other", hasOtherVl)
+                        .attr("has_null", "true")
                         .withClass(selectCls),
                         ent.getHasOther().equals("yes") ? br() : span(),
                         nw
@@ -785,7 +802,9 @@ public class PgModel {
                         .withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId())
                         .withClass(selectCls)
                         .attr("has_other", hasOtherVl)
+                                
                         .with(
+                                option("----").withValue("__2__"),
                                 each(myList, l
                                         -> option(l).withValue(l)
                                 )),
@@ -1196,17 +1215,17 @@ public class PgModel {
     }
 
     //<audio id="wavtag" controls style="vertical-align: middle;">
-      //      <source src="resources/upload/file_2CC9C60622A5BD3.wav" type="audio/mpeg">
-     //       Your browser does not support the audio element.
-     //   </audio>
+    //      <source src="resources/upload/file_2CC9C60622A5BD3.wav" type="audio/mpeg">
+    //       Your browser does not support the audio element.
+    //   </audio>
     public static Tag getVoiceAnalyseDiv(String submoduleId) {
         //bu hisse dinamik yazilmalidir
         if (submoduleId.equals("201707071617340418")) {
             return div()
                     .withClass("form-group col-md-12")
-                    .attr("style","margin-bottom:20px") 
+                    .attr("style", "margin-bottom:20px")
                     .with(
-                            label("recording").attr("qlang",""),
+                            label("recording").attr("qlang", ""),
                             a()
                             .withClass("button recordButton")
                             .withId("record")
@@ -1218,10 +1237,10 @@ public class PgModel {
                             .attr("qlang", "")
                             .withText("stopAndAnalyse"),
                             audio().withId("wavtag")
-                            .attr("controls","")
-                            .attr("style","vertical-align: middle;")
+                            .attr("controls", "")
+                            .attr("style", "vertical-align: middle;")
                             .with(
-                                    source().withSrc("").withType("audio/mpeg")                                    
+                                    source().withSrc("").withType("audio/mpeg")
                             )
                     );
         } else {

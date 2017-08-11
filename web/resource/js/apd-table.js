@@ -181,7 +181,8 @@ function createTableDivHTML(data, var_tablename) {
     for (var n = 0; n < seqArr.length; n++) {
         var childLi = $('<li></li>').addClass("apd-table-li");
         var ln = '<input type="checkbox" class="apd-table-cols" checked';
-        ln += ' cn="_c' + n + '" cnm="' + colType[seqArr[n]] + '"> ';
+        ln += ' cn="_c' + n + '" cnm="' + colType[seqArr[n]] +
+                '" cntitle="' + colPair[seqArr[n]] + '"> ';
         ln += colPair[seqArr[n]];
         childLi.html(ln);
         childUl.append(childLi);
@@ -632,10 +633,17 @@ function createTriggerRowHTML(var_tablename, row_id) {
 
 function getTableCheckBoxTriggerEventButtonHtml(var_tablename, row_id) {
     var checkboxHTML = '';
-    checkboxHTML = '<input type="checkbox" ' +
-            ' class="apd-table-checkbox" ' +
-            ' name=\' ' + g_tbl[var_tablename].response_tn + ' \' ' +
-            ' value =\'' + row_id + ' \'>';
+    checkboxHTML = '<input type="checkbox" ';
+    checkboxHTML += ' class="apd-table-checkbox" ';
+    checkboxHTML += ' name=\' ' + g_tbl[var_tablename].response_tn + ' \' ';
+    checkboxHTML += ' value =\'' + row_id;
+    var id =  (row_id);
+    if (jQuery.inArray(id, g_tbl[var_tablename].arrChecked) > -1) {
+        checkboxHTML += ' checked="checked"';
+    }
+    checkboxHTML += ' \'>';
+
+    console.log(id+ " - "+JSON.stringify(g_tbl[var_tablename].arrChecked));;
     return checkboxHTML;
 }
 
@@ -799,6 +807,13 @@ function fillTableBodyByid(var_tablename, data, start_ind) {
     $('#' + var_tablename).find('tfoot').html(tfooter.html());
     $('#' + var_tablename).find('tbody').html(body.html());
     $(".youtube").YouTubeModal({autoplay: 0, width: 640, height: 480});
+    
+    //set checkers
+    var arr = g_tbl[var_tablename].arrChecked;
+    for (var i=0;i<arr.length;i++){
+        console.log('i='+arr[i]);
+        $('.apd-table-checkbox[value=\''+arr[i]+'\'').attr("checked",true);
+    }
 }
 
 function addEmptyRow(tableid) {
@@ -988,7 +1003,7 @@ function exportToExcel(tableId) {
     console.log("row-" + JSON.stringify(row));
     data.push(row);
 
-    
+
     var colStartInd = 4;
     $('#' + tableId + ' tbody tr').each(function () {
         var cc = 0;

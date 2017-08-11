@@ -24,29 +24,33 @@ public class UserController {
 
 //    private String fullText;
     private File contentFile = null;
-    private String filename="";
+    private String filename = "";
 
     public UserController() throws IOException {
         GeneralProperties prop = new GeneralProperties();
         filename = "page_index.html";
-        String file = prop.getWorkingDir() + "../page/"+filename;
+        String file = prop.getWorkingDir() + "../page/" + filename;
         this.contentFile = new File(file);
     }
 
     public UserController(String filename) throws IOException {
         GeneralProperties prop = new GeneralProperties();
-        this.filename=filename;
-        String file = prop.getWorkingDir() + "../page/"+filename;
+        this.filename = filename;
+        String file = prop.getWorkingDir() + "../page/" + filename;
         this.contentFile = new File(file);
     }
 
-    
-    public void setFilename(String filename){
-        this.filename=filename;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
-    
+
     public String filterText(String userName) throws IOException, QException {
         Document doc = Jsoup.parse(this.contentFile, "UTF-8");
+
+        try {
+            QUtility.checkLangLabel(doc);
+        } catch (IOException ex) {
+        }
 
         /*HashMap<String, String> permissions = null;
         try {
@@ -56,35 +60,35 @@ public class UserController {
         } catch (Exception ex) {
 
         }*/
-        
         if (!userName.equals("__singup__")) {
-        
-        Element el = doc.getElementById("lang_id");
-        el.html(SessionManager.getCurrentLang());
 
-        Elements elements = doc.getElementsByAttribute("component_id");
-        for (Element element : elements) {
-            String componentid = element.attr("component_id");
-            System.out.println("component_id->"+componentid);
-            //eger component id usercontroler-de yoxdursa o zaman silinecekdir. eger varsa o zaman permission type nezere alinacaqdir.
-            
-            boolean isPermitted = false;
-            if (componentid.startsWith("role:")) {
-                isPermitted = SessionManager.hasRole(componentid.substring(5));
-            } else if (componentid.startsWith("rule:")) {
-                isPermitted = SessionManager.hasRule(componentid.substring(5));
-            } else if (componentid.startsWith("perm:")) {
-                isPermitted = SessionManager.isPermitted(componentid.substring(5));
-            } else {
+            Element el = doc.getElementById("lang_id");
+            el.html(SessionManager.getCurrentLang());
+
+            Elements elements = doc.getElementsByAttribute("component_id");
+            for (Element element : elements) {
+                String componentid = element.attr("component_id");
+                System.out.println("component_id->" + componentid);
+                //eger component id usercontroler-de yoxdursa o zaman silinecekdir. eger varsa o zaman permission type nezere alinacaqdir.
+
+                boolean isPermitted = false;
+                if (componentid.startsWith("role:")) {
+                    isPermitted = SessionManager.hasRole(componentid.substring(5));
+                } else if (componentid.startsWith("rule:")) {
+                    isPermitted = SessionManager.hasRule(componentid.substring(5));
+                } else if (componentid.startsWith("perm:")) {
+                    isPermitted = SessionManager.isPermitted(componentid.substring(5));
+                } else {
+                    isPermitted = true;
+                }
+
                 isPermitted = true;
-            }
-            
-            isPermitted = true;
-            //todo: remove component_id remove
-            
-            if (!isPermitted) {
-                element.remove();
-            } /*else {
+                //todo: remove component_id remove
+
+                if (!isPermitted) {
+                    element.remove();
+                }
+                /*else {
                 String type = permissions.get(componentid);
                 if (type.equals("n")) {
                     doc.getElementsByAttributeValue("component_id", componentid).stream().forEach((matchingComponent) -> {
@@ -96,7 +100,7 @@ public class UserController {
                     });
                 }
             }*/
-        }
+            }
         }
         return doc.getElementsByTag("body").get(0).toString();
     }

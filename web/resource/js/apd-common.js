@@ -613,11 +613,8 @@ function fillSwitchList(e,inData) {
 }
 
 function fillCombobox(e, inData) {
-    
     var dependence_id = $(e).attr('dependence_id');
     var main_id = $(e).attr('id');
-    var kv = $(e).attr('apd-form-fill-kv');
-    
     //dependence_id varsa ve inData yoxdursa o zaman sorgu gondermeyecek
     if (dependence_id && !inData) {
         return;
@@ -645,7 +642,6 @@ function fillCombobox(e, inData) {
     var select_value = $(e).attr('select_value');
     var select_separator = $(e).attr('select_separator');
     var has_null = $(e).attr('has_null');
-    
     //send_data="id=5,color=green" formatda olur
     var send_data = $(e).attr('send_data');
     var selected_value = $(e).attr('selected_value');
@@ -671,25 +667,25 @@ function fillCombobox(e, inData) {
         select_separator = ' - ';
     }
     if (typeof has_null === 'undefined' || !has_null) {
-        has_null = '';
+        has_null = '__2__';
     }
-    if (typeof ph === 'undefined' || !ph) {
-        has_null = '------';
+//    if (typeof ph === 'undefined' || !ph) {
+//        has_null = '------';
+//    }
+    console.log('url ='+url+','+has_null)
+    if (has_null!=='__2__') {
+        $(e).append($("<option />").val('___2___').text('----'));
     }
     
-    if (has_null.length > 0) {
-        $(e).append($("<option hidden style='color:#C7C7C7'/>").val('').text(ph));
-    }
-    
-    if (has_all === '1') {
-                    $(e).append($("<option />").val('').text("All"));
-                }
+//    if (has_all === '1') {
+//                    $(e).append($("<option />").val('').text("All"));
+//                }
 
     if (typeof selected_value === 'undefined' || !selected_value) {
         selected_value = '';
     }
 
-    if (typeof send_data !== 'undefined' && send_data) {
+    if (typeof send_data != 'undefined' && send_data) {
         var vs = send_data.split(",");
         for (var k = 0; k < vs.length; k++) {
             var arr = vs[k].split("=");
@@ -727,10 +723,9 @@ function fillCombobox(e, inData) {
                 if (has_other === '1') {
                     $(e).append($("<option />").val("__2__").text("Other"));
                 }
-                
             }
             var mv = $(e).attr("multiple");
-            if (typeof mv !== 'undefined' && mv !== 'multiple') {
+            if (mv != 'multiple') {
                 $(e).addClass('selectpicker');
                 $(e).attr("data-show-subtext", "true");
                 $(e).attr("data-live-search", "true");
@@ -852,22 +847,30 @@ function showAgenda() {
 function fillStatisticField(matrixId) {
     $('#f4statistic').html("");
     $('#f4figure').html("");
+    $('#f4figureSingle').html("");
     
+
     $('#tbl_inspectiomatrix_list').closest('div[class=custom-table]').find('.apd-table-cols').each(function () {
         var el = $(this);
         var cn = el.attr("cn");
-        console.log(cn);
+//        console.log(cn);
         var cnm = el.attr("cnm");
+        var cnt = el.attr("cntitle");
 
 //        if (!el.is(":checked")) {
 //             console.log('lolo- '+cn);
         $('#f4statistic').append($("<option />")
                 .val(cn)
-                .text(getLabel(cnm)));
+                .text(cnt));
         $('#f4figure').append($("<option />")
                 .val(cn)
-                .text(getLabel(cnm)));
+                .text(cnt));
+        $('#f4figureSingle').append($("<option />")
+                .val(cn)
+                .text(cnt));
+        
         $('#f4figure').multiselect('rebuild');
+        $('#f4figureSingle').multiselect('rebuild');
 //        }
 
 
@@ -969,7 +972,7 @@ function createArrayFromTableCol(e) {
 
 function fillStatistic(e) {
     var n = createArrayFromTableCol(e);
-    console.log(JSON.stringify(n))
+//    console.log(JSON.stringi  fy(n))
 //    var n = [44, 55, 66, 77];
     var mean = jStat.mean(n);
     var min = jStat.min(n);

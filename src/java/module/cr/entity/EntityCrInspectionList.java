@@ -255,9 +255,5 @@ public class EntityCrInspectionList extends CoreEntity {
         this.lang = lang;
     }
     
-    @Override
-    public String selectDbname() {
-        return "apdvoice";//temp
-    }
-
+     
 }

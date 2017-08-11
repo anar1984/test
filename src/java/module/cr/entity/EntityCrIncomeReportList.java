@@ -54,9 +54,6 @@ public class EntityCrIncomeReportList extends CoreEntity {
         this.currency = currency;
     }
     
-    @Override
-    public String selectDbname() {
-        return "apdvoice";//temp
-    }
+     
 
 }

@@ -8,22 +8,15 @@ package job;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import module.cr.entity.EntityCrCompany;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import utility.MailSender;
 import utility.QException;
 import utility.SessionManager;
-import utility.sqlgenerator.DBConnection;
-import utility.sqlgenerator.QLogger;
 
 /**
  *
@@ -40,33 +33,42 @@ public class CompanyJob /*implements Job*/ {
             System.out.println("send mail error: "+e.getMessage());
         }*/
         //Connection conn = null;
-        try {
+        try {   
+            System.out.println("ok 0");
             Connection conn = SessionManager.getCurrentConnection();//new DBConnection().getConnection();
             //conn.setAutoCommit(false);
             //SessionManager.setConnection(Thread.currentThread().getId(), conn);
-
-            PreparedStatement pst = conn.prepareStatement("select lower(table_name) table_name from cr_user_tables where type='t'");
+            System.out.println("ok 1");
+            PreparedStatement pst = conn.prepareStatement("select lower(table_name) "
+                    + "table_name from apdvoice.cr_user_tables where type='t'");
             ResultSet rst = pst.executeQuery();
             List<String> tableList = new ArrayList<>();
             while (rst.next()) {
                 tableList.add(rst.getString(1));
             }
-            
-            pst = conn.prepareStatement("SELECT ut.table_script FROM cr_user_tables ut WHERE ut.type='v' ORDER BY SEQNUM");
+                        System.out.println("ok 2");
+
+            pst = conn.prepareStatement("SELECT ut.table_script "
+                    + "FROM apdvoice.cr_user_tables ut WHERE ut.type='v' ORDER BY SEQNUM");
             rst = pst.executeQuery();
             List<String> viewList = new ArrayList<>();
             while (rst.next()) {
                 viewList.add(rst.getString(1));
             }
+            System.out.println("ok 3");
 
-            PreparedStatement ps = conn.prepareStatement("select c.id, lower(c.company_domain) company_domain, u.email_1, company_db, company_type, u.id user_id "
+            PreparedStatement ps = conn.prepareStatement("select c.id, "
+                    + "lower(c.company_domain) company_domain, u.email_1, "
+                    + "company_db, company_type, u.id user_id "
                     + "from cr_company c, cr_user u "
                     + "where c.status = ?  and c.id=u.fk_company_id order by c.insert_date");
             ps.setString(1, EntityCrCompany.CompanyStatus.PENDING.toString());
             ResultSet rs = ps.executeQuery();
             
-            Pattern p = Pattern.compile("\\$\\{companyDb\\}");
+                        System.out.println("ok 4");
 
+            Pattern p = Pattern.compile("\\$\\{companyDb\\}");
+            System.out.println("ok 5");
 
             while (rs.next()) {
                 String companyDb = rs.getString("company_db");
@@ -80,6 +82,7 @@ public class CompanyJob /*implements Job*/ {
                 psu.setString(2, id);
                 psu.executeUpdate();
                 //conn.commit();
+            System.out.println("ok 6");
 
                 Statement stmt = conn.createStatement();
 
@@ -109,14 +112,15 @@ public class CompanyJob /*implements Job*/ {
                     psu.executeUpdate();
                 }*/
 
-                psu = conn.prepareStatement("UPDATE cr_company SET status=? WHERE id=? AND status=?");
+                psu = conn.prepareStatement("UPDATE apdvoice.cr_company SET status=? WHERE id=? AND status=?");
                 psu.setString(1, EntityCrCompany.CompanyStatus.ACTIVE.toString());
                 psu.setString(2, id);
                 psu.setString(3, EntityCrCompany.CompanyStatus.CREATE.toString());
                 psu.executeUpdate();
                 //conn.commit();
 
-                MailSender.send(email, "Company registered", "Your company " + companyDb + " registered successfully.");
+//                MailSender.send(email, "Company registered", "Your company " + 
+//                        companyDb + " registered successfully.");
 
                 System.out.println(companyDb + " company created");
 

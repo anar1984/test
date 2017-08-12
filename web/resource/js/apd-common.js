@@ -266,9 +266,9 @@ function showPanelByMenuClick() {
 //    showList($('#' + id).attr('data-tab'));
 }
 function toggleSubmoduleButton() {
-    $('.apd-subm-attr-button').each(function () {
-        $(this).toggle();
-    });
+//    $('.apd-subm-attr-button').each(function () {
+//        $(this).toggle();
+//    });
     s_h_sm_attribute_buttons();
 }
 
@@ -282,6 +282,8 @@ function loadInspectionListBySession(e) {
 //    s_h_sm_attribute_buttons();
     hideAndDisableAddInspection();
     loadTable('tbl_inspection_list');
+    $('.toggle-on-click').hide(1000);
+    $('.toggle-on-click-session').hide(1000);
 }
 
 function toggleNewSession(e) {
@@ -310,16 +312,16 @@ function showAddInspection() {
 }
 
 function toggleNewInspection(e) {
-    $("#apd-submodule-button-list-id").fadeToggle("slide");
-    var f = (-1) * parseInt($(e).attr("f"));
-    $(e).attr("f", f);
-
-    if (f === -1) {
-        $(e).attr("style", "border-color:#D4AC0D;background-color:#D4AC0D;");
-    } else {
-        $(e).attr("style", "border-color:#00b289;background-color:#00b289;");
-    }
-    s_h_sm_attribute_buttons();
+//    $("#apd-submodule-button-list-id").fadeToggle("slide");
+//    var f = (-1) * parseInt($(e).attr("f"));
+//    $(e).attr("f", f);
+//
+//    if (f === -1) {
+//        $(e).attr("style", "border-color:#D4AC0D;background-color:#D4AC0D;");
+//    } else {
+//        $(e).attr("style", "border-color:#00b289;background-color:#00b289;");
+//    }
+//    s_h_sm_attribute_buttons();
 }
 
 function loadSession(e) {
@@ -330,6 +332,9 @@ function loadSession(e) {
     loadTable('tbl_appointment_list');
     enableSubmoduleDiv();
     showAddInspection();
+    $('.toggle-on-click').show(1000);
+    $('#newSessionToggle').attr("style", "border-color:#00b289;background-color:#00b289;");
+//     $('.toggle-on-click').show(1000);
 //    $('#tbl_appointment_list .apd-table-checkbox').click();
 }
 
@@ -518,38 +523,38 @@ function getQTime(e) {
     return v;
 }
 
-function fillSwitchList(e,inData) {
- 
-    
-     var json;
+function fillSwitchList(e, inData) {
+
+
+    var json;
     if (inData) {
         json = inData;
     } else {
         json = {kv: {}};
     }
-   
-    
+
+
     $(e).children().remove();
 
     var url = $(e).attr('srv_url');
     if (typeof url === 'undefined' || !url) {
         return;
     }
-    
+
     var select_text = $(e).attr('select_text');
     var select_value = $(e).attr('select_value');
     var select_id = $(e).attr('select_id');
     var select_separator = $(e).attr('select_separator');
     var name = $(e).attr('name');
     var send_data = $(e).attr('send_data');
-    
+
     if (typeof selected_value === 'undefined' || !selected_value) {
         selected_value = '';
     }
     if (typeof select_separator === 'undefined' || !select_separator) {
         select_separator = ' - ';
     }
-    
+
     if (typeof send_data !== 'undefined' && send_data) {
         var vs = send_data.split(",");
         for (var k = 0; k < vs.length; k++) {
@@ -559,9 +564,9 @@ function fillSwitchList(e,inData) {
             json.kv[key] = val;
         }
     }
-    
-    
-    
+
+
+
     var data = JSON.stringify(json);
     $.ajax({
         url: "api/post/" + url,
@@ -581,35 +586,35 @@ function fillSwitchList(e,inData) {
                     var t = '';
                     var v = objChild[j][select_value];
                     var val = objChild[j][select_id];
-                    var checked='';
-                    if (v==='1') {
-                        checked='checked';
+                    var checked = '';
+                    if (v === '1') {
+                        checked = 'checked';
                     }
                     var vs = select_text.split(",");
                     for (var k = 0; k < vs.length; k++) {
                         t += objChild[j][vs[k]] + select_separator;
                     }
                     t = t.substr(0, t.length - select_separator.length);
-                    var li='<li class="list-group-item">'+t+'<div class="material-switch pull-right">';
-                    li += '<input id="'+name+j+'" name="'+name+'" type="checkbox" '+checked+' value="'+val+'"/>';
-                    li += '<label for="'+name+j+'" class="label-success"></label>';
+                    var li = '<li class="list-group-item">' + t + '<div class="material-switch pull-right">';
+                    li += '<input id="' + name + j + '" name="' + name + '" type="checkbox" ' + checked + ' value="' + val + '"/>';
+                    li += '<label for="' + name + j + '" class="label-success"></label>';
                     li += '</div> </li>';
-                    
-                    
-                    
+
+
+
                     $(e).append($(li));
                 }
                 /*if (has_other === '1') {
-                    $(e).append($("<option />").val("__2__").text("Other"));
-                }*/
+                 $(e).append($("<option />").val("__2__").text("Other"));
+                 }*/
             }
-            
+
         },
         error: function (res, status) {
             alert(getMessage('somethingww'));
         }
     });
-    
+
 }
 
 function fillCombobox(e, inData) {
@@ -654,7 +659,7 @@ function fillCombobox(e, inData) {
     if (typeof has_other === 'undefined' || !has_other) {
         has_other = '0';
     }
-    
+
     if (typeof has_all === 'undefined' || !has_all) {
         has_all = '0';
     }
@@ -672,11 +677,11 @@ function fillCombobox(e, inData) {
 //    if (typeof ph === 'undefined' || !ph) {
 //        has_null = '------';
 //    }
-    console.log('url ='+url+','+has_null)
-    if (has_null!=='__2__') {
+//    console.log('url ='+url+','+has_null)
+    if (has_null !== '__2__') {
         $(e).append($("<option />").val('___2___').text('----'));
     }
-    
+
 //    if (has_all === '1') {
 //                    $(e).append($("<option />").val('').text("All"));
 //                }
@@ -799,6 +804,10 @@ function getAgendaOfDoctor(fkDoctorUserId) {
 
 function getDiscountedPrice(e) {
     var paymentDiscount = $(e).closest("form").find('#paymentDiscount').val();
+    paymentDiscount = parseFloat(paymentDiscount);
+    if (isNaN(paymentDiscount)) {
+        paymentDiscount = 0;
+    }
     var fkPriceListId = $(e).closest("form").find('#fkPriceListId').val();
     var json = {kv: {}};
     json.kv.paymentDiscount = paymentDiscount;
@@ -848,7 +857,7 @@ function fillStatisticField(matrixId) {
     $('#f4statistic').html("");
     $('#f4figure').html("");
     $('#f4figureSingle').html("");
-    
+
 
     $('#tbl_inspectiomatrix_list').closest('div[class=custom-table]').find('.apd-table-cols').each(function () {
         var el = $(this);
@@ -868,7 +877,7 @@ function fillStatisticField(matrixId) {
         $('#f4figureSingle').append($("<option />")
                 .val(cn)
                 .text(cnt));
-        
+
         $('#f4figure').multiselect('rebuild');
         $('#f4figureSingle').multiselect('rebuild');
 //        }
@@ -929,7 +938,7 @@ function getVoiceAnalyse(filename) {
         async: false,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
-            console.log(JSON.stringify(res));
+//            console.log(JSON.stringify(res));
             if (res.kv) {
                 $('#sa_201707081329440581').val(res.kv.median);
                 $('#sa_201707081330020388').val(res.kv.jitter_loc);
@@ -1026,7 +1035,7 @@ function fillStatistic(e) {
             .append($('<td></td>').append(parseFloat(mean - 2.576 * se) + ' - ' + parseFloat(mean + 2.576 * se))));
     table1.append($('<tr></tr>')
             .append($('<td></td>').append(("99.9%, 3.291*SE_x̄")))
-            .append($('<td></td>').append(parseFloat(mean - 3.291 * se) + ' - ' + parseFloat(mean +3.291 * se))));
+            .append($('<td></td>').append(parseFloat(mean - 3.291 * se) + ' - ' + parseFloat(mean + 3.291 * se))));
     table1.append($('<tr></tr>')
             .append($('<td></td>').append(("99.99%, 3.891*SE_x̄")))
             .append($('<td></td>').append(parseFloat(mean - 3.891 * se) + ' - ' + parseFloat(mean + 3.891 * se))));
@@ -1042,7 +1051,22 @@ function fillStatistic(e) {
 
 }
 
-
+function patientSelectAction(e) {
+    var val = $(e).val();
+    if (typeof val !== typeof undefined && val !== false) {
+        var st = 'id=' + val;
+        var st1 = 'fkPatientId='+val;
+        $('#btn_serviceCrUpdatePatient').attr("apd-form-fill-kv", st);
+        $('#btn_serviceCrUpdatePatient').removeAttr("disabled");
+         g_tbl['tbl_appointment_list'].kv=st1;
+         //refresh table
+       
+         $('#tbl_appointment_list').closest('div[class="custom-table"]')
+                 .find('.table-filter-comp').first().change();
+    } else {
+        $('#btn_serviceCrUpdatePatient').attr("disabled", "disabled");
+    }
+}
 
 (function ($) {
     $.fn.extend({

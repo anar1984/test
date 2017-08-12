@@ -826,7 +826,7 @@ public class CrController {
     public Carrier getReportLineList4Print(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController("general", cp.hasValue(carrier, "id"));
-        carrier.addController("general", cp.hasValue(carrier, "fkModuleId"));
+//        carrier.addController("general", cp.hasValue(carrier, "fkModuleId"));
         carrier.addController("general", cp.hasValue(carrier, "fkSessionId"));
 //        carrier.addController("general",
 //                cp.isExistInEntity(new EntityCrInspection(),

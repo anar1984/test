@@ -303,7 +303,7 @@ public class CrModel {
             String tn = "permission";
             int rc = carrier.getTableRowCount(tn);
             for (int i = 0; i < rc; i++) {
-                System.out.println("id" + (i + 1) + carrier.getValue(tn, i, "ruleId").toString());
+//                System.out.println("id" + (i + 1) + carrier.getValue(tn, i, "ruleId").toString());
                 EntityCrRelUserRule entUserRule = new EntityCrRelUserRule();
                 entUserRule.setFkUserId(ent.getId());
                 entUserRule.setFkRuleId(carrier.getValue(tn, i, "ruleId").toString());
@@ -344,7 +344,7 @@ public class CrModel {
             String tn = "permission";
             int rc = carrier.getTableRowCount(tn);
             for (int i = 0; i < rc; i++) {
-                System.out.println("id" + (i + 1) + carrier.getValue(tn, i, "ruleId").toString());
+//                System.out.println("id" + (i + 1) + carrier.getValue(tn, i, "ruleId").toString());
                 entUserRule = new EntityCrRelUserRule();
                 entUserRule.setFkUserId(ent.getId());
                 entUserRule.setFkRuleId(carrier.getValue(tn, i, "ruleId").toString());
@@ -824,6 +824,7 @@ public class CrModel {
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
 
+        
         return carrier;
     }
 
@@ -1098,6 +1099,7 @@ public class CrModel {
 
     public static Carrier getAppointmentList(Carrier carrier) throws QException {
         EntityCrAppointment ent = new EntityCrAppointment();
+        
         EntityManager.mapCarrierToEntity(carrier, ent);
         if (!ent.hasSortBy()) {
             ent.addSortBy(EntityCrAppointment.APPOINTMENT_STATUS);
@@ -1235,7 +1237,7 @@ public class CrModel {
         entLangDesc.setLangDef(carrier.getValue(EntityCrModule.MODULE_DESCRIPTION).toString());
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
-
+        
         return carrier;
     }
 
@@ -1887,10 +1889,11 @@ public class CrModel {
         String res = "170000001";
 
         EntityCrPatient ent = new EntityCrPatient();
+        ent.setDeepWhere(false);
         ent.addSortBy(EntityCrPatient.PATIENT_ID);
         ent.setSortByAsc(false);
         ent.setStartLimit(0);
-        ent.setEndLimit(1);
+        ent.setEndLimit(0);
         EntityManager.select(ent);
 
         try {
@@ -2119,7 +2122,9 @@ public class CrModel {
                 "fkSubmoduleAttributeId", "saSubmoduleAttributeId");
         carrier.removeKey("startLimit");
         carrier.removeKey("endLimit");
-
+        
+//        System.out.println("get inspection  -> "+   cIns.getJson());
+        
         //get user info
         EntityCrUserList entUser = new EntityCrUserList();
         entUser.setDeepWhere(false);
@@ -2136,7 +2141,9 @@ public class CrModel {
                 new String[]{"userPersonName", "userPersonSurname", "userPersonMiddlename"}, " ");
         cIns.mergeCarrier(tnIns, "fkUserId", "doctorFullname", cprUser);
 
-        //get and merge patient info
+//         out.println("merget with EntityCrUserList  -> "+   cIns.getJson());
+       
+         //get and merge patient info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkPatientId"));
         Carrier crPatient = getPatientList(carrier);
         cIns.mergeCarrier(tnIns, "fkPatientId", crPatient, CoreLabel.RESULT_SET,
@@ -2144,11 +2151,15 @@ public class CrModel {
                     "patientSurname", "patientMiddleName", "patientBirthDate",
                     "patientBirthPlace", "sex"});
 
-        //get and merge patient sex info
+       
+       
+         //get and merge patient sex info
         Carrier cprSex = QUtility.getListItem("sex",
                 carrier.getValue("sexName").toString());
-        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
+        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex); 
 
+        
+       
         //get  and merge submodule attribute info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkSubmoduleAttributeId"));
         Carrier crSA = getSubmoduleAttributeList(carrier);
@@ -2157,29 +2168,40 @@ public class CrModel {
                     "fkSubmoduleId", "submoduleValue", "hasOther",
                     "sortBy"});
 
+        
+       
         //get and merge attribute info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkAttributeId"));
         Carrier cAttr = getAttributeList(carrier);
         cIns.mergeCarrier(tnIns, "fkAttributeId", cAttr, CoreLabel.RESULT_SET,
                 "id", new String[]{"attributeCode", "attributeName"});
 
+        
+       
         //get and merge module info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkModuleId"));
         Carrier cModule = getModuleList(carrier);
         cIns.mergeCarrier(tnIns, "fkModuleId", cModule, CoreLabel.RESULT_SET,
                 "id", new String[]{"moduleName"});
 
+        
+       
         //get and merge submodule info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkSubmoduleId"));
         Carrier cSM = getSubmoduleList(carrier);
         cIns.mergeCarrier(tnIns, "fkSubmoduleId", cSM, CoreLabel.RESULT_SET,
                 "id", new String[]{"submoduleName"});
 
+        
+       
         ////
         cIns.renameTableName(tnIns, CoreLabel.RESULT_SET);
 
         ///  generate finalValue
         cIns = addFinalValue(cIns, carrier.getValue("finalValue").toString());
+        
+        
+       
         /////
 
         cIns.addTableSequence(CoreLabel.RESULT_SET,
@@ -2626,16 +2648,19 @@ public class CrModel {
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
-            String json = "{\"kv\":{}}";
-            String servicename = "serviceCrGetAppointmentList";
-            //
-
-            Carrier c = new Carrier();
-            c.setServiceName(servicename);
-            c.fromJson(json);
-            System.out.println(c.getJson());
-            //            System.out.println(c.getJson());
-            CallDispatcher.callService(c);
+            
+            EntityCrSubmoduleAttribute ent = new EntityCrSubmoduleAttribute();
+            Carrier c = EntityManager.select(ent);
+//            String json = "{\"kv\":{}}";
+//            String servicename = "serviceCrGetInspectionList";
+//            //
+//
+//            Carrier c = new Carrier();
+//            c.setServiceName(servicename);
+//            c.fromJson(json);
+////            System.out.println(c.getJson());
+//            //            System.out.println(c.getJson());
+//            CallDispatcher.callService(c);
             conn.commit();
             conn.close();
         } catch (Exception ex) {
@@ -2661,7 +2686,7 @@ public class CrModel {
             CommonConfigurationProperties prop = new CommonConfigurationProperties();
             String praatline = prop.getProperty("praatline");
             praatline += filename;
-            System.out.println("praat line-> " + praatline);
+//            System.out.println("praat line-> " + praatline);
             Process p = Runtime.getRuntime().exec(praatline);
 
             p.waitFor();
@@ -2686,7 +2711,7 @@ public class CrModel {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println("praat resposse line"+line);
+//                System.out.println("praat resposse line"+line);
                 String[] st = line.split(",");
                 if (st.length == 9) {
                     min = st[0];
@@ -2883,7 +2908,7 @@ public class CrModel {
         ln += ") T";
         ln += line.trim().length() > 0 ? " WHERE " + line : "";
 
-        System.out.println("sql->" + ln);
+//        System.out.println("sql->" + ln);
 
         String[] st1 = new String[arr.size()];
         int idx = 0;

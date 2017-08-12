@@ -10,7 +10,6 @@
             <li><a data-toggle="tab" href="#stat" qlang>basicstatistic</a></li>
             <li><a data-toggle="tab" href="#figure" qlang>figure</a></li> 
             <li><a data-toggle="tab" href="#regression" qlang>regression</a></li>
-
         </ul>
     </div>
 
@@ -38,7 +37,6 @@
             </div>
             <div  id= "patientlist" class="col-md-12 apd-page-body"> 
             </div>  
-
 
 
 
@@ -81,13 +79,34 @@
         <div id="figure" class="col-md-12  tab-pane fade      ">
             <br>
             <div class="col-md-12  ">
-                <div class="col-md-5">
-                    <label   qlang>field</label>
+                <div class="col-md-12">
+                    <label   qlang>field_y_axis</label>
                     <select id="f4figure" class="form-control" multiple>
                     </select>
+
+                    <label   qlang>field_x_axis</label>
+                    <select id="f4figureSingle" class="form-control" >
+                    </select>
+                    <button type="button"  id="id1"   class="btn btn-md" qlang 
+                            onclick="drawSeries(this)">
+                        drawLine</button>
+                    <button type="button"   id="id2"  class="btn btn-md" qlang 
+                            onclick="drawBar(this)">
+                        drawBar</button>
+                     <button type="button"   id="id3"  class="btn btn-md" qlang 
+                            onclick="drawPie(this)">
+                        drawPie</button>
+                    
                 </div>
-            </div>
+                <div class="col-md-12"  >
+                    <hr>
+                </div>
+                <div class="col-md-12" id="linechart_material" style="width: 100%; height: 400px;">
+
+                </div>
+            </div> 
         </div>
+
         <!--        regression tab-->
         <div id="regression" class="col-md-12  tab-pane fade      ">
             <br>

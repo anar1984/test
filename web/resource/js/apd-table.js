@@ -181,7 +181,8 @@ function createTableDivHTML(data, var_tablename) {
     for (var n = 0; n < seqArr.length; n++) {
         var childLi = $('<li></li>').addClass("apd-table-li");
         var ln = '<input type="checkbox" class="apd-table-cols" checked';
-        ln += ' cn="_c' + n + '" cnm="' + colType[seqArr[n]] + '"> ';
+        ln += ' cn="_c' + n + '" cnm="' + colType[seqArr[n]] +
+                '" cntitle="' + colPair[seqArr[n]] + '"> ';
         ln += colPair[seqArr[n]];
         childLi.html(ln);
         childUl.append(childLi);
@@ -355,6 +356,8 @@ function loadTable(var_tablename, data) {
     var list_url = g_tbl[var_tablename].list_url;
     var sourceId = g_tbl[var_tablename].result_div_id;
     var tablename = g_tbl[var_tablename].response_tn;
+    
+
     if (!list_url) {
         return;
     }
@@ -363,6 +366,8 @@ function loadTable(var_tablename, data) {
         tablename = "Response";
     }
 
+
+    
     var json;
     if (data) {
         json = data;
@@ -372,6 +377,18 @@ function loadTable(var_tablename, data) {
     } else {
         json = {kv: {}};
     }
+    
+    var kv = g_tbl[var_tablename].kv;
+    if (typeof kv !== 'undefined' && kv) {
+        var arr = kv.split(',');
+        for (var i in arr) {
+            var t = arr[i].split('=');
+            var key = t[0];
+            var val = t[1];
+            json.kv[key] = val;
+        }
+    }
+    
     g_tbl[var_tablename].startLimit = 0;
     g_tbl[var_tablename].endLimit = global_var.default_per_page;
 
@@ -632,10 +649,17 @@ function createTriggerRowHTML(var_tablename, row_id) {
 
 function getTableCheckBoxTriggerEventButtonHtml(var_tablename, row_id) {
     var checkboxHTML = '';
-    checkboxHTML = '<input type="checkbox" ' +
-            ' class="apd-table-checkbox" ' +
-            ' name=\' ' + g_tbl[var_tablename].response_tn + ' \' ' +
-            ' value =\'' + row_id + ' \'>';
+    checkboxHTML = '<input type="checkbox" ';
+    checkboxHTML += ' class="apd-table-checkbox" ';
+    checkboxHTML += ' name=\' ' + g_tbl[var_tablename].response_tn + ' \' ';
+    checkboxHTML += ' value =\'' + row_id;
+    var id = (row_id);
+    if (jQuery.inArray(id, g_tbl[var_tablename].arrChecked) > -1) {
+        checkboxHTML += ' checked="checked"';
+    }
+    checkboxHTML += ' \'>';
+
+//    console.log(id+ " - "+JSON.stringify(g_tbl[var_tablename].arrChecked));;
     return checkboxHTML;
 }
 
@@ -678,6 +702,18 @@ function getTableFilterData(tableId) {
             json.kv[$(this).attr("name")] = $(this).val();
         }
     });
+    
+    var kv = g_tbl[tableId].kv;
+    if (typeof kv !== 'undefined' && kv) {
+        var arr = kv.split(',');
+        for (var i in arr) {
+            var t = arr[i].split('=');
+            var key = t[0];
+            var val = t[1];
+            json.kv[key] = val;
+        }
+    }
+    
     return json;
 }
 
@@ -799,6 +835,13 @@ function fillTableBodyByid(var_tablename, data, start_ind) {
     $('#' + var_tablename).find('tfoot').html(tfooter.html());
     $('#' + var_tablename).find('tbody').html(body.html());
     $(".youtube").YouTubeModal({autoplay: 0, width: 640, height: 480});
+
+    //set checkers
+    var arr = g_tbl[var_tablename].arrChecked;
+    for (var i = 0; i < arr.length; i++) {
+//        console.log('i='+arr[i]);
+        $('.apd-table-checkbox[value=\'' + arr[i] + '\'').attr("checked", true);
+    }
 }
 
 function addEmptyRow(tableid) {
@@ -984,11 +1027,11 @@ function exportToExcel(tableId) {
         o.wch = columns[i].length + 2;
         wscols.push(o);
     }
-    console.log("wscols-" + JSON.stringify(wscols));
-    console.log("row-" + JSON.stringify(row));
+//    console.log("wscols-" + JSON.stringify(wscols));
+//    console.log("row-" + JSON.stringify(row));
     data.push(row);
 
-    
+
     var colStartInd = 4;
     $('#' + tableId + ' tbody tr').each(function () {
         var cc = 0;
@@ -1006,7 +1049,7 @@ function exportToExcel(tableId) {
         data.push(row_t);
     });
 
-    console.log("data-" + JSON.stringify(data));
+//    console.log("data-" + JSON.stringify(data));
 
 
     var ws_name = "SheetJS";
@@ -1095,7 +1138,7 @@ function sheet_from_array_of_arrays(data, opt, wscols) {
                         {name: 'accent5', rgb: '4BACC6'};
 
             }
-            console.log("C=" + C)
+//            console.log("C=" + C)
             if (data[R][C] && wscols[C].wch < data[R][C].length) {
                 wscols[C].wch = data[R][C].length + 2;
             }

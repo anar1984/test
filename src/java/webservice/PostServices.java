@@ -61,7 +61,7 @@ public class PostServices {
     private ExecutorService executorService = java.util.concurrent.Executors.newCachedThreadPool();
 //    SMSSender smsSender = new SMSSender();
 
-    /** 
+    /**
      * Creates a new instance of AndroidWS
      */
     public PostServices() {
@@ -85,6 +85,17 @@ public class PostServices {
         Carrier carrier = new Carrier();
 //        System.out.println("uploaded file json->" + jsonData);
         carrier.fromJson(jsonData);
+
+        Cookie cookie = headers.getCookies().get("apdtok");
+        String cs = cookie.getValue();
+        EntityCrUser user = null;
+
+        user = SessionHandler.getTokenFromCookie(cs);
+
+        SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
+        SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
+        SessionManager.setDomain(Thread.currentThread().getId(), user.selectDomain());
+        SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
 
         CommonConfigurationProperties prop = new CommonConfigurationProperties();
 
@@ -128,7 +139,6 @@ public class PostServices {
 
         c.setValue("msg", msg);
         c.setValue("uploaded_file_name", fileName);
-        
 
         return Response.status(Response.Status.OK)
                 .entity(c.getJson()).build();
@@ -159,8 +169,6 @@ public class PostServices {
             EntityCrUser user = SessionHandler.checkLogin(usename, password, domain);
             user.setLang(lang);
             user.setDomain(user.selectDbname());
-            
-            
 
             token = SessionHandler.encryptUser(user);
             String fullname = "";
@@ -246,7 +254,7 @@ public class PostServices {
             asyncResponse.resume(doCallDispatcher(headers, servicename, jsonNew));
         });
     }
-    
+
     @POST
     @Compress
     @Path(value = "nali/{code}")
@@ -289,7 +297,7 @@ public class PostServices {
             }
 
             asyncResponse.resume(res);*/
-            
+
             System.out.println("json->" + json);
 
             Carrier carrier = new Carrier();
@@ -307,14 +315,9 @@ public class PostServices {
             String servicename = "serviceCrGetListItemList";
 
             asyncResponse.resume(doCallDispatcherNoToken(headers, servicename, jsonNew));
-            
 
         });
     }
-    
-    
-
-    
 
     @POST
     @Path(value = "srv/{servicename}")
@@ -327,7 +330,7 @@ public class PostServices {
             asyncResponse.resume(doCallDispatcher(headers, servicename, json));
         });
     }
-    
+
     @POST
     @Path(value = "nasrv/{servicename}")
     @Compress
@@ -337,14 +340,11 @@ public class PostServices {
             final String servicename, final String json) {
         executorService.submit(() -> {
             asyncResponse.resume(doCallDispatcherNoToken(headers, servicename, json));
-            
-            
-           // asyncResponse.resume(doCallDispatcher(headers, servicename, json));
+
+            // asyncResponse.resume(doCallDispatcher(headers, servicename, json));
         });
     }
-    
-    
-    
+
     @GET
     @Path(value = "signup/activate/{activationId}")
     @Compress
@@ -353,25 +353,24 @@ public class PostServices {
             final AsyncResponse asyncResponse, @PathParam(value = "activationId")
             final String activationId, final String json) {
         executorService.submit(() -> {
-            
+
             Carrier carrier = new Carrier();
             carrier.fromJson(json);
             carrier.setValue("activationId", activationId);
- 
+
             String jsonNew = "";
             try {
                 jsonNew = carrier.getJson();
             } catch (QException ex) {
 
             }
-            
+
             asyncResponse.resume(doCallDispatcherNoToken(headers, "serviceCrActivateCompany", jsonNew));
-            
-            
-           // asyncResponse.resume(doCallDispatcher(headers, servicename, json));
+
+            // asyncResponse.resume(doCallDispatcher(headers, servicename, json));
         });
     }
-    
+
     @GET
     @Path(value = "signup/resend/{userId}")
     @Compress
@@ -380,26 +379,24 @@ public class PostServices {
             final AsyncResponse asyncResponse, @PathParam(value = "userId")
             final String userId, final String json) {
         executorService.submit(() -> {
-            
+
             Carrier carrier = new Carrier();
             carrier.fromJson(json);
             carrier.setValue("userId", userId);
- 
+
             String jsonNew = "";
             try {
                 jsonNew = carrier.getJson();
             } catch (QException ex) {
 
             }
-            
+
             asyncResponse.resume(doCallDispatcherNoToken(headers, "serviceCrResendEmail", jsonNew));
-            
-            
-           // asyncResponse.resume(doCallDispatcher(headers, servicename, json));
+
+            // asyncResponse.resume(doCallDispatcher(headers, servicename, json));
         });
     }
-    
-    
+
     @POST
     @Compress
     @Path(value = "li/{code}/{sortbykey}")
@@ -421,7 +418,6 @@ public class PostServices {
             asyncResponse.resume(doCallDispatcher(headers, servicename, jsonNew));
         });
     }
-    
 
     private Response doCallDispatcher(@Context HttpHeaders headers, @PathParam("servicename") String servicename, String json) {
         Connection conn = null;
@@ -446,7 +442,7 @@ public class PostServices {
 
 //        SessionManager.setUserName(Thread.currentThread().getId(),"admin1");
             //if (!SessionManager.hasAccessToService(servicename)) {
-              //return Response.status(Response.Status.FORBIDDEN).build();
+            //return Response.status(Response.Status.FORBIDDEN).build();
             //}
             System.out.println("Start-" + SessionManager.getCurrentUsername() + ":" + QDate.getCurrentDate() + ":" + QDate.getCurrentTime() + ":" + servicename);
 
@@ -459,7 +455,7 @@ public class PostServices {
             System.out.println(servicename + " | - Service Executing Time: " + (System.currentTimeMillis() - serviceTime));
             conn.commit();
             //conn.close();
-          
+
             return res;
         } catch (JoseException ex) {
             DBConnection.rollbackConnection(conn);
@@ -473,10 +469,9 @@ public class PostServices {
             DBConnection.closeConnection(conn);
             SessionManager.cleanSessionThread();
         }
-        
-        
+
     }
-    
+
     private Response doCallDispatcherNoToken(@Context HttpHeaders headers, @PathParam("servicename") String servicename, String json) {
         Connection conn = null;
         try {
@@ -492,10 +487,8 @@ public class PostServices {
             //EntityCrUser user = null;
 
             //user = SessionHandler.getTokenFromCookie(cs);
-
             //SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
             //SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
-
 //        SessionManager.setUserName(Thread.currentThread().getId(),"admin1");
 //        if (!hasAccessToService(servicename)) {
 //            return Response.status(Response.Status.FORBIDDEN).build();
@@ -511,12 +504,12 @@ public class PostServices {
             System.out.println(servicename + " | - Service Executing Time: " + (System.currentTimeMillis() - serviceTime));
             conn.commit();
             //conn.close();
-            
-            if (servicename.equals("serviceCrSignupPersonal")||servicename.equals("serviceCrSignupCompany")){
-                return Response.temporaryRedirect(new URI("/apd/activation.html?id="+c.getValue(EntityCrUser.ID).toString())).build();
+
+            if (servicename.equals("serviceCrSignupPersonal") || servicename.equals("serviceCrSignupCompany")) {
+                return Response.temporaryRedirect(new URI("/apd/activation.html?id=" + c.getValue(EntityCrUser.ID).toString())).build();
             }
-            
-            if (servicename.equals("serviceCrActivateCompany")){
+
+            if (servicename.equals("serviceCrActivateCompany")) {
                 return Response.temporaryRedirect(new URI("/apd/activated.html")).build();
             }
             return res;
@@ -532,11 +525,8 @@ public class PostServices {
             DBConnection.closeConnection(conn);
             SessionManager.cleanSessionThread();
         }
-        
-        
-    }
 
-   
+    }
 
     @GET
     @Path(value = "getContent")
@@ -556,6 +546,9 @@ public class PostServices {
             user = SessionHandler.getTokenFromCookie(cs);
             SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
             SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
+            SessionManager.setDomain( Thread.currentThread().getId(), user.selectDomain());
+            SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
+            
             System.out.println("Getting User: " + (System.currentTimeMillis() - startTime));
 
 //         EntityCrUser user = new EntityCrUser();
@@ -584,7 +577,7 @@ public class PostServices {
             SessionManager.cleanSessionThread();
         }
     }
-    
+
     @GET
     @Path(value = "signup/{type}")
     @Compress
@@ -605,7 +598,6 @@ public class PostServices {
 //            SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
 //            SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
 //            System.out.println("Getting User: " + (System.currentTimeMillis() - startTime));
-
 //         EntityCrUser user = new EntityCrUser();
 //         user.setUsername("admin1");
             long startTime = System.currentTimeMillis();
@@ -633,7 +625,5 @@ public class PostServices {
             SessionManager.cleanSessionThread();
         }
     }
-    
-    
 
 }

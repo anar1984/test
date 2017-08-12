@@ -13,6 +13,7 @@ import module.cr.entity.EntityCrRelUserRole;
 import module.cr.entity.EntityCrRelUserRule;
 import module.cr.entity.EntityCrRole;
 import module.cr.entity.EntityCrRule;
+import org.ehcache.CacheManager;
 import utility.sqlgenerator.EntityManager;
 
 /**
@@ -27,13 +28,23 @@ public class SessionManager {
     private static final String LI_USER_PERMISSION_TYPE_USER = "user";
     private static final String DEFAULT_LANG = "ENG";
 
-    private static Map<Long, String> map = new HashMap<>();
+    private static Map<Long, String> userMap = new HashMap<>();
     private static Map<Long, String> langMap = new HashMap<>();
     private static Map<Long, Connection> conn = new HashMap<>();
     private static Map<Long, String> domainMap = new HashMap<>();
     private static Map<Long, String> userIdMap = new HashMap<>();
     
     private static Map<String, Subject> permissionMap = new HashMap<>();
+    
+    
+    
+    public static void cleanSessionThread() {
+        userMap.remove(getCurrentThreadId());
+        langMap.remove(getCurrentThreadId());
+        conn.remove(getCurrentThreadId());
+        domainMap.remove(getCurrentThreadId());
+        userIdMap.remove(getCurrentThreadId());
+    }
     
     public static void setDomain(Long threadId,String domain){
         domainMap.put(threadId, domain);
@@ -57,7 +68,7 @@ public class SessionManager {
     }
 
     public static void setUserName(Long threadId, String userName) {
-        map.put(threadId, userName);
+        userMap.put(threadId, userName);
     }
     public static void setUserId(Long threadId, String userId) {
         userIdMap.put(threadId, userId);
@@ -78,7 +89,7 @@ public class SessionManager {
     }
 
     public static String getUserByThreadId(Long threadId) {
-        return map.get(threadId);
+        return userMap.get(threadId);
     }
     
     public static String getUserIdByThreadId(Long threadId) {

@@ -6,11 +6,19 @@
 package utility;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.ws.rs.core.Response;
 import label.CoreLabel;
 import module.cr.CrDispatcher;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.Status;
+import org.ehcache.config.Configuration;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.core.config.DefaultConfiguration;
+import org.ehcache.xml.XmlConfiguration;
 
 
 /**
@@ -25,11 +33,35 @@ public class CallDispatcher {
     static String DISPATCHER_LABEL = "Dispatcher";
 
     public static Response callService(Carrier carrier) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException, Exception {
-        String module = getModuleName(carrier.getServiceName());
-        createKeyValuePairInCarrier(carrier);
-        carrier = executeDispatcher(module, carrier);
-
-        String entity = carrier.getJson();
+        Cache<String, String> serviceCache = CacheUtil.cacheManager
+                .getCache("serviceCache", String.class, String.class);
+        //serviceCache.put("dd", "bb");
+        String entity = "";
+        String cacheKey = carrier.getCacheKey();
+        String serviceName = carrier.getServiceName();
+        boolean isServiceCachable = serviceName.equals("serviceCrGetAttributeList") 
+                || serviceName.equals("serviceCrGetAttributeList")
+                || serviceName.equals("serviceCrGetModuleList")
+                || serviceName.equals("serviceCrGetSubmoduleList")
+                || serviceName.equals("serviceCrGetEntityLabel");
+        
+        if (isServiceCachable && CacheUtil.cacheManager.getStatus()==Status.AVAILABLE 
+                && serviceCache.containsKey(cacheKey)) {
+            entity = serviceCache.get(cacheKey);
+        } else {
+            String module = getModuleName(serviceName);
+            createKeyValuePairInCarrier(carrier);
+            carrier = executeDispatcher(module, carrier);
+            entity = carrier.getJson();
+            if (isServiceCachable && CacheUtil.cacheManager.getStatus()==Status.AVAILABLE 
+                    && !carrier.hasError()) {
+                serviceCache.put(cacheKey, entity);
+            }
+        }
+        
+        
+        
+        
 //        if (carrier.hasError()) {
 //            entity = carrier.getErrorJson();
 //        } else {

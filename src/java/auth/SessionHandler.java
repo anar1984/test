@@ -68,58 +68,68 @@ public class SessionHandler {
         EntityCrUser user = new EntityCrUser();
         user.setDeepWhere(false);
         if (domain.equals("")) {//personal
-            
             user.setUsername(username.trim());
+            user.setDbname("apdvoice");
             EntityManager.select(user);
-            
-            
-            
+
+            if (user.getFkCompanyId().length() == 0) {
+                throw new Exception(".Username or password is incorrect!!!!!!!!!");
+            }
+
             EntityCrCompany company = new EntityCrCompany();
             company.setDeepWhere(false);
             company.setId(user.getFkCompanyId());
+            company.setCompanyType(
+                    EntityCrCompany.CompanyType.PERSONAL.toString());
             EntityManager.select(company);
 
-            user.setDbname(company.getCompanyDb());
-            
+            if (company.getCompanyName().length()== 0) {
+                throw new Exception(".Username or password is incorrect!!!!!!!!!");
+            }
 
-            
+            //user.setDbname(company.getCompanyDb());
             if (user.getPassword().trim().equals("")
-                    || !user.getPassword().trim().equals(password.trim()) || !company.getCompanyType().equals(EntityCrCompany.CompanyType.PERSONAL.toString())) {
+                    || !user.getPassword().trim().equals(password.trim())) {
                 System.out.println(".Username or password is incorrect!!!!!!!!!");
                 throw new Exception(".Username or password is incorrect!!!!!!!!!");
             } else {
-                
+                user.setDbname(company.getCompanyDb());
                 return user;
             }
-        } else {
+        } else {//is company
             EntityCrCompany company = new EntityCrCompany();
             company.setDeepWhere(false);
             company.setCompanyDomain(domain.trim());
             Carrier cComp = EntityManager.select(company);
-            if (cComp.getTableRowCount(company.toTableName())==0) {
-                 throw new Exception(".There is no domain such as!!!!!!!!!");
+            if (cComp.getTableRowCount(company.toTableName()) == 0) {
+                throw new Exception(".There is no domain such as!!!!!!!!!");
             }
-            
+
+            //is contact person
             user.setFkCompanyId(company.getId());
             user.setUsername(username.trim());
+            user.setDbname("apdvoice");
             Carrier cUser = EntityManager.select(user);
-            
-            if (cUser.getTableRowCount(user.toTableName())==0) {
-                 user = new EntityCrUser();
-                 user.setUsername(username.trim());
-                 EntityManager.select(user);
+
+            //if user contact person
+            if (cUser.getTableRowCount(user.toTableName()) == 0) {
+                user = new EntityCrUser();
+                user.setDeepWhere(false);
+                user.setUsername(username.trim());
+                user.setDbname(company.getCompanyDb());
+                EntityManager.select(user);
             }
-            user.setDbname(company.getCompanyDb());
-            
+
             if (user.getPassword().trim().equals("")
                     || !user.getPassword().trim().equals(password.trim())) {
                 System.out.println(".Username or password is incorrect!!!!!!!!!");
                 throw new Exception(".Username or password is incorrect!!!!!!!!!");
             } else {
                 //SessionManager.setDomain(Thread.currentThread().getId(), company.getCompanyDb());
+                user.setDbname(company.getCompanyDb());
                 return user;
             }
-            
+
         }
 
 //        System.out.println(user.getUsername() + " - " + password);

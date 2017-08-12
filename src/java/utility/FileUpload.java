@@ -28,8 +28,13 @@ public class FileUpload {
         }
 System.out.println("2");
         String id = IdGenerator.getId();
+        System.out.println("id = "+id);
+        System.out.println("userId = "+userId);
+        System.out.println("2 `1");
         long num = Long.parseLong(id) + Long.parseLong(userId) + 214521;
+        System.out.println("2 2");
         String hexId = QUtility.convertDecimalToHex(num);
+        System.out.println("2 3");
         String fileName = "file_" + hexId + "." + ext.replaceAll("^\"|\"$", "");
 System.out.println("3");
 //        System.out.println("ext -> " + ext);

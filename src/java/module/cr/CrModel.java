@@ -94,7 +94,7 @@ public class CrModel {
     private static final String LANG_FIELD_DESC = "DSC";
     private static final String LANG_FIELD_VALUE = "VAL";
 
-	public static final String VALUE_TYPE_INTEGER = "13";
+    public static final String VALUE_TYPE_INTEGER = "13";
     public static final String VALUE_TYPE_FLOAT = "7";
     public static final String VALUE_TYPE_POSITIVE_INTEGER = "11";
     public static final String VALUE_TYPE_POSITIVE_FLOAT = "6";
@@ -111,7 +111,7 @@ public class CrModel {
     public static final String VALUE_TYPE_VIDEO_URL = "1";
     public static final String VALUE_TYPE_RANGE_INTEGER_MULTI = "15";
     public static final String VALUE_TYPE_YOUTUBE_URL = "17";
-    
+
     public Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
         String ln = "";
@@ -160,7 +160,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -207,7 +207,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -225,7 +225,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
         return carrier;
     }
@@ -239,7 +239,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
         return carrier;
     }
@@ -263,7 +263,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
         return carrier;
     }
@@ -287,7 +287,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
         return carrier;
     }
@@ -316,7 +316,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -358,7 +358,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -375,7 +375,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -412,7 +412,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -434,7 +434,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -450,7 +450,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -465,7 +465,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -496,7 +496,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -541,7 +541,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -585,7 +585,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -602,7 +602,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -616,7 +616,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -640,7 +640,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -656,7 +656,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -671,7 +671,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -697,7 +697,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -716,7 +716,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -742,7 +742,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -760,7 +760,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -776,7 +776,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -790,7 +790,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -798,11 +798,11 @@ public class CrModel {
 
         String entId = carrier.getValue("attributeUniqueId").toString();
         if (entId.length() == 0) {
-        	EntityCrAttribute ent = new EntityCrAttribute();
+            EntityCrAttribute ent = new EntityCrAttribute();
             ent.setAttributeCode(carrier.getValue("attributeCode").toString());
             ent.setLiAttributeStatus(carrier.getValue("liAttributeStatus").toString());
             ent.setLiIsGeneral(carrier.getValue("liIsGeneral").toString());
-        	EntityManager.insert(ent);
+            EntityManager.insert(ent);
             entId = ent.getId();
         }
 
@@ -1277,13 +1277,13 @@ public class CrModel {
     public static Carrier getModuleList(Carrier carrier) throws QException {
         String perid = "";//QUtility.getPermissionRelIdByCrrentUser();
         perid += carrier.getValue("id").toString();
-                
+
         EntityCrModule ent = new EntityCrModule();
         ent.setDeepWhere(false);
         ent.setLiModuleStatus(carrier.getValue("liModuleStatus").toString());
         ent.setId(perid);
         Carrier c = EntityManager.select(ent);
-        
+
         carrier.removeKey("startLimit");
         carrier.removeKey("endLimit");
 
@@ -2156,7 +2156,7 @@ public class CrModel {
         //get and merge patient sex info
         Carrier cprSex = QUtility.getListItem("sex",
                 carrier.getValue("sexName").toString());
-        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
+        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex); 
 
         
        
@@ -2212,7 +2212,7 @@ public class CrModel {
         return cIns;
     }
 
-	private static Carrier addFinalValue(Carrier cr, String filterValue) throws QException {
+    private static Carrier addFinalValue(Carrier cr, String filterValue) throws QException {
         String tn = CoreLabel.RESULT_SET;
         int rc = cr.getTableRowCount(tn);
         for (int i = 0; i < rc; i++) {
@@ -2670,7 +2670,7 @@ public class CrModel {
                         } catch (SQLException ex1) {
                         }
                     }
-    }
+            }
 
     public static Carrier getVoiceAnalyse(Carrier carrier) throws QException {
         String filename = carrier.getValue("filename").toString();
@@ -2678,7 +2678,7 @@ public class CrModel {
         return carrier;
     }
 
-	private static Carrier getPraatAnalyseResult(String filename) {
+    private static Carrier getPraatAnalyseResult(String filename) {
         Carrier carrier = new Carrier();
         try {
 
@@ -2706,9 +2706,9 @@ public class CrModel {
 //                    hnr = "undefined", nhr = "undefined";
             String min = "-1", max = "-1", mean = "-1",
                     median = "-1", std = "-1";
-            String jitter_loc = "-1", shimmer_loc = "-1", 
+            String jitter_loc = "-1", shimmer_loc = "-1",
                     hnr = "-1", nhr = "-1";
-            
+
             String line;
             while ((line = reader.readLine()) != null) {
 //                System.out.println("praat resposse line"+line);
@@ -2749,7 +2749,7 @@ public class CrModel {
         return carrier;
     }
 
-public static Carrier getInspectionMatrixBodyList(Carrier carrier) throws QException {
+    public static Carrier getInspectionMatrixBodyList(Carrier carrier) throws QException {
 
         if (!carrier.isKeyExist("matrixId")) {
             return carrier;
@@ -3001,7 +3001,7 @@ public static Carrier getInspectionMatrixBodyList(Carrier carrier) throws QExcep
         return carrier;
     }
 
-public Carrier getDiscountedPrice(Carrier carrier) throws QException {
+    public Carrier getDiscountedPrice(Carrier carrier) throws QException {
         if (carrier.getValue("paymentDiscount").toString().length() == 0
                 || carrier.getValue("fkPriceListId").toString().length() == 0) {
             carrier.setValue("price", "0");
@@ -3044,7 +3044,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
         return carrier;
     }
 
-	private static Carrier getDoctorFullname(Carrier carrier) throws QException {
+    private static Carrier getDoctorFullname(Carrier carrier) throws QException {
         EntityCrUserList entUser = new EntityCrUserList();
         EntityManager.mapCarrierToEntity(carrier, entUser);
         entUser.setDeepWhere(false);
@@ -3184,7 +3184,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
         return carrier;
     }
 
-	public Carrier getLabel(Carrier carrier) throws QException {
+    public Carrier getLabel(Carrier carrier) throws QException {
         EntityCrEntityLabelList ent = new EntityCrEntityLabelList();
         ent.setDeepWhere(false);
         ent.setLang(SessionManager.getCurrentLang());
@@ -3201,9 +3201,9 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
     public static Carrier getBasicStatistics(Carrier carrier) throws QException {
         String matrixId = carrier.getValue("fkModuleId").toString();
         String saId = carrier.getValue("fkSubmoduleAttributeId").toString();
-        
+
         return carrier;
-     }
+    }
 
     public static Carrier signupCompany(Carrier carrier) throws QException {
         try {
@@ -3237,7 +3237,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3272,7 +3272,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3305,7 +3305,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3332,7 +3332,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3353,7 +3353,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3399,7 +3399,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3472,7 +3472,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3501,7 +3501,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3575,7 +3575,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3619,7 +3619,7 @@ public Carrier getDiscountedPrice(Carrier carrier) throws QException {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-                    }.getClass().getEnclosingMethod().getName(), ex);
+            }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }

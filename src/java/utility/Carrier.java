@@ -17,6 +17,7 @@ import java.util.List;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import utility.sqlgenerator.EntityManager;
 
-public class Carrier {
+public class Carrier implements Serializable {
 
     private final String THERE_IS_NOT_ANY_KEY_CALLED = "QCarry: There isn't any key called ";
     private final String ROW_AND_COLUMN_INDEX_MUST_BE_POSITIV_NUMBER = "QCarry: Row and column index must be positiv";
@@ -1882,6 +1883,10 @@ public class Carrier {
             }
 
         }
+    }
+    
+    public String getCacheKey() {
+        return Integer.toHexString(params.hashCode());
     }
 
 }

@@ -114,6 +114,7 @@ public class SessionHandler {
             //if user contact person
             if (cUser.getTableRowCount(user.toTableName()) == 0) {
                 user = new EntityCrUser();
+                user.setDeepWhere(false);
                 user.setUsername(username.trim());
                 user.setDbname(company.getCompanyDb());
                 EntityManager.select(user);

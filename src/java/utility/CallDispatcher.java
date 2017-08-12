@@ -39,11 +39,11 @@ public class CallDispatcher {
         String entity = "";
         String cacheKey = carrier.getCacheKey();
         String serviceName = carrier.getServiceName();
-        boolean isServiceCachable = serviceName.equals("serviceCrGetAttributeList") 
+        boolean isServiceCachable = false;/*serviceName.equals("serviceCrGetAttributeList") 
                 || serviceName.equals("serviceCrGetAttributeList")
                 || serviceName.equals("serviceCrGetModuleList")
                 || serviceName.equals("serviceCrGetSubmoduleList")
-                || serviceName.equals("serviceCrGetEntityLabel");
+                || serviceName.equals("serviceCrGetEntityLabelList");*/
         
         if (isServiceCachable && CacheUtil.cacheManager.getStatus()==Status.AVAILABLE 
                 && serviceCache.containsKey(cacheKey)) {

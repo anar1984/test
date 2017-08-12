@@ -45,6 +45,7 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.impl.StdSchedulerFactory;
+import utility.CacheUtil;
 import utility.CallDispatcher;
 import utility.Carrier;
 import utility.CommonConfigurationProperties;
@@ -160,7 +161,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -207,7 +208,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -225,7 +226,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
         return carrier;
     }
@@ -239,14 +240,15 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
         return carrier;
     }
 
     public static Carrier getListItemList(Carrier carrier) throws QException {
+        Carrier resultCarrier = new Carrier();
         try {
-            EntityCrListItemList ent = new EntityCrListItemList();
+            /*EntityCrListItemList ent = new EntityCrListItemList();
             ent.setDeepWhere(false);
             ent.addAndStatementField(EntityCrListItemList.ITEM_CODE_NAME);
             ent.addAndStatementField(EntityCrListItemList.ITEM_VALUE);
@@ -255,17 +257,48 @@ public class CrModel {
             carrier = EntityManager.select(ent);
             carrier.removeKey("startLimit");
             carrier.removeKey("endLimit");
+             */
+            long tm = System.currentTimeMillis();
+            //String itemCode = carrier.getValue("itemCode").toString();
+            //String lang = SessionManager.getCurrentLang();
+            //Carrier crListItem = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_LISTITEM);
+            resultCarrier = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_LISTITEM/*+"::itemCode="+itemCode+"&lang="+lang*/);
+            
+            /*int rc = crListItem.getTableRowCount(CoreLabel.RESULT_SET);
+            int idx = 0;
+            
+            Carrier resultCarrier = new Carrier();
+            for (int i = 0; i < rc; i++) {
+                if (crListItem.getValue(
+                        CoreLabel.RESULT_SET, i, "itemCode").toString().equals(
+                                carrier.getValue("itemCode").toString())
+                        && crListItem.getValue(
+                                CoreLabel.RESULT_SET, i, "lang").toString().equals(
+                                        SessionManager.getCurrentLang())) {
 
-            carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
-            carrier.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(ent));
-            carrier.addTableSequence(CoreLabel.RESULT_SET, EntityManager.getListSequenceByKey("getListItemList"));
+                    resultCarrier.setValue(CoreLabel.RESULT_SET, idx, "itemKey",
+                            crListItem.getValue(CoreLabel.RESULT_SET, i, "itemKey")
+                    );
+                    resultCarrier.setValue(CoreLabel.RESULT_SET, idx, "itemValue",
+                            crListItem.getValue(CoreLabel.RESULT_SET, i, "itemValue")
+                    );
+                    idx++;
+                }
+            }*/
+            System.out.println("+++++++++++++++++++++");
+            System.out.println("$$$$ >> "+(System.currentTimeMillis()-tm));
+            System.out.println("+++++++++++++++++++++");
+
+            //carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+            //carrier.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(ent));
+            //carrier.addTableSequence(CoreLabel.RESULT_SET, EntityManager.getListSequenceByKey("getListItemList"));
         } catch (Exception ex) {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
-        return carrier;
+        return resultCarrier;
     }
 
     public static Carrier getListItemMainList(Carrier carrier) throws QException {
@@ -283,11 +316,16 @@ public class CrModel {
             carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
             carrier.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(ent));
             carrier.addTableSequence(CoreLabel.RESULT_SET, EntityManager.getListSequenceByKey("getListItemList"));
+            
+           // carrier = carrier.getKeyValuesPairFromTable(CoreLabel.RESULT_SET,
+           //         new String[]{"itemCode","lang"}, 
+           //         new String[]{"itemValue"})
+            
         } catch (Exception ex) {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
         return carrier;
     }
@@ -316,7 +354,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -358,7 +396,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -375,7 +413,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -412,7 +450,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -434,7 +472,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -450,7 +488,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -465,7 +503,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -496,7 +534,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -541,7 +579,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -585,7 +623,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -602,7 +640,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -616,7 +654,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -640,7 +678,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -656,7 +694,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -671,7 +709,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -697,7 +735,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -716,7 +754,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -742,7 +780,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -760,7 +798,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -776,7 +814,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -790,7 +828,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -824,7 +862,6 @@ public class CrModel {
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
 
-        
         return carrier;
     }
 
@@ -1099,7 +1136,7 @@ public class CrModel {
 
     public static Carrier getAppointmentList(Carrier carrier) throws QException {
         EntityCrAppointment ent = new EntityCrAppointment();
-        
+
         EntityManager.mapCarrierToEntity(carrier, ent);
         if (!ent.hasSortBy()) {
             ent.addSortBy(EntityCrAppointment.APPOINTMENT_STATUS);
@@ -1237,7 +1274,7 @@ public class CrModel {
         entLangDesc.setLangDef(carrier.getValue(EntityCrModule.MODULE_DESCRIPTION).toString());
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
-        
+
         return carrier;
     }
 
@@ -2124,7 +2161,6 @@ public class CrModel {
         carrier.removeKey("endLimit");
 
 //        System.out.println("get inspection  -> "+   cIns.getJson());
-        
         //get user info
         EntityCrUserList entUser = new EntityCrUserList();
         entUser.setDeepWhere(false);
@@ -2142,7 +2178,6 @@ public class CrModel {
         cIns.mergeCarrier(tnIns, "fkUserId", "doctorFullname", cprUser);
 
 //         out.println("merget with EntityCrUserList  -> "+   cIns.getJson());
-       
         //get and merge patient info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkPatientId"));
         Carrier crPatient = getPatientList(carrier);
@@ -2151,15 +2186,11 @@ public class CrModel {
                     "patientSurname", "patientMiddleName", "patientBirthDate",
                     "patientBirthPlace", "sex"});
 
-       
-       
         //get and merge patient sex info
         Carrier cprSex = QUtility.getListItem("sex",
                 carrier.getValue("sexName").toString());
-        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex); 
+        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
 
-        
-       
         //get  and merge submodule attribute info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkSubmoduleAttributeId"));
         Carrier crSA = getSubmoduleAttributeList(carrier);
@@ -2168,42 +2199,31 @@ public class CrModel {
                     "fkSubmoduleId", "submoduleValue", "hasOther",
                     "sortBy"});
 
-        
-       
         //get and merge attribute info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkAttributeId"));
         Carrier cAttr = getAttributeList(carrier);
         cIns.mergeCarrier(tnIns, "fkAttributeId", cAttr, CoreLabel.RESULT_SET,
                 "id", new String[]{"attributeCode", "attributeName"});
 
-        
-       
         //get and merge module info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkModuleId"));
         Carrier cModule = getModuleList(carrier);
         cIns.mergeCarrier(tnIns, "fkModuleId", cModule, CoreLabel.RESULT_SET,
                 "id", new String[]{"moduleName"});
 
-        
-       
         //get and merge submodule info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkSubmoduleId"));
         Carrier cSM = getSubmoduleList(carrier);
         cIns.mergeCarrier(tnIns, "fkSubmoduleId", cSM, CoreLabel.RESULT_SET,
                 "id", new String[]{"submoduleName"});
 
-        
-       
         ////
         cIns.renameTableName(tnIns, CoreLabel.RESULT_SET);
 
         ///  generate finalValue
         cIns = addFinalValue(cIns, carrier.getValue("finalValue").toString());
-        
-        
-       
-        /////
 
+        /////
         cIns.addTableSequence(CoreLabel.RESULT_SET,
                 EntityManager.getListSequenceByKey("getInspectionList"));
 
@@ -2644,33 +2664,33 @@ public class CrModel {
     public static void main(String[] arg) {
 //        getPraatAnalyseResult("a.wav") ;
         Connection conn = null;
-                        try {
-                            conn = new DBConnection().getConnection();
-                            conn.setAutoCommit(false);
-                            SessionManager.setConnection(Thread.currentThread().getId(), conn);
-            
+        try {
+            conn = new DBConnection().getConnection();
+            conn.setAutoCommit(false);
+            SessionManager.setConnection(Thread.currentThread().getId(), conn);
+
             EntityCrSubmoduleAttribute ent = new EntityCrSubmoduleAttribute();
             Carrier c = EntityManager.select(ent);
 //            String json = "{\"kv\":{}}";
 //            String servicename = "serviceCrGetInspectionList";
 //            //
-                //
+            //
 //            Carrier c = new Carrier();
 //            c.setServiceName(servicename);
 //            c.fromJson(json);
 ////            System.out.println(c.getJson());
 //            //            System.out.println(c.getJson());
 //            CallDispatcher.callService(c);
-                            conn.commit();
-                            conn.close();
+            conn.commit();
+            conn.close();
         } catch (Exception ex) {
-                            try {
-                            conn.rollback();
-                            conn.close();
-                        } catch (SQLException ex1) {
-                        }
-                    }
+            try {
+                conn.rollback();
+                conn.close();
+            } catch (SQLException ex1) {
             }
+        }
+    }
 
     public static Carrier getVoiceAnalyse(Carrier carrier) throws QException {
         String filename = carrier.getValue("filename").toString();
@@ -2909,7 +2929,6 @@ public class CrModel {
         ln += line.trim().length() > 0 ? " WHERE " + line : "";
 
 //        System.out.println("sql->" + ln);
-
         String[] st1 = new String[arr.size()];
         int idx = 0;
         for (String arg : arr) {
@@ -3197,7 +3216,7 @@ public class CrModel {
         carrier.setValue("text", t);
         return carrier;
     }
-    
+
     public static Carrier getBasicStatistics(Carrier carrier) throws QException {
         String matrixId = carrier.getValue("fkModuleId").toString();
         String saId = carrier.getValue("fkSubmoduleAttributeId").toString();
@@ -3237,7 +3256,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3272,7 +3291,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3284,9 +3303,9 @@ public class CrModel {
             EntityManager.select(entCompany);
             entCompany.setStatus(EntityCrCompany.CompanyStatus.PENDING.toString());
             EntityManager.update(entCompany);
-            
+
             CompanyJob.execute(null);
-            
+
             //Create a new Job 
             /*JobKey jobKey = JobKey.jobKey("CompanyCreatorJob", "APDVoice");
             JobDetail job = JobBuilder.newJob(CompanyJob.class).withIdentity(jobKey).storeDurably().build();
@@ -3299,13 +3318,12 @@ public class CrModel {
 
             //Immediately fire the Job MyJob.class
             scheduler.triggerJob(jobKey);*/
-
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3332,7 +3350,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
 
@@ -3353,7 +3371,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3399,7 +3417,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3472,7 +3490,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3501,7 +3519,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3575,7 +3593,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3619,7 +3637,7 @@ public class CrModel {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+                    }.getClass().getEnclosingMethod().getName(), ex);
         }
 
     }
@@ -3635,7 +3653,7 @@ public class CrModel {
         EntityManager.select(ent);
         carrier.setValue("nextNo", ent.getSortBy());
         return carrier;
-}
+    }
 
     public Carrier getPreviousSubmoduleOrderNo(Carrier carrier) throws QException {
         EntityCrSubmodule ent = new EntityCrSubmodule();

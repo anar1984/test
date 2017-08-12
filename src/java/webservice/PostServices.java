@@ -187,6 +187,7 @@ public class PostServices {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } finally {
             DBConnection.closeConnection(conn);
+            SessionManager.cleanSessionThread();
         }
     }
 
@@ -470,6 +471,7 @@ public class PostServices {
             return Response.status(Response.Status.NOT_FOUND).build();
         } finally {
             DBConnection.closeConnection(conn);
+            SessionManager.cleanSessionThread();
         }
         
         
@@ -528,6 +530,7 @@ public class PostServices {
             return Response.status(Response.Status.NOT_FOUND).build();
         } finally {
             DBConnection.closeConnection(conn);
+            SessionManager.cleanSessionThread();
         }
         
         
@@ -578,6 +581,7 @@ public class PostServices {
             return Response.status(Response.Status.NOT_FOUND).build();
         } finally {
             DBConnection.closeConnection(conn);
+            SessionManager.cleanSessionThread();
         }
     }
     
@@ -626,6 +630,7 @@ public class PostServices {
             return Response.status(Response.Status.NOT_FOUND).build();
         } finally {
             DBConnection.closeConnection(conn);
+            SessionManager.cleanSessionThread();
         }
     }
     

@@ -83,7 +83,7 @@ public class EntityManager {
 
     private static void addDateToInsert(CoreEntity entity, String databaseNumber) throws QException {
         try {
-            boolean hasInsertDate = Config.getPropertyBoolean(HAS_INSERT_DATE + "." + databaseNumber.toLowerCase());
+            boolean hasInsertDate = Config.getPropertyBool(HAS_INSERT_DATE + "." + databaseNumber.toLowerCase());
             if (hasInsertDate) {
                 entity.setInsertDate(QDate.getCurrentDate());
             }

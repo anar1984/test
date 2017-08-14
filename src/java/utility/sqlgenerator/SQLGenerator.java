@@ -429,7 +429,7 @@ public class SQLGenerator {
 
     static String seperateTableFieldNameWithUnderscore(String arg, String databaseNumber) {
         String propKeyName = HAS_UNDERSCORE_IN_FIELD_NAME + "." + databaseNumber.toLowerCase();
-        boolean hasSeperator = Config.getPropertyBoolean(propKeyName);
+        boolean hasSeperator = Config.getPropertyBool(propKeyName);
         if (!hasSeperator) {
             return arg;
         } else {

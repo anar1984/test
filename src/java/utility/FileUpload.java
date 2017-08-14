@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import label.CoreLabel;
 import org.apache.commons.codec.binary.Base64;
+import resources.config.Config;
 import utility.sqlgenerator.IdGenerator;
 
 /**
@@ -66,8 +67,8 @@ System.out.println("8");
     public String getUploadPath() {
         String file = "";
         try {
-            UploadConfigurationProperties prop = new UploadConfigurationProperties();
-            file = prop.coreFullPath() + prop.getProperty(CoreLabel.UPLOAD_PATH);
+            GeneralProperties prop = new GeneralProperties();
+            file = prop.coreFullPath() + Config.getUploadPath();
             System.out.println("file uploaded------->" + file);
 
             return file;

@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import label.CoreLabel;
 import module.rp.entity.EntityCrSqlPool;
-import utility.ListSequenceConfigurationProperties;
+import resources.config.Config;
 import utility.QException;
 import utility.SessionManager;
 
@@ -40,10 +40,10 @@ public class EntityManager {
     public static String SQL_QUERY = "sqlQuery";
     public static String SQL_POOL_TABLE = "sqlPool";
     private static final String PARAM_KEY = ":param";
-    private static final String REFERENCE_KEY_NAME = "referenceKeyName";
-    private static final String HAS_INSERT_DATE = "hasInsertDate";
+    private static final String REFERENCE_KEY_NAME = "db.reference.key-name.primary";
+    private static final String HAS_INSERT_DATE = "db.has.insert-date";
     private static final String HAS_MODIFICATION_DATE = "hasModificationDate";
-    private static final String DELETE_STATUS = "deleteStatus";
+    private static final String DELETE_STATUS = "db.delete.status.primary";
     public static String GET = "get";
     public static String SEPERATOR_DOT = ".";
     public static String SEPERATOR_COMMA = ",";
@@ -83,10 +83,8 @@ public class EntityManager {
 
     private static void addDateToInsert(CoreEntity entity, String databaseNumber) throws QException {
         try {
-            DBConfigurationProperties prop = new DBConfigurationProperties();
-            String f = prop.getProperty(HAS_INSERT_DATE + capitalizeOnlyFirstLetter(databaseNumber));
-
-            if (f.equals("true")) {
+            boolean hasInsertDate = Config.getPropertyBoolean(HAS_INSERT_DATE + "." + databaseNumber.toLowerCase());
+            if (hasInsertDate) {
                 entity.setInsertDate(QDate.getCurrentDate());
             }
         } catch (Exception ex) {
@@ -194,8 +192,7 @@ public class EntityManager {
 
     public static Carrier selectBySqlId(String sqlId, String[] params, String destinationDatabaseNumber) throws QException {
         try {
-            DBConfigurationProperties prop = new DBConfigurationProperties();
-            String sourceDB = prop.getProperty(CoreLabel.SQL_QUERY_POOL_DB_NUMBER);
+            String sourceDB = Config.getSqlPoolDbNumber();
 
             EntityCrSqlPool entity = new EntityCrSqlPool();
             entity.setSqlId(sqlId);
@@ -287,14 +284,8 @@ public class EntityManager {
     }
 
     public static String getReferenceKeyName(String databaseNumber) {
-        DBConfigurationProperties prop = null;
-        try {
-            prop = new DBConfigurationProperties();
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(EntityManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String propKeyName = REFERENCE_KEY_NAME + capitalizeFirstLetter(databaseNumber);
-        String keyName = prop.getProperty(propKeyName);
+        String propKeyName = REFERENCE_KEY_NAME + "." + databaseNumber.toLowerCase();
+        String keyName = Config.getProperty(propKeyName);
         return keyName;
     }
 
@@ -365,14 +356,8 @@ public class EntityManager {
     }
 
     public static String getStatusValueOfDeleteByDatabaseNumber(String databaseNumber) {
-        DBConfigurationProperties prop = null;
-        try {
-            prop = new DBConfigurationProperties();
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(EntityManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String propKeyName = DELETE_STATUS + capitalizeFirstLetter(databaseNumber);
-        String keyName = prop.getProperty(propKeyName);
+        String propKeyName = DELETE_STATUS + "." + databaseNumber.toLowerCase();
+        String keyName = Config.getProperty(propKeyName);
         return keyName;
     }
 
@@ -1290,31 +1275,13 @@ public class EntityManager {
     }
 
     public static void addSequence(Carrier carrier, String key) {
-        try {
-            ListSequenceConfigurationProperties prop = new ListSequenceConfigurationProperties();
-            String fields = prop.getProperty(key);
-
-            String[] fieldsArr = fields.split(",");
-            carrier.addSequence(fieldsArr);
-        } catch (Exception ex) {
-            new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
-        }
+        String fields = Config.getProperty(key);
+        String[] fieldsArr = fields.split(",");
+        carrier.addSequence(fieldsArr);
     }
 
     public static String getListSequenceByKey(String key) {
-        ListSequenceConfigurationProperties prop = null;
-        try {
-            prop = new ListSequenceConfigurationProperties();
-        } catch (Exception ex) {
-            new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
-        }
-        return prop.getProperty(key);
+        return Config.getProperty(key);
     }
 
     /*birinci xalis entity melumatları user_controller cədvəlindən çəkilir. Daha sonra baxılır ki, entity-nin dəyəri hansıdır. 

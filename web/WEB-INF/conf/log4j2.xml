@@ -10,13 +10,13 @@
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="${PATTERN}"/>
     </Console>
-    <RollingFile name="logFile" fileName="${LOG_DIR}/apd.log" filePattern="${ARCHIVE}/wic-%d{yyyyMMdd}-%i.log.gz">
+    <RollingFile name="logFile" fileName="${LOG_DIR}/apd.log" filePattern="${ARCHIVE}/apd-%d{yyyyMMdd}-%i.log.gz">
         <PatternLayout pattern="${PATTERN}"/>
         <Policies>
             <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
         </Policies>
     </RollingFile>  
-    <RollingFile name="logErrorFile" fileName="${LOG_DIR}/apd-error.log" filePattern="${ARCHIVE}/wicError-%d{yyyyMMdd}-%i.log.gz">
+    <RollingFile name="logErrorFile" fileName="${LOG_DIR}/apd-error.log" filePattern="${ARCHIVE}/apd-error-%d{yyyyMMdd}-%i.log.gz">
         <PatternLayout pattern="${PATTERN}"/>
         <Policies>
             <TimeBasedTriggeringPolicy interval="1" modulate="true"/>

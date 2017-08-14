@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import label.CoreLabel;
+import resources.config.Config;
 import utility.Carrier;
 import utility.CoreEntity;
 import utility.DBConfigurationProperties;
@@ -69,7 +70,7 @@ public class SQLGenerator {
     private static final String ORDER_BY = "ORDER BY";
     private static final String PATTERN_FOR_PARAMS = ":param";
     private static final String HAS_UNDERSCORE_IN_TABLE_NAME = "hasUnderscoreInTableName";
-    private static final String HAS_UNDERSCORE_IN_FIELD_NAME = "hasUnderscoreInFieldName";
+    private static final String HAS_UNDERSCORE_IN_FIELD_NAME = "db.has.underscore.field-name.primary";
     //private static String = ;
 
     public static void main(String arg[]) {
@@ -427,18 +428,9 @@ public class SQLGenerator {
     }
 
     static String seperateTableFieldNameWithUnderscore(String arg, String databaseNumber) {
-        DBConfigurationProperties prop = null;
-        try {
-            prop = new DBConfigurationProperties();
-
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(SQLGenerator.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-        String propKeyName = HAS_UNDERSCORE_IN_FIELD_NAME + capitalizeFirstLetter(databaseNumber);
-        String hasSeperator = prop.getProperty(propKeyName);
-
-        if (hasSeperator.equals("false")) {
+        String propKeyName = HAS_UNDERSCORE_IN_FIELD_NAME + "." + databaseNumber.toLowerCase();
+        boolean hasSeperator = Config.getPropertyBoolean(propKeyName);
+        if (!hasSeperator) {
             return arg;
         } else {
             return addUnderscoreToFieldName(arg);

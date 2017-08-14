@@ -11,12 +11,13 @@ import utility.Carrier;
 import utility.CoreEntity;
 import utility.DBConfigurationProperties;
 import module.rp.entity.EntityCrSqlPool;
+import resources.config.Config;
 import utility.QDate;
 import utility.QException;
 
 public class IdGenerator {
 
-    private static final String ID_GENERATOR_TYPE = "idGeneratorType";
+    private static final String ID_GENERATOR_TYPE = "db.id-generator-type.primary";
     private static final String SQL_TYPE_LOGICAL_ID = "lastId";
     
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -54,16 +55,8 @@ public class IdGenerator {
     }
 
     private static String getIdGeneratorType(String databaseNumber) {
-        DBConfigurationProperties prop = null;
-        try {
-            prop = new DBConfigurationProperties();
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(IdGenerator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String propKeyName = ID_GENERATOR_TYPE + capitalizeFirstLetter(databaseNumber);
-        String keyName = prop.getProperty(propKeyName);
-//                                            System.out.println("  getId  ----------- ok "+propKeyName+ " " +keyName);
-
+        String propKeyName = ID_GENERATOR_TYPE + "." + databaseNumber;
+        String keyName = Config.getProperty(propKeyName);
         return keyName;
     }
 

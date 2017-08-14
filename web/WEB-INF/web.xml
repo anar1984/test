@@ -13,7 +13,8 @@
     
      <context-param>
         <param-name>log4jConfiguration</param-name>
-        <param-value>${catalina.base}/conf/apd/log4j2.xml</param-value>
+        <!--param-value>${catalina.base}/conf/apd/log4j2.xml</param-value-->
+        <param-value>/WEB-INF/conf/log4j2.xml</param-value>
     </context-param>
     
     <!--resource-ref>

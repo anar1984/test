@@ -18,6 +18,7 @@ import org.ehcache.Status;
 import org.ehcache.config.Configuration;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.xml.XmlConfiguration;
+import resources.config.Config;
 
 /**
  *
@@ -56,17 +57,13 @@ public class CacheUtil {
             logger.debug("getFromCache.cacheKey="+cacheKey+" provided from cache");
         } else {
             try {
-                CommonConfigurationProperties prop = new CommonConfigurationProperties();
-                String methodName = prop.getProperty(getPropKey(cacheKey));
+                String methodName = Config.getProperty(getPropKey(cacheKey));
                 CrModel mdl = new CrModel();
                 Method method = mdl.getClass().getMethod(methodName, Carrier.class);
                 Object retObj = method.invoke(mdl, prepareParam(cacheKey));
                 logger.debug("getFromCache.cacheKey="+cacheKey+" provided from model");
                 putCache(cacheKey, (Carrier) retObj);
 
-            } catch (UnsupportedEncodingException ex) {
-                logger.error("getFromCache.cacheKey=" + cacheKey, ex);
-                throw new QException(ex);
             } catch (NoSuchMethodException ex) {
                 logger.error("getFromCache.cacheKey=" + cacheKey, ex);
                 throw new QException(ex);

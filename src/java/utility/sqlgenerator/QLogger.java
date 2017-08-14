@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import label.CoreLabel;
-import utility.ConfigProperties;
-import utility.GeneralProperties;
 import utility.LogConfigurationProperties;
 import utility.SessionManager;
 

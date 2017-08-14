@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Collections;
 import label.CoreLabel;
+import resources.config.Config;
 import utility.sqlgenerator.EntityManager;
 import utility.sqlgenerator.SQLGenerator;
 import static utility.sqlgenerator.SQLGenerator.AND;
@@ -849,17 +850,8 @@ public abstract class CoreEntity {
     }
 
     public String selectEndLimit() throws QException {
-        try {
-            if (this.endLimit.equals("")) {
-                DBConfigurationProperties prop = new DBConfigurationProperties();
-                this.endLimit = prop.getProperty(CoreLabel.DEFAULT_SELECT_END_LIMIT);
-            }
-        } catch (UnsupportedEncodingException ex) {
-            throw new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(),
-                    ex);
+        if (this.endLimit.equals("")) {
+            this.endLimit = Config.getSelectEndLimitDefault();
         }
         return endLimit;
     }

@@ -22,7 +22,6 @@ import utility.sqlgenerator.EntityManager;
  */
 public class SessionManager {
 
-    private static final String WEB_SERVICE_INTERVAL = "webserviceinterval";
     private static final String SEPERATOR = "__";
     private static final String LI_USER_PERMISSION_TYPE_ADMIN = "admin";
     private static final String LI_USER_PERMISSION_TYPE_USER = "user";
@@ -242,7 +241,7 @@ public class SessionManager {
         }
     }
 
-    public static boolean isInWebServiceInterval(String servicename) throws QException {
+    /*public static boolean isInWebServiceInterval(String servicename) throws QException {
         try {
             boolean f;
 
@@ -292,7 +291,7 @@ public class SessionManager {
                     new Object() {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
-    }
+    }*/
     
     public static boolean hasAccessToService(String serviceName) throws QException {
         Subject subject = permissionMap.get(getCurrentUsername());

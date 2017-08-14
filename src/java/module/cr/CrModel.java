@@ -45,13 +45,13 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.impl.StdSchedulerFactory;
+import resources.config.Config;
+//import smssender.Config;
 import utility.CacheUtil;
 import utility.CallDispatcher;
 import utility.Carrier;
-import utility.CommonConfigurationProperties;
 import utility.DeepWhere;
 import utility.GeneralProperties;
-import utility.ListSequenceConfigurationProperties;
 import utility.MailSender;
 import utility.QDate;
 import utility.QException;
@@ -477,7 +477,7 @@ public class CrModel {
 
     }
 
-    private static void addSequence4UserList(Carrier carrier) throws QException {
+    /*private static void addSequence4UserList(Carrier carrier) throws QException {
         try {
             ListSequenceConfigurationProperties prop = new ListSequenceConfigurationProperties();
             String fields = prop.getProperty("getUserList");
@@ -490,7 +490,7 @@ public class CrModel {
                     new Object() {
                     }.getClass().getEnclosingMethod().getName(), ex);
         }
-    }
+    }*/
 
     public static Carrier getCurrentDateAndTime(Carrier carrier) throws QException {
         try {
@@ -2703,8 +2703,7 @@ public class CrModel {
         try {
 
             String ext = ".wav";
-            CommonConfigurationProperties prop = new CommonConfigurationProperties();
-            String praatline = prop.getProperty("praatline");
+            String praatline = Config.getPraatCommand();
             praatline += filename;
 //            System.out.println("praat line-> " + praatline);
             Process p = Runtime.getRuntime().exec(praatline);

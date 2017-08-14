@@ -35,8 +35,8 @@ import label.CoreLabel;
 import org.glassfish.jersey.CommonProperties;
 import module.cr.CrModel;
 import org.jose4j.lang.JoseException;
+import resources.config.Config;
 import utility.Carrier;
-import utility.CommonConfigurationProperties;
 import utility.FileUpload;
 import utility.QDate;
 import utility.QException;
@@ -97,8 +97,6 @@ public class PostServices {
         SessionManager.setDomain(Thread.currentThread().getId(), user.selectDomain());
         SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
 
-        CommonConfigurationProperties prop = new CommonConfigurationProperties();
-
         String file_type = carrier.getValue("file_type").toString();
         String file_extension = carrier.getValue("file_extension").toString();
         String fileName = "";
@@ -114,7 +112,7 @@ public class PostServices {
         }
 
         if (type.trim().length() > 0) {
-            String img_type[] = prop.getProperty(type + "_type").split(",");
+            String img_type[] = Config.getProperty("upload.type."+type).split(",");
             boolean f = false;
             for (String t : img_type) {
                 if (file_extension.trim().toLowerCase().equals(t.trim().toLowerCase())) {

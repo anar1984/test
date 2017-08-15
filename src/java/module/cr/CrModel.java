@@ -111,6 +111,7 @@ public class CrModel {
     public static final String VALUE_TYPE_VIDEO_URL = "1";
     public static final String VALUE_TYPE_RANGE_INTEGER_MULTI = "15";
     public static final String VALUE_TYPE_YOUTUBE_URL = "17";
+    public static final String VALUE_TYPE_SOUND_UPLOAD = "19";
 
     public Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
@@ -824,14 +825,18 @@ public class CrModel {
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
 
-        
         return carrier;
     }
 
     public Carrier updateAttribute(Carrier carrier) throws QException {
+        EntityCrLangRel entLangT = new EntityCrLangRel();
+        entLangT.setId(carrier.getValue("id").toString());
+        EntityManager.select(entLangT);
+
         EntityCrAttribute ent = new EntityCrAttribute();
-        ent.setId(carrier.getValue("id").toString());
+        ent.setId(entLangT.getRelId());
         EntityManager.select(ent);
+        carrier.removeKey("id");
         EntityManager.mapCarrierToEntity(carrier, ent, false);
         EntityManager.update(ent);
 
@@ -1099,7 +1104,7 @@ public class CrModel {
 
     public static Carrier getAppointmentList(Carrier carrier) throws QException {
         EntityCrAppointment ent = new EntityCrAppointment();
-        
+
         EntityManager.mapCarrierToEntity(carrier, ent);
         if (!ent.hasSortBy()) {
             ent.addSortBy(EntityCrAppointment.APPOINTMENT_STATUS);
@@ -1237,7 +1242,7 @@ public class CrModel {
         entLangDesc.setLangDef(carrier.getValue(EntityCrModule.MODULE_DESCRIPTION).toString());
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
-        
+
         return carrier;
     }
 
@@ -2122,9 +2127,8 @@ public class CrModel {
                 "fkSubmoduleAttributeId", "saSubmoduleAttributeId");
         carrier.removeKey("startLimit");
         carrier.removeKey("endLimit");
-        
+
 //        System.out.println("get inspection  -> "+   cIns.getJson());
-        
         //get user info
         EntityCrUserList entUser = new EntityCrUserList();
         entUser.setDeepWhere(false);
@@ -2142,8 +2146,7 @@ public class CrModel {
         cIns.mergeCarrier(tnIns, "fkUserId", "doctorFullname", cprUser);
 
 //         out.println("merget with EntityCrUserList  -> "+   cIns.getJson());
-       
-         //get and merge patient info
+        //get and merge patient info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkPatientId"));
         Carrier crPatient = getPatientList(carrier);
         cIns.mergeCarrier(tnIns, "fkPatientId", crPatient, CoreLabel.RESULT_SET,
@@ -2151,15 +2154,11 @@ public class CrModel {
                     "patientSurname", "patientMiddleName", "patientBirthDate",
                     "patientBirthPlace", "sex"});
 
-       
-       
-         //get and merge patient sex info
+        //get and merge patient sex info
         Carrier cprSex = QUtility.getListItem("sex",
                 carrier.getValue("sexName").toString());
-        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex); 
+        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
 
-        
-       
         //get  and merge submodule attribute info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkSubmoduleAttributeId"));
         Carrier crSA = getSubmoduleAttributeList(carrier);
@@ -2168,42 +2167,31 @@ public class CrModel {
                     "fkSubmoduleId", "submoduleValue", "hasOther",
                     "sortBy"});
 
-        
-       
         //get and merge attribute info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkAttributeId"));
         Carrier cAttr = getAttributeList(carrier);
         cIns.mergeCarrier(tnIns, "fkAttributeId", cAttr, CoreLabel.RESULT_SET,
                 "id", new String[]{"attributeCode", "attributeName"});
 
-        
-       
         //get and merge module info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkModuleId"));
         Carrier cModule = getModuleList(carrier);
         cIns.mergeCarrier(tnIns, "fkModuleId", cModule, CoreLabel.RESULT_SET,
                 "id", new String[]{"moduleName"});
 
-        
-       
         //get and merge submodule info
         carrier.setValue("id", cIns.getValueLine(tnIns, "fkSubmoduleId"));
         Carrier cSM = getSubmoduleList(carrier);
         cIns.mergeCarrier(tnIns, "fkSubmoduleId", cSM, CoreLabel.RESULT_SET,
                 "id", new String[]{"submoduleName"});
 
-        
-       
         ////
         cIns.renameTableName(tnIns, CoreLabel.RESULT_SET);
 
         ///  generate finalValue
         cIns = addFinalValue(cIns, carrier.getValue("finalValue").toString());
-        
-        
-       
-        /////
 
+        /////
         cIns.addTableSequence(CoreLabel.RESULT_SET,
                 EntityManager.getListSequenceByKey("getInspectionList"));
 
@@ -2264,6 +2252,15 @@ public class CrModel {
                         + " apd_video_url=\"resources/upload/" + insValue + "\"  "
                         + " data-toggle=\"modal\" data-target=\"#apdVideoPlayer\""
                         + " aria-hidden=\"true\" ></i> ";
+            } else if (!insValue.equals(haEmptyVal) && vtId.equals(VALUE_TYPE_SOUND_UPLOAD)) {
+//                finalVal = " <i class=\"apd-sound-trigger fa fa-microphone\""
+//                        + " style=\" font-size:14px;color:#00b289\""
+//                        + " apd_sound_url=\"resources/upload/" + insValue + "\"  "
+//                        + " data-toggle=\"modal\" data-target=\"#apdSoundPlayer\""
+//                        + " aria-hidden=\"true\" ></i> ";
+                finalVal = "<audio controls style='width: 100px;'> "
+                        + "<source src=\"resources/upload/"+insValue+"\" type=\"audio/mpeg\"> "
+                        + "</audio>";
             } else if (!insValue.equals(haEmptyVal) && vtId.equals(VALUE_TYPE_YOUTUBE_URL)) {
                 finalVal = " <a class=\"youtube\" "
                         + " href=\"" + insValue + "\">"
@@ -2648,19 +2645,20 @@ public class CrModel {
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
-            
-            EntityCrSubmoduleAttribute ent = new EntityCrSubmoduleAttribute();
-            Carrier c = EntityManager.select(ent);
-//            String json = "{\"kv\":{}}";
-//            String servicename = "serviceCrGetInspectionList";
-//            //
-//
-//            Carrier c = new Carrier();
-//            c.setServiceName(servicename);
-//            c.fromJson(json);
-////            System.out.println(c.getJson());
-//            //            System.out.println(c.getJson());
-//            CallDispatcher.callService(c);
+
+            String json = "{\"kv\":{\"id\":\"1100010230102\",\"attributeCode\":\"sa_11000102\",\"attributeName\":\"Endolaringeal selik yap??qanl???[0:Mövcuddur,2:Mövcud deyil]\",\"attributeUniqueId\":\"11000102\",\"undefined\":\"AZE\",\"liAttributeStatus\":\"A\",\"liIsGeneral\":\"yes\",\"lang\":\"AZE\",\"attributeDescription\":\"\"},\"tbl\":[]}"
+                    + "";
+            String servicename = "serviceCrUpdateAttribute";
+            //
+
+            Carrier c = new Carrier();
+
+            c.setServiceName(servicename);
+            c.fromJson(json);
+//            System.out.println(c.getJson());
+            //            System.out.println(c.getJson());
+            CallDispatcher.callService(c);
+
             conn.commit();
             conn.close();
         } catch (Exception ex) {
@@ -2909,7 +2907,6 @@ public class CrModel {
         ln += line.trim().length() > 0 ? " WHERE " + line : "";
 
 //        System.out.println("sql->" + ln);
-
         String[] st1 = new String[arr.size()];
         int idx = 0;
         for (String arg : arr) {
@@ -3284,9 +3281,9 @@ public class CrModel {
             EntityManager.select(entCompany);
             entCompany.setStatus(EntityCrCompany.CompanyStatus.PENDING.toString());
             EntityManager.update(entCompany);
-            
+
             CompanyJob.execute(null);
-            
+
             //Create a new Job 
             /*JobKey jobKey = JobKey.jobKey("CompanyCreatorJob", "APDVoice");
             JobDetail job = JobBuilder.newJob(CompanyJob.class).withIdentity(jobKey).storeDurably().build();
@@ -3299,7 +3296,6 @@ public class CrModel {
 
             //Immediately fire the Job MyJob.class
             scheduler.triggerJob(jobKey);*/
-
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {

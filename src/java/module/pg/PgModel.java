@@ -370,7 +370,16 @@ public class PgModel {
                                 .attr("width", "20px"),
                                 i()
                                 .attr("style", "font-size:22px;color:red;display: none; ")
-                                .withClass("fa fa-warning apd-image-upload-error")
+                                .withClass("fa fa-warning apd-image-upload-error"),
+                                i()
+                                .withClass("apd-image-trigger fa  fa-picture-o  ")
+                                .attr("style", "font-size:14px;color:#00b289;display: none")
+                                .attr("apd_image_url", "")
+                                .attr("apd_image_alt", "insValue")
+                                .attr("data-toggle", "modal")
+                                .attr("data-target", "#apdImageViewer")
+                                .attr("aria-hidden", "true")
+                                .attr("v_id", "sa_" + ent.getId())
                         )
                 );
 
@@ -405,7 +414,15 @@ public class PgModel {
                                 .attr("width", "20px"),
                                 i()
                                 .attr("style", "font-size:22px;color:red;display: none; ")
-                                .withClass("fa fa-warning apd-image-upload-error")
+                                .withClass("fa fa-warning apd-image-upload-error"),
+                                i()
+                                .withClass("apd-video-trigger fa fa-video-camera  ")
+                                .attr("style", "font-size:14px;color:#00b289;display: none")
+                                .attr("apd_video_url", "")
+                                .attr("data-toggle", "modal")
+                                .attr("data-target", "#apdVideoPlayer")
+                                .attr("aria-hidden", "true")
+                                .attr("v_id", "sa_" + ent.getId())
                         )
                 );
 
@@ -416,7 +433,7 @@ public class PgModel {
         Tag ln = div()
                 .withClass("fileuploader")
                 .with(
-                        div().withClass("col-md-11")
+                        div().withClass("col-md-8")
                         .with(
                                 input().
                                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
@@ -441,6 +458,16 @@ public class PgModel {
                                 i()
                                 .attr("style", "font-size:22px;color:red;display: none; ")
                                 .withClass("fa fa-warning apd-image-upload-error")
+                        ),
+                        div().withClass("col-md-3")
+                        .with(
+                                audio()
+                                .attr("controls", "")
+                                .attr("style", "display:none;width:100px;")
+                                .attr("preload", "auto")
+                                .withClass("apd-input-audio")
+                                .withId("soundInput")
+                                .attr("s_id", PREFIX_SUBMODULE_ATTRIBUTE + ent.getId())
                         )
                 );
 
@@ -672,12 +699,25 @@ public class PgModel {
     }
 
     private static Tag generateYoutubeUrlAttributeVal(EntityCrSubmoduleAttributeList ent) {
-        Tag ln = input().
-                withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
-                withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
-                withClass("form-control apd-form-input").
-                withType("url").
-                withPlaceholder(ent.getAttributeName());
+        Tag ln = div()
+                .withClass("apd-div-youtube")
+                .with(
+                        div().withClass("col-md-11")
+                        .with(
+                                input().
+                                withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                                withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                                withClass("form-control apd-form-input").
+                                withType("url").
+                                withPlaceholder(ent.getAttributeName())),
+                        div().withClass("col-md-1")
+                        .with(
+                                i()
+                                .attr("style", "font-size:22px;color:red;  ")
+                                .withClass("fa fa-youtube apd-youtube-player")
+                                .attr("v_id", "sa_" + ent.getId())
+                        )
+                );
         return ln;
     }
 
@@ -802,7 +842,6 @@ public class PgModel {
                         .withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId())
                         .withClass(selectCls)
                         .attr("has_other", hasOtherVl)
-                                
                         .with(
                                 option("----").withValue("__2__"),
                                 each(myList, l

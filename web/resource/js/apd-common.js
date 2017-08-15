@@ -297,6 +297,8 @@ function toggleNewSession(e) {
         $(e).attr("style", "border-color:#00b289;background-color:#00b289;");
     }
     s_h_sm_attribute_buttons();
+    $('#currentTime').click();
+    toggleSessionDate($('#currentTime'));
 }
 
 function hideAndDisableAddInspection() {
@@ -437,8 +439,10 @@ function addAppointment(el) {
         async: false,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
-            loadTable('tbl_appointment_list');
-
+            $('#fkPatientId').click();
+            $('#fkPatientId').change();
+//            $('#tbl_appointment_list').closest('div[class="custom-table"]')
+//                    .find('.table-filter-comp').first().change();
         },
         error: function (res, status) {
             alert(getMessage('somethingww'));
@@ -1055,14 +1059,15 @@ function patientSelectAction(e) {
     var val = $(e).val();
     if (typeof val !== typeof undefined && val !== false) {
         var st = 'id=' + val;
-        var st1 = 'fkPatientId='+val;
+        var st1 = 'fkPatientId=' + val;
         $('#btn_serviceCrUpdatePatient').attr("apd-form-fill-kv", st);
         $('#btn_serviceCrUpdatePatient').removeAttr("disabled");
-         g_tbl['tbl_appointment_list'].kv=st1;
-         //refresh table
-       
-         $('#tbl_appointment_list').closest('div[class="custom-table"]')
-                 .find('.table-filter-comp').first().change();
+        g_tbl['tbl_appointment_list'].kv = st1;
+        //refresh table
+
+        $('#tbl_appointment_list').closest('div[class="custom-table"]')
+                .find('.table-filter-comp').first().change();
+        $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
     } else {
         $('#btn_serviceCrUpdatePatient').attr("disabled", "disabled");
     }

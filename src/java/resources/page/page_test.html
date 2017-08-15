@@ -3,53 +3,55 @@
     <br>
     <br>
 
+    <button onclick='d1o()'>open</button>
 
 
+    <i class="apd-image-trigger fa fa-picture-o" 
+       style=" font-size:14px;color:#00b289" 
+       apd_image_url="resources/upload/file_59938EADE34587B.jpg" 
+       apd_image_alt="+insValue+" 
+       data-toggle="modal"
+       data-target="#apdImageViewer" 
+       aria-hidden="true">
 
-    <div class="dropdown">
-        <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="">
-            Dropdown <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-            <li><a href="#">Some action</a></li>
-            <li><a href="#">Some other action</a></li>
-            <li class="divider"></li>
-            <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Hover me for more options</a>
-                <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="#">Second level</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="#">Even More..</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">3rd level</a></li>
-                            <li><a href="#">3rd level</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Second level</a></li>
-                    <li><a href="#">Second level</a></li>
-                </ul>
-            </li>
-            <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Hover me for more options</a>
-                <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="#">Second level</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="#">Even More..</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">3rd level</a></li>
-                            <li><a href="#">3rd level</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Second level</a></li>
-                    <li><a href="#">Second level</a></li>
-                </ul>
-            </li>
-        </ul>
+    </i>
+
+    <div id="apdImageViewer"   class="modal fade col-md-12" role="dialog">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">imageViewer</h4>
+                </div>
+                <div class="modal-body-1">
+                    <div id="myCarousel211" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators" >
+                        </ol>
+                        <div class="carousel-inner">
+                        </div>
+                        <a class="left carousel-control" href="#myCarousel211" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel211" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
     </div>
-
-
 </div>
 
+<script>
+    function d1o() {
+        window.open('https://www.youtube.com/watch?v=hipSVxR5dyQ', 'name');
+    }
+</script>
 
 <style>
     .button{

@@ -374,6 +374,21 @@
             </div>
         </div>
     </div>
+    
+    <div id="apdSoundPlayer"   class="modal fade col-md-12" role="dialog">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">soundPlayer</h4>
+                </div>
+                <div class="modal-body-1">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="agendaModal"   class="modal fade col-md-12" role="dialog">
         <div class="modal-dialog " style="width:90%">
@@ -525,11 +540,16 @@
                                     srv_url="li/pa">
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
+                         <div class="form-group col-md-6">
                             <label qlang>description</label>
                             <textarea class="form-control apd-form-textarea" id="description" 
                                       name="description" placeholder=""></textarea>
                         </div> 
+                         <div class="form-group col-md-6">
+                            <label qlang>addressLine</label>
+                            <textarea class="form-control apd-form-textarea" id="addressLine" 
+                                      name="addressLine" placeholder=""></textarea>
+                        </div>
 
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true" 
@@ -679,10 +699,15 @@
                                     srv_url="li/pa">
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
+                         <div class="form-group col-md-6">
                             <label qlang>description</label>
                             <textarea class="form-control apd-form-textarea" id="description" 
                                       name="description" placeholder=""></textarea>
+                        </div> 
+                         <div class="form-group col-md-6">
+                            <label qlang>addressLine</label>
+                            <textarea class="form-control apd-form-textarea" id="addressLine" 
+                                      name="addressLine" placeholder=""></textarea>
                         </div> 
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>Update</button>

@@ -57,6 +57,10 @@ public class SessionHandler {
         if (username.trim().equals("") || password.trim().equals("")) {
             throw new Exception(".Username or password is incorrect!!!!!!!!!");
         }
+        password = password.replaceAll("%", "");
+        username = username.replaceAll("%", "");
+        domain = domain.replaceAll("%", "");
+        
         /*EntityCrCompany company = new EntityCrCompany();
         company.setDeepWhere(false);
         company.setCompanyDomain(domain.trim());

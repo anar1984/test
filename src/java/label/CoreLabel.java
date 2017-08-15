@@ -112,9 +112,9 @@ public class CoreLabel {
     public static String RESOURCE_QUERIES_PATH = "resources\\queries\\";
 
     ///////////////////////LOG LABEL
-    public static String LOG_PATH = "logPath";
-    public static String LOG_EXCEPTION_PATH = "logExceptionPath";
-    public static String LOG_SMS_PATH = "logSmsPath";
+    //public static String LOG_PATH = "logPath";
+    //public static String LOG_EXCEPTION_PATH = "logExceptionPath";
+    //public static String LOG_SMS_PATH = "logSmsPath";
     //public static String UPLOAD_PATH = "uploadPath";
     ////////////////////// END LOG LABEL
 

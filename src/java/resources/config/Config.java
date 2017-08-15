@@ -112,9 +112,9 @@ public class Config {
     }
 
     public static void loadConfig(Properties properties) {
-        for (final String name : properties.stringPropertyNames()) {
+        properties.stringPropertyNames().forEach((name) -> {
             configMap.put(name, properties.getProperty(name));
-        }
+        });
 
         encoding = properties.getProperty("encoding", "UTF-8");
         praatCommand = properties.getProperty("praat.command");
@@ -126,8 +126,11 @@ public class Config {
         selectEndLimitDefault = properties.getProperty("db.select.end-limit.default");
         sqlPoolDbNumber = properties.getProperty("db.sql-pool.db-number");
 
-        logger.info("Configuration loaded: ");
-        logger.info("\tcongig=" + configMap);
+        logger.debug("--------------  CONFIGURATION  --------------");
+        configMap.forEach((key, value) -> {
+            logger.debug("\t"+key+"="+value);
+        });
+        logger.debug("---------------------------------------------");
     }
 
 }

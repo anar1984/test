@@ -16,7 +16,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utility.ConfigProperties;
 
 /**
  *
@@ -46,9 +45,7 @@ public class AcnisUrlFilter implements Filter {
                 && !url.contains("/nali/")
                 && !url.contains("/nasrv/")
                 && !url.contains("/activation.html")) {
-            ConfigProperties prop = new ConfigProperties();
-            String mainPath = prop.getProperty("main"); //adeten fab olur
-            response.sendRedirect("/"+mainPath+"/login.html");
+            response.sendRedirect(request.getContextPath()+"/login.html");
         } else {
             response.addHeader("Access-Controll-Allow-Origin", "*");
             chain.doFilter(req, res);

@@ -676,14 +676,14 @@ function fillCombobox(e, inData) {
         select_separator = ' - ';
     }
     if (typeof has_null === 'undefined' || !has_null) {
-        has_null = '__2__';
+        has_null = '  ';
     }
 //    if (typeof ph === 'undefined' || !ph) {
 //        has_null = '------';
 //    }
 //    console.log('url ='+url+','+has_null)
     if (has_null !== '__2__') {
-        $(e).append($("<option />").val('___2___').text('----'));
+        $(e).append($("<option />").val('').text('----'));
     }
 
 //    if (has_all === '1') {
@@ -740,6 +740,8 @@ function fillCombobox(e, inData) {
                 $(e).attr("data-live-search", "true");
                 $('.selectpicker').selectpicker('refresh');
             }
+//            $(e).change();
+            
         },
         error: function (res, status) {
             alert(getMessage('somethingww'));
@@ -1054,6 +1056,7 @@ function fillStatistic(e) {
     $('#confedendeLevelInfo').html(div1.html());
 
 }
+
 
 function patientSelectAction(e) {
     var val = $(e).val();

@@ -38,7 +38,9 @@ public class EntityCrPatient extends CoreEntity {
     public static String FK_OWNER_USER_ID = "fkOwnerUserId";
     public static String PATIENT_ID = "patientId";
     public static String ADDRESS_LINE = "addressLine";
-    
+    public static String OCCUPATION_OTHER="occupationOther";	
+    private String occupationOther="";
+
 
     private String patientId = "";
     public static String PATIENT_IMAGE = "patientImage";
@@ -69,6 +71,14 @@ public class EntityCrPatient extends CoreEntity {
     private String isActive = "";
     private String lang = "";
     private String description = "";
+
+    public String getOccupationOther() {
+        return occupationOther;
+    }
+
+    public void setOccupationOther(String occupationOther) {
+        this.occupationOther = occupationOther;
+    }
 
     public String getAddressLine() {
         return addressLine;

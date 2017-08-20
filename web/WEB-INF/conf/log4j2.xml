@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="DEBUG"  monitorInterval="30" name="wic-log">
+  <Properties>
+        <Property name="LOG_DIR">${sys:catalina.home}/logs</Property>
+        <Property name="ARCHIVE">${LOG_DIR}/archive</Property>
+        <Property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %c:%L - %enc{%m}%n</Property>
+    </Properties>
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="${PATTERN}"/>
+    </Console>
+    <RollingFile name="logFile" fileName="${LOG_DIR}/apd.log" filePattern="${ARCHIVE}/apd-%d{yyyyMMdd}-%i.log.gz">
+        <PatternLayout pattern="${PATTERN}"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        </Policies>
+    </RollingFile>  
+    <RollingFile name="logErrorFile" fileName="${LOG_DIR}/apd-error.log" filePattern="${ARCHIVE}/apd-error-%d{yyyyMMdd}-%i.log.gz">
+        <PatternLayout pattern="${PATTERN}"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        </Policies>
+    </RollingFile> 
+
+  </Appenders>
+  <Loggers>
+    <!--Logger name="com.azercell.izahatcell" level="debug" additivity="false">
+        <AppenderRef  ref="logFile"/>
+    </Logger>
+
+    <Logger name="com.azercell.izahatcell" level="error" additivity="true">
+      <AppenderRef  ref="logErrorFile"/>
+    </Logger-->  
+
+      
+    <Root level="debug">
+      <!--AppenderRef ref="Console"/-->
+      <AppenderRef ref="logFile" level="warn"/>
+      <AppenderRef ref="logErrorFile" level="error"/>
+    </Root>
+  </Loggers>
+</Configuration>

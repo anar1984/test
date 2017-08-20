@@ -18,10 +18,10 @@ public class CoreLabel {
 //    LabelSqlQueryIds LabelSqlQueryId = new LabelSqlQueryIds();
 
     /////////////////////////////////DB Config
-    public static String SQL_QUERY_POOL_DB_NUMBER = "sqlQueryPoolDBNumber";
+    //public static String SQL_QUERY_POOL_DB_NUMBER = "sqlQueryPoolDBNumber";
     public static String MESSAGE_POOL_DB_NUMBER = "messagePoolDBNumber";
-    public static String DEFAULT_SELECT_END_LIMIT = "defaultSelectEndLimit";
-    public static String DEFAULT_SELECT_START_LIMIT = "defaultSelectStartLimit";
+    //public static String DEFAULT_SELECT_END_LIMIT = "defaultSelectEndLimit";
+    //public static String DEFAULT_SELECT_START_LIMIT = "defaultSelectStartLimit";
 
     public static String DB_PRIMARY = "primary";
     public static String DB_SLAVE = "slave";
@@ -106,19 +106,16 @@ public class CoreLabel {
     public static String NO = "NO";
     public static String STATUS = "STATUS";
 
-    public static String JAVA_SOURCE_CODE_PATH = "javaSourceCodePath";
 
-    public static String HAS_NEW_QUERIES = "hasNewQueries";
     public static String REPOSITORY_FILE_INSERT_SQL = "insert.sql";
     public static String RESOURCE_FILE_INSERT_SQL = "insert.sql";
     public static String RESOURCE_QUERIES_PATH = "resources\\queries\\";
 
     ///////////////////////LOG LABEL
-    public static String LOG_SIZE = "logSize";
     public static String LOG_PATH = "logPath";
     public static String LOG_EXCEPTION_PATH = "logExceptionPath";
     public static String LOG_SMS_PATH = "logSmsPath";
-    public static String UPLOAD_PATH = "uploadPath";
+    //public static String UPLOAD_PATH = "uploadPath";
     ////////////////////// END LOG LABEL
 
     /////////////////////// STATUS TABLE
@@ -128,11 +125,11 @@ public class CoreLabel {
 
     /////////////////////// END STATUS TABLE
     //////////////////////SMS SENDER
-    public static String SMS_SENDER_URL = "smsSenderUrl";
-    public static String SMS_SENDER_USERNAME = "username";
-    public static String SMS_SENDER_PASSWORD = "password";
-    public static String SMS_SENDER_NAME_OMID = "senderNameOmid";
-    public static String SMS_SENDER_NAME_FAB = "senderNameFab";
+    //public static String SMS_SENDER_URL = "smsSenderUrl";
+    //public static String SMS_SENDER_USERNAME = "username";
+    //public static String SMS_SENDER_PASSWORD = "password";
+    //public static String SMS_SENDER_NAME_OMID = "senderNameOmid";
+    //public static String SMS_SENDER_NAME_FAB = "senderNameFab";
 
     //////////////////////END SMS SENDER
     //////////////////////SQL QUERIES

@@ -13,8 +13,11 @@ public class EntityCrAppointmentList extends CoreEntity {
     public static String INSERT_DATE = "insertDate";
     public static String MODIFICATION_DATE = "modificationDate";
     public static String FK_DOCTOR_USER_ID = "fkDoctorUserId";
+    public static String DOCTOR_FULLNAME = "doctorFullname";
     public static String FK_PATIENT_ID = "fkPatientId";
     public static String APPOINTMENT_DATE = "appointmentDate";
+    public static String APPOINTMENT_TIME_1 = "appointmentTime1";
+    public static String APPOINTMENT_TIME_2 = "appointmentTime2";
     public static String APPOINTMENT_STATUS = "appointmentStatus";
     public static String DESCRIPTION = "description";
     public static String PATIENT_ID = "patientId";
@@ -24,24 +27,21 @@ public class EntityCrAppointmentList extends CoreEntity {
     public static String PATIENT_MIDDLE_NAME = "patientMiddleName";
     public static String PATIENT_BIRTH_DATE = "patientBirthDate";
     public static String PATIENT_BIRTH_PLACE = "patientBirthPlace";
+    public static String INSPECTION_CODE = "inspectionCode";
     public static String FK_OWNER_USER_ID = "fkOwnerUserId";
+    public static String PAYMENT_STATUS = "paymentStatus";
     public static String SEX = "sex";
 
-    public static String APPOINTMENT_TIME_1 = "appointmentTime1";
-    public static String APPOINTMENT_TIME_2 = "appointmentTime2";
-    public static String APPOINTMENT_STATUS_NAME = "appointmentStatusName";
-    public static String INSPECTION_CODE = "inspectionCode";
-    public static String DOCTOR_FULLNAME = "doctorFullname";
-    public static String PAYMENT_STATUS = "paymentStatus";
-    private String paymentStatus = "";
-    private String doctorFullname = "";
-    private String inspectionCode = "";
-    private String appointmentStatusName = "";
-    private String appointmentTime2 = "";
-    private String appointmentTime1 = "";
+    private String id = "";
+    private String status = "";
+    private String insertDate = "";
+    private String modificationDate = "";
     private String fkDoctorUserId = "";
+    private String doctorFullname = "";
     private String fkPatientId = "";
     private String appointmentDate = "";
+    private String appointmentTime1 = "";
+    private String appointmentTime2 = "";
     private String appointmentStatus = "";
     private String description = "";
     private String patientId = "";
@@ -51,55 +51,41 @@ public class EntityCrAppointmentList extends CoreEntity {
     private String patientMiddleName = "";
     private String patientBirthDate = "";
     private String patientBirthPlace = "";
+    private String inspectionCode = "";
     private String fkOwnerUserId = "";
+    private String paymentStatus = "";
     private String sex = "";
 
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public String getId() {
+        return id;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getDoctorFullname() {
-        return doctorFullname;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDoctorFullname(String doctorFullname) {
-        this.doctorFullname = doctorFullname;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getInspectionCode() {
-        return inspectionCode;
+    public String getInsertDate() {
+        return insertDate;
     }
 
-    public void setInspectionCode(String inspectionCode) {
-        this.inspectionCode = inspectionCode;
+    public void setInsertDate(String insertDate) {
+        this.insertDate = insertDate;
     }
 
-    public String getAppointmentStatusName() {
-        return appointmentStatusName;
+    public String getModificationDate() {
+        return modificationDate;
     }
 
-    public void setAppointmentStatusName(String appointmentStatusName) {
-        this.appointmentStatusName = appointmentStatusName;
-    }
-
-    public String getAppointmentTime2() {
-        return appointmentTime2;
-    }
-
-    public void setAppointmentTime2(String appointmentTime2) {
-        this.appointmentTime2 = appointmentTime2;
-    }
-
-    public String getAppointmentTime1() {
-        return appointmentTime1;
-    }
-
-    public void setAppointmentTime1(String appointmentTime1) {
-        this.appointmentTime1 = appointmentTime1;
+    public void setModificationDate(String modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
     public String getFkDoctorUserId() {
@@ -108,6 +94,14 @@ public class EntityCrAppointmentList extends CoreEntity {
 
     public void setFkDoctorUserId(String fkDoctorUserId) {
         this.fkDoctorUserId = fkDoctorUserId;
+    }
+
+    public String getDoctorFullname() {
+        return doctorFullname;
+    }
+
+    public void setDoctorFullname(String doctorFullname) {
+        this.doctorFullname = doctorFullname;
     }
 
     public String getFkPatientId() {
@@ -124,6 +118,22 @@ public class EntityCrAppointmentList extends CoreEntity {
 
     public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
+    }
+
+    public String getAppointmentTime1() {
+        return appointmentTime1;
+    }
+
+    public void setAppointmentTime1(String appointmentTime1) {
+        this.appointmentTime1 = appointmentTime1;
+    }
+
+    public String getAppointmentTime2() {
+        return appointmentTime2;
+    }
+
+    public void setAppointmentTime2(String appointmentTime2) {
+        this.appointmentTime2 = appointmentTime2;
     }
 
     public String getAppointmentStatus() {
@@ -198,6 +208,14 @@ public class EntityCrAppointmentList extends CoreEntity {
         this.patientBirthPlace = patientBirthPlace;
     }
 
+    public String getInspectionCode() {
+        return inspectionCode;
+    }
+
+    public void setInspectionCode(String inspectionCode) {
+        this.inspectionCode = inspectionCode;
+    }
+
     public String getFkOwnerUserId() {
         return fkOwnerUserId;
     }
@@ -206,17 +224,20 @@ public class EntityCrAppointmentList extends CoreEntity {
         this.fkOwnerUserId = fkOwnerUserId;
     }
 
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
     public String getSex() {
         return sex;
     }
 
     public void setSex(String sex) {
         this.sex = sex;
-    }
-    
-    @Override
-    public String selectDbname() {
-        return "apdvoice";//temp
     }
 
 }

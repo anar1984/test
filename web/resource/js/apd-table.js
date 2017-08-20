@@ -724,7 +724,6 @@ function fillTableBodyByid(var_tablename, data, start_ind) {
     }
 
 // footer info;
-
     var f_val = {};
     var f_val_c = {};
     if (!start_ind) {

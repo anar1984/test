@@ -58,7 +58,7 @@ function submoduleinsertAndNextPageListener() {
         var nextNo = getPreviousSubmoduleOrderNo(orderNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
-        doSumModuleFormShow(e);
+        doSubmoduleFormShow(e);
     });
 }
 
@@ -70,7 +70,7 @@ function submodulePreviousPageListener() {
         var nextNo = getPreviousSubmoduleOrderNo(orderNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
-        doSumModuleFormShow(e);
+        doSubmoduleFormShow(e);
     });
 }
 
@@ -82,7 +82,7 @@ function submoduleNextPageListener() {
         var nextNo = getNextSubmoduleOrderNo(orderNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
-        doSumModuleFormShow(e);
+        doSubmoduleFormShow(e);
     });
 }
 
@@ -417,7 +417,6 @@ function selectHasOtherChangeListener() {
         var el = $(e.target);
         var val = el.find(":selected").val();
         var id = el.attr("id");
-        var val = el.find(":selected").val();
         if (val === '__2__') {
             var pid = id.split("_")[1];
             $('#ha_' + pid).attr("style", "margin-top:4px;display:block;");
@@ -1127,6 +1126,7 @@ function formButtonListener() {
                     alert(getMessage('successOperation'));
                     if (el.attr('id') === 'insertNewPatientBtn') {
                         fillCombobox($('#fkPatientId'));
+                        $("#fkPatientId option:eq(1)").attr("selected", "selected");
                         $('#fkPatientId').change();
                     }
                 }
@@ -1184,7 +1184,7 @@ function menuListenerActivies(page_id) {
             $('#fkModuleId').click();
             fillCombobox($('#fkDoctorUserId'));
             fillCombobox($('#fkPatientId'));
-//            $('#fkPatientId').prepend("'<option value=''></option>").val('');
+//            $('#fkPatientId').prepend("'<option value='----'></option>").val('-----');
             fillInspectionMatrixList();
             $("#serviceCrGetAppointmentList").click();
             fillCombobox($('#fkReportId'));
@@ -1297,7 +1297,10 @@ function tableFilterListener() {
         var tableId = var_tablename;
         var div = element.closest('div[class="custom-table"]');
         var sLimit = g_tbl[var_tablename].start_limit;
+        sLimit = sLimit == 'undefined' || !(sLimit) ? 0 : sLimit;
         var eLimit = g_tbl[var_tablename].end_limit;
+        eLimit = eLimit == 'undefined' || !(eLimit) ? global_var.default_per_page : eLimit;
+
         json.kv["startLimit"] = sLimit;
         json.kv['endLimit'] = eLimit;
         div.find(".table-filter-comp").each(function () {
@@ -1374,7 +1377,7 @@ function formActivateListeners() {
         clearForm(target_id, 'update');
         $('#' + target_id).find("form").find(".apd-form-select").each(function () {
             fillCombobox(this);
-            $(this).change();
+//            $(this).change();
         });
         $('#' + target_id).find("form").find(".apd-form-switch-list").each(function () {
 //            console.log("formActivateListeners: <empty>");
@@ -1468,11 +1471,15 @@ function reportComboListeners() {
 
 function subModuleFormShowListeners() {
     $(document).on("click", '.apd-subm-attr-button', function (e) {
-        doSumModuleFormShow(e.target);
+        doSubmoduleFormShow(e.target);
     });
 }
 
-function doSumModuleFormShow(e) {
+function doSubmoduleFormShow(e) {
+    var d21 = new Date();
+    console.log(" begin all >>> " + d21.getSeconds() + '-' + d21.getMilliseconds());
+    var d = new Date();
+
     var insCmCode = '-1';
     var sesId = $('.apd-table-checkbox:checked').val();
     if (typeof sesId === 'undefined' || !sesId) {
@@ -1491,57 +1498,27 @@ function doSumModuleFormShow(e) {
     json.kv.fkSubmoduleId = smodule_id;
     json.kv.fkSessionId = sesId;
     var data = JSON.stringify(json);
+    console.log("start >>> " + d.getSeconds() + '-' + d.getMilliseconds());
     $.ajax({
         url: "api/post/srv/serviceCrGetSubmoduleFormBody",
         type: "POST",
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
+            var d12 = new Date();
+            console.log("return >>> " + d12.getSeconds() + '-' + d12.getMilliseconds());
             isResultRedirect(JSON.stringify(res));
             var body = res.kv.body;
             var hd = res.kv.header;
             if (insCmCode === '-1') {
                 $('#modal-insert-title-name').text(hd);
                 $('#form-insert-element-body').html(body);
-                $('#form-insert-element-body').find(".apd-form-select").each(function () {
-                    fillCombobox(this);
-                });
-                $('#form-insert-element-body').find(".apd-form-select-manual").each(function () {
-                    var has_other = $(this).attr('has_other');
-                    if (typeof has_other === 'undefined' || !has_other) {
-                        has_other = '0';
-                    }
-                    if (has_other === '1') {
-                        $(this).append($("<option />").val("__2__").text("Other"));
-                    }
-                    $(this).addClass('selectpicker');
-                    $(this).attr("data-show-subtext", "true");
-                    $(this).attr("data-live-search", "true");
-                    $(this).selectpicker('refresh');
-                });
-                $('#form-insert-element-body').find(".apd-form-multiselect").each(function () {
-                    $(this).multiselect('destroy');
-                    fillCombobox(this);
-                    $(this).multiselect(
-                            {includeSelectAllOption: true,
-                                enableFiltering: true,
-                                selectAllJustVisible: true
-                            }
-                    );
-                });
-                $('#form-insert-element-body').find(".apd-form-multiselect-manual").each(function () {
-                    $(this).multiselect('destroy');
-                    $(this).multiselect(
-                            {includeSelectAllOption: true,
-                                enableFiltering: true,
-                                selectAllJustVisible: true
-                            }
-                    );
-                });
-                var res = getInspectionInfo(sesId, smodule_id);
-                setSubmoduleUpdateFormValues(res);
+//                
+//                setSubmoduleUpdateFormValues(res);
+                $('.selectpicker').selectpicker('refresh');
+
             }
         },
         error: function (res, status) {

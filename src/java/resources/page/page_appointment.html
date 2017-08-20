@@ -10,9 +10,9 @@
                     class="btn btn-md task-button toggle-on-click " 
                     onclick="toggleNewSession(this)">newSession
             </button>
-<!--                        <button id='newInspectionToggle' type="button" f="1" qlang class="btn btn-md task-button  " 
-                                onclick="toggleNewInspection(this)">addInspection
-                        </button>-->
+            <!--                        <button id='newInspectionToggle' type="button" f="1" qlang class="btn btn-md task-button  " 
+                                            onclick="toggleNewInspection(this)">addInspection
+                                    </button>-->
             <button id='serviceCrGetAppointmentList' type="button"  qlang class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                     onclick="loadSession(this)">sessionList
             </button>
@@ -21,9 +21,9 @@
                                 class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                                 onclick="loadTable('tbl_patient_list')">patientList
                         </button>-->
-<!--                        <button id='serviceCrGetAppointmentList' type="button" qlang class="btn btn-md task-button apd-task-load" 
-                                onclick="loadInspectionListBySession(this)">inspectionList
-                        </button>-->
+            <!--                        <button id='serviceCrGetAppointmentList' type="button" qlang class="btn btn-md task-button apd-task-load" 
+                                            onclick="loadInspectionListBySession(this)">inspectionList
+                                    </button>-->
 
             <button id='serviceCrGetAppointmentList' type="button" qlang 
                     class="btn btn-md task-button apd-task-load toggle-on-click" 
@@ -59,8 +59,7 @@
                         </ul>
                     </li>
                     <li>
-                         <a tabindex="-1" href="#" qlang onclick='loadInspectionListBySession(this)'>inspectionList</a>
-                        
+                        <a tabindex="-1" href="#" qlang onclick='loadInspectionListBySession(this)'>inspectionList</a>
                     </li>
                 </ul>
             </div>
@@ -69,14 +68,15 @@
     <div class="col-md-12" >
         <br>
     </div>
-    
+
     <div class="col-md-12  toggle-on-click" >
 
         <div class="form-group col-md-5" >
             <label qlang>patient</label>
-            <select class="form-control apd-form-select" id="fkPatientId" name="fkPatientId" select_separator=" " 
-                    select_text="patientId,patientName,patientSurname,patientMiddleName"  select_value="id" 
-                    srv_url="srv/serviceCrGetPatientList" onchange='patientSelectAction(this)'>
+            <select class="form-control apd-form-select" id="fkPatientId" 
+                    has_null="1" name="fkPatientId" select_separator=" " 
+                    select_text="patientName"  select_value="id" 
+                    srv_url="srv/serviceCrGetPatientList4Combo" onchange='patientSelectAction(this)'>
             </select>
 
         </div>
@@ -86,31 +86,26 @@
                     class="btn btn-md task-button apd-task-create apd-task-form" 
                     style='margin-top:5px'
                     data-toggle="modal"   data-target="#insertNewPatient"  >
-               <i class="fa fa-plus" aria-hidden="true" 
-                  style='font-size: 12px;padding-left: 12px;padding-right: 12px;'></i>
+                <i class="fa fa-plus" aria-hidden="true" 
+                   style='font-size: 12px;padding-left: 12px;padding-right: 12px;'></i>
             </button>
-            
+
             <button id='btn_serviceCrUpdatePatient' type="button" 
                     class="btn btn-md task-button apd-task-create 
-                    apd-task-form-fill apd-task-form" 
+                    apd-task-form-fill  " 
                     style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;' 
                     apd-form-fill-url="srv/serviceCrGetPatientList" 
-                     apd-form-fill-kv="id=201708120805030545" 
-                    data-toggle="modal"   data-target="#updatePatient">
-               &#8519;
+                    apd-form-fill-kv="id=201708120805030545" 
+                    data-toggle="modal"   data-target="#updatePatient" qlang>
+                edit
             </button>
-            
-            
-            
+
         </div>
         <div class="col-md-12" ><br></div>
-
     </div>
-    
     <div  class="col-md-12 toggle-on-click-session" id="newSessionDiv" style="display: none;border-width: 1px;
           border-style: solid; border-color: #00B5AD"> 
         <div class="col-md-12">
-
             <div class="form-group col-md-2">
                 <label qlang>doctor</label> 
                 <select class="form-control apd-form-select" id="fkDoctorUserId" name="fkDoctorUserId" select_separator=" " 
@@ -118,8 +113,6 @@
                         srv_url="srv/serviceCrGetDoctorList">
                 </select>
             </div>
-
-
 
             <div class="form-group col-md-2">
                 <label qlang>appointmentDate</label>
@@ -169,7 +162,7 @@
         </div>
 
     </div>
-    
+
 
 
     <div  
@@ -374,7 +367,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="apdSoundPlayer"   class="modal fade col-md-12" role="dialog">
         <div class="modal-dialog ">
             <div class="modal-content ">
@@ -447,6 +440,7 @@
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
                             <select class="form-control apd-form-select" id="maritualStatus" name="maritualStatus"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/maritualStatus">
                             </select>
@@ -454,36 +448,45 @@
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select" id="occupation" name="occupation"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/occupation">
                             </select>
                         </div>
-
                         <div class="form-group col-md-4">
+                            <label qlang>occupationOther</label>
+                            <input type="text" class="form-control apd-form-input" id="occupationOther" 
+                                   name="occupationOther" placeholder="">
+                        </div>
+                        <div class="form-group col-md-3">
                             <label qlang>education</label>
                             <select class="form-control apd-form-select" id="education" name="education"
                                     select_text="itemValue" select_value="itemKey" 
+                                    has_null="1"
                                     srv_url="li/educationType">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select" id="sex" name="sex"
                                     select_text="itemValue" select_value="itemKey" 
+                                    has_null="1"
                                     srv_url="li/sex">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label qlang>bloodGroup</label>
                             <select class="form-control apd-form-select" id="bloodGroup" name="bloodGroup"
                                     select_text="itemValue" select_value="itemKey" 
+                                    has_null="1"
                                     srv_url="li/bloodGroup">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label qlang>rhFactor</label>
                             <select class="form-control apd-form-select" id="rhFactor" name="rhFactor"
                                     select_text="itemValue" select_value="itemKey" 
+                                    has_null="1"
                                     srv_url="li/rhFactor">
                             </select>
                         </div>
@@ -536,16 +539,17 @@
                         <div class="form-group col-md-3">
                             <label>isActive</label>
                             <select class="form-control apd-form-select" id="isActive" name="isActive"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/pa">
                             </select>
                         </div>
-                         <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                             <label qlang>description</label>
                             <textarea class="form-control apd-form-textarea" id="description" 
                                       name="description" placeholder=""></textarea>
                         </div> 
-                         <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                             <label qlang>addressLine</label>
                             <textarea class="form-control apd-form-textarea" id="addressLine" 
                                       name="addressLine" placeholder=""></textarea>
@@ -606,6 +610,7 @@
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
                             <select class="form-control apd-form-select" id="maritualStatus" name="maritualStatus"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/maritualStatus">
                             </select>
@@ -613,35 +618,44 @@
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select" id="occupation" name="occupation"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/occupation">
                             </select>
                         </div>
-
                         <div class="form-group col-md-4">
+                            <label qlang>occupationOther</label>
+                            <input type="text" class="form-control apd-form-input" id="occupationOther" 
+                                   name="occupationOther" placeholder="">
+                        </div>
+                        <div class="form-group col-md-3">
                             <label qlang>education</label>
                             <select class="form-control apd-form-select" id="education" name="education"
                                     select_text="itemValue" select_value="itemKey" 
+                                    has_null="1"
                                     srv_url="li/educationType">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select" id="sex" name="sex"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/sex">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label qlang>bloodGroup</label>
                             <select class="form-control apd-form-select" id="bloodGroup" name="bloodGroup"
                                     select_text="itemValue" select_value="itemKey" 
+                                    has_null="1"
                                     srv_url="li/bloodGroup">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label qlang>rhFactor</label>
                             <select class="form-control apd-form-select" id="rhFactor" name="rhFactor"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/rhFactor">
                             </select>
@@ -695,16 +709,17 @@
                         <div class="form-group col-md-3">
                             <label>isActive</label>
                             <select class="form-control apd-form-select" id="isActive" name="isActive"
+                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/pa">
                             </select>
                         </div>
-                         <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                             <label qlang>description</label>
                             <textarea class="form-control apd-form-textarea" id="description" 
                                       name="description" placeholder=""></textarea>
                         </div> 
-                         <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                             <label qlang>addressLine</label>
                             <textarea class="form-control apd-form-textarea" id="addressLine" 
                                       name="addressLine" placeholder=""></textarea>

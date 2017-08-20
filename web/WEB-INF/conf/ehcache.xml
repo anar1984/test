@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://www.ehcache.org/v3'
+    xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd">
+    
+    <!--thread-pools> 
+        <thread-pool alias="defaultDiskPool" min-size="1" max-size="3"/>
+    </thread-pools-->
+    
+    <!--disk-store thread-pool="defaultDiskPool" /-->
+    <persistence directory="java.io.tmpdir" />
+    
+    <cache alias="modelCache">
+        <key-type>java.lang.String</key-type> 
+        <value-type>utility.Carrier</value-type> 
+        <expiry>
+            <ttl unit="hours">1</ttl>
+        </expiry>
+        <resources>
+            <disk unit="GB">2</disk>
+            <heap unit="MB">500</heap> 
+            <offheap unit="MB">600</offheap>
+        </resources>
+        <!--disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" /-->
+    </cache>
+    
+<!--    <cache alias="serviceCache"> 
+        <key-type>java.lang.String</key-type> 
+        <value-type>java.lang.String</value-type> 
+        <expiry>
+            <ttl unit="hours">1</ttl>
+        </expiry>
+        <resources>
+            <disk unit="GB">2</disk>
+            <heap unit="MB">500</heap> 
+            <offheap unit="MB">600</offheap>
+        </resources>-->
+        <!--disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" /-->
+    
+    
+    
+    <!--loader-writer>
+        <class>module.cr.CrModel</class>
+       
+        </loader-writer-->
+    
+    <!--</cache>-->
+  
+</config>

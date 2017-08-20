@@ -28,7 +28,6 @@ public class QUtility {
 
     private static String SERVICE = "Service";
     private static String MODULE = "MD";
- 
 
     public static String convertWSTitleToMethodFormat(String wsTitle) {
 //  Veb servis standardı “Service” + MODULE(2 characters) + METHOD_NAME
@@ -53,7 +52,7 @@ public class QUtility {
         return arg.substring(0, 1).toUpperCase() + arg.substring(1, arg.length()).toLowerCase();
     }
 
-   public static String convertDecimalToHex(Long num){
+    public static String convertDecimalToHex(Long num) {
         String str = "";
         char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         long rem;
@@ -65,36 +64,37 @@ public class QUtility {
         }
         return str;
     }
-    
-    public static String convertDecimalToHex(int num){
-         return convertDecimalToHex(num);
+
+    public static String convertDecimalToHex(int num) {
+        return convertDecimalToHex(num);
     }
-    
-    public static String getUndefinedLabel() throws QException{
+
+    public static String getUndefinedLabel() throws QException {
         return getLabel("___undefined___");
     }
-    public static String getLabel(String arg) throws QException{
+
+    public static String getLabel(String arg) throws QException {
         EntityCrEntityLabel ent = new EntityCrEntityLabel();
         ent.setLang(SessionManager.getCurrentLang());
         ent.setFieldName(arg.trim());
         Carrier c = EntityManager.select(ent);
-        if (c.getTableRowCount(ent.toTableName())>0){
+        if (c.getTableRowCount(ent.toTableName()) > 0) {
             arg = c.getValue(
-                    ent.toTableName(),0,EntityCrEntityLabel.DESCRIPTION).toString();
+                    ent.toTableName(), 0, EntityCrEntityLabel.DESCRIPTION).toString();
         }
         return arg;
     }
 
-    public static Carrier getListItem(String code) throws QException{
-        EntityCrListItem  ent = new EntityCrListItem();
+    public static Carrier getListItem(String code) throws QException {
+        EntityCrListItem ent = new EntityCrListItem();
         ent.setDeepWhere(false);
         ent.setLang(SessionManager.getCurrentLang());
         ent.setItemCode(code);
         Carrier tc = EntityManager.select(ent).
-                getKVFromTable(ent.toTableName(), "itemKey","itemValue");
+                getKVFromTable(ent.toTableName(), "itemKey", "itemValue");
         return tc;
     }
-    
+
     public static String getListItemValue(String code, String key) throws QException {
         EntityCrListItem ent = new EntityCrListItem();
         ent.setDeepWhere(false);
@@ -106,13 +106,29 @@ public class QUtility {
     }
 
     public static Carrier getListItem(String code, String itemValue4Search) throws QException {
-        EntityCrListItem  ent = new EntityCrListItem();
+        EntityCrListItem ent = new EntityCrListItem();
         ent.setDeepWhere(false);
         ent.setLang(SessionManager.getCurrentLang());
+        ent.setItemCode(code);
         ent.setItemValue(itemValue4Search);
         ent.addDeepWhereStatementField("itemValue");
-        ent.setItemCode(code);
         Carrier tc = EntityManager.select(ent);
+
+//        Carrier newC = new Carrier();
+//        
+//        Carrier tc = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_LISTITEM);
+//        String tn = code + SessionManager.getCurrentLang();
+//        int rc = tc.getTableRowCount(tn);
+//
+//        for (int i = 0; i < rc; i++) {
+//            String itemKey = tc.getValue(tn,i,"itemKey").toString();
+//            String itemValue = tc.getValue(tn,i,"itemValue").toString();
+////            System.out.println("itemKey=>"+itemKey+"; itemvalue="+itemValue);
+//            if (new DeepWhere(itemValue, itemValue4Search).isMatched()){
+//                newC.setValue(itemKey, itemValue);
+//            } 
+//        }
+         
 
         if (tc.getTableRowCount(ent.toTableName()) == 0) {
             ent.setLang("ENG");
@@ -176,8 +192,8 @@ public class QUtility {
     }
 
     public static String checkLangLabel(String arg) throws QException, IOException {
-         Document doc = Jsoup.parse(arg, "UTF-8");
-         
+        Document doc = Jsoup.parse(arg, "UTF-8");
+
         Elements elements = doc.getElementsByAttribute("qlang");
         String langs = "";
         for (Element element : elements) {

@@ -15,17 +15,17 @@
         <key-type>java.lang.String</key-type> 
         <value-type>utility.Carrier</value-type> 
         <expiry>
-            <ttl unit="hours">1</ttl>
+            <tti unit="hours">1</tti>
         </expiry>
         <resources>
             <disk unit="GB">2</disk>
-            <heap unit="MB">500</heap> 
-            <offheap unit="MB">600</offheap>
+            <heap unit="MB">200</heap> 
+            <offheap unit="MB">400</offheap>
         </resources>
         <!--disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" /-->
     </cache>
     
-    <cache alias="serviceCache"> 
+    <!--cache alias="serviceCache"> 
         <key-type>java.lang.String</key-type> 
         <value-type>java.lang.String</value-type> 
         <expiry>
@@ -35,7 +35,7 @@
             <disk unit="GB">2</disk>
             <heap unit="MB">500</heap> 
             <offheap unit="MB">600</offheap>
-        </resources>
+        </resources-->
         <!--disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" /-->
     
     
@@ -45,6 +45,6 @@
        
     </loader-writer-->
     
-  </cache>
+  <!--/cache-->
   
 </config>

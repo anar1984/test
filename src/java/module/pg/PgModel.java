@@ -23,7 +23,9 @@ import module.cr.entity.EntityCrAppointment;
 import module.cr.entity.EntityCrAppointmentList;
 import module.cr.entity.EntityCrInspection;
 import module.cr.entity.EntityCrInspectionList;
+import module.cr.entity.EntityCrListItem;
 import module.cr.entity.EntityCrModule;
+import module.cr.entity.EntityCrPatient;
 import module.cr.entity.EntityCrSubmodule;
 import module.cr.entity.EntityCrSubmoduleAttribute;
 import module.cr.entity.EntityCrSubmoduleAttributeList;
@@ -98,7 +100,7 @@ public class PgModel {
         EntityCrInspection entIns = new EntityCrInspection();
         entIns.setDeepWhere(false);
         entIns.setFkSubmoduleAttributeId(saIds);
-        entIns.setFkUserId(SessionManager.getCurrentUserId());
+//        entIns.setFkUserId(SessionManager.getCurrentUserId());
         entIns.setInspectionCode(fkSessionId);
         Carrier c1 = EntityManager.select(entIns);
 
@@ -178,13 +180,6 @@ public class PgModel {
 
         String insCode = "";
 
-//        EntityCrSubmodule ent = new EntityCrSubmodule();
-//        ent.setDeepWhere(false);
-//        ent.setFkModuleId(fkModuleId);
-//        ent.setLang(SessionManager.getCurrentLang());
-//        ent.addSortBy(EntityCrSubmodule.SORT_BY);
-//        ent.setSortByAsc(true);
-//        Carrier carrier = EntityManager.select(ent);
         Carrier carrier = new Carrier();
         carrier.setValue("fkModuleId", fkModuleId);
         carrier.setValue("asc", "sortBy");
@@ -240,7 +235,6 @@ public class PgModel {
         }
 
         String ln = getSubmoduleHtml(entArr, insCode);
-
         return ln;
     }
 
@@ -267,13 +261,12 @@ public class PgModel {
     }
 
     public static String getSubmoduleFormBody(String fkSubmoduleId,
-            String fkSessionId) throws QException {
-//        EntityCrSubmoduleAttributeList ent = new EntityCrSubmoduleAttributeList();
-//        ent.setDeepWhere(false);
-//        ent.setFkSubmoduleId(fkSubmoduleId);
-//        ent.addSortBy(EntityCrSubmoduleAttributeList.SORT_BY);
-//        ent.setSortByAsc(true);
-//        Carrier carrier = EntityManager.select(ent);
+            String fkSessionId, Carrier crInspection) throws QException {
+
+        Carrier cprIns = crInspection.getKVFromTable(CoreLabel.RESULT_SET,
+                "fkSubmoduleAttributeId", "inspectionValue");
+        Carrier cprInsHa = crInspection.getKVFromTable(CoreLabel.RESULT_SET,
+                "fkSubmoduleAttributeId", "haInspectionValue");
 
         Carrier carrier = new Carrier();
         carrier.setValue("fkSubmoduleId", fkSubmoduleId);
@@ -287,46 +280,49 @@ public class PgModel {
             EntityCrSubmoduleAttributeList ent
                     = new EntityCrSubmoduleAttributeList();
             EntityManager.mapCarrierToEntity(carrier, tn, i, ent);
+            String insVal = cprIns.getValue(ent.getId()).toString();
+            String haInsVal = cprInsHa.getValue(ent.getId()).toString();
+
             CsTag tag = new CsTag();
             Tag val = null;
             if (ent.getFkValueTypeId().equals(VALUE_TYPE_STRING)) {
-                val = generateStringAttributeVal(ent);
+                val = generateStringAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_RANGE_STRING)) {
-                val = generateRangeStringtAttributeVal(ent);
+                val = generateRangeStringtAttributeVal(ent, insVal, haInsVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_RANGE_STRING_MULTI)) {
-                val = generateRangeStringtMultiAttributeVal(ent);
+                val = generateRangeStringtMultiAttributeVal(ent, insVal, haInsVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_RANGE_INTEGER_MULTI)) {
-                val = generateRangeIntegerMultiAttributeVal(ent);
+                val = generateRangeIntegerMultiAttributeVal(ent, insVal, haInsVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_FLOAT)) {
-                val = generateFloatAttributeVal(ent);
+                val = generateFloatAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_INTEGER)) {
-                val = generateIntegerAttributeVal(ent);
+                val = generateIntegerAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_MIN_MAX_FLOAT)) {
-                val = generateMinMaxFloatAttributeVal(ent);
+                val = generateMinMaxFloatAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_MIN_MAX_INTEGER)) {
-                val = generateMinMaxIntegerAttributeVal(ent);
+                val = generateMinMaxIntegerAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_POSITIVE_FLOAT)) {
-                val = generatePosiviteFloatAttributeVal(ent);
+                val = generatePosiviteFloatAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_POSITIVE_INTEGER)) {
-                val = generatePosiviteIntegerAttributeVal(ent);
+                val = generatePosiviteIntegerAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_RANGE_INTEGER)) {
-                val = generateRangeNumbertAttributeVal(ent);
+                val = generateRangeNumbertAttributeVal(ent, insVal, haInsVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_TEXTAREA)) {
-                val = generateTextareaAttributeVal(ent);
+                val = generateTextareaAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_PICTURE)) {
-                val = generatePictureAttributeVal(ent);
+                val = generatePictureAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_VIDEO_UPLOAD)) {
-                val = generateVideoAttributeVal(ent);
+                val = generateVideoAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_VIDEO_URL)) {
-                val = generateVideoUrlAttributeVal(ent);
+                val = generateVideoUrlAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_PICTURE_URL)) {
-                val = generatePictureUrlAttributeVal(ent);
+                val = generatePictureUrlAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_YOUTUBE_URL)) {
-                val = generateYoutubeUrlAttributeVal(ent);
+                val = generateYoutubeUrlAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_SOUND_UPLOAD)) {
-                val = generateSoundUploadAttributeVal(ent);
+                val = generateSoundUploadAttributeVal(ent, insVal);
             } else if (ent.getFkValueTypeId().equals(VALUE_TYPE_DATE)) {
-                val = generateDateAttributeVal(ent);
+                val = generateDateAttributeVal(ent, insVal);
             }
 
             tag.setHeader(ent.getAttributeName());
@@ -342,7 +338,10 @@ public class PgModel {
         return ln;
     }
 
-    private static Tag generatePictureAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generatePictureAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
+        String ds = insVal.length() == 0 ? "font-size:14px;color:#00b289;display: none"
+                : "font-size:14px;color:#00b289;display: block";
+
         Tag ln = div()
                 .withClass("fileuploader")
                 .with(
@@ -352,6 +351,7 @@ public class PgModel {
                                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                                 withClass("form-control apd-form-input-file").
+                                withValue(insVal).
                                 withType("file").
                                 attr("file_type", "image")
                         ),
@@ -370,14 +370,26 @@ public class PgModel {
                                 .attr("width", "20px"),
                                 i()
                                 .attr("style", "font-size:22px;color:red;display: none; ")
-                                .withClass("fa fa-warning apd-image-upload-error")
+                                .withClass("fa fa-warning apd-image-upload-error"),
+                                i()
+                                .withClass("apd-image-trigger fa  fa-picture-o  ")
+                                .attr("style", ds)
+                                .attr("apd_image_url", "")
+                                .attr("apd_image_alt", "insValue")
+                                .attr("data-toggle", "modal")
+                                .attr("data-target", "#apdImageViewer")
+                                .attr("aria-hidden", "true")
+                                .attr("v_id", "sa_" + ent.getId())
                         )
                 );
 
         return ln;
     }
 
-    private static Tag generateVideoAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateVideoAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
+        String ds = insVal.length() == 0 ? "font-size:14px;color:#00b289;display: none"
+                : "font-size:14px;color:#00b289;display: block";
+
         Tag ln = div()
                 .withClass("fileuploader")
                 .with(
@@ -388,6 +400,7 @@ public class PgModel {
                                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                                 withClass("form-control apd-form-input-file").
                                 withType("file").
+                                withValue(insVal).
                                 attr("file_type", "video")
                         ),
                         div().withClass("col-md-1")
@@ -405,23 +418,35 @@ public class PgModel {
                                 .attr("width", "20px"),
                                 i()
                                 .attr("style", "font-size:22px;color:red;display: none; ")
-                                .withClass("fa fa-warning apd-image-upload-error")
+                                .withClass("fa fa-warning apd-image-upload-error"),
+                                i()
+                                .withClass("apd-video-trigger fa fa-video-camera  ")
+                                .attr("style", ds)
+                                .attr("apd_video_url", "")
+                                .attr("data-toggle", "modal")
+                                .attr("data-target", "#apdVideoPlayer")
+                                .attr("aria-hidden", "true")
+                                .attr("v_id", "sa_" + ent.getId())
                         )
                 );
 
         return ln;
     }
 
-    private static Tag generateSoundUploadAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateSoundUploadAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
+        String ds = insVal.length() == 0 ? "display:none;width:100px;"
+                : "display:block;width:100px;";
+
         Tag ln = div()
                 .withClass("fileuploader")
                 .with(
-                        div().withClass("col-md-11")
+                        div().withClass("col-md-8")
                         .with(
                                 input().
                                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                                 withClass("form-control apd-form-input-file").
+                                withValue(insVal).
                                 withType("file").
                                 attr("file_type", "audio")
                         ),
@@ -439,8 +464,23 @@ public class PgModel {
                                 .attr("height", "20px")
                                 .attr("width", "20px"),
                                 i()
-                                .attr("style", "font-size:22px;color:red;display: none; ")
+                                .attr("style", "font-size:22px;color:red;display: none;")
                                 .withClass("fa fa-warning apd-image-upload-error")
+                        ),
+                        div().withClass("col-md-3")
+                        .with(
+                                audio()
+                                .attr("controls", "")
+                                .attr("style", ds)
+                                .attr("preload", "auto")
+                                .withClass("apd-input-audio")
+                                .withId("soundInput")
+                                .attr("s_id", PREFIX_SUBMODULE_ATTRIBUTE + ent.getId())
+                                .with(
+                                        source()
+                                        .attr("src", "resources/upload/" + insVal)
+                                        .attr("type", "audio/mpeg")
+                                )
                         )
                 );
 
@@ -450,6 +490,19 @@ public class PgModel {
     private static String generateSubmoduleFormElementBody(ArrayList<CsTag> tagArr,
             String fkSessionId) throws QException {
         return generateSubmoduleFormElementBody(tagArr, fkSessionId, "");
+    }
+
+    private static EntityCrPatient getPatientInfoBySessionId(String fkSessionId)
+            throws QException {
+        EntityCrAppointment entAppt = new EntityCrAppointment();
+        entAppt.setId(fkSessionId);
+        EntityManager.select(entAppt);
+
+        EntityCrPatient entPtnt = new EntityCrPatient();
+        entPtnt.setId(entAppt.getFkPatientId());
+        EntityManager.select(entPtnt);
+
+        return entPtnt;
     }
 
     private static String generateSubmoduleFormElementBody(ArrayList<CsTag> tagArr,
@@ -463,18 +516,14 @@ public class PgModel {
         EntityManager.select(entSM);
 
         String sortByNo = entSM.getSortBy();
-
-        Carrier c = new Carrier();
-        c.setValue("id", fkSessionId);
-        c = CrModel.getAppointmentList(c);
-
+        EntityCrPatient entPtnt = getPatientInfoBySessionId(fkSessionId);
         String patientFullname
-                = c.getValue(CoreLabel.RESULT_SET, 0, "patientName").toString() + " "
-                + c.getValue(CoreLabel.RESULT_SET, 0, "patientSurname").toString() + " "
-                + c.getValue(CoreLabel.RESULT_SET, 0, "patientMiddleName").toString();
+                = entPtnt.getPatientName() + " " + entPtnt.getPatientMiddleName() + " "
+                + entPtnt.getPatientSurname();
 
         String fkPatientId
-                = c.getValue(CoreLabel.RESULT_SET, 0, "fkPatientId").toString();
+                = entPtnt.getId();
+
         String ln = div()
                 .with(
                         div().withClass("form-group col-md-12")
@@ -522,63 +571,68 @@ public class PgModel {
         return ln;
     }
 
-    private static Tag generateFloatAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateFloatAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
+                withValue(insVal).
                 withType("number").
                 attr("step", "0.00000001").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generatePosiviteIntegerAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generatePosiviteIntegerAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
                 withType("number").
+                withValue(insVal).
                 attr("step", "1").
                 attr("min", "0").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generatePosiviteFloatAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generatePosiviteFloatAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
                 attr("step", "0.00000001").
                 attr("min", "0").
+                withValue(insVal).
                 withType("number").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generateIntegerAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateIntegerAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
                 withType("number").
+                withValue(insVal).
                 attr("step", "1").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generateDateAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateDateAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
                 withType("date").
+                withValue(insVal).
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generateMinMaxIntegerAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateMinMaxIntegerAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         String min = ent.getSubmoduleValue().split(CoreLabel.SEPERATOR_VERTICAL_LINE)[0];
         String max = ent.getSubmoduleValue().split(CoreLabel.SEPERATOR_VERTICAL_LINE)[1];
 
@@ -594,6 +648,7 @@ public class PgModel {
                                 withType("number").
                                 attr("step", "1").
                                 attr("min", min).
+                                withValue(insVal).
                                 attr("max", max).
                                 withPlaceholder(ent.getAttributeName())
                         ),
@@ -605,7 +660,7 @@ public class PgModel {
         return ln;
     }
 
-    private static Tag generateMinMaxFloatAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateMinMaxFloatAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         String min = ent.getSubmoduleValue().split(CoreLabel.SEPERATOR_VERTICAL_LINE)[0];
         String max = ent.getSubmoduleValue().split(CoreLabel.SEPERATOR_VERTICAL_LINE)[1];
 
@@ -622,6 +677,7 @@ public class PgModel {
                                 attr("step", "0.00000001").
                                 attr("min", min).
                                 attr("max", max).
+                                withValue(insVal).
                                 withPlaceholder(ent.getAttributeName())
                         ),
                         div()
@@ -632,56 +688,142 @@ public class PgModel {
         return ln;
     }
 
-    private static Tag generateTextareaAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateTextareaAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = textarea().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-textarea").
+                withText(insVal).
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generateStringAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateStringAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
+                withValue(insVal).
                 withType("text").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generateVideoUrlAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateVideoUrlAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
+                withValue(insVal).
                 withType("url").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generatePictureUrlAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generatePictureUrlAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
         Tag ln = input().
                 withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
                 withClass("form-control apd-form-input").
+                withValue(insVal).
                 withType("url").
                 withPlaceholder(ent.getAttributeName());
         return ln;
     }
 
-    private static Tag generateYoutubeUrlAttributeVal(EntityCrSubmoduleAttributeList ent) {
-        Tag ln = input().
-                withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
-                withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
-                withClass("form-control apd-form-input").
-                withType("url").
-                withPlaceholder(ent.getAttributeName());
+    private static Tag generateYoutubeUrlAttributeVal(EntityCrSubmoduleAttributeList ent, String insVal) {
+        Tag ln = div()
+                .withClass("apd-div-youtube")
+                .with(
+                        div().withClass("col-md-11")
+                        .with(
+                                input().
+                                withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                                withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId()).
+                                withClass("form-control apd-form-input").
+                                withType("url").
+                                withValue(insVal).
+                                withPlaceholder(ent.getAttributeName())),
+                        div().withClass("col-md-1")
+                        .with(
+                                i()
+                                .attr("style", "font-size:22px;color:red;  ")
+                                .withClass("fa fa-youtube apd-youtube-player")
+                                .attr("v_id", "sa_" + ent.getId())
+                        )
+                );
         return ln;
     }
 
-    private static Tag generateRangeStringtAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static ArrayList<EntityCrListItem> getListItemBySMValue(String submoduleValue) throws QException {
+        ArrayList<EntityCrListItem> list = new ArrayList<>();
+
+        if (submoduleValue.trim().length() == 0) {
+            return list;
+        }
+
+        Carrier c = new Carrier();
+        c.setValue("itemCode", submoduleValue);
+        c = CrModel.getListItemByCode(c);
+        String tn = CoreLabel.RESULT_SET;
+        int rc = c.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            EntityCrListItem ent = new EntityCrListItem();
+            EntityManager.mapCarrierToEntity(c, tn, i, ent);
+            list.add(ent);
+        }
+        return list;
+    }
+
+    private static Tag generateRangeStringtAttributeVal(EntityCrSubmoduleAttributeList ent,
+            String insVal, String haInsVal)
+            throws QException {
+        ArrayList<EntityCrListItem> list = getListItemBySMValue(ent.getSubmoduleValue());
+
+        String selectCls = ent.getHasOther().equals("yes")
+                ? "form-control apd-form-select apd-form-select-ho selectpicker"
+                : "form-control apd-form-select selectpicker";
+        String hasOtherVl = ent.getHasOther().equals("yes") ? "1" : "0";
+
+        Tag nw = ent.getHasOther().equals("yes")
+                ? input().withClass("form-control apd-form-input ")
+                .withId(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
+                .withName(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
+                .withValue(haInsVal)
+                .withType("text")
+                .attr("style", haInsVal.length() == 0 ? "margin-top:4px;display:none;" : "margin-top:4px;display:block;")
+                : span();
+
+        Tag ln = div()
+                .with(
+                        select()
+                        .withId(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId())
+                        .withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId())
+                        .attr("select_text", "itemValue")
+                        .attr("select_value", "itemKey")
+                        .attr("srv_url", "li/" + ent.getSubmoduleValue())
+                        .attr("has_other", hasOtherVl)
+                        .attr("has_null", "true")
+                        .withClass(selectCls)
+                        .with(
+                                option("----").withValue(""),
+                                each(list, l
+                                        -> option(l.getItemValue())
+                                        .withValue(l.getItemKey())
+                                        .attr(l.getItemKey().equals(insVal) ? "selected" : "", "")
+                                ),
+                                ent.getHasOther().equals("yes")
+                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                .attr(insVal.equals("__2__") ? "selected" : "", "")
+                                : span()
+                        ),
+                        ent.getHasOther().equals("yes") ? br() : span(),
+                        nw
+                );
+        return ln;
+    }
+
+    private static Tag generateRangeStringtAttributeVal_old(EntityCrSubmoduleAttributeList ent) {
         String selectCls = ent.getHasOther().equals("yes")
                 ? "form-control apd-form-select apd-form-select-ho"
                 : "form-control apd-form-select";
@@ -712,18 +854,23 @@ public class PgModel {
         return ln;
     }
 
-    private static Tag generateRangeStringtMultiAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateRangeStringtMultiAttributeVal(EntityCrSubmoduleAttributeList ent,
+            String insVal, String haInsVal) throws QException {
+        ArrayList<EntityCrListItem> list = getListItemBySMValue(ent.getSubmoduleValue());
+        String[] insValArr = insVal.split(CoreLabel.SEPERATOR_VERTICAL_LINE);
+
         String selectCls = ent.getHasOther().equals("yes")
-                ? "form-control apd-form-multiselect apd-form-select-ho"
-                : "form-control apd-form-multiselect";
+                ? "form-control apd-form-multiselect selectpicker apd-form-select-ho"
+                : "form-control apd-form-multiselect selectpicker";
         String hasOtherVl = ent.getHasOther().equals("yes") ? "1" : "0";
 
         Tag nw = ent.getHasOther().equals("yes")
                 ? input().withClass("form-control apd-form-input")
                 .withId(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
                 .withName(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
+                .withValue(haInsVal)
                 .withType("text")
-                .attr("style", "margin-top:4px;display:none;")
+                .attr("style", haInsVal.length() == 0 ? "margin-top:4px;display:none;" : "margin-top:4px;display:block;")
                 : span();
 
         Tag ln = div()
@@ -736,28 +883,42 @@ public class PgModel {
                         .attr("multiple", "multiple")
                         .attr("srv_url", "li/" + ent.getSubmoduleValue())
                         .attr("has_other", hasOtherVl)
-                        .withClass(selectCls),
+                        .withClass(selectCls)
+                        .with(
+                                each(list, l
+                                        -> option(l.getItemValue())
+                                        .withValue(l.getItemKey())
+                                        .attr(Arrays.asList(insValArr).contains(l.getItemKey()) ? "selected" : "", "")
+                                ),
+                                ent.getHasOther().equals("yes")
+                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                .attr(insVal.equals("__2__") ? "selected" : "", "")
+                                : span()
+                        ),
                         ent.getHasOther().equals("yes") ? br() : span(),
                         nw
                 );
         return ln;
     }
 
-    private static Tag generateRangeIntegerMultiAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateRangeIntegerMultiAttributeVal(EntityCrSubmoduleAttributeList ent,
+            String insVal, String haInsVal) throws QException {
         List<String> myList = new ArrayList<>(
                 Arrays.asList(ent.getSubmoduleValue().split(CoreLabel.SEPERATOR_VERTICAL_LINE)));
+        String[] insValArr = insVal.split(CoreLabel.SEPERATOR_VERTICAL_LINE);
 
         String selectCls = ent.getHasOther().equals("yes")
-                ? "form-control apd-form-multiselect-manual apd-form-select-ho"
-                : "form-control apd-form-multiselect-manual";
+                ? "form-control apd-form-multiselect-manual selectpicker apd-form-select-ho"
+                : "form-control apd-form-multiselect-manual selectpicker";
         String hasOtherVl = ent.getHasOther().equals("yes") ? "1" : "0";
 
         Tag nw = ent.getHasOther().equals("yes")
                 ? input().withClass("form-control apd-form-input")
                 .withId(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
                 .withName(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
+                .withValue(haInsVal)
                 .withType("text")
-                .attr("style", "margin-top:4px;display:none;")
+                .attr("style", haInsVal.length() == 0 ? "margin-top:4px;display:none;" : "margin-top:4px;display:block;")
                 : span();
 
         Tag ln = div()
@@ -771,28 +932,36 @@ public class PgModel {
                         .with(
                                 each(myList, l
                                         -> option(l).withValue(l)
-                                )),
+                                        .attr(Arrays.asList(insValArr).contains(l) ? "selected" : "", "")
+                                ),
+                                ent.getHasOther().equals("yes")
+                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                .attr(insVal.equals("__2__") ? "selected" : "", "")
+                                : span()
+                        ),
                         ent.getHasOther().equals("yes") ? br() : span(),
                         nw
                 );
         return ln;
     }
 
-    private static Tag generateRangeNumbertAttributeVal(EntityCrSubmoduleAttributeList ent) {
+    private static Tag generateRangeNumbertAttributeVal(EntityCrSubmoduleAttributeList ent,
+            String insVal, String haInsVal) throws QException {
         List<String> myList = new ArrayList<>(
                 Arrays.asList(ent.getSubmoduleValue().split(CoreLabel.SEPERATOR_VERTICAL_LINE)));
 
         String selectCls = ent.getHasOther().equals("yes")
-                ? "form-control apd-form-select-manual apd-form-select-ho"
-                : "form-control apd-form-select-manual";
+                ? "form-control apd-form-select-manual selectpicker apd-form-select-ho"
+                : "form-control apd-form-select-manual selectpicker ";
         String hasOtherVl = ent.getHasOther().equals("yes") ? "1" : "0";
 
         Tag nw = ent.getHasOther().equals("yes")
                 ? input().withClass("form-control apd-form-input")
                 .withId(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
                 .withName(PREFIX_SUBMODULE_ATTRIBUTE_HAS_OTHER + ent.getId())
+                .withValue(haInsVal)
                 .withType("text")
-                .attr("style", "margin-top:4px;display:none;")
+                .attr("style", haInsVal.length() == 0 ? "margin-top:4px;display:none;" : "margin-top:4px;display:block;")
                 : span();
 
         Tag ln = div()
@@ -802,12 +971,17 @@ public class PgModel {
                         .withName(PREFIX_SUBMODULE_ATTRIBUTE + ent.getId())
                         .withClass(selectCls)
                         .attr("has_other", hasOtherVl)
-                                
                         .with(
-                                option("----").withValue("__2__"),
+                                option("----").withValue(""),
                                 each(myList, l
                                         -> option(l).withValue(l)
-                                )),
+                                        .attr(l.equals(insVal) ? "selected" : "", "")
+                                ),
+                                ent.getHasOther().equals("yes")
+                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                .attr(insVal.equals("__2__") ? "selected" : "", "")
+                                : span()
+                        ),
                         ent.getHasOther().equals("yes") ? br() : span(),
                         nw
                 );

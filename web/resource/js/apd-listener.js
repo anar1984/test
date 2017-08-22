@@ -36,9 +36,20 @@ function init() {
     submoduleNextPageListener();
     submodulePreviousPageListener();
     submoduleinsertAndNextPageListener();
+    openYoutubeInNewTabListener();
 
 }
 
+
+function openYoutubeInNewTabListener() {
+    $(document).on("click", '.apd-youtube-player ', function (evt) {
+        var el = $(evt.target);
+        var url = el.closest("div[class='apd-div-youtube'")
+                .find('.apd-form-input').first().val();
+        console.log(url)
+        window.open(url, 'name');
+    });
+}
 
 function submoduleinsertAndNextPageListener() {
     $(document).on("click", '.apd-form-submodule-attr-sv-nxt ', function (evt) {
@@ -47,8 +58,7 @@ function submoduleinsertAndNextPageListener() {
         var nextNo = getPreviousSubmoduleOrderNo(orderNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
-        doSumModuleFormShow(e);
-
+        doSubmoduleFormShow(e);
     });
 }
 
@@ -60,8 +70,7 @@ function submodulePreviousPageListener() {
         var nextNo = getPreviousSubmoduleOrderNo(orderNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
-        doSumModuleFormShow(e);
-
+        doSubmoduleFormShow(e);
     });
 }
 
@@ -73,8 +82,7 @@ function submoduleNextPageListener() {
         var nextNo = getNextSubmoduleOrderNo(orderNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
-        doSumModuleFormShow(e);
-
+        doSubmoduleFormShow(e);
     });
 }
 
@@ -126,7 +134,7 @@ function getPreviousSubmoduleOrderNo(currentNo) {
 
 function tableNavPerPageListener() {
     $(document).on("change", '.table-per-page', function (evt) {
-        //end limiti sifirla
+//end limiti sifirla
         var el = $(evt.target);
         var var_tablename = el.closest('[global_var]').attr('global_var');
         var vl = el.val();
@@ -296,6 +304,11 @@ function tableImageBtnListener() {
         });
         var url = el.attr("apd_image_url");
         var alt = el.attr("apd_image_alt");
+
+        if (url_s.length === 0) {
+            url_s.push(url);
+        }
+
         var ol = $('<ol></ol>');
         var div = $('<div></div>');
         for (var i in url_s) {
@@ -315,7 +328,6 @@ function tableImageBtnListener() {
             div_c.append(img);
             div.append(div_c);
         }
-        var s = $('#apdImageViewer').find('.carousel-inner').html();
         $('#apdImageViewer').find('.carousel-inner').html(div.html());
         $('#apdImageViewer').find('.carousel-indicators').html(ol.html());
     });
@@ -337,6 +349,8 @@ function tableVideoBtnListener() {
         $('#apdVideoPlayer').find('.modal-body-1').html(div.html());
     });
 }
+
+
 
 
 function fileListeners() {
@@ -403,7 +417,6 @@ function selectHasOtherChangeListener() {
         var el = $(e.target);
         var val = el.find(":selected").val();
         var id = el.attr("id");
-        var val = el.find(":selected").val();
         if (val === '__2__') {
             var pid = id.split("_")[1];
             $('#ha_' + pid).attr("style", "margin-top:4px;display:block;");
@@ -629,7 +642,6 @@ function fillSubmoduleButtonDiv(json) {
                 obj = res.kv.body;
             }
             $('#apd-submodule-button-list-id').html(obj);
-
             s_h_sm_attribute_buttons();
         },
         error: function (res, status) {
@@ -643,7 +655,6 @@ function tablePatientClickListener() {
     $(document).on("click", '.apd-table-checkbox', function (e) {
         $('.apd-table-checkbox').not(this).attr('checked', false);
         var len = $('.apd-table-checkbox:checked').length;
-
         s_h_sm_attribute_buttons();
         if (len === 1) {
             var fkSessionId = $(this).val();
@@ -818,7 +829,6 @@ function buttonFillFormListener() {
         var url = el.attr('apd-form-fill-url');
         var kv = el.attr('apd-form-fill-kv');
         var target_form = el.attr('data-target');
-        console.log('target-form=' + target_form)
         //remove # sign
         target_form = target_form.substring(1, target_form.length);
         clearForm(target_form, 'update');
@@ -831,10 +841,6 @@ function buttonFillFormListener() {
         $('#' + target_form).find(".apd-form-htmleditor").each(function () {
             $(this).Editor();
         });
-
-
-
-
         //create json
         json = {kv: {}};
         //fill json
@@ -954,8 +960,6 @@ function formButtonListener() {
 
 
         var el = $(e.target);
-
-
         //remove all error message from form
         el.closest("form[class='apd-form']").find(".apd-form-error-msg").each(function () {
             $(this).remove();
@@ -1025,13 +1029,11 @@ function formButtonListener() {
         el.closest("form[class='apd-form']").find(".apd-form-switch-list").each(function () {
             var id = $(this).attr('id');
             var tn = $(this).attr('tn');
-
             var tn1 = {};
             tn1.tn = tn;
             var r = [];
             $(this).find('input:checked').each(function () {
                 var tro = {};
-
                 var cn = $(this).val();
                 if (typeof cn === 'undefined' || !cn) {
                     cn = '';
@@ -1043,10 +1045,7 @@ function formButtonListener() {
             })
             tn1.r = r;
             json.tbl.push(tn1);
-
-
         });
-
         //add input values to json
         el.closest("form[class='apd-form']").find(".apd-form-textarea").each(function () {
             var k = $(this).attr("id");
@@ -1127,6 +1126,7 @@ function formButtonListener() {
                     alert(getMessage('successOperation'));
                     if (el.attr('id') === 'insertNewPatientBtn') {
                         fillCombobox($('#fkPatientId'));
+                        $("#fkPatientId option:eq(1)").attr("selected", "selected");
                         $('#fkPatientId').change();
                     }
                 }
@@ -1141,7 +1141,6 @@ function formButtonListener() {
 function clearForm(formId, actionType) {
     $('#' + formId).find(".apd-form-input").each(function () {
         var attr = $(this).attr('dont_clear');
-
         if (typeof attr !== typeof undefined && attr !== false) {
 
         } else {
@@ -1185,6 +1184,7 @@ function menuListenerActivies(page_id) {
             $('#fkModuleId').click();
             fillCombobox($('#fkDoctorUserId'));
             fillCombobox($('#fkPatientId'));
+//            $('#fkPatientId').prepend("'<option value='----'></option>").val('-----');
             fillInspectionMatrixList();
             $("#serviceCrGetAppointmentList").click();
             fillCombobox($('#fkReportId'));
@@ -1294,11 +1294,13 @@ function tableFilterListener() {
         var div1 = element.closest('[srv_url]');
         var url = div1.attr("srv_url");
         var var_tablename = element.closest('[global_var]').attr('global_var');
-
         var tableId = var_tablename;
         var div = element.closest('div[class="custom-table"]');
         var sLimit = g_tbl[var_tablename].start_limit;
+        sLimit = sLimit == 'undefined' || !(sLimit) ? 0 : sLimit;
         var eLimit = g_tbl[var_tablename].end_limit;
+        eLimit = eLimit == 'undefined' || !(eLimit) ? global_var.default_per_page : eLimit;
+
         json.kv["startLimit"] = sLimit;
         json.kv['endLimit'] = eLimit;
         div.find(".table-filter-comp").each(function () {
@@ -1310,7 +1312,6 @@ function tableFilterListener() {
 //                }
             }
         });
-
         var kv = g_tbl[var_tablename].kv;
         if (typeof kv !== 'undefined' && kv) {
             var arr = kv.split(',');
@@ -1322,7 +1323,7 @@ function tableFilterListener() {
             }
         }
 
-        //get checked checkboxs
+//get checked checkboxs
         var arrChecked = [];
         $('input.apd-table-checkbox:checkbox:checked').each(function () {
             var id = ($(this).val());
@@ -1330,7 +1331,6 @@ function tableFilterListener() {
             arrChecked.push(id);
         });
         g_tbl[var_tablename].arrChecked = arrChecked;
-
         var data = JSON.stringify(json);
         $.ajax({
             url: "api/post/" + url,
@@ -1367,8 +1367,6 @@ function tableFilterListener() {
                 alert(getMessage('somethingww'));
             }
         });
-
-
     }));
 }
 
@@ -1379,7 +1377,7 @@ function formActivateListeners() {
         clearForm(target_id, 'update');
         $('#' + target_id).find("form").find(".apd-form-select").each(function () {
             fillCombobox(this);
-            $(this).change();
+//            $(this).change();
         });
         $('#' + target_id).find("form").find(".apd-form-switch-list").each(function () {
 //            console.log("formActivateListeners: <empty>");
@@ -1414,14 +1412,10 @@ function formSelectListeners() {
         var val = $(element).find(":selected").val();
         var json = {kv: {}};
         json.kv[id] = val;
-
         element.closest('.apd-form').find('input[id="id"]').each(function () {
 //            console.log("userid=" + $(this).val());
             json.kv["id"] = $(this).val();
-
         });
-
-
         element.closest('.apd-form').find('select[dependence_id=' + id + ']').each(function () {
             var e_id = $(this).attr('id');
             fillCombobox(this, json);
@@ -1477,11 +1471,15 @@ function reportComboListeners() {
 
 function subModuleFormShowListeners() {
     $(document).on("click", '.apd-subm-attr-button', function (e) {
-        doSumModuleFormShow(e.target);
+        doSubmoduleFormShow(e.target);
     });
 }
 
-function doSumModuleFormShow(e) {
+function doSubmoduleFormShow(e) {
+    var d21 = new Date();
+    console.log(" begin all >>> " + d21.getSeconds() + '-' + d21.getMilliseconds());
+    var d = new Date();
+
     var insCmCode = '-1';
     var sesId = $('.apd-table-checkbox:checked').val();
     if (typeof sesId === 'undefined' || !sesId) {
@@ -1500,57 +1498,27 @@ function doSumModuleFormShow(e) {
     json.kv.fkSubmoduleId = smodule_id;
     json.kv.fkSessionId = sesId;
     var data = JSON.stringify(json);
+    console.log("start >>> " + d.getSeconds() + '-' + d.getMilliseconds());
     $.ajax({
         url: "api/post/srv/serviceCrGetSubmoduleFormBody",
         type: "POST",
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
+            var d12 = new Date();
+            console.log("return >>> " + d12.getSeconds() + '-' + d12.getMilliseconds());
             isResultRedirect(JSON.stringify(res));
             var body = res.kv.body;
             var hd = res.kv.header;
             if (insCmCode === '-1') {
                 $('#modal-insert-title-name').text(hd);
                 $('#form-insert-element-body').html(body);
-                $('#form-insert-element-body').find(".apd-form-select").each(function () {
-                    fillCombobox(this);
-                });
-                $('#form-insert-element-body').find(".apd-form-select-manual").each(function () {
-                    var has_other = $(this).attr('has_other');
-                    if (typeof has_other === 'undefined' || !has_other) {
-                        has_other = '0';
-                    }
-                    if (has_other === '1') {
-                        $(this).append($("<option />").val("__2__").text("Other"));
-                    }
-                    $(this).addClass('selectpicker');
-                    $(this).attr("data-show-subtext", "true");
-                    $(this).attr("data-live-search", "true");
-                    $(this).selectpicker('refresh');
-                });
-                $('#form-insert-element-body').find(".apd-form-multiselect").each(function () {
-                    $(this).multiselect('destroy');
-                    fillCombobox(this);
-                    $(this).multiselect(
-                            {includeSelectAllOption: true,
-                                enableFiltering: true,
-                                selectAllJustVisible: true
-                            }
-                    );
-                });
-                $('#form-insert-element-body').find(".apd-form-multiselect-manual").each(function () {
-                    $(this).multiselect('destroy');
-                    $(this).multiselect(
-                            {includeSelectAllOption: true,
-                                enableFiltering: true,
-                                selectAllJustVisible: true
-                            }
-                    );
-                });
-                var res = getInspectionInfo(sesId, smodule_id);
-                setSubmoduleUpdateFormValues(res);
+//                
+//                setSubmoduleUpdateFormValues(res);
+                $('.selectpicker').selectpicker('refresh');
+
             }
         },
         error: function (res, status) {
@@ -1591,10 +1559,8 @@ function setSubmoduleUpdateFormValues(res) {
 //get key of each element. Output is array of strings
     if (res.tbl.length == 0)
         return;
-
     if (typeof res.tbl[0].r === 'undefined')
         return;
-
     var obj = res.tbl[0].r;
     //set form input values
     for (var i = 0; i < obj.length; i++) {
@@ -1610,7 +1576,55 @@ function setSubmoduleUpdateFormValues(res) {
 //fileuploader ucun istifade edilir
             $('#popup1').find('input[id=' + sid + ']').attr("file_value", v);
         }
+
         $('#popup1').find('textarea[id=' + sid + ']').val(v);
+
+        try {
+            var t = $('#popup1').find('.apd-video-trigger[v_id=' + sid + ']').attr("class");
+            if (t) {
+                if (v) {
+                    var st = "resources/upload/" + v;
+                    $('#popup1').find('.apd-video-trigger[v_id=' + sid + ']').attr("apd_video_url", st);
+                    $('#popup1').find('.apd-video-trigger[v_id=' + sid + ']').show();
+                }
+            }
+
+        } catch (err) {
+        }
+
+
+        try {
+            var t = $('#popup1').find('.apd-input-audio[s_id=' + sid + ']').attr("class");
+            if (t) {
+                if (v) {
+                    var st = '<source src="resources/upload/' + v + '" type="audio/mpeg">';
+//                    var st1 = 'resources/upload/' + v;
+                    var ht = $('#popup1').find('.apd-input-audio[s_id=' + sid + ']');
+                    ht.html(st);
+                    ht.load();
+                    ht.show();
+
+
+
+                }
+            }
+
+        } catch (err) {
+        }
+
+        try {
+            var t = $('#popup1').find('.apd-image-trigger[v_id=' + sid + ']').attr("class");
+            if (t) {
+                if (v) {
+                    var st = "resources/upload/" + v;
+                    $('#popup1').find('.apd-image-trigger[v_id=' + sid + ']').attr("apd_image_url", st);
+                    $('#popup1').find('.apd-image-trigger[v_id=' + sid + ']').show();
+                }
+            }
+
+        } catch (err) {
+        }
+
         try {
             $('#popup1').find('select[id=' + sid + ']').
                     find('option[value=' + v + ']').attr("selected", "selected");

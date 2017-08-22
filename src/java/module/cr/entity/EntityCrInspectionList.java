@@ -13,182 +13,81 @@ public class EntityCrInspectionList extends CoreEntity {
     public static String INSERT_DATE = "insertDate";
     public static String MODIFICATION_DATE = "modificationDate";
     public static String FK_USER_ID = "fkUserId";
-    public static String USER_FULLNAME = "userFullname";
     public static String FK_PATIENT_ID = "fkPatientId";
-    public static String PATIENT_FULLNAME = "patientFullname";
-    public static String FK_MODULE_ID = "fkModuleId";
-    public static String MODULE_NAME = "moduleName";
     public static String FK_SUBMODULE_ATTRIBUTE_ID = "fkSubmoduleAttributeId";
-    public static String ATTRIBUTE_NAME = "attributeName";
-    public static String FK_SUBMODULE_ID = "fkSubmoduleId";
-    public static String SUBMODULE_NAME = "submoduleName";
-    public static String FK_PRIVATE_SUBMODULE_ATTRIBUTE_ID = "fkPrivateSubmoduleAttributeId";
-    public static String PRIVATE_SUBMODULE_ATTRIBUTE_NAME = "privateSubmoduleAttributeName";
+    public static String SA_SUBMODULE_ATTRIBUTE_ID = "saSubmoduleAttributeId";
     public static String INSPECTION_VALUE = "inspectionValue";
     public static String INSPECTION_DATE = "inspectionDate";
     public static String INSPECTION_TIME = "inspectionTime";
-    public static String LANG = "lang";
     public static String INSPECTION_CODE = "inspectionCode";
-    public static String SA_SUBMODULE_ATTRIBUTE_ID = "saSubmoduleAttributeId";
-    public static String HA_INSPECTION_VALUE = "haInspectionValue";
     public static String FINAL_VALUE = "finalValue";
-    public static String CORE_DATE = "coreDate";
-    public static String CORE_TIME = "coreTime";
+    public static String HA_INSPECTION_VALUE = "haInspectionValue";
     public static String FK_VALUE_TYPE_ID = "fkValueTypeId";
-    public static String FK_COMPANY_ID = "fkCompanyId";
+    public static String FK_MODULE_ID = "fkModuleId";
+    public static String FK_SUBMODULE_ID = "fkSubmoduleId";
+    public static String PATIENT_NAME = "patientName";
+    public static String PATIENT_SURNAME = "patientSurname";
+    public static String PATIENT_MIDDLE_NAME = "patientMiddleName";
+    public static String ATTRIBUTE_CODE = "attributeCode";
+    public static String DOCTOR_FULLNAME = "doctorFullname";
+    public static String FK_ATTRIBUTE_ID = "fkAttributeId";
+    public static String PATIENT_BIRTH_DATE = "patientBirthDate";
+    public static String PATIENT_BIRTH_PLACE = "patientBirthPlace";
+    public static String SEX = "sex";
 
-    private String fkCompanyId = "";
-    private String fkValueTypeId = "";
-    private String coreDate = "";
-    private String coreTime = "";
-
-    private String finalValue = "";
-    private String haInspectionValue = "";
-    private String saSubmoduleAttributeId = "";
-    private String inspectionCode = "";
+    private String patientBirthDate = "";
+    private String patientBirthPlace = "";
+    private String sex = "";
+    private String fkAttributeId = "";
+    private String doctorFullname = "";
     private String fkUserId = "";
-    private String userFullname = "";
     private String fkPatientId = "";
-    private String patientFullname = "";
-    private String fkModuleId = "";
-    private String moduleName = "";
     private String fkSubmoduleAttributeId = "";
-    private String attributeName = "";
-    private String fkSubmoduleId = "";
-    private String submoduleName = "";
-    private String fkPrivateSubmoduleAttributeId = "";
-    private String privateSubmoduleAttributeName = "";
+    private String saSubmoduleAttributeId = "";
     private String inspectionValue = "";
     private String inspectionDate = "";
     private String inspectionTime = "";
-    private String lang = "";
+    private String inspectionCode = "";
+    private String finalValue = "";
+    private String haInspectionValue = "";
+    private String fkValueTypeId = "";
+    private String fkModuleId = "";
+    private String fkSubmoduleId = "";
+    private String patientName = "";
+    private String patientSurname = "";
+    private String patientMiddleName = "";
+    private String attributeCode = "";
 
-    public String getFkCompanyId() {
-        return fkCompanyId;
+    public String getPatientBirthDate() {
+        return patientBirthDate;
     }
 
-    public void setFkCompanyId(String fkCompanyId) {
-        this.fkCompanyId = fkCompanyId;
+    public void setPatientBirthDate(String patientBirthDate) {
+        this.patientBirthDate = patientBirthDate;
     }
 
-    public String getFkValueTypeId() {
-        return fkValueTypeId;
+    public String getPatientBirthPlace() {
+        return patientBirthPlace;
     }
 
-    public void setFkValueTypeId(String fkValueTypeId) {
-        this.fkValueTypeId = fkValueTypeId;
+    public void setPatientBirthPlace(String patientBirthPlace) {
+        this.patientBirthPlace = patientBirthPlace;
     }
 
-    public String getCoreDate() {
-        return coreDate;
+    public String getSex() {
+        return sex;
     }
 
-    public void setCoreDate(String coreDate) {
-        this.coreDate = coreDate;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getCoreTime() {
-        return coreTime;
+    public String getFkAttributeId() {
+        return fkAttributeId;
     }
 
-    public void setCoreTime(String coreTime) {
-        this.coreTime = coreTime;
-    }
-
-    public String getFinalValue() {
-        return finalValue;
-    }
-
-    public void setFinalValue(String finalValue) {
-        this.finalValue = finalValue;
-    }
-
-    public String getHaInspectionValue() {
-        return haInspectionValue;
-    }
-
-    public void setHaInspectionValue(String haInspectionValue) {
-        this.haInspectionValue = haInspectionValue;
-    }
-
-    public String getSaSubmoduleAttributeId() {
-        return saSubmoduleAttributeId;
-    }
-
-    public void setSaSubmoduleAttributeId(String saSubmoduleAttributeId) {
-        this.saSubmoduleAttributeId = saSubmoduleAttributeId;
-    }
-
-    public String getInspectionCode() {
-        return inspectionCode;
-    }
-
-    public void setInspectionCode(String inspectionCode) {
-        this.inspectionCode = inspectionCode;
-    }
-
-    public String getUserFullname() {
-        return userFullname;
-    }
-
-    public void setUserFullname(String userFullname) {
-        this.userFullname = userFullname;
-    }
-
-    public String getPatientFullname() {
-        return patientFullname;
-    }
-
-    public void setPatientFullname(String patientFullname) {
-        this.patientFullname = patientFullname;
-    }
-
-    public String getFkModuleId() {
-        return fkModuleId;
-    }
-
-    public void setFkModuleId(String fkModuleId) {
-        this.fkModuleId = fkModuleId;
-    }
-
-    public String getModuleName() {
-        return moduleName;
-    }
-
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
-    }
-
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public String getFkSubmoduleId() {
-        return fkSubmoduleId;
-    }
-
-    public void setFkSubmoduleId(String fkSubmoduleId) {
-        this.fkSubmoduleId = fkSubmoduleId;
-    }
-
-    public String getSubmoduleName() {
-        return submoduleName;
-    }
-
-    public void setSubmoduleName(String submoduleName) {
-        this.submoduleName = submoduleName;
-    }
-
-    public String getPrivateSubmoduleAttributeName() {
-        return privateSubmoduleAttributeName;
-    }
-
-    public void setPrivateSubmoduleAttributeName(String privateSubmoduleAttributeName) {
-        this.privateSubmoduleAttributeName = privateSubmoduleAttributeName;
+    public void setFkAttributeId(String fkAttributeId) {
+        this.fkAttributeId = fkAttributeId;
     }
 
     public String getFkUserId() {
@@ -215,12 +114,12 @@ public class EntityCrInspectionList extends CoreEntity {
         this.fkSubmoduleAttributeId = fkSubmoduleAttributeId;
     }
 
-    public String getFkPrivateSubmoduleAttributeId() {
-        return fkPrivateSubmoduleAttributeId;
+    public String getSaSubmoduleAttributeId() {
+        return saSubmoduleAttributeId;
     }
 
-    public void setFkPrivateSubmoduleAttributeId(String fkPrivateSubmoduleAttributeId) {
-        this.fkPrivateSubmoduleAttributeId = fkPrivateSubmoduleAttributeId;
+    public void setSaSubmoduleAttributeId(String saSubmoduleAttributeId) {
+        this.saSubmoduleAttributeId = saSubmoduleAttributeId;
     }
 
     public String getInspectionValue() {
@@ -247,13 +146,92 @@ public class EntityCrInspectionList extends CoreEntity {
         this.inspectionTime = inspectionTime;
     }
 
-    public String getLang() {
-        return lang;
+    public String getInspectionCode() {
+        return inspectionCode;
     }
 
-    public void setLang(String lang) {
-        this.lang = lang;
+    public void setInspectionCode(String inspectionCode) {
+        this.inspectionCode = inspectionCode;
     }
-    
-     
+
+    public String getFinalValue() {
+        return finalValue;
+    }
+
+    public void setFinalValue(String finalValue) {
+        this.finalValue = finalValue;
+    }
+
+    public String getHaInspectionValue() {
+        return haInspectionValue;
+    }
+
+    public void setHaInspectionValue(String haInspectionValue) {
+        this.haInspectionValue = haInspectionValue;
+    }
+
+    public String getFkValueTypeId() {
+        return fkValueTypeId;
+    }
+
+    public void setFkValueTypeId(String fkValueTypeId) {
+        this.fkValueTypeId = fkValueTypeId;
+    }
+
+    public String getFkModuleId() {
+        return fkModuleId;
+    }
+
+    public void setFkModuleId(String fkModuleId) {
+        this.fkModuleId = fkModuleId;
+    }
+
+    public String getFkSubmoduleId() {
+        return fkSubmoduleId;
+    }
+
+    public void setFkSubmoduleId(String fkSubmoduleId) {
+        this.fkSubmoduleId = fkSubmoduleId;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getPatientSurname() {
+        return patientSurname;
+    }
+
+    public void setPatientSurname(String patientSurname) {
+        this.patientSurname = patientSurname;
+    }
+
+    public String getPatientMiddleName() {
+        return patientMiddleName;
+    }
+
+    public void setPatientMiddleName(String patientMiddleName) {
+        this.patientMiddleName = patientMiddleName;
+    }
+
+    public String getDoctorFullname() {
+        return doctorFullname;
+    }
+
+    public void setDoctorFullname(String doctorFullname) {
+        this.doctorFullname = doctorFullname;
+    }
+
+    public String getAttributeCode() {
+        return attributeCode;
+    }
+
+    public void setAttributeCode(String attributeCode) {
+        this.attributeCode = attributeCode;
+    }
+
 }

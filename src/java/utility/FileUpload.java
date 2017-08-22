@@ -27,40 +27,40 @@ public class FileUpload {
         } catch (Exception e) {
 
         }
-System.out.println("2");
+//System.out.println("2");
         String id = IdGenerator.getId();
-        System.out.println("id = "+id);
-        System.out.println("userId = "+userId);
-        System.out.println("2 `1");
+//        System.out.println("id = "+id);
+//        System.out.println("userId = "+userId);
+//        System.out.println("2 `1");
         long num = Long.parseLong(id) + Long.parseLong(userId) + 214521;
-        System.out.println("2 2");
+//        System.out.println("2 2");
         String hexId = QUtility.convertDecimalToHex(num);
         System.out.println("2 3");
         String fileName = "file_" + hexId + "." + ext.replaceAll("^\"|\"$", "");
-System.out.println("3");
+//System.out.println("3");
 //        System.out.println("ext -> " + ext);
         FileOutputStream imageOutFile;
-        System.out.println("4");
+//        System.out.println("4");
         try {
             // Decode String using Base64 Class
             byte[] imageByteArray = Base64.decodeBase64(base64String);
-System.out.println("5");
+//System.out.println("5");
             // Write Image into File system - Make sure you update the path
             String fname = this.getUploadPath() + fileName;
-            System.out.println("file uploaded to ->" + fname);
+//            System.out.println("file uploaded to ->" + fname);
             imageOutFile = new FileOutputStream(fname);
             imageOutFile.write(imageByteArray);
-System.out.println("return file");
+//System.out.println("return file");
             imageOutFile.close();
             return fileName;
         } catch (FileNotFoundException ex) {
-            System.out.println("6");
+//            System.out.println("6");
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("7");
+//            System.out.println("7");
         }
-System.out.println("8");
+//System.out.println("8");
         return QDate.getCurrentDate() + QDate.getCurrentTime() + "temp_file.png";
     }
 
@@ -69,7 +69,7 @@ System.out.println("8");
         try {
             GeneralProperties prop = new GeneralProperties();
             file = prop.coreFullPath() + Config.getUploadPath();
-            System.out.println("file uploaded------->" + file);
+//            System.out.println("file uploaded------->" + file);
 
             return file;
         } catch (UnsupportedEncodingException ex) {

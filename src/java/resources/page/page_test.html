@@ -2,86 +2,163 @@
     <br>
     <br>
     <br>
+    <div class="wrapper">
+        <select class="apd-editable-combo selectpicker" id="fkPatientId" name="fkPatientId">        
 
-
-
-
-    <div class="dropdown">
-        <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="">
-            Dropdown <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-            <li><a href="#">Some action</a></li>
-            <li><a href="#">Some other action</a></li>
-            <li class="divider"></li>
-            <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Hover me for more options</a>
-                <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="#">Second level</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="#">Even More..</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">3rd level</a></li>
-                            <li><a href="#">3rd level</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Second level</a></li>
-                    <li><a href="#">Second level</a></li>
-                </ul>
-            </li>
-            <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Hover me for more options</a>
-                <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="#">Second level</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="#">Even More..</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">3rd level</a></li>
-                            <li><a href="#">3rd level</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Second level</a></li>
-                    <li><a href="#">Second level</a></li>
-                </ul>
-            </li>
-        </ul>
+        </select>
+        <input class="apd-filter-combo-text" name="patientNameList" />
     </div>
+
+
+    <div class="row-fluid">
+        <div class="span6">
+            <h3>Basic example</h3>
+            <div class="row-fluid">
+                <div class="span4">It trasforms this</div>
+                <div class="span7">
+                    <select id="sid">
+                        <option>Alfa Romeo</option>
+                        <option>Audi</option>
+                        <option>BMW</option>
+                        <option>Citroen</option>
+                        <option>Fiat</option>
+                        <option>Ford</option>
+                        <option>Jaguar</option>
+                        <option>Jeep</option>
+                        <option>Lancia</option>
+                        <option>Land Rover</option>
+                        <option>Mercedes</option>
+                        <option>Mini</option>
+                        <option>Nissan</option>
+                        <option>Opel</option>
+                        <option>Peugeot</option>
+                        <option>Porsche</option>
+                        <option>Renault</option>
+                        <option selected>Smart</option>
+                        <option>Volkswagen</option>
+                        <option>Volvo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span4">Into this</div>
+                <div class="span7">
+                    <select id="basic">
+                        <option>Alfa Romeo</option>
+                        <option>Audi</option>
+                        <option>BMW</option>
+                        <option>Citroen</option>
+                        <option>Fiat</option>
+                        <option>Ford</option>
+                        <option>Jaguar</option>
+                        <option>Jeep</option>
+                        <option>Lancia</option>
+                        <option>Land Rover</option>
+                        <option>Mercedes</option>
+                        <option>Mini</option>
+                        <option>Nissan</option>
+                        <option>Opel</option>
+                        <option>Peugeot</option>
+                        <option>Porsche</option>
+                        <option>Renault</option>
+                        <option selected="selected">Smart</option>
+                        <option>Volkswagen</option>
+                        <option>Volvo</option>
+                    </select>
+                    <button onclick="do1(this)">click here</button>
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <h4>Code</h4>
+            <pre>$('#basic').editableSelect();</pre>
+        </div>
+    </div>
+    <hr />
 
 
 </div>
 
+<script>
+
+    $('#basic').editableSelect();
+
+
+    $(document).ready(function () {
+
+        $(".es-input").change(function () {
+            console.log("es-input >>> " + $(this).val())
+            do1(this);
+        });
+
+
+        $(".apd-editable-combo").change(function () {
+            $(".apd-filter-combo-text").val($(".apd-editable-combo option:selected").html());
+            $(".apd-filter-combo-text").attr("pid", $(".apd-editable-combo option:selected").val());
+        });
+
+        $(".es-input").change(function () {
+           
+        });
+    });
+    
+    function do1(t){
+         $("#basic").html("");
+            $('.es-list').html("");
+            var pid = $("#basic").attr("pid");
+            var val = $("#basic").val();
+            console.log("pid", pid);
+            console.log("val", val);
+
+            json = {kv: {}};
+            json.kv.fullname = val;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: "api/post/srv/serviceCrGetPatientList4Combo",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    isResultRedirect(JSON.stringify(res));
+                    console.log(JSON.stringify(res))
+//                    $('#fkPatientId').attr('size', 6);
+                    var obj = res.tbl;
+//                    for (var i = 0; i < obj.length; i++) {
+                    var objChild = obj[0]['r'];
+                    for (var j = 0; j < objChild.length; j++) {
+                        var v = objChild[j]['id'];
+                        var t = objChild[j]['patientName'];
+                        $('#basic').append($("<option />").val(v).text(t));
+                        $('.es-list').append($("<li/>").text(t)
+                                .attr("class","es-visible"));
+                    }
+//                    $('#basic').editableSelect();
+                    $('.es-list').show();
+                },
+                error: function (res, status) {
+                    alert(getMessage('somethingww'));
+                }
+            });
+
+
+
+            $("#basic").attr("pid", "");
+    }
+</script>
 
 <style>
-    .button{
-        display: inline-block;
-        vertical-align: middle;
-        margin: 0px 5px;
-        padding: 5px 12px;
-        cursor: pointer;
-        outline: none;
-        font-size: 13px;
-        text-decoration: none !important;
-        text-align: center;
-        color:#fff;
-        background-color: #4D90FE;
-        background-image: linear-gradient(top,#4D90FE, #4787ED);
-        background-image: -ms-linear-gradient(top,#4D90FE, #4787ED);
-        background-image: -o-linear-gradient(top,#4D90FE, #4787ED);
-        background-image: linear-gradient(top,#4D90FE, #4787ED);
-        border: 1px solid #4787ED;
-        box-shadow: 0 1px 3px #BFBFBF;
+    .apd-editable-combo{
+        width: 375px;
+        height: 30px;
     }
-    a.button{
-        color: #fff;
+
+    .apd-filter-combo-text{
+        width: 345px;
+        margin-left: 0px;
+        height: 25px;
+        border: none;
     }
-    .button:hover{
-        box-shadow: inset 0px 1px 1px #8C8C8C;
-    }
-    .button.disabled{
-        box-shadow:none;
-        opacity:0.7;
-    }
-    canvas{
-        display: block;
-    }
+
 </style>

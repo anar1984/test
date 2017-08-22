@@ -309,7 +309,8 @@ public class SQLGenerator {
 
     static String getTableNameBasedOnEntity(CoreEntity core, String databaseNumber) {
 //        DBConfigurationProperties prop = new DBConfigurationProperties();
-//        String hasSeperator = prop.getProperty(HAS_UNDERSCORE_IN_FIELD_NAME + UNDERSCORE + capitalizeFirstLetter(databaseNumber));
+//        String hasSeperator = prop.getProperty(HAS_UNDERSCORE_IN_FIELD_NAME + 
+//UNDERSCORE + capitalizeFirstLetter(databaseNumber));
         String mtSt[] = core.getClass().getName().split("\\.");
         String tableName = mtSt[mtSt.length - 1].substring(ENTITY.length());
         tableName = seperateTableFieldNameWithUnderscore(tableName).toUpperCase();
@@ -428,13 +429,13 @@ public class SQLGenerator {
     }
 
     static String seperateTableFieldNameWithUnderscore(String arg, String databaseNumber) {
-        String propKeyName = HAS_UNDERSCORE_IN_FIELD_NAME + "." + databaseNumber.toLowerCase();
-        boolean hasSeperator = Config.getPropertyBool(propKeyName);
-        if (!hasSeperator) {
-            return arg;
-        } else {
+//        String propKeyName = HAS_UNDERSCORE_IN_FIELD_NAME + "." + databaseNumber.toLowerCase();
+//        boolean hasSeperator = Config.getPropertyBool(propKeyName);
+//        if (!hasSeperator) {
+//            return arg;
+//        } else {
             return addUnderscoreToFieldName(arg);
-        }
+//        }
     }
 
     static String addUnderscoreToFieldName(String arg) {

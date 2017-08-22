@@ -147,6 +147,7 @@ public class EntityManager {
 
     private static Carrier coreSelect(CoreEntity entity, String tablename, String databaseNumber) throws QException {
         //And Statement olan saheleri addAndStatement() funksiyasina elavet etmek
+        entity.splitOrStatementField();
         entity.splitAndStatementField();
         entity.splitAndOrStatementField();
         entity.splitDeepWhereStatementField();

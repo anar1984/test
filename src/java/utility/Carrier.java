@@ -407,7 +407,7 @@ public class Carrier implements Serializable {
         } catch (Exception ex) {
         }
     }
-    
+
     public void renameKey(String oldName, String newName) {
 
         try {
@@ -1311,34 +1311,35 @@ public class Carrier implements Serializable {
         if (cols.length == 0) {
             return new Carrier();
         }
-        Carrier c = EntityManager.getEntityFieldType(cols);
-        String carrTable = "crEntityLabel";
+//        Carrier c = EntityManager.getEntityFieldType(cols);
+//        String carrTable = "crEntityLabel";
+
+        Carrier c = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_ENTITY_LABEL);
 
         if (this.getMatrixId().length() > 0) {
 
-                EntityCrInspectionMatrix entInsMat = new EntityCrInspectionMatrix();
+            EntityCrInspectionMatrix entInsMat = new EntityCrInspectionMatrix();
             entInsMat.setFkParentId(this.getMatrixId());
             Carrier cInsMat = EntityManager.select(entInsMat);
             Carrier cprInsMat = cInsMat.getKeyValuesPairFromTable(
                     entInsMat.toTableName(), "fkSubmoduleAttributeId", "shortName");
-            String saIds = cInsMat.getValueLine(entInsMat.toTableName(), "fkSubmoduleAttributeId");
+//            String saIds = cInsMat.getValueLine(entInsMat.toTableName(), "fkSubmoduleAttributeId");
 
-            EntityCrSubmoduleAttribute entSA = new EntityCrSubmoduleAttribute();
-            entSA.setId(saIds);
-            Carrier cSA = EntityManager.select(entSA);
-            Carrier cprSA = cSA.getKeyValuesPairFromTable(entSA.toTableName(),
-                    "fkAttributeId", "id");
-            String attrIds = cSA.getValueLine(entSA.toTableName(),
-                    EntityCrSubmoduleAttribute.FK_ATTRIBUTE_ID);
-
-            Carrier cAttr = new Carrier();
-            cAttr.setValue("id", attrIds);
-            cAttr = CrModel.getAttributeList(cAttr);
-            Carrier cprAttr = cAttr.getKeyValuesPairFromTable(
-                    CoreLabel.RESULT_SET, "attributeCode", "id");
-            Carrier cprAttrCode = cAttr.getKeyValuesPairFromTable(
-                    CoreLabel.RESULT_SET, "attributeCode", "attributeName");
-
+//            EntityCrSubmoduleAttribute entSA = new EntityCrSubmoduleAttribute();
+//            entSA.setId(saIds);
+//            Carrier cSA = EntityManager.select(entSA);
+//            Carrier cprSA = cSA.getKeyValuesPairFromTable(entSA.toTableName(),
+//                    "fkAttributeId", "id");
+//            String attrIds = cSA.getValueLine(entSA.toTableName(),
+//                    EntityCrSubmoduleAttribute.FK_ATTRIBUTE_ID);
+//
+//            Carrier cAttr = new Carrier();
+//            cAttr.setValue("id", attrIds);
+//            cAttr = CrModel.getAttributeList(cAttr);
+//            Carrier cprAttr = cAttr.getKeyValuesPairFromTable(
+//                    CoreLabel.RESULT_SET, "attributeCode", "id");
+//            Carrier cprAttrCode = cAttr.getKeyValuesPairFromTable(
+//                    CoreLabel.RESULT_SET, "attributeCode", "attributeName");
 //            Carrier tc = EntityManager.getEntityFieldTypeByMatrixId(
 //                    this.getMatrixId(), cols);
 //            String colName = tc.getValueLine(carrTable, "columnName", ",");
@@ -1347,18 +1348,19 @@ public class Carrier implements Serializable {
                 //attribute code entityLabel-de olmadigi ucun bu deyerler yeni 
                 //setir kimi elave edilir
                 if (col.startsWith("sa_")) {
-                    int rc = c.getTableRowCount(carrTable);
-                    
-                    String desc = cprAttr.getValue(col).toString();
-                    desc = cprSA.getValue(desc).toString();
-                    desc = cprInsMat.getValue(desc).toString();
-                    if (desc.trim().length()==0){
-                        desc = cprAttrCode.getValue(col).toString();
+//                    int rc = c.getTableRowCount(carrTable);
+
+//                    String desc = cprAttr.getValue(col).toString();
+                    String desc = c.getValue(col, 0, "description").toString();
+//                    desc = cprSA.getValue(desc).toString();
+//                    desc = cprInsMat.getValue(desc).toString();
+                    if (desc.trim().length() > 0) {
+//                        desc = cprAttrCode.getValue(col).toString();
                     }
-                    
-                    c.setValue(carrTable, rc, "fieldName", col);
-                    c.setValue(carrTable, rc, "labelType", "INTEGER");
-                    c.setValue(carrTable, rc, "description", desc);
+
+//                    c.setValue(carrTable, rc, "fieldName", col);
+//                    c.setValue(carrTable, rc, "labelType", "INTEGER");
+//                    c.setValue(carrTable, rc, "description", desc);
                 }
             }
         }
@@ -1373,7 +1375,6 @@ public class Carrier implements Serializable {
         int rowCount = this.getTableRowCount(tablename);
         String[] colNames = this.getTableColumnNames(tablename);
         Carrier carrier = getColNamesDefination(colNames);
-        String carrTable = "crEntityLabel";
         try {
 
             //set column name
@@ -1382,26 +1383,34 @@ public class Carrier implements Serializable {
             ArrayList timeList = new ArrayList();
             for (int j = 0; j < colNames.length; j++) {
                 JSONObject jsonRow1 = new JSONObject();
+                String s = colNames[j] + SessionManager.getCurrentLang();
+                String name = carrier.getValue(s, 0, "description").toString();
+                String type = carrier.getValue(s, 0, "labelType").toString();
 
-                String type = CoreLabel.ENTITY_LABEL_TYPE_STRING;
-                String name = colNames[j];
+                type = type.length() > 0 ? type : CoreLabel.ENTITY_LABEL_TYPE_STRING;
+                name = name.length() > 0 ? name : colNames[j];
 
                 //is type and description exist;
-                int idx = -1;
-                int c = carrier.getTableRowCount(carrTable);
-                for (int l = 0; l < c; l++) {
-                    if (carrier.getValue(carrTable, l, CoreLabel.LABEL_FIELD_NAME).toString().trim().equals(name)) {
-                        idx = l;
-                        break;
-                    }
-                }
-                if (idx != -1) {
-                    type = carrier.getValue(carrTable, idx, CoreLabel.LABEL_TYPE).toString().trim().equals("")
-                            ? CoreLabel.ENTITY_LABEL_TYPE_STRING : carrier.getValue(carrTable, idx, CoreLabel.LABEL_TYPE).toString();
-                    name = carrier.getValue(carrTable, idx, CoreLabel.LABEL_DESCRIPTION).toString().trim().equals("")
-                            ? colNames[j] : carrier.getValue(carrTable, idx, CoreLabel.LABEL_DESCRIPTION).toString();
-                }
-
+//                int idx = -1;
+//                int c = carrier.getTableRowCount(carrTable);
+//                for (int l = 0; l < c; l++) {
+//                    if (carrier.getValue(carrTable, l, CoreLabel.LABEL_FIELD_NAME)
+//                            .toString().trim().equals(name)) {
+//                        idx = l;
+//                        break;
+//                    }
+//                }
+//                if (idx != -1) {
+//                    type = carrier.getValue(carrTable, idx, CoreLabel.LABEL_TYPE)
+//                            .toString().trim().equals("")
+//                            ? CoreLabel.ENTITY_LABEL_TYPE_STRING
+//                            : carrier.getValue(carrTable, idx, CoreLabel.LABEL_TYPE).toString();
+//                    name = carrier.getValue(carrTable, idx, CoreLabel.LABEL_DESCRIPTION)
+//                            .toString().trim().equals("")
+//                            ? colNames[j]
+//                            : carrier.getValue(carrTable, idx,
+//                                    CoreLabel.LABEL_DESCRIPTION).toString();
+//                }
                 jsonRow1.put(CoreLabel.JSON_TABLE_FIELD_ID, colNames[j]);
                 jsonRow1.put(CoreLabel.JSON_TABLE_FIELD_NAME, name);
                 jsonRow1.put(CoreLabel.JSON_TABLE_FIELD_TYPE, type);
@@ -1744,7 +1753,7 @@ public class Carrier implements Serializable {
         }
     }
 
-  public void mergeCarrier(String sourceTablename,
+    public void mergeCarrier(String sourceTablename,
             String sourceRelatedColName, String newColumnName, Carrier carrier)
             throws QException {
         mergeCarrier(sourceTablename,
@@ -1781,17 +1790,19 @@ public class Carrier implements Serializable {
             String newColumnName, Carrier carrier, boolean keepOriginal)
             throws QException {
 
-         
-
         String newCol = newColumnName;
         Carrier tc = carrier;
         String coreTablename = sourceTablename;
         int rc = this.getTableRowCount(coreTablename);
         for (int i = 0; i < rc; i++) {
-            String val ="";  
+            String val = "";
             for (int k = 0; k < sourceRelatedColName.length; k++) {
-                val += this.getValue(coreTablename, i,
-                        sourceRelatedColName[k]).toString();
+                if (sourceRelatedColName[k].equals("LANG")) {
+                    val += SessionManager.getCurrentLang();
+                } else {
+                    val += this.getValue(coreTablename, i,
+                            sourceRelatedColName[k]).toString();
+                }
                 val += k + 1 < sourceRelatedColName.length ? sourceSeperator : "";
             }
             if (tc.isKeyExist(val)) {
@@ -1858,7 +1869,6 @@ public class Carrier implements Serializable {
             }
         }
 
-        Carrier tc = carrier;
         int rc = this.getTableRowCount(sourceTablename);
         for (int i = 0; i < rc; i++) {
             String val = "";
@@ -1884,7 +1894,7 @@ public class Carrier implements Serializable {
 
         }
     }
-    
+
     public String getCacheKey() {
         return Integer.toHexString(params.hashCode());
     }

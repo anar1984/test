@@ -247,7 +247,7 @@ public class PostServices {
 //            jsonNew += "\"itemCode\":\"" + itemCode + "\",";
 //            jsonNew += "\"asc\":\"itemValue\"";
 //            jsonNew += "}}";
-            String servicename = "serviceCrGetListItemList";
+            String servicename = "serviceCrGetListItemByCode";
 
             asyncResponse.resume(doCallDispatcher(headers, servicename, jsonNew));
         });

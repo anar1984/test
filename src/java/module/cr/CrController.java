@@ -74,6 +74,10 @@ public class CrController {
         return carrier;
     }
 
+    public Carrier getListItemByCode(Carrier carrier) throws QException {
+        return carrier;
+    }
+
     public Carrier getListItemMainList(Carrier carrier) throws QException {
         return carrier;
     }
@@ -514,10 +518,10 @@ public class CrController {
         return carrier;
     }
 
-        public Carrier getModuleMainList(Carrier carrier) {
+    public Carrier getModuleMainList(Carrier carrier) {
         return carrier;
     }
-        
+
     public Carrier insertNewSubmodule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrSubmodule.SUBMODULE_NAME,
@@ -1026,11 +1030,9 @@ public class CrController {
         return carrier;
     }
 
-	public Carrier getDiscountedPrice(Carrier carrier) throws QException {
+    public Carrier getDiscountedPrice(Carrier carrier) throws QException {
         return carrier;
     }
-
-    
 
     public Carrier getExpenseList(Carrier carrier) {
         return carrier;
@@ -1044,21 +1046,21 @@ public class CrController {
         return carrier;
     }
 
-public Carrier getLabel(Carrier carrier) throws QException {
+    public Carrier getLabel(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController("general",
                 cp.hasValue(carrier, "code"));
         return carrier;
     }
-    
-    public static Carrier getVoiceAnalyse(Carrier carrier)  throws QException{
+
+    public static Carrier getVoiceAnalyse(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController("general",
                 cp.hasValue(carrier, "filename"));
         return carrier;
     }
-    
-     public static Carrier getBasicStatistics(Carrier carrier)  throws QException{
+
+    public static Carrier getBasicStatistics(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
 //        carrier.addController("general",
 //                cp.hasValue(carrier, "fkMatrixId"));
@@ -1066,7 +1068,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
 //                cp.hasValue(carrier, "fkSubmoduleAttributeId"));
         return carrier;
     }
-    
+
     public Carrier signupCompany(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
@@ -1099,15 +1101,15 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier signupPersonal(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
             carrier.addController(EntityCrUser.USERNAME, cp.hasValue(carrier, EntityCrUser.USERNAME));
             carrier.addController(EntityCrUser.USERNAME,
-                cp.isNotExistInEntity(new EntityCrUser(), EntityCrUser.USERNAME,
-                        carrier.getValue(EntityCrUser.USERNAME).toString()));
-            
+                    cp.isNotExistInEntity(new EntityCrUser(), EntityCrUser.USERNAME,
+                            carrier.getValue(EntityCrUser.USERNAME).toString()));
+
             carrier.addController(EntityCrUser.EMAIL_1, cp.hasValue(carrier, EntityCrUser.EMAIL_1));
             carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));
             carrier.addController(EntityCrUser.USER_PERSON_NAME, cp.hasValue(carrier, EntityCrUser.USER_PERSON_NAME));
@@ -1123,7 +1125,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier activateCompany(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
@@ -1137,7 +1139,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier resendEmail(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
@@ -1151,7 +1153,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier getPermissionList(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
@@ -1163,7 +1165,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier insertNewPermission(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrPermission.PERMISSION_STRING,
@@ -1188,7 +1190,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
 
         return carrier;
     }
-    
+
     public Carrier getRuleList(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
@@ -1200,7 +1202,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier insertNewRule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrRule.RULE_NAME,
@@ -1225,7 +1227,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
 
         return carrier;
     }
-    
+
     public Carrier getRulePermissionList(Carrier carrier) throws QException {
         //ControllerPool cp = new ControllerPool();
         //carrier.addController(EntityCrRelRulePermission.FK_RULE_ID,
@@ -1234,7 +1236,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
         //        cp.hasValue(carrier, EntityCrRelRulePermission.FK_PERMISSION_ID));
         return carrier;
     }
-    
+
     public Carrier assignPermissionRule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrRelRulePermission.FK_RULE_ID,
@@ -1243,19 +1245,15 @@ public Carrier getLabel(Carrier carrier) throws QException {
                 cp.hasValue(carrier, EntityCrRelRulePermission.FK_PERMISSION_ID));
         return carrier;
     }
-    
+
     public Carrier deleteRulePermission(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrRelRulePermission.ID,
                 cp.hasValue(carrier, EntityCrRelRulePermission.ID));
-        
+
         return carrier;
     }
-    
-    
-    
-    
-    
+
     public Carrier getRoleList(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
@@ -1267,7 +1265,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier insertNewRole(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrRole.ROLE_NAME,
@@ -1292,7 +1290,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
 
         return carrier;
     }
-    
+
     public Carrier getRoleRuleList(Carrier carrier) throws QException {
         //ControllerPool cp = new ControllerPool();
         //carrier.addController(EntityCrRelRulePermission.FK_RULE_ID,
@@ -1301,7 +1299,7 @@ public Carrier getLabel(Carrier carrier) throws QException {
         //        cp.hasValue(carrier, EntityCrRelRulePermission.FK_PERMISSION_ID));
         return carrier;
     }
-    
+
     public Carrier assignRuleRole(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrRelRoleRule.FK_ROLE_ID,
@@ -1310,15 +1308,15 @@ public Carrier getLabel(Carrier carrier) throws QException {
                 cp.hasValue(carrier, EntityCrRelRoleRule.FK_RULE_ID));
         return carrier;
     }
-    
+
     public Carrier deleteRoleRule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrRelRoleRule.ID,
                 cp.hasValue(carrier, EntityCrRelRoleRule.ID));
-        
+
         return carrier;
     }
-    
+
     public Carrier getUserRuleList(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
@@ -1330,12 +1328,12 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier getNextSubmoduleOrderNo(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
             carrier.addController("general",
-                cp.hasValue(carrier, "currentNo"));
+                    cp.hasValue(carrier, "currentNo"));
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -1344,12 +1342,12 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
+
     public Carrier getPreviousSubmoduleOrderNo(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
             carrier.addController("general",
-                cp.hasValue(carrier, "currentNo"));
+                    cp.hasValue(carrier, "currentNo"));
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -1358,7 +1356,10 @@ public Carrier getLabel(Carrier carrier) throws QException {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
-     
 
+    public static Carrier getPatientList4Combo(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    
 }

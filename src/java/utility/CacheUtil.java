@@ -31,6 +31,9 @@ public class CacheUtil {
     public static String CACHE_KEY_MODULE = "cache.key.module";
     public static String CACHE_KEY_ATTRIBUTE = "cache.key.attribute";
     public static String CACHE_KEY_LISTITEM = "cache.key.listitem";
+    public static String CACHE_KEY_ENTITY_LABEL = "cache.key.entitylabel";
+    public static String CACHE_KEY_SUBMODULE_ATTRIBUTE = "cache.key.submoduleattribute";
+    public static String CACHE_KEY_SUBMODULE = "cache.key.submodule";
     
 
     public static void initCache(URL configUrl) {
@@ -38,9 +41,9 @@ public class CacheUtil {
         CacheUtil.cacheManager = CacheManagerBuilder.newCacheManager(xmlConfig);
         CacheUtil.cacheManager.init();
     }
-    
+
     public static void closeCache() {
-        if (cacheManager != null && cacheManager.getStatus()!=Status.UNINITIALIZED) {
+        if (cacheManager != null && cacheManager.getStatus() != Status.UNINITIALIZED) {
             cacheManager.close();
         }
     }
@@ -54,14 +57,14 @@ public class CacheUtil {
         if (cacheManager.getStatus() == Status.AVAILABLE
                 && serviceCache.containsKey(cacheKey)) {
             carrier = serviceCache.get(cacheKey);
-            logger.debug("getFromCache.cacheKey="+cacheKey+" provided from cache");
+            logger.debug("getFromCache.cacheKey=" + cacheKey + " provided from cache");
         } else {
             try {
                 String methodName = Config.getProperty(getPropKey(cacheKey));
                 CrModel mdl = new CrModel();
                 Method method = mdl.getClass().getMethod(methodName, Carrier.class);
                 Object retObj = method.invoke(mdl, prepareParam(cacheKey));
-                logger.debug("getFromCache.cacheKey="+cacheKey+" provided from model");
+                logger.debug("getFromCache.cacheKey=" + cacheKey + " provided from model");
                 putCache(cacheKey, (Carrier) retObj);
 
             } catch (NoSuchMethodException ex) {
@@ -85,36 +88,36 @@ public class CacheUtil {
 
         return carrier;
     }
-    
+
     private static String getPropKey(String cacheKey) {
         int ix = cacheKey.indexOf("::");
-        if (ix==-1) {
+        if (ix == -1) {
             return cacheKey;
         }
         return cacheKey.substring(0, ix);
     }
-    
+
     private static Carrier prepareParam(String cacheKey) {
         int ix = cacheKey.indexOf("::");
         Carrier crParam = new Carrier();
-        if (ix==-1) {
+        if (ix == -1) {
             return crParam;
         }
-        String[] params = cacheKey.substring(ix+2).split("&");
-        for (String param:params) {
+        String[] params = cacheKey.substring(ix + 2).split("&");
+        for (String param : params) {
             String[] s = param.split("=");
             crParam.setValue(s[0], s[1]);
         }
-        
+
         return crParam;
-        
+
     }
 
     public static void putCache(String cacheKey, Carrier carrier) {
         Cache<String, Carrier> serviceCache = cacheManager
                 .getCache("modelCache", String.class, Carrier.class);
         serviceCache.put(cacheKey, carrier);
-        logger.debug("putCache.cacheKey="+cacheKey);
+        logger.debug("putCache.cacheKey=" + cacheKey);
 
     }
 

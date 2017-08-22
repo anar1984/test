@@ -297,6 +297,8 @@ function toggleNewSession(e) {
         $(e).attr("style", "border-color:#00b289;background-color:#00b289;");
     }
     s_h_sm_attribute_buttons();
+    $('#currentTime').click();
+    toggleSessionDate($('#currentTime'));
 }
 
 function hideAndDisableAddInspection() {
@@ -437,8 +439,10 @@ function addAppointment(el) {
         async: false,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
-            loadTable('tbl_appointment_list');
-
+            $('#fkPatientId').click();
+            $('#fkPatientId').change();
+//            $('#tbl_appointment_list').closest('div[class="custom-table"]')
+//                    .find('.table-filter-comp').first().change();
         },
         error: function (res, status) {
             alert(getMessage('somethingww'));
@@ -672,14 +676,14 @@ function fillCombobox(e, inData) {
         select_separator = ' - ';
     }
     if (typeof has_null === 'undefined' || !has_null) {
-        has_null = '__2__';
+        has_null = '  ';
     }
 //    if (typeof ph === 'undefined' || !ph) {
 //        has_null = '------';
 //    }
 //    console.log('url ='+url+','+has_null)
     if (has_null !== '__2__') {
-        $(e).append($("<option />").val('___2___').text('----'));
+        $(e).append($("<option />").val('').text('----'));
     }
 
 //    if (has_all === '1') {
@@ -736,6 +740,8 @@ function fillCombobox(e, inData) {
                 $(e).attr("data-live-search", "true");
                 $('.selectpicker').selectpicker('refresh');
             }
+//            $(e).change();
+            
         },
         error: function (res, status) {
             alert(getMessage('somethingww'));
@@ -1051,18 +1057,20 @@ function fillStatistic(e) {
 
 }
 
+
 function patientSelectAction(e) {
     var val = $(e).val();
     if (typeof val !== typeof undefined && val !== false) {
         var st = 'id=' + val;
-        var st1 = 'fkPatientId='+val;
+        var st1 = 'fkPatientId=' + val;
         $('#btn_serviceCrUpdatePatient').attr("apd-form-fill-kv", st);
         $('#btn_serviceCrUpdatePatient').removeAttr("disabled");
-         g_tbl['tbl_appointment_list'].kv=st1;
-         //refresh table
-       
-         $('#tbl_appointment_list').closest('div[class="custom-table"]')
-                 .find('.table-filter-comp').first().change();
+        g_tbl['tbl_appointment_list'].kv = st1;
+        //refresh table
+
+        $('#tbl_appointment_list').closest('div[class="custom-table"]')
+                .find('.table-filter-comp').first().change();
+        $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
     } else {
         $('#btn_serviceCrUpdatePatient').attr("disabled", "disabled");
     }

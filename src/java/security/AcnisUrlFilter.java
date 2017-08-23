@@ -41,6 +41,7 @@ public class AcnisUrlFilter implements Filter {
 
         if (!SessionHandler.checkSession(cookie) && !url.contains("resource") 
                 && !url.contains("login") 
+                && !url.contains("home.html") 
                 && !url.contains("signup") 
                 && !url.contains("/nali/")
                 && !url.contains("/nasrv/")

@@ -1231,6 +1231,8 @@ public class CrModel {
         EntityCrAppointment ent = new EntityCrAppointment();
         ent.setId(carrier.getValue("id").toString());
         EntityManager.select(ent);
+        
+        
 
         if (ent.getInspectionCode().trim().length() == 0) {
             carrier.addController("general",
@@ -1238,12 +1240,17 @@ public class CrModel {
             return carrier;
         }
 
-        if (ent.getAppointmentStatus().equals(APPOINTMENT_STATUS_ACTIVE)
-                || ent.getAppointmentStatus().equals(APPOINTMENT_STATUS_PASSIVE)) {
+        EntityCrInspection entIns = new EntityCrInspection();
+        entIns.setInspectionCode(ent.getInspectionCode());
+        Carrier tc = EntityManager.select(entIns);
+        int rc = tc.getTableRowCount(entIns.toTableName());
+        
+        
+        if (rc==0) {
             EntityManager.delete(ent);
         } else {
             carrier.addController("general",
-                    EntityManager.getMessageText("operationCannotBeDoneInThisStatus"));
+                    EntityManager.getMessageText("operationWithValueCannotBeDeleted"));
             return carrier;
         }
 
@@ -1287,6 +1294,7 @@ public class CrModel {
         EntityCrAppointmentList ent = new EntityCrAppointmentList();
         EntityManager.mapCarrierToEntity(carrier, ent);
         ent.setSex(sex);
+        ent.setStatus("A");
         ent.setAppointmentStatus(apptmntStts);
         ent.setAppointmentStatus(apptStatusKeys);
         if (!ent.hasSortBy()) {
@@ -2111,39 +2119,41 @@ public class CrModel {
 
     public static Carrier getAgendaOfDoctor(Carrier carrier) throws QException {
 
-        String fdate = QDate.convertDateToString(QDate.add(QDate.getCurrentDate(), 100));
-        String sdate = QDate.convertDateToString(QDate.add(QDate.getCurrentDate(), -30));
+        String fdate = QDate.convertDateToString(QDate.add(QDate.getCurrentDate(), 50));
+        String sdate = QDate.convertDateToString(QDate.add(QDate.getCurrentDate(), -5));
 
-        EntityCrAppointment ent = new EntityCrAppointment();
+        EntityCrAppointmentList ent = new EntityCrAppointmentList();
         ent.setDeepWhere(false);
         ent.setFkDoctorUserId(carrier.getValue("id").toString());
-        ent.setAppointmentDate("GE%" + sdate);
-        ent.setAppointmentDate("LE%" + fdate);
+        ent.setAppointmentDate(sdate + CoreLabel.BN + fdate);
+//        ent.setAppointmentDate("LE%" +);
         carrier = EntityManager.select(ent);
 
         String tn = ent.toTableName();
-        String patientIds = carrier.getValueLine(tn, EntityCrAppointment.FK_PATIENT_ID);
+//        String patientIds = carrier.getValueLine(tn, EntityCrAppointment.FK_PATIENT_ID)
+//                  +CoreLabel.IN+"-1";
+//        System.out.println("patientIds:"+patientIds);
         int rc = carrier.getTableRowCount(tn);
-        carrier.removeKey("startLimit");
-        carrier.removeKey("endLimit");
+//        carrier.removeKey("startLimit");
+//        carrier.removeKey("endLimit");
 
-        EntityCrPatient entPtnt = new EntityCrPatient();
-        entPtnt.setId(patientIds);
-        Carrier cprPtnt = EntityManager.select(entPtnt)
-                .getKeyValuesPairFromTable(entPtnt.toTableName(), "id",
-                        new String[]{EntityCrPatient.PATIENT_NAME,
-                            EntityCrPatient.PATIENT_MIDDLE_NAME,
-                            EntityCrPatient.PATIENT_SURNAME});
-        Carrier cprPtnt1 = EntityManager.select(entPtnt)
-                .getKeyValuesPairFromTable(entPtnt.toTableName(), "id",
-                        EntityCrPatient.PATIENT_ID);
-
+//        EntityCrPatient entPtnt = new EntityCrPatient();
+//        entPtnt.setId(patientIds);
+//        Carrier cprPtnt = //EntityManager.select(entPtnt)
+//                carrier.getKeyValuesPairFromTable(tn, "fkPatientId",
+//                        new String[]{EntityCrPatient.PATIENT_NAME,
+//                            EntityCrPatient.PATIENT_MIDDLE_NAME,
+//                            EntityCrPatient.PATIENT_SURNAME});
+//        Carrier cprPtnt1 = //EntityManager.select(entPtnt)
+//                carrier.getKeyValuesPairFromTable(tn , "fkPatientId",
+//                        EntityCrPatient.PATIENT_ID);
         String res = "[";
         for (int i = 0; i < rc; i++) {
             EntityManager.mapCarrierToEntity(carrier, tn, i, ent);
-
-            String title = " " + cprPtnt.getValue(ent.getFkPatientId()).toString()
-                    + " (" + cprPtnt1.getValue(ent.getFkPatientId()) + ")";
+            String fname = ent.getPatientName() + " " + ent.getPatientSurname() + " "
+                    + ent.getPatientMiddleName();
+            String title = " " + fname
+                    + " (" + ent.getPatientId() + ")";
 
             String shour = ent.getAppointmentTime1().substring(0, 2);
             String ehour = ent.getAppointmentTime2().substring(0, 2);
@@ -2170,6 +2180,7 @@ public class CrModel {
             res += i + 1 < rc ? "," : "";
         }
         res += "]";
+        System.out.println("json" + res);
         carrier.setValue("res", res);
         return carrier;
     }
@@ -2291,29 +2302,46 @@ public class CrModel {
     }
 
     public static Carrier getPatientList4Combo(Carrier carrier) throws QException {
-        String fname = carrier.getValue("fullname").toString();
+        String fname = carrier.getValue("fullname").toString().trim();
+        fname=fname.replaceAll("\\)", "");
+        fname=fname.replaceAll("\\(", "");
+        
         EntityCrPatient ent = new EntityCrPatient();
+        String[] sp = fname.split(" ");
+        String name = sp.length > 0 ? sp[0].trim() : "";
+        String surname = sp.length > 1 ? sp[1].trim() : "";
+        String middlename = sp.length > 2 ? sp[2].trim() : "";
+        String bdate = sp.length > 3 ? sp[3].trim() : "";
 
-        ent.setPatientName(fname);
-        ent.setPatientSurname(fname);
-        ent.setPatientMiddleName(fname);
-        ent.addOrStatementField("patientName");
-        ent.addOrStatementField("patientSurname");
-        ent.addOrStatementField("patientMiddleName");
-        ent.addSortBy("patientName");
-        ent.setSortByAsc(true);
-                
+        ent.setPatientName(name);
+        ent.setPatientSurname(surname);
+        ent.setPatientMiddleName(middlename);
+        ent.setPatientBirthDate(bdate);
+//        ent.addOrStatementField("patientName");
+//        ent.addOrStatementField("patientSurname");
+//        ent.addOrStatementField("patientMiddleName");
+//        ent.addOrStatementField("patientId");
+
+        if (fname.trim().length() == 0) {
+            ent.setEndLimit(200);
+            ent.addSortBy("id");
+            ent.setSortByAsc(false);
+        } else {
+            ent.addSortBy("patientName");
+            ent.setSortByAsc(true);
+        }
+
         Carrier crPtnt = EntityManager.select(ent);
         String tn = ent.toTableName();
         int rc = crPtnt.getTableRowCount(tn);
-        Carrier ocr= new Carrier();
-        for (int i=0;i<rc;i++){
-            EntityManager.mapCarrierToEntity(crPtnt,tn,i, ent);
+        Carrier ocr = new Carrier();
+        for (int i = 0; i < rc; i++) {
+            EntityManager.mapCarrierToEntity(crPtnt, tn, i, ent);
             String id = ent.getId();
-            String fullname = ent.getPatientName()+" "+ent.getPatientSurname()+" "
-                    +ent.getPatientMiddleName()+ " (" +ent.getPatientId()+")";
-            ocr.setValue(CoreLabel.RESULT_SET,i,"patientName",fullname);
-            ocr.setValue(CoreLabel.RESULT_SET,i,"id",id);
+            String fullname = ent.getPatientName() + " " + ent.getPatientSurname() + " "
+                    + ent.getPatientMiddleName() + " (" + ent.getPatientBirthDate() + ")";
+            ocr.setValue(CoreLabel.RESULT_SET, i, "patientName", fullname);
+            ocr.setValue(CoreLabel.RESULT_SET, i, "id", id);
         }
 
         return ocr;
@@ -2457,65 +2485,81 @@ public class CrModel {
     }
 
     private static String getIdsForInspectionList(Carrier carrier, String filterValue) throws QException {
-        String keys[] = carrier.getKeys();
+
         String st = "";
-        for (String k : keys) {
-            String val = carrier.getValue(k).toString();
-            if (new DeepWhere(val, filterValue).isMatched()) {
-                st += k.substring(0, k.length() - 3) + CoreLabel.IN;
-            } else {
-                carrier.removeKey(k);
+        try {
+            String keys[] = carrier.getKeys();
+
+            for (String k : keys) {
+                String val = carrier.getValue(k).toString();
+                if (val == null) {
+                    continue;
+                }
+
+                if (new DeepWhere(val, filterValue).isMatched()) {
+                    st += k.substring(0, k.length() - 3) + CoreLabel.IN;
+                } else {
+                    carrier.removeKey(k);
+                }
             }
+        } catch (Exception e) {
+
         }
         return st;
     }
 
     public static Carrier getInspectionList(Carrier carrier) throws QException {
+        Carrier cIns = new Carrier();
+        try {
+            Carrier cprSex = QUtility.getListItem("sex",
+                    carrier.getValue("sexName").toString());
+            String sex = convertArrayToFilterLine(cprSex.getKeys());
 
-        Carrier cprSex = QUtility.getListItem("sex",
-                carrier.getValue("sexName").toString());
-        String sex = convertArrayToFilterLine(cprSex.getKeys());
+            Carrier cAttr = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_ATTRIBUTE);//getAttributeList(carrier);
+            String fkAttributeIds = getIdsForInspectionList(cAttr,
+                    carrier.getValue("attributeName").toString());
 
-        Carrier cAttr = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_ATTRIBUTE);//getAttributeList(carrier);
-        String fkAttributeIds = getIdsForInspectionList(cAttr,
-                carrier.getValue("attributeName").toString());
+            Carrier cSM = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_SUBMODULE);
+            String fkSubmoduleIds = getIdsForInspectionList(cSM,
+                    carrier.getValue("submoduleName").toString());
 
-        Carrier cSM = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_SUBMODULE);
-        String fkSubmoduleIds = getIdsForInspectionList(cSM,
-                carrier.getValue("submoduleName").toString());
+            Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
+            String fkModuleIds = getIdsForInspectionList(cModule,
+                    carrier.getValue("moduleName").toString());
 
-        Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
-        String fkModuleIds = getIdsForInspectionList(cModule,
-                carrier.getValue("moduleName").toString());
+            EntityCrInspectionList ent = new EntityCrInspectionList();
+            EntityManager.mapCarrierToEntity(carrier, ent);
+            ent.setFkAttributeId(fkAttributeIds);
+            ent.setFkModuleId(fkModuleIds);
+            ent.setFkSubmoduleId(fkSubmoduleIds);
+            ent.setSex(sex);
+            String tnIns = ent.toTableName();
+            cIns = EntityManager.select(ent);
 
-        EntityCrInspectionList ent = new EntityCrInspectionList();
-        EntityManager.mapCarrierToEntity(carrier, ent);
-        ent.setFkAttributeId(fkAttributeIds);
-        ent.setFkModuleId(fkModuleIds);
-        ent.setFkSubmoduleId(fkSubmoduleIds);
-        ent.setSex(sex);
-        String tnIns = ent.toTableName();
-        Carrier cIns = EntityManager.select(ent);
+            cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
 
-        cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
+            cIns.mergeCarrier(tnIns, new String[]{"fkAttributeId", "LANG"},
+                    "attributeName", cAttr);
 
-        cIns.mergeCarrier(tnIns, new String[]{"fkAttributeId", "LANG"},
-                "attributeName", cAttr);
+            cIns.mergeCarrier(tnIns, new String[]{"fkModuleId", "LANG"},
+                    "moduleName", cModule);
 
-        cIns.mergeCarrier(tnIns, new String[]{"fkModuleId", "LANG"},
-                "moduleName", cModule);
+            cIns.mergeCarrier(tnIns, new String[]{"fkSubmoduleId", "LANG"},
+                    "submoduleName", cSM);
 
-        cIns.mergeCarrier(tnIns, new String[]{"fkSubmoduleId", "LANG"},
-                "submoduleName", cSM);
+            cIns.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+            System.out.println(cIns.toXML());
+            cIns = addFinalValue(cIns, carrier.getValue("finalValue").toString());
 
-        cIns.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+            cIns.addTableSequence(CoreLabel.RESULT_SET,
+                    EntityManager.getListSequenceByKey("getInspectionList"));;
 
-        cIns = addFinalValue(cIns, carrier.getValue("finalValue").toString());
+            cIns.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(ent) + 1);
 
-        cIns.addTableSequence(CoreLabel.RESULT_SET,
-                EntityManager.getListSequenceByKey("getInspectionList"));;
-
-        cIns.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(ent) + 1);
+        } catch (Exception e) {
+            System.out.println("getInspectionList error >>>> " + e.getMessage());
+            e.printStackTrace();
+        }
         return cIns;
     }
 
@@ -3186,14 +3230,16 @@ public class CrModel {
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
 
-            String json = "{\"kv\":{\"fkModuleId\":\"201706221522420346\"}}"
+            String json = "{\"kv\":{\"startLimit\":0,\"endLimit\":\"25\",\"fkPatientId\":\"201708221705210595\"}}"
                     + "";
 //            String servicename = "serviceCrGetInspectionList";
             //
 
+            
+
             Carrier c = new Carrier();
             c.fromJson(json);
-            c = genSubmoduleButtonList(c);
+            c = getInspectionList(c) ;
 //
 //            c.setServiceName(servicename);
 //            c.fromJson(json);
@@ -4198,5 +4244,28 @@ public class CrModel {
         EntityManager.select(ent);
         carrier.setValue("nextNo", ent.getSortBy());
         return carrier;
+    }
+
+    public static Carrier getLastPatientInfo(Carrier carrier) throws QException {
+
+        EntityCrPatient ent = new EntityCrPatient();
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        ent.addSortBy("id");
+        ent.setSortByAsc(false);
+        Carrier crPtnt = EntityManager.select(ent);
+        String tn = ent.toTableName();
+        int rc = crPtnt.getTableRowCount(tn);
+        Carrier ocr = new Carrier();
+        for (int i = 0; i < rc; i++) {
+            EntityManager.mapCarrierToEntity(crPtnt, tn, i, ent);
+            String id = ent.getId();
+            String fullname = ent.getPatientName() + " " + ent.getPatientSurname() + " "
+                    + ent.getPatientMiddleName() + " (" + ent.getPatientBirthDate() + ")";
+            ocr.setValue("patientName", fullname);
+            ocr.setValue("pid", id);
+        }
+
+        return ocr;
     }
 }

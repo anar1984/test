@@ -356,7 +356,7 @@ function loadTable(var_tablename, data) {
     var list_url = g_tbl[var_tablename].list_url;
     var sourceId = g_tbl[var_tablename].result_div_id;
     var tablename = g_tbl[var_tablename].response_tn;
-    
+
 
     if (!list_url) {
         return;
@@ -367,7 +367,7 @@ function loadTable(var_tablename, data) {
     }
 
 
-    
+
     var json;
     if (data) {
         json = data;
@@ -377,7 +377,7 @@ function loadTable(var_tablename, data) {
     } else {
         json = {kv: {}};
     }
-    
+
     var kv = g_tbl[var_tablename].kv;
     if (typeof kv !== 'undefined' && kv) {
         var arr = kv.split(',');
@@ -388,7 +388,7 @@ function loadTable(var_tablename, data) {
             json.kv[key] = val;
         }
     }
-    
+
     g_tbl[var_tablename].startLimit = 0;
     g_tbl[var_tablename].endLimit = global_var.default_per_page;
 
@@ -649,6 +649,9 @@ function createTriggerRowHTML(var_tablename, row_id) {
 
 function getTableCheckBoxTriggerEventButtonHtml(var_tablename, row_id) {
     var checkboxHTML = '';
+    if ((g_tbl[var_tablename].show_checkbox) && g_tbl[var_tablename].show_checkbox==='false'){
+        return '';
+    }
     checkboxHTML = '<input type="checkbox" ';
     checkboxHTML += ' class="apd-table-checkbox" ';
     checkboxHTML += ' name=\' ' + g_tbl[var_tablename].response_tn + ' \' ';
@@ -665,6 +668,10 @@ function getTableCheckBoxTriggerEventButtonHtml(var_tablename, row_id) {
 
 function getTableUpdateTriggerEventButtonHtml(var_tablename, row_id) {
     var lnUpd = '';
+    if (g_tbl[var_tablename].form_update_popup_id===''){
+        return '';
+    }
+    
     lnUpd += '<i class="apd-task-form-fill fa fa-edit" style="color:#00b289; cursor:pointer"';
     lnUpd += ' apd-form-fill-url="' + g_tbl[var_tablename].list_url
             + '" apd-form-fill-kv="id=' + row_id + '"';
@@ -675,6 +682,9 @@ function getTableUpdateTriggerEventButtonHtml(var_tablename, row_id) {
 
 function getTableCopyTriggerEventButtonHtml(var_tablename, row_id) {
     var lnUpd = '';
+    if (g_tbl[var_tablename].form_copy_popup_id===''){
+        return '';
+    }
     lnUpd += '<i class="apd-task-form-fill fa fa-copy" style="color:#41c4f4;cursor:pointer"';
     lnUpd += ' apd-form-fill-url="' + g_tbl[var_tablename].list_url +
             '" apd-form-fill-kv="id=' + row_id + '"';
@@ -685,7 +695,10 @@ function getTableCopyTriggerEventButtonHtml(var_tablename, row_id) {
 
 function getTableDeleteTriggerEventButtonHtml(var_tablename, row_id) {
     var lnUpd = '';
-    lnUpd += '<i class="apd-task-trigger fa fa-remove" style=" color:red;cursor:pointer"';
+    if (g_tbl[var_tablename].delete_url===''){
+        return '';
+    }
+    lnUpd += '<i class="apd-task-table-delete fa fa-remove" style=" color:red;cursor:pointer"';
     lnUpd += ' apd-form-fill-url="' + g_tbl[var_tablename].delete_url + '" apd-form-fill-kv="id=' + row_id + '"';
     lnUpd += ' data-toggle="modal"  ' + ' aria-hidden="true"  ';
     lnUpd += ' apd-form-reload-button-id="' + g_tbl[var_tablename].reload_buttion_id + '"></i>';
@@ -702,7 +715,7 @@ function getTableFilterData(tableId) {
             json.kv[$(this).attr("name")] = $(this).val();
         }
     });
-    
+
     var kv = g_tbl[tableId].kv;
     if (typeof kv !== 'undefined' && kv) {
         var arr = kv.split(',');
@@ -713,7 +726,7 @@ function getTableFilterData(tableId) {
             json.kv[key] = val;
         }
     }
-    
+
     return json;
 }
 
@@ -1010,8 +1023,10 @@ function exportToExcel(tableId) {
     $('#' + tableId).closest('div[class=custom-table]')
             .find('.apd-table-cols').each(function () {
         var cnm = $(this).attr("cnm");
+        var cntitle = $(this).attr("cntitle");
+
         if ($(this).is(":checked")) {
-            colnames.push(getLabel(cnm));
+            colnames.push(cntitle);
         }
     });
 

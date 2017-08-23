@@ -5,10 +5,10 @@
  */
 
 
-var per_page = ["25", "50", "100", "300", "500", "1000"];
+var per_page = ["50", "100", "300", "500", "1000"];
 
 var global_var = {
-    "default_per_page": "25",
+    "default_per_page": "50",
     "label_type": {"DATE": "DATE", "TIME": "TIME"}
 };
 
@@ -78,8 +78,8 @@ var g_tbl = {
         "list_url": "srv/serviceCrGetAppointmentList",
         "delete_url": "srv/serviceCrDeleteAppointment",
         "result_div_id": "patientlist",
-        "form_update_popup_id": "updateAppointment",
-        "form_copy_popup_id": "insertNewAppointment",
+        "form_update_popup_id": "",
+        "form_copy_popup_id": "",
         "reload_buttion_id": "serviceCrGetAppointmentList",
         "table_block": "0",
     },
@@ -126,12 +126,13 @@ var g_tbl = {
     "tbl_inspection_list": {
         "response_tn": "Response",
         "list_url": "srv/serviceCrGetInspectionList",
-        "delete_url": "srv/serviceCrDeleteInspection",
+        "delete_url": "",
         "result_div_id": "patientlist",
-        "form_update_popup_id": "updateInspection",
-        "form_copy_popup_id": "insertNewInspection",
+        "form_update_popup_id": "",
+        "form_copy_popup_id": "",
         "reload_buttion_id": "serviceCrGetInspectionList",
         "table_block": "0",
+        "show_checkbox":"false"
     },
     "tbl_inspection1_list": {
         "response_tn": "Response",
@@ -274,7 +275,7 @@ function toggleSubmoduleButton() {
 
 function loadInspectionListBySession(e) {
 //    var json = {kv: {}};
-//    json.kv.fkUserId = $('#fkDoctorUserId').val();
+//    json.kv.fkUserId = $('#fkDoctorUserId').val();bl_inspectiomatrix_list
 //    json.kv.fkPatientId = $('#fkPatientId').val();
 
     $('#headertitle').html($(e).html());
@@ -287,16 +288,17 @@ function loadInspectionListBySession(e) {
 }
 
 function toggleNewSession(e) {
-    $("#newSessionDiv").fadeToggle("slide");
-    var f = (-1) * parseInt($(e).attr("f"));
-    $(e).attr("f", f);
+//    $("#newSessionDiv").fadeToggle("slide");
+//    var f = (-1) * parseInt($(e).attr("f"));
+//    $(e).attr("f", f);
     //show
-    if (f === -1) {
-        $(e).attr("style", "border-color:#D4AC0D;background-color:#D4AC0D;");
-    } else {//hide
-        $(e).attr("style", "border-color:#00b289;background-color:#00b289;");
-    }
-    s_h_sm_attribute_buttons();
+//    if (f === -1) {
+//        $(e).attr("style", "border-color:#D4AC0D;background-color:#D4AC0D;");
+//    } else {//hide
+//        $(e).attr("style", "border-color:#00b289;background-color:#00b289;");
+//    }
+//    s_h_sm_attribute_buttons();
+    $('#currentTime').prop('checked', false);
     $('#currentTime').click();
     toggleSessionDate($('#currentTime'));
 }
@@ -343,7 +345,8 @@ function loadSession(e) {
 function finishSession(e) {
     var len = $('.apd-table-checkbox:checked').length;
     if (len != 1) {
-        alert(getMessage('chooseSession'));
+
+        alert($(e).html() + ">>" + getMessage('chooseSession'));
         return;
     }
     var r = confirm(getMessage("sureToProseed_q"));
@@ -374,29 +377,29 @@ function finishSession(e) {
 
 
 function toggleSessionDate(el) {
-    var isnow = $(el).closest(".row").find("#currentTime").prop('checked');
+    var isnow = $(el).closest(".apd-form").find("#currentTime").prop('checked');
 
 
     if (isnow) {
-        $(el).closest(".row").find("#appointmentDate").attr("disabled", "disabled");
-        $(el).closest(".row").find("#appointmentTime1").attr("disabled", "disabled");
-        $(el).closest(".row").find("#appointmentTime2").attr("disabled", "disabled");
+        $(el).closest(".apd-form").find("#appointmentDate").attr("disabled", "disabled");
+        $(el).closest(".apd-form").find("#appointmentTime1").attr("disabled", "disabled");
+        $(el).closest(".apd-form").find("#appointmentTime2").attr("disabled", "disabled");
 
 
     } else {
-        $(el).closest(".row").find("#appointmentDate").removeAttr("disabled");
-        $(el).closest(".row").find("#appointmentTime1").removeAttr("disabled");
-        $(el).closest(".row").find("#appointmentTime2").removeAttr("disabled");
+        $(el).closest(".apd-form").find("#appointmentDate").removeAttr("disabled");
+        $(el).closest(".apd-form").find("#appointmentTime1").removeAttr("disabled");
+        $(el).closest(".apd-form").find("#appointmentTime2").removeAttr("disabled");
     }
 }
 
 function addAppointment(el) {
-    var doctorId = $(el).closest(".row").find("#fkDoctorUserId").val();
+    var doctorId = $(el).closest(".apd-form").find("#fkDoctorUserId").val();
     if (!doctorId) {
         alert(getMessage('doctorIsNotEntered'));
         return;
     }
-    var patientId = $(el).closest(".row").find("#fkPatientId").val();
+    var patientId = $(el).closest(".apd-page").find("#fkPatientId").attr("pid");
     if (!patientId) {
         alert(getMessage('patientIsNotEntered'));
         return;
@@ -407,9 +410,9 @@ function addAppointment(el) {
     var apttime2 = "";
 
     if (!isnow) {
-        var apdate = getQDate($(el).closest(".row").find("#appointmentDate"));
-        var apttime1 = getQTime($(el).closest(".row").find("#appointmentTime1"));
-        var apttime2 = getQTime($(el).closest(".row").find("#appointmentTime2"));
+        var apdate = getQDate($(el).closest(".apd-form").find("#appointmentDate"));
+        var apttime1 = getQTime($(el).closest(".apd-form").find("#appointmentTime1"));
+        var apttime2 = getQTime($(el).closest(".apd-form").find("#appointmentTime2"));
         if (!apdate || !apttime1 || !apttime2) {
             alert(getMessage('dateOrTimeIsNotEntered'));
             return;
@@ -419,7 +422,7 @@ function addAppointment(el) {
             return;
         }
     }
-    var desc = $(el).closest(".row").find("#description").val();
+    var desc = $(el).closest(".apd-form").find("#description").val();
     var json = {kv: {}};
     json.kv.fkPatientId = patientId;
     json.kv.fkDoctorUserId = doctorId;
@@ -439,10 +442,13 @@ function addAppointment(el) {
         async: false,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
-            $('#fkPatientId').click();
-            $('#fkPatientId').change();
-//            $('#tbl_appointment_list').closest('div[class="custom-table"]')
-//                    .find('.table-filter-comp').first().change();
+//            $('#fkPatientId').click();
+//            $('#fkPatientId').change();
+            $('#tbl_appointment_list').closest('div[class="custom-table"]')
+                    .find('.table-filter-comp').first().change();
+            $('#tbl_appointment_list').find('.apd-table-checkbox').first().attr("checked", false);
+            $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
+            alert(getMessage('newSessionIsAdded'));
         },
         error: function (res, status) {
             alert(getMessage('somethingww'));
@@ -676,7 +682,7 @@ function fillCombobox(e, inData) {
         select_separator = ' - ';
     }
     if (typeof has_null === 'undefined' || !has_null) {
-        has_null = '  ';
+        has_null = '__2__';
     }
 //    if (typeof ph === 'undefined' || !ph) {
 //        has_null = '------';
@@ -741,7 +747,7 @@ function fillCombobox(e, inData) {
                 $('.selectpicker').selectpicker('refresh');
             }
 //            $(e).change();
-            
+
         },
         error: function (res, status) {
             alert(getMessage('somethingww'));
@@ -1059,55 +1065,134 @@ function fillStatistic(e) {
 
 
 function patientSelectAction(e) {
-    var val = $(e).val();
-    if (typeof val !== typeof undefined && val !== false) {
-        var st = 'id=' + val;
-        var st1 = 'fkPatientId=' + val;
-        $('#btn_serviceCrUpdatePatient').attr("apd-form-fill-kv", st);
-        $('#btn_serviceCrUpdatePatient').removeAttr("disabled");
-        g_tbl['tbl_appointment_list'].kv = st1;
-        //refresh table
 
-        $('#tbl_appointment_list').closest('div[class="custom-table"]')
-                .find('.table-filter-comp').first().change();
-        $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
-    } else {
+//    filterPatientCombo(e);
+    var val = $(e).attr("pid");
+//    console.log("pid on select " + val);
+    if (typeof val === typeof undefined || val === false) {
+        val = "";
         $('#btn_serviceCrUpdatePatient').attr("disabled", "disabled");
     }
+
+    var st = 'id=' + val;
+    var st1 = 'fkPatientId=' + val;
+    $('#btn_serviceCrUpdatePatient').attr("apd-form-fill-kv", st);
+    $('#btn_serviceCrUpdatePatient').removeAttr("disabled");
+    g_tbl['tbl_appointment_list'].kv = st1;
+    g_tbl['tbl_inspection_list'].kv = st1;
+
+    //refresh table
+    var is_hidden = $('#tbl_appointment_list').is(":visible");
+    console.log("is hidden=" + is_hidden)
+    if (is_hidden) {
+        console.log("is not  hidden=" + is_hidden)
+        $('#tbl_appointment_list').closest('div[class="custom-table"]')
+                .find('.table-filter-comp').first().change();
+        $('#tbl_appointment_list').find('.apd-table-checkbox').first().attr("checked", false);
+        $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
+    } else {
+        $('#tbl_inspection_list').closest('div[class="custom-table"]')
+                .find('.table-filter-comp').first().change();
+
+    }
+
+//    if (!$('#tbl_appointment_list').find('.apd-table-checkbox').first().is(':checked')) {
+//        $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
+//    }
+
 }
 
+function filterPatientCombo(hideCombo) {
+    $('.es-list').empty();
+    $("#fkPatientId").attr("pid", "");
+    var pid = $("#fkPatientId").attr("pid");
+    var val = $("#fkPatientId").val();
+//    console.log("pid=" + pid);
+//    console.log("val=" + val)
+
+    json = {kv: {}};
+    json.kv.fullname = val;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrGetPatientList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+//                console.log(JSON.stringify(res))
+//                    $('#fkPatientId').attr('size', 6);
+            var obj = res.tbl;
+//                    for (var i = 0; i < obj.length; i++) {
+            if (obj.length == 0) {
+                return;
+            }
+            var objChild = obj[0]['r'];
+            for (var j = 0; j < objChild.length; j++) {
+                var v = objChild[j]['id'];
+                var t = objChild[j]['patientName'];
+//                $('#fkPatientId').append($("<option />").val(v).text(t));
+                $('.es-list')
+                        .append($("<li/>")
+                                .text(t)
+                                .attr("class", "es-visible apd-editable-combo-li")
+                                .attr("pid", v)
+                                );
+            }
+            if (hideCombo == true) {
+                $('.es-list').hide();
+            } else {
+                $('.es-list').show();
+            }
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+}
+
+function clearAndshowAllPatientListCombo() {
+    $("#fkPatientId").val("");
+    $("#fkPatientId").attr("pid", "");
+    filterPatientCombo(true);
+    patientSelectAction();
+    $("#ul_fkPatientId  li.es-visible").each(function (e) {
+        var v = $(e).attr("pid");
+        console.log("res for find = " + v);
+    });
+    var v = $(".apd-editable-combo-li").first().attr("pid");
+    console.log("res = " + v);
+}
 (function ($) {
     $.fn.extend({
         tableAddCounter: function (options) {
 
-            // set up default options 
+// set up default options 
             var defaults = {
                 title: '#',
                 start: 1,
                 id: false,
                 cssClass: false
             };
-
             // Overwrite default options with user provided
             var options = $.extend({}, defaults, options);
-
             return $(this).each(function () {
-                // Make sure this is a table tag
+// Make sure this is a table tag
                 if ($(this).is('table')) {
 
-                    // Add column title unless set to 'false'
+// Add column title unless set to 'false'
                     if (!options.title)
                         options.title = '';
                     $('th:first-child, thead td:first-child', this).each(function () {
                         var tagName = $(this).prop('tagName');
                         $(this).before('<' + tagName + ' rowspan="' + $('thead tr').length + '" class="' + options.cssClass + '" id="' + options.id + '">' + options.title + '</' + tagName + '>');
                     });
-
                     // Add counter starting counter from 'start'
                     $('tbody td:first-child', this).each(function (i) {
                         $(this).before('<td>' + (options.start + i) + '</td>');
                     });
-
                 }
             });
         }

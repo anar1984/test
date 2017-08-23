@@ -14,12 +14,12 @@ public class QLogger {
     public static void saveExceptions(String classname, String methodname, String log) {
         String username = SessionManager.getCurrentUsername();//SessionManager.getUserByThreadId(Thread.currentThread().getId());
         Date dt = new Date();
-        logger.error("-----------------------------------------------------------------------------------------");
-        logger.error("##");
-        logger.error(" --&gt" + dt + "::" + username + "::");
-        logger.error(" " + classname + ":: " + methodname + "::");
-        logger.error(log);
-        logger.error("-----------------------------------------------------------------------------------------");
+//        logger.error("-----------------------------------------------------------------------------------------");
+//        logger.error("##");
+//        logger.error(" -->" + dt + "::" + username + "::");
+//        logger.error(" " + classname + ":: " + methodname + "::");
+//        logger.error(log);
+//        logger.error("-----------------------------------------------------------------------------------------");
     }
 
     public static void saveSMSLog(String[] numbers, String message, String output) {
@@ -31,14 +31,14 @@ public class QLogger {
             numbersLine = numbersLine + number + ",";
         }
 
-        logger.info("-----------------------------------------------------------------------------------------");
-        logger.info("##");
-        logger.info(" --&gt" + dt + "::" + username + "::");
-        logger.info(" numbers-&gt" + numbersLine);
-        logger.info("::");
-        logger.info(" message-&gt" + message + "::");
-        logger.info(" output--&gt" + output + ";");
-        logger.info("-----------------------------------------------------------------------------------------");
+//        logger.info("-----------------------------------------------------------------------------------------");
+//        logger.info("##");
+//        logger.info(" --&gt" + dt + "::" + username + "::");
+//        logger.info(" numbers->" + numbersLine);
+//        logger.info("::");
+//        logger.info(" message->" + message + "::");
+//        logger.info(" output-->" + output + ";");
+//        logger.info("-----------------------------------------------------------------------------------------");
     }
 
     public static void saveLogToFile(String log) {
@@ -56,10 +56,10 @@ public class QLogger {
     public static void saveLogToFile(String log, String values) {
         String username = SessionManager.getCurrentUsername();
         Date dt = new Date();
-        sqlLogger.debug("##");
-        sqlLogger.debug(" --&gt" + dt + "::" + username + "::");
-        sqlLogger.debug(" " + log + "::");
-        sqlLogger.debug(" " + values);
+//        sqlLogger.debug("##");
+//        sqlLogger.debug(" -->" + dt + "::" + username + "::");
+//        sqlLogger.debug(" " + log + "::");
+//        sqlLogger.debug(" " + values);
     }
 
 }

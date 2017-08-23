@@ -34,6 +34,9 @@ public class EntityCrInspectionList extends CoreEntity {
     public static String PATIENT_BIRTH_DATE = "patientBirthDate";
     public static String PATIENT_BIRTH_PLACE = "patientBirthPlace";
     public static String SEX = "sex";
+    public static String SUBMODULE_VALU = "submoduleValue";
+    
+    private String submoduleValue = "";
 
     private String patientBirthDate = "";
     private String patientBirthPlace = "";
@@ -57,6 +60,14 @@ public class EntityCrInspectionList extends CoreEntity {
     private String patientSurname = "";
     private String patientMiddleName = "";
     private String attributeCode = "";
+
+    public String getSubmoduleValue() {
+        return submoduleValue;
+    }
+
+    public void setSubmoduleValue(String submoduleValue) {
+        this.submoduleValue = submoduleValue;
+    }
 
     public String getPatientBirthDate() {
         return patientBirthDate;

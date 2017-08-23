@@ -288,10 +288,10 @@ public class SQLGenerator {
         String tableName = mtSt[mtSt.length - 1].substring(ENTITY.length());
         tableName = seperateTableFieldNameWithUnderscore(tableName).toUpperCase();
         tableName = !core.isFunction() ? tableName : convertTableNameToFunctionFormatWithParams(core, tableName);
-        
-        String dbname = core.selectDbname().trim().length()==0 ? 
-                SessionManager.getCurrentDomain() : core.selectDbname().trim();
-        tableName = dbname+"."+tableName;
+
+        String dbname = core.selectDbname().trim().length() == 0
+                ? SessionManager.getCurrentDomain() : core.selectDbname().trim();
+        tableName = dbname + "." + tableName;
         return tableName;
     }
 
@@ -314,10 +314,10 @@ public class SQLGenerator {
         String mtSt[] = core.getClass().getName().split("\\.");
         String tableName = mtSt[mtSt.length - 1].substring(ENTITY.length());
         tableName = seperateTableFieldNameWithUnderscore(tableName).toUpperCase();
-        
-        String dbname = core.selectDbname().trim().length()==0 ? 
-                SessionManager.getCurrentDomain() : core.selectDbname().trim();
-        tableName = dbname+"."+tableName;
+
+        String dbname = core.selectDbname().trim().length() == 0
+                ? SessionManager.getCurrentDomain() : core.selectDbname().trim();
+        tableName = dbname + "." + tableName;
         return tableName;
     }
 
@@ -434,7 +434,7 @@ public class SQLGenerator {
 //        if (!hasSeperator) {
 //            return arg;
 //        } else {
-            return addUnderscoreToFieldName(arg);
+        return addUnderscoreToFieldName(arg);
 //        }
     }
 
@@ -525,7 +525,7 @@ public class SQLGenerator {
         //add limit 
         String slimit = coreEnt.selectStartLimit();
         String elimit = coreEnt.selectEndLimit();
-        int idx = Integer.parseInt(elimit) - Integer.parseInt(slimit)+1;
+        int idx = Integer.parseInt(elimit) - Integer.parseInt(slimit) + 1;
         selectSql += " LIMIT " + slimit + ", " + idx;
         return selectSql;
     }
@@ -563,12 +563,12 @@ public class SQLGenerator {
                             .toUpperCase();
                     String singleClause = "";
                     if (!key.trim().equals(sumByField)) {
-                        singleClause = coreEnt.isDeepWhere() &&
-                                !val.contains(CoreLabel.IN)
+                        singleClause = coreEnt.isDeepWhere()
+                                && !val.contains(CoreLabel.IN)
                                 ? new WhereSingle(key, val, valueArr).exec()
-                                : getSingleClausOfWherePartOfSelect(tablename, 
+                                : getSingleClausOfWherePartOfSelect(tablename,
                                         key, val, valueArr, addEntityNameToAS);
-                        singleClause = singleClause.trim().length() == 0 
+                        singleClause = singleClause.trim().length() == 0
                                 ? singleClause : singleClause + AND;
                         whereCondition = whereCondition + singleClause + SPACE;
                     }
@@ -611,7 +611,7 @@ public class SQLGenerator {
                 int rc = coreEnt.selectDeepWhereStatementKeySize();
                 for (int i = 0; i < rc; i++) {
                     String key = coreEnt.selectDeepWhereStatementKey(i);
-                    String val = coreEnt.selectDeepWhereStatementValue(i); 
+                    String val = coreEnt.selectDeepWhereStatementValue(i);
                     key = addUnderscoreToFieldName(key);
                     String stmt = new WhereSingle(key, val, valueArr).exec();
                     if (stmt.length() > 0) {
@@ -649,9 +649,13 @@ public class SQLGenerator {
                 String tname = entity.toTableName();
                 String singleClause = getSingleClausOfWherePartOfSelect(tname, key, val, valueArr);
                 if (i + 1 == rc) {
+                    String o = "";
+                    if (!entity.selectAndOrStatementKey(i).equals(oldKey)) {
+                        ln = ln.substring(0, ln.length() - AND.length()) + "  " + OR;
+                    }
                     oldKey = "";
                     ln += SPACE + singleClause;
-                    ln += rc > 2 ? AND : OR;
+                    ln += rc > 2  ? AND: OR;
 
                 }
 

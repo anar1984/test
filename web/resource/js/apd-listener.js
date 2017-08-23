@@ -943,15 +943,63 @@ function buttonTaskTriggerListener() {
             success: function (res) {
                 isResultRedirect(JSON.stringify(res));
                 //get onclick fuct name
-                var func = $('#' + refreshBtnId).attr('onclick');
+                var func = $('#' + refreshBtnId).click();
                 //execute function
-                eval(func);
+//                eval(func);
             },
             error: function (res, status) {
                 alert(getMessage('somethingww'));
             }
         });
     });
+
+
+    $(document).on("click", ".apd-task-table-delete", function (e) {
+        var r = confirm(getMessage("sureToProseed_q"));
+        if (r === false) {
+            return;
+        }
+
+        var el = $(e.target);
+        //apd-form-fill-kv="id=1,name=1" seklinde olur
+        var url = el.attr('apd-form-fill-url');
+        var kv = el.attr('apd-form-fill-kv');
+        var refreshBtnId = el.attr('apd-form-reload-button-id');
+        //create json
+        json = {kv: {}};
+        //fill json
+        var arr = kv.split(',');
+        for (var i in arr) {
+            var t = arr[i].split('=');
+            var key = t[0];
+            var val = t[1];
+            json.kv[key] = val;
+        }
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/" + url,
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                isResultRedirect(JSON.stringify(res));
+
+                var div = el.closest('div[class="custom-table"]');
+                div.find(".table-filter-comp").first().change();
+
+                //get onclick fuct name
+                var func = $('#' + refreshBtnId).click();
+                //execute function
+//                eval(func);
+            },
+            error: function (res, status) {
+                alert(getMessage('somethingww'));
+            }
+        });
+    });
+
 }
 
 function formButtonListener() {
@@ -1125,9 +1173,10 @@ function formButtonListener() {
                     //show successful message
                     alert(getMessage('successOperation'));
                     if (el.attr('id') === 'insertNewPatientBtn') {
-                        fillCombobox($('#fkPatientId'));
-                        $("#fkPatientId option:eq(1)").attr("selected", "selected");
-                        $('#fkPatientId').change();
+//                        fillCombobox($('#fkPatientId'));
+//                        $("#fkPatientId option:eq(1)").attr("selected", "selected");
+//                        $('#fkPatientId').change();
+                        getLastPersonInfo();
                     }
                 }
             },
@@ -1135,6 +1184,31 @@ function formButtonListener() {
                 alert(getMessage('somethingww'));
             }
         });
+    });
+}
+
+function getLastPersonInfo() {
+    var json = {kv: {}};
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrGetLastPatientInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            console.log(JSON.stringify(res));
+            var pid = res.kv.pid;
+            var fname = res.kv.patientName;
+            $('#fkPatientId').val(fname);
+            $('#fkPatientId').attr("pid", pid);
+//            $('.page-content').html(obj);
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
     });
 }
 
@@ -1180,15 +1254,17 @@ function menuListenerActivies(page_id) {
             break;
         case "page_appointment":
             $('.apd-module-cmb-list:eq(0)').click();
-//            fillCombobox($('#fkModuleId'));
             $('#fkModuleId').click();
             fillCombobox($('#fkDoctorUserId'));
-            fillCombobox($('#fkPatientId'));
-//            $('#fkPatientId').prepend("'<option value='----'></option>").val('-----');
-            fillInspectionMatrixList();
-            $("#serviceCrGetAppointmentList").click();
-            fillCombobox($('#fkReportId'));
-//            fillInspectionComboByTableClick("");
+            $('#fkPatientId').editableSelect({
+                onSelect: function (element) {
+                    patientSelectAction(this);
+                }
+            });
+            filterPatientCombo(true);
+            patientSelectAction();
+            loadSession("");
+
             break;
         case "page_statistic":
             fillCombobox($('#fkModuleId'));
@@ -1211,6 +1287,7 @@ function menuListenerActivies(page_id) {
         default:
     }
 }
+
 
 function clickFirstElementOfMatritList() {
     $('.apd-patient-matrix-item:eq(1)').click();

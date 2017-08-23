@@ -5,7 +5,6 @@
  */
 package utility;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -26,7 +25,7 @@ import resources.config.Config;
  */
 public class CacheUtil {
 
-    private static org.apache.logging.log4j.Logger logger = LogManager.getLogger();
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger();
     public static CacheManager cacheManager;
     public static String CACHE_KEY_MODULE = "cache.key.module";
     public static String CACHE_KEY_ATTRIBUTE = "cache.key.attribute";
@@ -49,13 +48,19 @@ public class CacheUtil {
     }
 
     public static Carrier getFromCache(String cacheKey) throws QException {
-        Cache<String, Carrier> serviceCache = cacheManager
+        Cache<String, Carrier> serviceCache = null;
+        
+        try{
+            serviceCache = cacheManager
                 .getCache("modelCache", String.class, Carrier.class);
+        }catch(Exception e){
+            System.out.println("getFromCache"+e.getMessage());
+            e.printStackTrace();
+        }
+        Carrier carrier = new Carrier();
 
-        Carrier carrier = null;
-
-        if (cacheManager.getStatus() == Status.AVAILABLE
-                && serviceCache.containsKey(cacheKey)) {
+        if (serviceCache.containsKey(cacheKey)
+                && cacheManager.getStatus() == Status.AVAILABLE) {
             carrier = serviceCache.get(cacheKey);
             logger.debug("getFromCache.cacheKey=" + cacheKey + " provided from cache");
         } else {
@@ -66,7 +71,7 @@ public class CacheUtil {
                 Object retObj = method.invoke(mdl, prepareParam(cacheKey));
                 logger.debug("getFromCache.cacheKey=" + cacheKey + " provided from model");
                 putCache(cacheKey, (Carrier) retObj);
-
+                carrier = (Carrier) retObj;
             } catch (NoSuchMethodException ex) {
                 logger.error("getFromCache.cacheKey=" + cacheKey, ex);
                 throw new QException(ex);

@@ -1,46 +1,76 @@
 <div class="row apd-page" id="page_appointment">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
-            <label id="headertitle" qlang>inspection</label>
+            <label id="headertitle" qlang>sessionList</label>
         </div>
     </div> 
-    <div class="col-md-12">
-        <div class="col-md-5  text-left ">
-            <button id='newSessionToggle' type="button" f="1" qlang 
-                    class="btn btn-md task-button toggle-on-click " 
-                    onclick="toggleNewSession(this)">newSession
-            </button>
-            <!--                        <button id='newInspectionToggle' type="button" f="1" qlang class="btn btn-md task-button  " 
-                                            onclick="toggleNewInspection(this)">addInspection
-                                    </button>-->
-            <button id='serviceCrGetAppointmentList' type="button"  qlang class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                    onclick="loadSession(this)">sessionList
-            </button>
-            <!--            <button id='serviceCrGetPatientList' qlang type="button" 
-                                style='margin-top:0px; '
-                                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                                onclick="loadTable('tbl_patient_list')">patientList
-                        </button>-->
-            <!--                        <button id='serviceCrGetAppointmentList' type="button" qlang class="btn btn-md task-button apd-task-load" 
-                                            onclick="loadInspectionListBySession(this)">inspectionList
-                                    </button>-->
+    
+    <div class="col-md-12" >
+        <br>
+    </div>
 
-            <button id='serviceCrGetAppointmentList' type="button" qlang 
-                    class="btn btn-md task-button apd-task-load toggle-on-click" 
-                    style=' background-color:#A5673F;'
-                    onclick="finishSession(this)">finishSession
+    <div class="col-md-12  " >
+
+        <div class="form-group1 col-md-4" >
+            <label qlang>patient</label>
+            <select class="form-control apd-form-select" id="fkPatientId" 
+                    has_null="1" name="fkPatientId" select_separator=" " 
+                    select_text="patientName"  select_value="id" 
+                    srv_url="srv/serviceCrGetModuleList" onchange='filterPatientCombo()'>
+            </select>
+        </div>
+        <div class="form-group col-md-6" >
+            <br>  
+            <button id='btn_searchPatient' type="button" 
+                    class="btn btn-md task-button  " 
+                    style='margin-top:5px' onclick="filterPatientCombo(this)"
+                    >
+                <i class="fa fa-search" aria-hidden="true"  
+                   style='font-size: 12px;padding-left: 12px;padding-right: 12px;'></i>
+            </button>
+            <button id='btn_searchPatient' type="button" 
+                    class="btn btn-md task-button  " 
+                    style='margin-top:5px' onclick="clearAndshowAllPatientListCombo(this)" qlang
+                    >
+                showAll
+            </button>
+            <button id='btn_serviceCrInsertNewPatient' type="button" 
+                    class="btn btn-md task-button apd-task-create apd-task-form" 
+                    style='margin-top:5px'
+                    data-toggle="modal"   data-target="#insertNewPatient"  qlang >insertNewPatient
+            </button>
+
+            <button id='btn_serviceCrUpdatePatient' type="button" 
+                    class="btn btn-md task-button apd-task-create 
+                    apd-task-form-fill  " 
+                    style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;' 
+                    apd-form-fill-url="srv/serviceCrGetPatientList" 
+                    apd-form-fill-kv="id=201708120805030545" 
+                    data-toggle="modal"   data-target="#updatePatient" qlang>
+                updatePatientInfo
+            </button>
+            <button id='btn_newSessionWizard' type="button" 
+                    onclick="toggleNewSession(this)"
+                    class="btn btn-md task-button  apd-task-create apd-task-form toggle-on-click" 
+                    style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
+                    data-toggle="modal"   data-target="#newSessionWizard" qlang>
+                newSession
+            </button>
+            <button   type="button" qlang 
+                      class="btn btn-md task-button toggle-on-click  " 
+                      style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
+                      onclick="finishSession(this)">finishSession
             </button>
 
         </div>
-
-
-        <div class="col-md-7  text-right">
+        <div class="col-md-2  text-right">
+            <br>
             <div class="dropdown ">
                 <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="">
                     <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"></i> </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right  multi-level" role="menu" aria-labelledby="dropdownMenu">
-                    <li class="dropdown-submenu pull-left">
+                    <li class="dropdown-submenu pull-left toggle-on-click" >
                         <a tabindex="-1" href="#" qlang> report</a>
                         <ul class="dropdown-menu dropdown-menu-right " >
                             <li><a class='apd-report-cmb-list' rid='201708090638410249'
@@ -59,109 +89,79 @@
                         </ul>
                     </li>
                     <li>
-                        <a tabindex="-1" href="#" qlang onclick='loadInspectionListBySession(this)'>inspectionList</a>
+                        <a tabindex="-1" href="#" qlang 
+                           onclick='loadInspectionListBySession(this)'>inspectionList</a>
                     </li>
+                    <li>
+                        <a tabindex="-1" href="#" qlang 
+                           onclick='loadSession(this)'>sessionList</a>
+                    </li>
+
+                    </button>
                 </ul>
             </div>
         </div >
-    </div>
-    <div class="col-md-12" >
-        <br>
-    </div>
-
-    <div class="col-md-12  toggle-on-click" >
-
-        <div class="form-group col-md-5" >
-            <label qlang>patient</label>
-            <select class="form-control apd-form-select" id="fkPatientId" 
-                    has_null="1" name="fkPatientId" select_separator=" " 
-                    select_text="patientName"  select_value="id" 
-                    srv_url="srv/serviceCrGetPatientList4Combo" onchange='patientSelectAction(this)'>
-            </select>
-
-        </div>
-        <div class="form-group col-md-2" >
-            <br>  
-            <button id='btn_serviceCrInsertNewPatient' type="button" 
-                    class="btn btn-md task-button apd-task-create apd-task-form" 
-                    style='margin-top:5px'
-                    data-toggle="modal"   data-target="#insertNewPatient"  >
-                <i class="fa fa-plus" aria-hidden="true" 
-                   style='font-size: 12px;padding-left: 12px;padding-right: 12px;'></i>
-            </button>
-
-            <button id='btn_serviceCrUpdatePatient' type="button" 
-                    class="btn btn-md task-button apd-task-create 
-                    apd-task-form-fill  " 
-                    style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;' 
-                    apd-form-fill-url="srv/serviceCrGetPatientList" 
-                    apd-form-fill-kv="id=201708120805030545" 
-                    data-toggle="modal"   data-target="#updatePatient" qlang>
-                edit
-            </button>
-
-        </div>
         <div class="col-md-12" ><br></div>
     </div>
-    <div  class="col-md-12 toggle-on-click-session" id="newSessionDiv" style="display: none;border-width: 1px;
-          border-style: solid; border-color: #00B5AD"> 
-        <div class="col-md-12">
-            <div class="form-group col-md-2">
-                <label qlang>doctor</label> 
-                <select class="form-control apd-form-select" id="fkDoctorUserId" name="fkDoctorUserId" select_separator=" " 
-                        select_text="userPersonName,userPersonSurname,userPersonMiddlename"    select_value="id" 
-                        srv_url="srv/serviceCrGetDoctorList">
-                </select>
+    <!--    <div  class="col-md-12 toggle-on-click-session" id="newSessionDiv" style="display: none;border-width: 1px;
+              border-style: solid; border-color: #00B5AD"> 
+            <div class="col-md-12">
+                <div class="form-group col-md-2">
+                    <label qlang>doctor</label> 
+                    <select class="form-control apd-form-select" id="fkDoctorUserId" name="fkDoctorUserId" select_separator=" " 
+                            select_text="userPersonName,userPersonSurname,userPersonMiddlename"    select_value="id" 
+                            srv_url="srv/serviceCrGetDoctorList">
+                    </select>
+                </div>
+    
+                <div class="form-group col-md-2">
+                    <label qlang>appointmentDate</label>
+                    <input class="form-control   apd-form-date" type="date" id="appointmentDate"
+                           name="appointmentDate"    >
+                </div>
+                <div class="form-group col-md-1">
+                    <label qlang>timeFrom</label>
+                    <input class="form-control   apd-form-date" type="time" id="appointmentTime1"
+                           name="appointmentTime1"    >
+                </div>
+                <div class="form-group col-md-1">
+                    <label qlang>timeTo</label>
+                    <input class="form-control   apd-form-date" type="time" id="appointmentTime2"
+                           name="appointmentTime2"    >
+    
+                </div>
+                <div class="form-group col-md-1" align="left">
+                    <label qlang><span style="opacity: 0;">_________________________    </span> </label>
+                    <input class="apd-form-check" type="checkbox" id="currentTime"
+                           name="currentTime" onclick="toggleSessionDate(this)"><span qlang>Now</span>
+                </div>
+                <div class="form-group col-md-3" align="left">
+                    <br>  
+                    <button type="button" style="color:green;" 
+                            class="btn btn-default apd-form-btn-add-appointment"  
+                            qlang onclick="addAppointment(this);">newSession
+                    </button> 
+    
+                    <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                            data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
+                    </button>
+    
+    
+    
+    
+                </div>
+    
             </div>
-
-            <div class="form-group col-md-2">
-                <label qlang>appointmentDate</label>
-                <input class="form-control   apd-form-date" type="date" id="appointmentDate"
-                       name="appointmentDate"    >
+            <div class="col-md-12">
+                <div class="form-group col-md-8" align="left">
+                    <label qlang>description</label>
+                    <input class="form-control apd-form-check" type="input" id="description"
+                           name="description"> 
+                    <br>
+                </div>
             </div>
-            <div class="form-group col-md-1">
-                <label qlang>timeFrom</label>
-                <input class="form-control   apd-form-date" type="time" id="appointmentTime1"
-                       name="appointmentTime1"    >
-            </div>
-            <div class="form-group col-md-1">
-                <label qlang>timeTo</label>
-                <input class="form-control   apd-form-date" type="time" id="appointmentTime2"
-                       name="appointmentTime2"    >
-
-            </div>
-            <div class="form-group col-md-1" align="left">
-                <label qlang><span style="opacity: 0;">_________________________    </span> </label>
-                <input class="apd-form-check" type="checkbox" id="currentTime"
-                       name="currentTime" onclick="toggleSessionDate(this)"><span qlang>Now</span>
-            </div>
-            <div class="form-group col-md-3" align="left">
-                <br>  
-                <button type="button" style="color:green;" 
-                        class="btn btn-default apd-form-btn-add-appointment"  
-                        qlang onclick="addAppointment(this);">newSession
-                </button> 
-
-                <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                        data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
-                </button>
-
-
-
-
-            </div>
-
-        </div>
-        <div class="col-md-12">
-            <div class="form-group col-md-8" align="left">
-                <label qlang>description</label>
-                <input class="form-control apd-form-check" type="input" id="description"
-                       name="description"> 
-                <br>
-            </div>
-        </div>
-
-    </div>
+    
+        </div>-->
 
 
 
@@ -383,24 +383,7 @@
         </div>
     </div>
 
-    <div id="agendaModal"   class="modal fade col-md-12" role="dialog">
-        <div class="modal-dialog " style="width:90%">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body-1">
-                    <div id='wrap'>
-                        <div id='calendar'></div>
-                        <div style='clear:both'></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
 
-        </div>
-    </div>
 
 
     <div id="insertNewPatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
@@ -737,6 +720,100 @@
         </div>
     </div>
 
+    <div id="newSessionWizard"   class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>insertNewWizard</h4>
+                </div>
+                <div class="modal-body-1">
+                    <div  class="col-md-12" id="newSessionDiv"  >
+                        <form id="form_insertNewSession" class="apd-form" method="POST"> 
+                            <div  class="col-md-12  "  >
+                                <div class="form-group col-md-10">
+                                    <label qlang>doctor</label> 
+                                    <select class="form-control apd-form-select" id="fkDoctorUserId" name="fkDoctorUserId" select_separator=" " 
+                                            select_text="userPersonName,userPersonSurname,userPersonMiddlename"    select_value="id" 
+                                            srv_url="srv/serviceCrGetDoctorList">
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2" align=" ">
+                                    <label qlang><span style="opacity: 0;">_________________________    </span> </label>
+                                    <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                                            data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
+                                    </button>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label qlang>appointmentDate</label>
+                                    <input class="form-control   apd-form-date" type="date" id="appointmentDate"
+                                           name="appointmentDate"    >
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label qlang>timeFrom</label>
+                                    <input class="form-control   apd-form-date" type="time" id="appointmentTime1"
+                                           name="appointmentTime1"    >
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label qlang>timeTo</label>
+                                    <input class="form-control   apd-form-date" type="time" id="appointmentTime2"
+                                           name="appointmentTime2"    >
+
+                                </div>
+                                <div class="form-group col-md-1" align="left">
+                                    <label qlang><span style="opacity: 0;">_________________________    </span> </label>
+                                    <input class="apd-form-check" type="checkbox" id="currentTime"
+                                           name="currentTime" onclick="toggleSessionDate(this)"><span qlang>now</span>
+                                </div>
+
+                                <div class="form-group col-md-12" align="left">
+                                    <label qlang>description</label>
+                                    <input class="form-control apd-form-check" type="input" id="description"
+                                           name="description"> 
+                                    <br>
+                                </div>
+                                <div class="form-group col-md-12" align="right">
+                                    <br>  
+                                    <button type="button" style="color:green;" 
+                                            class="btn btn-default apd-form-btn-add-appointment"  
+                                            qlang onclick="addAppointment(this);">newSession
+                                    </button> 
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" 
+                                            role="button" qlang>close</button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="agendaModal"   class="modal fade col-md-12" role="dialog">
+        <div class="modal-dialog " style="width:90%">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body-1">
+                    <div id='wrap'>
+                        <div id='calendar'></div>
+                        <div style='clear:both'></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script>

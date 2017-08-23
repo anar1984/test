@@ -1361,5 +1361,7 @@ public class CrController {
         return carrier;
     }
 
-    
+    public static Carrier getLastPatientInfo(Carrier carrier) throws QException {
+        return carrier;
+    }
 }

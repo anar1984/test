@@ -239,5 +239,7 @@ public class EntityCrAppointmentList extends CoreEntity {
     public void setSex(String sex) {
         this.sex = sex;
     }
+    
+     
 
 }

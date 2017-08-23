@@ -5,7 +5,7 @@
  * Source on GitHub @ https://github.com/indrimuska/jquery-editable-select
  */
 
-+(function ($) {
+(function ($) {
 	// jQuery Editable Select
 	EditableSelect = function (select, options) {
 		var that     = this;
@@ -13,7 +13,7 @@
 		this.options = options;
 		this.$select = $(select);
 		this.$input  = $('<input type="text" autocomplete="off">');
-		this.$list   = $('<ul class="es-list">');
+		this.$list   = $('<ul id="ul_'+this.$select.attr("id")+'" class="es-list">');
 		this.utility = new EditableSelectUtility(this);
 		
 		if (['focus', 'manual'].indexOf(this.options.trigger) < 0) this.options.trigger = 'focus';
@@ -35,7 +35,7 @@
 		var hiddens = 0;
 		var search  = this.$input.val().toLowerCase().trim();
 		
-		this.$list.find('li').addClass('es-visible').show();
+		this.$list.find('li').addClass('apd-editable-combo-li es-visible  ').show();
 		if (this.options.filter) {
 			hiddens = this.$list.find('li').filter(function (i, li) { return $(li).text().toLowerCase().indexOf(search) < 0; }).hide().removeClass('es-visible').length;
 			if (this.$list.find('li').length == hiddens) this.hide();
@@ -68,9 +68,12 @@
 	EditableSelect.prototype.select = function ($li) {
 		if (!this.$list.has($li) || !$li.is('li.es-visible:not([disabled])')) return;
 		this.$input.val($li.text());
+                this.$input.attr("pid",$li.attr("pid"));
+                 if (this.options.onSelect) this.options.onSelect.call(this.$input, $(this));
 		if (this.options.filter) this.hide();
 		this.filter();
 		this.utility.trigger('select', $li);
+               
 	};
 	EditableSelect.prototype.add = function (text, index, attrs, data) {
 		var $li     = $('<li>').html(text);
@@ -219,7 +222,7 @@
 	};
 	
 	// Plugin
-	Plugin = function (option) {
+	Plugin = function (option) { 
 		var args = Array.prototype.slice.call(arguments, 1);
 		return this.each(function () {
 			var $this   = $(this);
@@ -234,3 +237,6 @@
 	$.fn.editableSelect.Constructor = EditableSelect;
 	
 })(jQuery);
+
+
+ 

@@ -34,14 +34,16 @@ public class AcnisUrlFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         String url = request.getRequestURI();
-        System.out.println("url->>>> " + url);
+        System.out.println("url->>>" + url+"<<<new");
         String cookie = request.getHeader("Cookie");
         System.out.println("web service cookie->>" + cookie);  
         
 
-        if (!SessionHandler.checkSession(cookie) && !url.contains("resource") 
+        if (url.trim().length()==0 || url.trim().equals("/apd1/")  || url.trim().equals("/") ){
+             response.sendRedirect(request.getContextPath()+"/index.html");
+        }else if (!SessionHandler.checkSession(cookie) && !url.contains("resource") 
                 && !url.contains("login") 
-                && !url.contains("home.html") 
+                && !url.contains("index.html") 
                 && !url.contains("signup") 
                 && !url.contains("/nali/")
                 && !url.contains("/nasrv/")

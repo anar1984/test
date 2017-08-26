@@ -18,9 +18,9 @@ import utility.QException;
  */
 public class Config {
 
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
-    private static Map<String, String> configMap = new HashMap<>();
+    private static final Map<String, String> configMap = new HashMap<>();
 
     private static String encoding = "UTF-8";
     private static String praatCommand;
@@ -31,6 +31,7 @@ public class Config {
     private static String smsSenderSenderName;
     private static String selectEndLimitDefault;
     private static String sqlPoolDbNumber;
+    private static String downloadPath;
 
     public static String getProperty(String key) {
         return configMap.get(key);
@@ -107,6 +108,13 @@ public class Config {
         return sqlPoolDbNumber;
     }
 
+    /**
+     * @return the downloadPath
+     */
+    public static String getDownloadPath() {
+        return downloadPath;
+    }
+
     private Config() {
 
     }
@@ -125,6 +133,7 @@ public class Config {
         smsSenderSenderName = properties.getProperty("sms.sender.sendername");
         selectEndLimitDefault = properties.getProperty("db.select.end-limit.default");
         sqlPoolDbNumber = properties.getProperty("db.sql-pool.db-number");
+        downloadPath = properties.getProperty("download.path");
 
         logger.debug("--------------  CONFIGURATION  --------------");
         configMap.forEach((key, value) -> {

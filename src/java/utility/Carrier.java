@@ -71,9 +71,9 @@ public class Carrier implements Serializable {
     private final String SEPERATOR_FIELDS = ",";
 
     private int tableCount = 0;
-    private final String keyNames[] = new String[1000];
+    private final String keyNames[] = new String[100000];
     private int keyCount = 0;
-    private final String[] tableNamesArray = new String[1000];
+    private final String[] tableNamesArray = new String[100000];
 
     public String[] getKeys() {
         String[] res = new String[keyCount];

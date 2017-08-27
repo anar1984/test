@@ -43,22 +43,26 @@ public class AcnisUrlFilter implements Filter {
         System.out.println("url->>>> " + url);
         
         String token = null;
-        for (Cookie cookie : request.getCookies() ) {
-            if ("apdtok".equals(cookie.getName())) {
-                token = cookie.getValue();
-                break;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (int i=0;i<cookies.length;i++) {
+               Cookie cookie = cookies[i]; 
+               if ("apdtok".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
             }
         }
         
         System.out.println("web service token->>" + token);  
         
 
-        if (url.trim().length() == 0 || url.trim().equals("/apd1/") || url.trim().equals("/")) {
-            response.sendRedirect(request.getContextPath() + "/index.html");
-        } else if (!SessionHandler.checkSession(token) && !url.contains("resource")
-                && !url.contains("login")
-                && !url.contains("index.html")
-                && !url.contains("signup")
+        if (url.trim().length()==0 || url.trim().equals("/apd1/")  || url.trim().equals("/") ){
+             response.sendRedirect(request.getContextPath()+"/index.html");
+        }else if (!SessionHandler.checkSession(token) && !url.contains("resource") 
+                && !url.contains("login") 
+                && !url.contains("index.html") 
+                && !url.contains("signup") 
                 && !url.contains("/nali/")
                 && !url.contains("/nasrv/")
                 && !url.contains("/activation.html")) {

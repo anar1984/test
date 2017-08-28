@@ -288,18 +288,14 @@ function loadInspectionListBySession(e) {
 }
 
 function toggleNewSession(e) {
-//    $("#newSessionDiv").fadeToggle("slide");
-//    var f = (-1) * parseInt($(e).attr("f"));
-//    $(e).attr("f", f);
-    //show
-//    if (f === -1) {
-//        $(e).attr("style", "border-color:#D4AC0D;background-color:#D4AC0D;");
-//    } else {//hide
-//        $(e).attr("style", "border-color:#00b289;background-color:#00b289;");
-//    }
-//    s_h_sm_attribute_buttons();
     $('#currentTime').prop('checked', false);
     $('#currentTime').click();
+    var fkPatientId = $('#fkPatientId').attr("pid");
+    if (fkPatientId!='undefined' || (fkPatientId)){
+        $('#sessionPatientFullname').val($('#fkPatientId').val());
+    }else{
+         $('#sessionPatientFullname').val("");
+    }
     toggleSessionDate($('#currentTime'));
 }
 

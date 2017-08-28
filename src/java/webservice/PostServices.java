@@ -248,6 +248,11 @@ public class PostServices {
 //            jsonNew += "\"asc\":\"itemValue\"";
 //            jsonNew += "}}";
             String servicename = "serviceCrGetListItemByCode";
+            /*try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(PostServices.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
 
             asyncResponse.resume(doCallDispatcher(headers, servicename, jsonNew));
         });

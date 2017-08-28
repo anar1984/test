@@ -7,9 +7,9 @@ package auth;
 
 import java.security.Key;
 import module.cr.entity.EntityCrUser;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import module.cr.entity.EntityCrCompany;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;
 import org.jose4j.jwe.JsonWebEncryption;
 import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
@@ -19,8 +19,10 @@ import utility.SessionManager;
 import utility.sqlgenerator.EntityManager;
 
 public class SessionHandler {
+    
+    private static Logger logger = LogManager.getLogger();
 
-    public static boolean checkSession(String cookie) {
+    /*public static boolean checkSession(String cookie) {
         if (cookie == null) {
             return false;
         } else {
@@ -39,6 +41,29 @@ public class SessionHandler {
                 int l = jwe.getPayload().length();
                 return l > 1;
             } catch (Exception ex) {
+                return false;
+            }
+        }
+    }*/
+    
+    public static boolean checkSession(String token) {
+        if (token == null || token.equals("")) {
+            return false;
+        } else {
+            try {
+                JsonWebEncryption jwe = new JsonWebEncryption();
+                Key key = SKey.getKey();
+                byte[] keyBytes = key.getEncoded();
+                String ln = "";
+                for (byte b : keyBytes) {
+                    ln += b;
+                }
+                jwe.setKey(key);
+                jwe.setCompactSerialization(token);
+                int l = jwe.getPayload().length();
+                return l > 1;
+            } catch (Exception ex) {
+                logger.error("checkSession token="+token, ex);
                 return false;
             }
         }
@@ -161,8 +186,7 @@ public class SessionHandler {
             return token;
         } catch (Exception ex) {
             System.out.println("error");
-
-            Logger.getLogger(SessionHandler.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("encryptUser", ex);
             return "";
         }
     }

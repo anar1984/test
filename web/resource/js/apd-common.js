@@ -21,7 +21,7 @@ var g_tbl = {
         "form_update_popup_id": "updateValueType",
         "form_copy_popup_id": "insertNewValueType",
         "reload_buttion_id": "serviceCrGetValueTypeList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_expense_list": {
         "response_tn": "Response",
@@ -31,7 +31,7 @@ var g_tbl = {
         "form_update_popup_id": "updateExpense",
         "form_copy_popup_id": "insertNewExpense",
         "reload_buttion_id": "serviceCrGetExpenseList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_payment_list": {
         "response_tn": "Response",
@@ -41,7 +41,7 @@ var g_tbl = {
         "form_update_popup_id": "updatePayment",
         "form_copy_popup_id": "insertNewPayment",
         "reload_buttion_id": "serviceCrGetPaymentList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_incomereport_list": {
         "response_tn": "Response",
@@ -51,7 +51,7 @@ var g_tbl = {
         "form_update_popup_id": "",
         "form_copy_popup_id": "",
         "reload_buttion_id": "",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_pricelist_list": {
         "response_tn": "Response",
@@ -61,7 +61,7 @@ var g_tbl = {
         "form_update_popup_id": "updatePriceList",
         "form_copy_popup_id": "insertNewPriceList",
         "reload_buttion_id": "serviceCrGetPriceListList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_user_list": {
         "response_tn": "Response",
@@ -71,7 +71,7 @@ var g_tbl = {
         "form_update_popup_id": "updateUser",
         "form_copy_popup_id": "insertNewUser",
         "reload_buttion_id": "serviceCrGetUserList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_appointment_list": {
         "response_tn": "Response",
@@ -81,7 +81,7 @@ var g_tbl = {
         "form_update_popup_id": "",
         "form_copy_popup_id": "",
         "reload_buttion_id": "serviceCrGetAppointmentList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_entitylabel_list": {
         "response_tn": "Response",
@@ -91,7 +91,7 @@ var g_tbl = {
         "form_update_popup_id": "updateEntityLabel",
         "form_copy_popup_id": "insertNewEntityLabel",
         "reload_buttion_id": "serviceCrGetEntityLabelList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_patient_list": {
         "response_tn": "Response",
@@ -101,7 +101,7 @@ var g_tbl = {
         "form_update_popup_id": "updatePatient",
         "form_copy_popup_id": "insertNewPatient",
         "reload_buttion_id": "serviceCrGetPatientList",
-        "table_block": "1",
+        "table_block": "1"
     },
     "tbl_inspectiomatrix_list": {
         "response_tn": "Response",
@@ -111,7 +111,7 @@ var g_tbl = {
         "form_update_popup_id": "srv/serviceCrGetInspectionMatrixBodyList",
         "form_copy_popup_id": "srv/serviceCrGetInspectionMatrixBodyList",
         "reload_buttion_id": "serviceCrGetPatientList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_reportline_list": {
         "response_tn": "Response",
@@ -121,7 +121,7 @@ var g_tbl = {
         "form_update_popup_id": "updateReportLine",
         "form_copy_popup_id": "insertNewReportLine",
         "reload_buttion_id": "serviceCrGetReportLineList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_inspection_list": {
         "response_tn": "Response",
@@ -142,7 +142,7 @@ var g_tbl = {
         "form_update_popup_id": "updateInspection",
         "form_copy_popup_id": "insertNewInspection",
         "reload_buttion_id": "serviceCrGetInspectionList",
-        "table_block": "0",
+        "table_block": "0"
     }, "tbl_submoduleattribute_list": {
         "response_tn": "Response",
         "list_url": "srv/serviceCrGetSubmoduleAttributeList",
@@ -151,7 +151,7 @@ var g_tbl = {
         "form_update_popup_id": "updateSubmoduleAttribute",
         "form_copy_popup_id": "insertNewSubmoduleAttribute",
         "reload_buttion_id": "serviceCrGetSubmoduleAttributeList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_attribute_list": {
         "response_tn": "Response",
@@ -161,7 +161,7 @@ var g_tbl = {
         "form_update_popup_id": "updateAttribute",
         "form_copy_popup_id": "insertNewAttribute",
         "reload_buttion_id": "serviceCrGetAttributeList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_module_list": {
         "response_tn": "Response",
@@ -171,7 +171,7 @@ var g_tbl = {
         "form_update_popup_id": "updateModule",
         "form_copy_popup_id": "insertNewModule",
         "reload_buttion_id": "serviceCrGetModuleList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_submodule_list": {
         "response_tn": "Response",
@@ -181,7 +181,7 @@ var g_tbl = {
         "form_update_popup_id": "updateSubmodule",
         "form_copy_popup_id": "insertNewSubmodule",
         "reload_buttion_id": "serviceCrGetSubmoduleList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_organpoint_list": {
         "response_tn": "Response",
@@ -191,7 +191,7 @@ var g_tbl = {
         "form_update_popup_id": "updateOrganPoint",
         "form_copy_popup_id": "insertNewOrganPoint",
         "reload_buttion_id": "serviceCrGetOrganPointList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_listitem_list": {
         "response_tn": "Response",
@@ -201,7 +201,7 @@ var g_tbl = {
         "form_update_popup_id": "updateListItem",
         "form_copy_popup_id": "insertNewListItem",
         "reload_buttion_id": "serviceCrGetListItemList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_permission_list": {
         "response_tn": "Response",
@@ -211,7 +211,7 @@ var g_tbl = {
         "form_update_popup_id": "updatePermission",
         "form_copy_popup_id": "insertNewPermission",
         "reload_buttion_id": "serviceCrGetPermissionList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_rule_list": {
         "response_tn": "Response",
@@ -221,7 +221,7 @@ var g_tbl = {
         "form_update_popup_id": "updateRule",
         "form_copy_popup_id": "insertNewRule",
         "reload_buttion_id": "serviceCrGetRuleList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_rule_permission_list": {
         "response_tn": "Response",
@@ -231,7 +231,7 @@ var g_tbl = {
         "form_update_popup_id": "updateRulePermission",
         "form_copy_popup_id": "insertNewRulePermission",
         "reload_buttion_id": "serviceCrGetRulePermissionList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_role_list": {
         "response_tn": "Response",
@@ -241,7 +241,7 @@ var g_tbl = {
         "form_update_popup_id": "updateRole",
         "form_copy_popup_id": "insertNewRole",
         "reload_buttion_id": "serviceCrGetRoleList",
-        "table_block": "0",
+        "table_block": "0"
     },
     "tbl_role_rule_list": {
         "response_tn": "Response",
@@ -251,7 +251,7 @@ var g_tbl = {
         "form_update_popup_id": "updateRoleRule",
         "form_copy_popup_id": "insertNewRoleRule",
         "reload_buttion_id": "serviceCrGetRoleRuleList",
-        "table_block": "0",
+        "table_block": "0"
     }
 };
 //
@@ -1092,9 +1092,9 @@ function patientSelectAction(e) {
 
     //refresh table
     var is_hidden = $('#tbl_appointment_list').is(":visible");
-    console.log("is hidden=" + is_hidden)
+    console.log("is hidden=" + is_hidden);
     if (is_hidden) {
-        console.log("is not  hidden=" + is_hidden)
+        console.log("is not  hidden=" + is_hidden);
         $('#tbl_appointment_list').closest('div[class="custom-table"]')
                 .find('.table-filter-comp').first().change();
         $('#tbl_appointment_list').find('.apd-table-checkbox').first().attr("checked", false);

@@ -1087,7 +1087,7 @@ function formButtonListener() {
                     tro[id] = cn;
                 }
                 r.push(tro);
-            })
+            });
             tn1.r = r;
             json.tbl.push(tn1);
         });
@@ -1123,9 +1123,9 @@ function formButtonListener() {
                     if (cn.length > 0) {
                         tro[cn] = $(this).html();
                     }
-                })
+                });
                 r.push(tro);
-            })
+            });
             tn1.r = r;
             json.tbl.push(tn1);
         });
@@ -1449,6 +1449,7 @@ function tableFilterListener() {
 
 function formActivateListeners() {
     $(document).on("click", '.apd-task-form', function (e) {
+        
         var target_id = $(this).attr('data-target');
         target_id = target_id.substring(1, target_id.length);
         clearForm(target_id, 'update');
@@ -1478,6 +1479,7 @@ function formActivateListeners() {
         $('#' + target_id).find("form").find(".apd-form-htmleditor").each(function () {
             $(this).Editor();
         });
+        
     });
 }
 

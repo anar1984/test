@@ -61,7 +61,7 @@ public class QReport {
     }
 
     public static String getReport(QReportCarrier rc) throws QException {
-       String pureHtml = getPureReportHtml(rc.getReportId());
+        String pureHtml = getPureReportHtml(rc.getReportId());
         rc.setText(pureHtml);
         String res = replaceTags(rc);
         return res;
@@ -187,36 +187,50 @@ mobile2,telephone1,telephone2,email1,email2,country,city,postIndex,description
         String fkSessionId = rcarrier.getSessionId();
         String tn = CoreLabel.RESULT_SET;
 
+        System.out.println(" doc first variant >>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(doc.toString());
+
         Carrier c = new Carrier();
         c.setValue("inspectionCode", fkSessionId);
         c = CrModel.getInspectionList(c);
-        Carrier cprIns = c.getKeyValuesPairFromTable(tn, "attibuteCode", "finalValue");
+        System.out.println(" print ins >>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(c.toXML());
 
-        Elements elements = doc.getElementsByTag("qpatient");
+        Carrier cprIns = c.getKeyValuesPairFromTable(tn, "attributeCode", "finalValue");
+        System.out.println(" print pair ins >>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(cprIns.toXML());
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        Elements elements = doc.getElementsByTag("qattr");
         for (Element element : elements) {
             String data = element.hasAttr("data") ? element.attr("data") : "";
             String code = element.hasAttr("code") ? element.attr("code") : "";
             String val = cprIns.getValue(code).toString();
+            System.out.println("data===" + data);
+            System.out.println("code===" + code);
+            System.out.println("val===" + val);
 
             if (data.trim().equals("name") || data.trim().equals("")) {
                 element.after(val);
                 element.remove();
             } else if (data.trim().equals("image")) {
-                String h = element.hasAttr("height") 
-                        ? "height=\""+element.attr("height")+"\"" 
+                String h = element.hasAttr("height")
+                        ? "height=\"" + element.attr("height") + "\""
                         : "";
-                String w = element.hasAttr("weight") 
-                        ? "weight=\""+element.attr("weight")+"\""
+                String w = element.hasAttr("weight")
+                        ? "weight=\"" + element.attr("weight") + "\""
                         : "";
-                
-                val = "<img src=\"" + Config.getDownloadPath() + val + "\""+ " "+h+" "+w+">";
+
+                val = "<img src=\"" + Config.getDownloadPath() + val + "\"" + " " + h + " " + w + ">";
                 element.after(val);
                 element.remove();
 
             }
 
         }
-
+        
+        System.out.println(" doc last variant >>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(doc.toString());
 
         return doc;
     }

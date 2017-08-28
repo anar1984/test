@@ -1004,9 +1004,6 @@ function buttonTaskTriggerListener() {
 
 function formButtonListener() {
     $(document).on("click", '.apd-form-btn', function (e) {
-
-
-
         var el = $(e.target);
         //remove all error message from form
         el.closest("form[class='apd-form']").find(".apd-form-error-msg").each(function () {
@@ -1213,7 +1210,10 @@ function getLastPersonInfo() {
 }
 
 function clearForm(formId, actionType) {
-    $('#' + formId).find(".apd-form-input").each(function () {
+    $('#' + formId).find(".apd-form-error-msg").remove();
+    
+    $('#' + formId).find("input").each(function () {
+
         var attr = $(this).attr('dont_clear');
         if (typeof attr !== typeof undefined && attr !== false) {
 

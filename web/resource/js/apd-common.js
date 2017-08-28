@@ -345,7 +345,6 @@ function loadSession(e) {
 function finishSession(e) {
     var len = $('.apd-table-checkbox:checked').length;
     if (len != 1) {
-
         alert($(e).html() + ">>" + getMessage('chooseSession'));
         return;
     }
@@ -630,11 +629,21 @@ function fillSwitchList(e, inData) {
 function fillCombobox(e, inData) {
     var dependence_id = $(e).attr('dependence_id');
     var main_id = $(e).attr('id');
+    
     //dependence_id varsa ve inData yoxdursa o zaman sorgu gondermeyecek
     if (dependence_id && !inData) {
         return;
     }
 
+    var async = $(e).attr('async');
+    if (typeof async === 'undefined' || !async) {
+        async=false;
+    }
+    
+    if (!main_id) {
+        return;
+    }
+    
     if (!main_id) {
         return;
     }
@@ -689,7 +698,7 @@ function fillCombobox(e, inData) {
 //    }
 //    console.log('url ='+url+','+has_null)
     if (has_null !== '__2__') {
-        $(e).append($("<option />").val('').text('----'));
+        $(e).append($("<option />").val('').text(' '));
     }
 
 //    if (has_all === '1') {
@@ -717,7 +726,7 @@ function fillCombobox(e, inData) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: async,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
             var obj = res.tbl;
@@ -736,7 +745,7 @@ function fillCombobox(e, inData) {
                     $(e).append($("<option />").val(v).text(t));
                 }
                 if (has_other === '1') {
-                    $(e).append($("<option />").val("__2__").text("Other"));
+                    $(e).append($("<option />").val("__2__").text(getLabel("other")));
                 }
             }
             var mv = $(e).attr("multiple");
@@ -1165,6 +1174,19 @@ function clearAndshowAllPatientListCombo() {
     var v = $(".apd-editable-combo-li").first().attr("pid");
     console.log("res = " + v);
 }
+
+function toogleOccupationOther(e){
+    var val = $(e).val();
+    console.log("val->"+val)
+    if (val==="__2__"){
+        $(e).closest("form[class='apd-form']").find("#occupationOther").removeAttr("disabled");
+    }else{
+         $(e).closest("form[class='apd-form']").find("#occupationOther").prop('disabled', true);
+          $(e).closest("form[class='apd-form']").find("#occupationOther").val('');
+    }
+}
+
+
 (function ($) {
     $.fn.extend({
         tableAddCounter: function (options) {

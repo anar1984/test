@@ -103,65 +103,7 @@
         </div >
         <div class="col-md-12" ><br></div>
     </div>
-    <!--    <div  class="col-md-12 toggle-on-click-session" id="newSessionDiv" style="display: none;border-width: 1px;
-              border-style: solid; border-color: #00B5AD"> 
-            <div class="col-md-12">
-                <div class="form-group col-md-2">
-                    <label qlang>doctor</label> 
-                    <select class="form-control apd-form-select" id="fkDoctorUserId" name="fkDoctorUserId" select_separator=" " 
-                            select_text="userPersonName,userPersonSurname,userPersonMiddlename"    select_value="id" 
-                            srv_url="srv/serviceCrGetDoctorList">
-                    </select>
-                </div>
-    
-                <div class="form-group col-md-2">
-                    <label qlang>appointmentDate</label>
-                    <input class="form-control   apd-form-date" type="date" id="appointmentDate"
-                           name="appointmentDate"    >
-                </div>
-                <div class="form-group col-md-1">
-                    <label qlang>timeFrom</label>
-                    <input class="form-control   apd-form-date" type="time" id="appointmentTime1"
-                           name="appointmentTime1"    >
-                </div>
-                <div class="form-group col-md-1">
-                    <label qlang>timeTo</label>
-                    <input class="form-control   apd-form-date" type="time" id="appointmentTime2"
-                           name="appointmentTime2"    >
-    
-                </div>
-                <div class="form-group col-md-1" align="left">
-                    <label qlang><span style="opacity: 0;">_________________________    </span> </label>
-                    <input class="apd-form-check" type="checkbox" id="currentTime"
-                           name="currentTime" onclick="toggleSessionDate(this)"><span qlang>Now</span>
-                </div>
-                <div class="form-group col-md-3" align="left">
-                    <br>  
-                    <button type="button" style="color:green;" 
-                            class="btn btn-default apd-form-btn-add-appointment"  
-                            qlang onclick="addAppointment(this);">newSession
-                    </button> 
-    
-                    <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                            data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
-                    </button>
-    
-    
-    
-    
-                </div>
-    
-            </div>
-            <div class="col-md-12">
-                <div class="form-group col-md-8" align="left">
-                    <label qlang>description</label>
-                    <input class="form-control apd-form-check" type="input" id="description"
-                           name="description"> 
-                    <br>
-                </div>
-            </div>
-    
-        </div>-->
+   
 
 
 
@@ -175,112 +117,7 @@
 
 
     <!-- Modal -->
-    <div id="insertNewAppointment" apd-form-reload-button-id='serviceCrGetAppointmentList' class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" qlang>insertNewAppointment</h4>
-                </div>
-                <div class="modal-body-1">
-                    <form id="form_insertNewappointment" class="apd-form" method="POST" action="srv/serviceCrInsertNewAppointment">
-                        <div class="form-group col-md-6">
-                            <label qlang class="float">appointment Code</label>
-                            <input class="form-control qlang apd-form-input" type="text" id="appointmentCode"
-                                   name="appointmentCode" placeholder="appointmentCode"  >
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float">appointment Name</label>
-                            <input type="text" class="form-control apd-form-input" id="appointmentName" 
-                                   qlang name="appointmentName" placeholder="appointmentName">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Status</label>
-                            <select class="form-control apd-form-select" id="liappointmentStatus" name="liappointmentStatus"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/appointmentStatus">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Is General?</label>
-                            <select class="form-control apd-form-select" id="liIsGeneral" name="liIsGeneral"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/yesno">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label >appointment Description</label>
-                            <textarea class="form-control apd-form-textarea" id="appointmentDescription" 
-                                      name="appointmentDescription" placeholder=""></textarea>
-                        </div> 
-
-                        <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="updateappointment" apd-form-reload-button-id='serviceCrGetAppointmentList' class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update appointment</h4>
-                </div>
-                <div class="modal-body-1">
-                    <form id="form_updateappointment" class="apd-form" method="POST" action="srv/serviceCrUpdateAppointment">
-                        <div class="form-group col-md-6 hidden"> 
-                            <label class="float">id</label>
-                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="appointment Code"  >
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float">appointment Code</label>
-                            <input class="form-control apd-form-input" type="text" id="appointmentCode"
-                                   name="appointmentCode" placeholder="appointment Code"  >
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float">appointment Name</label>
-                            <input type="text" class="form-control apd-form-input" id="appointmentName" 
-                                   name="appointmentName" placeholder="appointment Name">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Status</label>
-                            <select class="form-control apd-form-select" id="liappointmentStatus" name="liappointmentStatus"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/appointmentStatus">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Is General?</label>
-                            <select class="form-control apd-form-select" id="liIsGeneral" name="liIsGeneral"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/yesno">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label >appointment Description</label>
-                            <textarea class="form-control apd-form-textarea" id="appointmentDescription" 
-                                      name="appointmentDescription" placeholder=""></textarea>
-                        </div> 
-                        <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 
 
@@ -310,7 +147,7 @@
                                                         </button>-->
                             <button type="button"
                                     class="btn btn-default apd-form-btn apd-form-attr-btn" 
-                                    apd-clear-form-data="true" qlang>insert
+                                    apd-clear-form-data="true" qlang >insert
                             </button>
                             <button type="button" class="btn btn-default  " 
                                     data-dismiss="modal" role="button" qlang>close
@@ -328,7 +165,7 @@
             <div class="modal-content ">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">imageViewer</h4>
+                    <h4 class="modal-title"  qlang >imageViewer</h4>
                 </div>
                 <div class="modal-body-1">
                     <div id="myCarousel211" class="carousel slide" data-ride="carousel">
@@ -338,11 +175,11 @@
                         </div>
                         <a class="left carousel-control" href="#myCarousel211" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left"></span>
-                            <span class="sr-only">Previous</span>
+                            <span class="sr-only"  qlang >previous</span>
                         </a>
                         <a class="right carousel-control" href="#myCarousel211" data-slide="next">
                             <span class="glyphicon glyphicon-chevron-right"></span>
-                            <span class="sr-only">Next</span>
+                            <span class="sr-only"  qlang >next</span>
                         </a>
                     </div>
                 </div>
@@ -358,7 +195,7 @@
             <div class="modal-content ">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">videoPlayer</h4>
+                    <h4 class="modal-title"  qlang  >videoPlayer</h4>
                 </div>
                 <div class="modal-body-1">
                 </div>
@@ -373,7 +210,7 @@
             <div class="modal-content ">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">soundPlayer</h4>
+                    <h4 class="modal-title"   qlang  >soundPlayer</h4>
                 </div>
                 <div class="modal-body-1">
                 </div>
@@ -391,7 +228,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Insert New Patient</h4>
+                    <h4 class="modal-title"   qlang  >insertNewPatient</h4>
                 </div>
                 <div class="modal-body-1">
                     <form id="form_insertNewPatient" class="apd-form" method="POST" action="srv/serviceCrInsertNewPatient">
@@ -423,7 +260,7 @@
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
                             <select class="form-control apd-form-select" id="maritualStatus" name="maritualStatus"
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/maritualStatus">
                             </select>
@@ -431,21 +268,23 @@
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select" id="occupation" name="occupation"
-                                    has_null="1"
-                                    select_text="itemValue" select_value="itemKey" 
+                                    async="true" has_null="1"
+                                    select_text="itemValue" select_value="itemKey" onchange="toogleOccupationOther(this)"
+                                    has_other="1"
                                     srv_url="li/occupation">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label qlang>occupationOther</label>
                             <input type="text" class="form-control apd-form-input" id="occupationOther" 
+                                   disabled
                                    name="occupationOther" placeholder="">
                         </div>
                         <div class="form-group col-md-3">
                             <label qlang>education</label>
                             <select class="form-control apd-form-select" id="education" name="education"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     srv_url="li/educationType">
                             </select>
                         </div>
@@ -453,7 +292,7 @@
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select" id="sex" name="sex"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     srv_url="li/sex">
                             </select>
                         </div>
@@ -461,7 +300,7 @@
                             <label qlang>bloodGroup</label>
                             <select class="form-control apd-form-select" id="bloodGroup" name="bloodGroup"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     srv_url="li/bloodGroup">
                             </select>
                         </div>
@@ -469,7 +308,7 @@
                             <label qlang>rhFactor</label>
                             <select class="form-control apd-form-select" id="rhFactor" name="rhFactor"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     srv_url="li/rhFactor">
                             </select>
                         </div>
@@ -520,9 +359,9 @@
                                    name="postIndex" placeholder=" ">
                         </div>
                         <div class="form-group col-md-3">
-                            <label>isActive</label>
+                            <label  qlang>isActive</label>
                             <select class="form-control apd-form-select" id="isActive" name="isActive"
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/pa">
                             </select>
@@ -540,8 +379,8 @@
 
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true" 
-                                    id="insertNewPatientBtn" qlang>Insert</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>Close</button>
+                                    id="insertNewPatientBtn" qlang>insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
                         </div>
                     </form>
                 </div>
@@ -557,7 +396,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update Patient</h4>
+                    <h4 class="modal-title"  qlang  >updatePatient</h4>
                 </div>
                 <div class="modal-body-1">
                     <form id="form_updatePatient" class="apd-form" method="POST" action="srv/serviceCrUpdatePatient">
@@ -598,17 +437,19 @@
                                     srv_url="li/maritualStatus">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                       <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select" id="occupation" name="occupation"
-                                    has_null="1"
-                                    select_text="itemValue" select_value="itemKey" 
+                                    async="true" has_null="1"
+                                    select_text="itemValue" select_value="itemKey" onchange="toogleOccupationOther(this)"
+                                    has_other="1"
                                     srv_url="li/occupation">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label qlang>occupationOther</label>
                             <input type="text" class="form-control apd-form-input" id="occupationOther" 
+                                   disabled
                                    name="occupationOther" placeholder="">
                         </div>
                         <div class="form-group col-md-3">
@@ -690,7 +531,7 @@
                                    name="postIndex" placeholder=" ">
                         </div>
                         <div class="form-group col-md-3">
-                            <label>isActive</label>
+                            <label qlang >isActive</label>
                             <select class="form-control apd-form-select" id="isActive" name="isActive"
                                     has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
@@ -708,8 +549,8 @@
                                       name="addressLine" placeholder=""></textarea>
                         </div> 
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
                         </div>
                     </form>
                 </div>

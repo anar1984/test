@@ -146,6 +146,7 @@ public class QUtility {
         String langs = "";
         for (Element element : elements) {
             String val = element.html().trim();
+//            System.out.println(val);
             langs += val + CoreLabel.IN;
         }
 

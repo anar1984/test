@@ -147,20 +147,9 @@ public class CrModel {
             String filename = prop.getWorkingDir() + "../page/" + pagename + ".html";
             String ln = "";
             File file = new File(filename);
-//            FileReader fr = new FileReader(file);
-//            BufferedReader br = new BufferedReader(fr);
-//
-//            String ln = "";
-//            String st = "";
-//            while ((st = br.readLine()) != null) {
-//                ln += st + "";
-//            }
-//
-//            fr.close();
-//            br.close();
-//            System.out.println("1.ci "+ln);
+            
             ln = QUtility.checkLangLabel(file);
-//            System.out.println("2-ci "+ln);
+            
             return ln;
         } catch (QException | IOException ex) {
             throw new QException(new Object() {
@@ -2977,6 +2966,7 @@ public class CrModel {
         QReportCarrier rc = new QReportCarrier();
         rc.Patient.setPatientInfoById(ent.getFkPatientId());
         rc.setReportId(carrier.getValue("id").toString());
+        rc.setSessionId(carrier.getValue("fkSessionId").toString());
         String arg = QReport.getReport(rc);
         Carrier c = new Carrier();
         c.setValue(CoreLabel.RESULT_SET, 0, "reportHtml", arg);

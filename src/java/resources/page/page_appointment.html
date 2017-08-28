@@ -572,12 +572,17 @@
                     <div  class="col-md-12" id="newSessionDiv"  >
                         <form id="form_insertNewSession" class="apd-form" method="POST"> 
                             <div  class="col-md-12  "  >
-                                <div class="form-group col-md-10">
+                                <div class="form-group col-md-6">
                                     <label qlang>doctor</label> 
                                     <select class="form-control apd-form-select" id="fkDoctorUserId" name="fkDoctorUserId" select_separator=" " 
                                             select_text="userPersonName,userPersonSurname,userPersonMiddlename"    select_value="id" 
                                             srv_url="srv/serviceCrGetDoctorList">
                                     </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label qlang>patient</label> 
+                                     <input class="form-control" type="text" dont_clear id="sessionPatientFullname" name="sessionPatientFullname"
+                                            disabled >
                                 </div>
                                 <div class="form-group col-md-2" align=" ">
                                     <label qlang><span style="opacity: 0;">_________________________    </span> </label>

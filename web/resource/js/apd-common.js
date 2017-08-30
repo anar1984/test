@@ -1173,7 +1173,6 @@ function clearAndshowAllPatientListCombo() {
 
 function toogleOccupationOther(e){
     var val = $(e).val();
-    console.log("val->"+val)
     if (val==="__2__"){
         $(e).closest("form[class='apd-form']").find("#occupationOther").removeAttr("disabled");
     }else{

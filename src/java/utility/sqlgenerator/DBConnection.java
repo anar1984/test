@@ -387,24 +387,22 @@ public class DBConnection {
     
     
     public static void closeConnection(Connection conn) {
-        if(conn!=null) {
-            try {
+        try {
+            if (conn != null && !conn.isClosed()) {
                 conn.close();
-            } catch (SQLException ex) {
-                QLogger.saveExceptions("closeConnection", "closeConnection", ex.getMessage());
-                
             }
+        } catch (SQLException ex) {
+            QLogger.saveExceptions("closeConnection", "closeConnection", ex.getMessage());
         }
     }
     
     public static void rollbackConnection(Connection conn) {
-        if(conn!=null) {
-            try {
+        try {
+            if (conn != null && !conn.isClosed()) {
                 conn.rollback();
-            } catch (SQLException ex) {
-                QLogger.saveExceptions("rollbackConnection", "rollbackConnection", ex.getMessage());
-                
             }
+        } catch (SQLException ex) {
+            QLogger.saveExceptions("rollbackConnection", "rollbackConnection", ex.getMessage());
         }
     }
 }

@@ -6,7 +6,6 @@
 package module.cr;
 
 import java.io.BufferedReader;
-import com.sun.mail.smtp.SMTPTransport;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,41 +15,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
-import java.util.Properties;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.ws.rs.core.Response;
 import job.CompanyJob;
 import label.CoreLabel;
 import module.cr.entity.*;
 import module.pg.PgModel;
-import org.apache.commons.lang.ArrayUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.impl.StdSchedulerFactory;
 import resources.config.Config;
 //import smssender.Config;
 import utility.CacheUtil;
-import utility.CallDispatcher;
 import utility.Carrier;
 import utility.DeepWhere;
 import utility.GeneralProperties;
@@ -118,6 +89,9 @@ public class CrModel {
     public static final String VALUE_TYPE_YOUTUBE_URL = "17";
     public static final String VALUE_TYPE_SOUND_UPLOAD = "19";
 
+    public static final String REPORT_TYPE_APPOINTMENT = "1";
+    public static final String REPORT_TYPE_PAYMENT = "2";
+
     public Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
         String ln = "";
@@ -147,9 +121,9 @@ public class CrModel {
             String filename = prop.getWorkingDir() + "../page/" + pagename + ".html";
             String ln = "";
             File file = new File(filename);
-            
+
             ln = QUtility.checkLangLabel(file);
-            
+
             return ln;
         } catch (QException | IOException ex) {
             throw new QException(new Object() {
@@ -1065,7 +1039,7 @@ public class CrModel {
                 String val = crName.getValue(tn, i, "langDef").toString();
                 outCarrier.setValue(newTN, val);
             }
- 
+
             String tn1 = ent.toTableName();
             int rc1 = c.getTableRowCount(tn1);
             for (int i = 0; i < rc1; i++) {
@@ -1474,6 +1448,23 @@ public class CrModel {
             outCarrier.setValue(tnNew, val);
         }
         return outCarrier;
+    }
+
+    public static Carrier getModuleList4Combo(Carrier carrier) throws QException {
+        Carrier c = new Carrier();
+
+        Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
+        String[] keys = cModule.getKeys();
+        int i = 0;
+        for (String k : keys) {
+            if (k.endsWith(SessionManager.getCurrentLang())) {
+                c.setValue(CoreLabel.RESULT_SET, i, "id",
+                        k.substring(i, k.length()-SessionManager.getCurrentLang().length()));
+                c.setValue(CoreLabel.RESULT_SET, i, "name", cModule.getValue(k));
+                i++;
+            }
+        }
+        return c;
     }
 
     public static Carrier getModuleList(Carrier carrier) throws QException {
@@ -2208,10 +2199,11 @@ public class CrModel {
         String res = "1700000001";
 
         EntityCrPayment ent = new EntityCrPayment();
+        ent.setDeepWhere(false);
         ent.addSortBy(EntityCrPayment.PAYMENT_NO);
         ent.setSortByAsc(false);
         ent.setStartLimit(0);
-        ent.setEndLimit(1);
+        ent.setEndLimit(0);
         EntityManager.select(ent);
 
         try {
@@ -2222,6 +2214,7 @@ public class CrModel {
         res = QDate.getCurrentYear().substring(2, 4) + res.substring(2, res.length());
 
         return res;
+
     }
 
     public Carrier updatePatient(Carrier carrier) throws QException {
@@ -2945,7 +2938,6 @@ public class CrModel {
     public Carrier getReportLineList(Carrier carrier) throws QException {
         EntityCrReportLine ent = new EntityCrReportLine();
         EntityManager.mapCarrierToEntity(carrier, ent);
-//        ent.setFkUserId(SessionManager.getCurrentUserId());
         Carrier c = EntityManager.select(ent);
 
         c.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
@@ -2954,8 +2946,24 @@ public class CrModel {
 
         EntityManager.mapCarrierToEntity(carrier, ent);
         c.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(ent));
-
         return c;
+    }
+
+    public Carrier getReportLineList4Appt(Carrier carrier) throws QException {
+        EntityCrReportLine ent = new EntityCrReportLine();
+        ent.setReportType(REPORT_TYPE_APPOINTMENT);
+        Carrier c = EntityManager.select(ent);
+
+        int rc = c.getTableRowCount(ent.toTableName());
+        Carrier nc = new Carrier();
+        for (int i = 0; i < rc; i++) {
+            nc.setValue(CoreLabel.RESULT_SET, i, "id",
+                    c.getValue(ent.toTableName(), i, "id"));
+            nc.setValue(CoreLabel.RESULT_SET, i, "name",
+                    c.getValue(ent.toTableName(), i, "reportName"));
+        }
+
+        return nc;
     }
 
     public Carrier getReportLineList4Print(Carrier carrier) throws QException {
@@ -2967,6 +2975,7 @@ public class CrModel {
         rc.Patient.setPatientInfoById(ent.getFkPatientId());
         rc.setReportId(carrier.getValue("id").toString());
         rc.setSessionId(carrier.getValue("fkSessionId").toString());
+//        rc.setPaymentId("201708230752140570");
         String arg = QReport.getReport(rc);
         Carrier c = new Carrier();
         c.setValue(CoreLabel.RESULT_SET, 0, "reportHtml", arg);
@@ -3113,13 +3122,11 @@ public class CrModel {
             String json = "{\"kv\":{\"startLimit\":0,\"endLimit\":\"25\",\"fkPatientId\":\"201708221705210595\"}}"
                     + "";
 
-            
 //            String servicename = "serviceCrGetInspectionList";
             //
-
             Carrier c = new Carrier();
             c.fromJson(json);
-            c = getAttributeList4Cache(c) ;
+            c = getAttributeList4Cache(c);
 //
 //            c.setServiceName(servicename);
 //            c.fromJson(json);

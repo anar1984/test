@@ -4,7 +4,7 @@
             <label id="headertitle" qlang>sessionList</label>
         </div>
     </div> 
-    
+
     <div class="col-md-12" >
         <br>
     </div>
@@ -72,19 +72,21 @@
                 <ul class="dropdown-menu dropdown-menu-right  multi-level" role="menu" aria-labelledby="dropdownMenu">
                     <li class="dropdown-submenu pull-left toggle-on-click" >
                         <a tabindex="-1" href="#" qlang> report</a>
-                        <ul class="dropdown-menu dropdown-menu-right " >
-                            <li><a class='apd-report-cmb-list' rid='201708090638410249'
+                        <ul class="dropdown-menu dropdown-menu-right " id="report4Appointment" >
+<!--                            <li><a class='apd-report-cmb-list' rid='201708090638410249'
                                    tabindex="-1" href="#">yyyy</a></li>
                             <li><a class='apd-report-cmb-list' rid='201708090631020540' 
-                                   href="#">4444</a></li> 
+                                   href="#">4444</a></li> -->
                         </ul>
+
+
                     </li>
                     <br>
                     <li class="dropdown-submenu pull-left">
                         <a tabindex="-1" href="#" qlang> module</a>
-                        <ul class="dropdown-menu dropdown-menu-right " >
-                            <li><a class="apd-module-cmb-list" mid="201706221522420346" 
-                                   tabindex="-1" href="#">APD Voice</a></li>
+                        <ul class="dropdown-menu dropdown-menu-right " id="moduleList" >
+<!--                            <li><a class="apd-module-cmb-list" mid="201706221522420346" 
+                                   tabindex="-1" href="#">APD Voice</a></li>-->
 
                         </ul>
                     </li>
@@ -103,7 +105,7 @@
         </div >
         <div class="col-md-12" ><br></div>
     </div>
-   
+
 
 
 
@@ -117,7 +119,7 @@
 
 
     <!-- Modal -->
-    
+
 
 
 
@@ -437,7 +439,7 @@
                                     srv_url="li/maritualStatus">
                             </select>
                         </div>
-                       <div class="form-group col-md-4">
+                        <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select" id="occupation" name="occupation"
                                     async="true" has_null="1"
@@ -581,8 +583,8 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label qlang>patient</label> 
-                                     <input class="form-control" type="text" dont_clear id="sessionPatientFullname" name="sessionPatientFullname"
-                                            disabled >
+                                    <input class="form-control" type="text" dont_clear id="sessionPatientFullname" name="sessionPatientFullname"
+                                           disabled >
                                 </div>
                                 <div class="form-group col-md-2" align=" ">
                                     <label qlang><span style="opacity: 0;">_________________________    </span> </label>

@@ -1211,7 +1211,7 @@ function getLastPersonInfo() {
 
 function clearForm(formId, actionType) {
     $('#' + formId).find(".apd-form-error-msg").remove();
-    
+
     $('#' + formId).find("input").each(function () {
 
         var attr = $(this).attr('dont_clear');
@@ -1253,6 +1253,7 @@ function menuListenerActivies(page_id) {
             fillInspectionComboByTableClick("");
             break;
         case "page_appointment":
+            fillModuleForAppointment();
             $('.apd-module-cmb-list:eq(0)').click();
             $('#fkModuleId').click();
             fillCombobox($('#fkDoctorUserId'));
@@ -1264,6 +1265,7 @@ function menuListenerActivies(page_id) {
             filterPatientCombo(true);
             patientSelectAction();
             loadSession("");
+            fillReportForAppointment();
 
             break;
         case "page_statistic":
@@ -1274,6 +1276,7 @@ function menuListenerActivies(page_id) {
             fillCombobox($('#fkReportId'));
             fillInspectionMatrixList();
             clickFirstElementOfMatritList();
+
 //            fillInspectionComboByTableClick("");
             break;
         case "page_patient":
@@ -1292,6 +1295,74 @@ function menuListenerActivies(page_id) {
 function clickFirstElementOfMatritList() {
     $('.apd-patient-matrix-item:eq(1)').click();
 }
+
+
+function fillReportForAppointment() {
+    var json = {kv: {}};
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrgetReportLineList4Appt",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            if (res.tbl.length > 0) {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var a = $("<a></a>").addClass("apd-report-cmb-list")
+                            .attr("rid", obj[i]["id"])
+                            .attr("href", "#")
+                            .html(obj[i]["name"]);
+
+                    $("#report4Appointment").append($("<li></li>").append(a));
+                }
+            }
+
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+
+}
+
+
+function fillModuleForAppointment() {
+    var json = {kv: {}};
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrGetModuleList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            console.log(JSON.stringify(res))
+            if (res.tbl.length > 0) {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var a = $("<a></a>").addClass("apd-module-cmb-list")
+                            .attr("mid", obj[i]["id"])
+                            .attr("href", "#")
+                            .html(obj[i]["name"]);
+
+                    $("#moduleList").append($("<li></li>").append(a));
+                }
+            }
+
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+
+}
+
 
 function loadRemotePage(pageid) {
     var json = {kv: {}};
@@ -1449,7 +1520,7 @@ function tableFilterListener() {
 
 function formActivateListeners() {
     $(document).on("click", '.apd-task-form', function (e) {
-        
+
         var target_id = $(this).attr('data-target');
         target_id = target_id.substring(1, target_id.length);
         clearForm(target_id, 'update');
@@ -1479,7 +1550,7 @@ function formActivateListeners() {
         $('#' + target_id).find("form").find(".apd-form-htmleditor").each(function () {
             $(this).Editor();
         });
-        
+
     });
 }
 

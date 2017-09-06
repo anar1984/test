@@ -751,7 +751,7 @@ function fillCombobox(e, inData) {
                 $(e).attr("data-live-search", "true");
                 $('.selectpicker').selectpicker('refresh');
             }
-//            $(e).change();
+            $(e).change();
 
         },
         error: function (res, status) {

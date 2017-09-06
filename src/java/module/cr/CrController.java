@@ -794,8 +794,8 @@ public class CrController {
 
     public Carrier insertNewReportLine(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
-        carrier.addController(EntityCrReportLine.FK_MODULE_ID,
-                cp.hasValue(carrier, EntityCrReportLine.FK_MODULE_ID));
+        carrier.addController(EntityCrReportLine.REPORT_TYPE,
+                cp.hasValue(carrier, EntityCrReportLine.REPORT_TYPE));
         carrier.addController(EntityCrReportLine.REPORT_NAME,
                 cp.hasValue(carrier, EntityCrReportLine.REPORT_NAME));
         carrier.addController(EntityCrReportLine.REPORT_HTML,
@@ -807,8 +807,8 @@ public class CrController {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrReportLine.ID,
                 cp.hasValue(carrier, EntityCrReportLine.ID));
-        carrier.addController(EntityCrReportLine.FK_MODULE_ID,
-                cp.hasValue(carrier, EntityCrReportLine.FK_MODULE_ID));
+        carrier.addController(EntityCrReportLine.REPORT_TYPE  ,
+                cp.hasValue(carrier, EntityCrReportLine.REPORT_TYPE));
         carrier.addController(EntityCrReportLine.REPORT_NAME,
                 cp.hasValue(carrier, EntityCrReportLine.REPORT_NAME));
         carrier.addController(EntityCrReportLine.REPORT_HTML,
@@ -1364,4 +1364,14 @@ public class CrController {
     public static Carrier getLastPatientInfo(Carrier carrier) throws QException {
         return carrier;
     }
+
+    public static Carrier getReportLineList4Appt(Carrier carrier) throws QException {
+        return carrier;
+    }
+    
+    public static Carrier getModuleList4Combo(Carrier carrier) throws QException {
+        Carrier c = new Carrier();
+        return c;
+    }
+
 }

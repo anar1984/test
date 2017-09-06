@@ -12,18 +12,22 @@ package utility.qreport;
 public class QReportCarrier {
 
     public QRPatient Patient;
-    public QRAttribute Attribute;
-    public QRModule Module;
-    public QRSubmodule Submodule;
     private String reportId="";
     private String sessionId="";
+    private String paymentId="";
     private String text="";
 
     public QReportCarrier() {
         Patient = new QRPatient();
-        Attribute = new QRAttribute();
-        Module = new QRModule();
-        Submodule = new QRSubmodule();
+        
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 
     public String getSessionId() {

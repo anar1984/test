@@ -10,6 +10,7 @@ import label.CoreLabel;
 import module.cr.CrModel;
 import module.cr.entity.EntityCrAppointment;
 import module.cr.entity.EntityCrReportLine;
+import module.cr.entity.EntityCrUserList;
 import module.pg.PgModel;
 import org.apache.commons.lang.ArrayUtils;
 import org.jsoup.Jsoup;
@@ -90,11 +91,27 @@ public class QReport {
         //<quser data="name">
         //<qlogo> istifadecinin daxil etdiyi logo.
         String txt = rc.getText();
-        txt = txt.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+        txt = txt.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
+                .replaceAll("&nbsp;"," ");
+         
         Document doc = Jsoup.parse(txt, "UTF-8");
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("el deyilmemish html>>>>>>>>>>>>>>>");
+        System.out.println(txt);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("");
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("pure html>>>>>>>>>>>>>>>");
+        System.out.println(doc.toString());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("");
 
         doc = doPatientTag(doc, rc);
         doc = doAttributeTag(doc, rc);
+        doc = doPaymentTag(doc, rc);
+        doc = doUserTag(doc);
         return doc.toString();
     }
 
@@ -111,70 +128,70 @@ mobile2,telephone1,telephone2,email1,email2,country,city,postIndex,description
             String data = element.attr("data");
             switch (data) {
                 case "name":
-                    element.after(rc.Patient.getName());
+                    element.html(rc.Patient.getName());
                     break;
                 case "surname":
-                    element.after(rc.Patient.getSurname());
+                    element.html(rc.Patient.getSurname());
                     break;
                 case "middleName":
-                    element.after(rc.Patient.getMiddleName());
+                    element.html(rc.Patient.getMiddleName());
                     break;
                 case "birthDate":
-                    element.after(rc.Patient.getBirthDate());
+                    element.html(rc.Patient.getBirthDate());
                     break;
                 case "birthPlace":
-                    element.after(rc.Patient.getBirthPlace());
+                    element.html(rc.Patient.getBirthPlace());
                     break;
                 case "sex":
-                    element.after(rc.Patient.getSex());
+                    element.html(rc.Patient.getSex());
                     break;
                 case "occupation":
-                    element.after(rc.Patient.getOccupation());
+                    element.html(rc.Patient.getOccupation());
                     break;
                 case "maritualStatus":
-                    element.after(rc.Patient.getMaritualStatus());
+                    element.html(rc.Patient.getMaritualStatus());
                     break;
                 case "education":
-                    element.after(rc.Patient.getEducation());
+                    element.html(rc.Patient.getEducation());
                     break;
                 case "bloodGroup":
-                    element.after(rc.Patient.getBloodGroup());
+                    element.html(rc.Patient.getBloodGroup());
                     break;
                 case "rhFactor":
-                    element.after(rc.Patient.getRhFactor());
+                    element.html(rc.Patient.getRhFactor());
                     break;
                 case "mobile1":
-                    element.after(rc.Patient.getMobile1());
+                    element.html(rc.Patient.getMobile1());
                     break;
                 case "mobile2":
-                    element.after(rc.Patient.getMobile2());
+                    element.html(rc.Patient.getMobile2());
                     break;
                 case "telephone1":
-                    element.after(rc.Patient.getTelephone1());
+                    element.html(rc.Patient.getTelephone1());
                     break;
                 case "telephone2":
-                    element.after(rc.Patient.getTelephone2());
+                    element.html(rc.Patient.getTelephone2());
                     break;
                 case "email1":
-                    element.after(rc.Patient.getEmail1());
+                    element.html(rc.Patient.getEmail1());
                     break;
                 case "email2":
-                    element.after(rc.Patient.getEmail2());
+                    element.html(rc.Patient.getEmail2());
                     break;
                 case "country":
-                    element.after(rc.Patient.getCountry());
+                    element.html(rc.Patient.getCountry());
                     break;
                 case "city":
-                    element.after(rc.Patient.getCity());
+                    element.html(rc.Patient.getCity());
                     break;
                 case "postIndex":
-                    element.after(rc.Patient.getPostIndex());
+                    element.html(rc.Patient.getPostIndex());
                     break;
                 case "description":
-                    element.after(rc.Patient.getDescription());
+                    element.html(rc.Patient.getDescription());
                     break;
             }
-            element.remove();
+//            element.remove();
         }
 
         return doc;
@@ -187,32 +204,22 @@ mobile2,telephone1,telephone2,email1,email2,country,city,postIndex,description
         String fkSessionId = rcarrier.getSessionId();
         String tn = CoreLabel.RESULT_SET;
 
-        System.out.println(" doc first variant >>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(doc.toString());
-
         Carrier c = new Carrier();
         c.setValue("inspectionCode", fkSessionId);
         c = CrModel.getInspectionList(c);
-        System.out.println(" print ins >>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(c.toXML());
 
         Carrier cprIns = c.getKeyValuesPairFromTable(tn, "attributeCode", "finalValue");
-        System.out.println(" print pair ins >>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(cprIns.toXML());
-        System.out.println(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        Carrier cprIns1 = c.getKeyValuesPairFromTable(tn, "attributeCode", "inspectionValue");
 
         Elements elements = doc.getElementsByTag("qattr");
         for (Element element : elements) {
             String data = element.hasAttr("data") ? element.attr("data") : "";
             String code = element.hasAttr("code") ? element.attr("code") : "";
             String val = cprIns.getValue(code).toString();
-            System.out.println("data===" + data);
-            System.out.println("code===" + code);
-            System.out.println("val===" + val);
 
             if (data.trim().equals("name") || data.trim().equals("")) {
-                element.after(val);
-                element.remove();
+                element.html(val);
+//                element.remove();
             } else if (data.trim().equals("image")) {
                 String h = element.hasAttr("height")
                         ? "height=\"" + element.attr("height") + "\""
@@ -221,20 +228,154 @@ mobile2,telephone1,telephone2,email1,email2,country,city,postIndex,description
                         ? "weight=\"" + element.attr("weight") + "\""
                         : "";
 
-                val = "<img src=\"" + Config.getDownloadPath() + val + "\"" + " " + h + " " + w + ">";
-                element.after(val);
-                element.remove();
+                val = "<img src=\"" + Config.getDownloadPath()
+                        + cprIns1.getValue(code).toString() + "\"" + " " + h + " " + w + ">";
+                element.html(val);
+//                element.remove();
 
             }
 
         }
-        
-        System.out.println(" doc last variant >>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(doc.toString());
-
         return doc;
     }
 
+    private static Document doUserTag(Document doc) throws QException {
+        String tn = CoreLabel.RESULT_SET;
+
+        Carrier c = new Carrier();
+        c.setValue("id", SessionManager.getCurrentUserId());
+        c = CrModel.getUserList(c);
+
+        EntityCrUserList ent = new EntityCrUserList();
+        EntityManager.mapCarrierToEntity(c, tn, 0, ent);
+
+        Elements elements = doc.getElementsByTag("quser");
+
+        for (Element element : elements) {
+            String data = element.hasAttr("data") ? element.attr("data") : "";
+
+            switch (data) {
+                case "image":
+                    System.out.println(element.toString());
+                    String h = element.hasAttr("height")
+                            ? "height=\"" + element.attr("height") + "\""
+                            : "";
+                    String w = element.hasAttr("weight")
+                            ? "weight=\"" + element.attr("weight") + "\""
+                            : "";
+
+                    String val = "<img src=\"" + Config.getDownloadPath()
+                            + ent.getUserImage() + "\"" + " " + h + " " + w + ">";
+                    element.html(val);
+                    break;
+                case "name":
+                    element.html(ent.getUserPersonName());
+                    break;
+                case "surname":
+                    element.html(ent.getUserPersonSurname());
+                    break;
+                case "middlename":
+                    element.html(ent.getUserPersonMiddlename());
+                    break;
+                case "birthDate":
+                    element.html(ent.getUserBirthDate());
+                    break;
+                case "birthPlace":
+                    element.html(ent.getUserBirthPlace());
+                    break;
+                case "sex":
+                    element.html(ent.getSex());
+                    break;
+                case "mobile1":
+                    element.html(ent.getMobile1());
+                    break;
+                case "mobile2":
+                    element.html(ent.getMobile2());
+                    break;
+                case "telephone1":
+                    element.html(ent.getTelephone1());
+                    break;
+                case "telephone2":
+                    element.html(ent.getTelephone2());
+                    break;
+                case "email1":
+                    element.html(ent.getEmail1());
+                    break;
+                case "email2":
+                    element.html(ent.getEmail2());
+                    break;
+            }
+//            element.remove();
+
+        }
+        return doc;
+    }
+
+    private static Document doPaymentTag(Document doc, QReportCarrier rc) throws QException {
+        if (rc.getPaymentId().trim().length()==0){
+            return doc;
+        }
+        
+        String tn = CoreLabel.RESULT_SET;
+        
+        Carrier c = new Carrier();
+        c.setValue("id", rc.getPaymentId());
+        c = CrModel.getPaymentList(c);
+        
+        Elements elements = doc.getElementsByTag("qpayment");
+
+        for (Element element : elements) {
+            String data = element.hasAttr("data") ? element.attr("data") : "";
+
+            switch (data) {
+                case "no":
+                    element.html(c.getValue(tn,0,"paymentNo").toString());
+                    break;
+                case "doctor":
+                    element.html(c.getValue(tn,0,"doctorFullname").toString());
+                    break;
+                case "patientId":
+                    element.html(c.getValue(tn,0,"patientId").toString());
+                    break;
+                case "patient":
+                    String fname = c.getValue(tn,0,"patientName").toString()
+                            +" "+c.getValue(tn,0,"patientSurname").toString()
+                            +" "+c.getValue(tn,0,"patientMiddleName").toString();
+                    element.html(fname);
+                    break;
+                case "patientSex":
+                    element.html(c.getValue(tn,0,"sexName").toString());
+                    break;
+                case "date":
+                    element.html(c.getValue(tn,0,"paymentDate").toString());
+                    break;
+                case "time":
+                    element.html(c.getValue(tn,0,"paymentTime").toString());
+                    break;
+                case "amount":
+                    element.html(c.getValue(tn,0,"paymentAmount").toString());
+                    break;
+                case "paymentType":
+                    element.html(c.getValue(tn,0,"paymentName").toString());
+                    break;
+                case "price":
+                    element.html(c.getValue(tn,0,"price").toString());
+                    break;
+                case "currency":
+                    element.html(c.getValue(tn,0,"currencyName").toString());
+                    break;
+                case "discount":
+                    element.html(c.getValue(tn,0,"paymentDiscount").toString());
+                    break;
+                case "description":
+                    element.html(c.getValue(tn,0,"description").toString());
+                    break;
+            }
+//            element.remove();
+
+        }
+        return doc;
+    }
     private static Document replaceReportStingWithTagsQp(Document doc,
             String fkSessionId) throws QException {
 

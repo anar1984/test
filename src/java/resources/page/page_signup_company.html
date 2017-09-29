@@ -1,183 +1,197 @@
+<h3 qlang>singUpCompany</h3>
+
 <div class="container">
-	<div class="row">
-		<section>
-        <div class="wizard">
-            <div class="wizard-inner">
-                <div class="connecting-line"></div>
-                <ul class="nav nav-tabs" role="tablist">
-
-                    <li role="presentation" class="active">
-                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-folder-open"></i>
-                            </span>
-                        </a>
-                    </li>
-
-                    <li role="presentation" class="disabled">
-                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li role="presentation" class="disabled">
-                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-picture"></i>
-                            </span>
-                        </a>
-                    </li>
-
-                    <li role="presentation" class="disabled">
-                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <form role="form">
-                <div class="tab-content">
-                    <div class="tab-pane active" role="tabpanel" id="step1">
-                        <h3>Step 1</h3>
-                        <p>This is step 1</p>
-                        <ul class="list-inline pull-right">
-                            <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="step2">
-                        <h3>Step 2</h3>
-                        <p>This is step 2</p>
-                        <ul class="list-inline pull-right">
-                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                            <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="step3">
-                        <h3>Step 3</h3>
-                        <p>This is step 3</p>
-                        <ul class="list-inline pull-right">
-                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                            <li><button type="button" class="btn btn-default next-step">Skip</button></li>
-                            <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="complete">
-                        <h3>Complete</h3>
-                        <p>You have successfully completed all steps.</p>
-                    </div>
-                    <div class="clearfix"></div>
+    <div class="row">
+        <section>
+            <div class="wizard">
+                <div class="wizard-inner">
+                    <div class="connecting-line"></div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-            </form>
-        </div>
-    </section>
-   </div>
+
+                <form role="form" id="form_signupCompany" class="apd-form" method="POST"
+                      action="nasrv/serviceCrSignupCompany">
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="step1">
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>companyName</label><span style="color: red">*</span>
+                                <input class="form-control apd-form-input" type="text" id="companyName" name="companyName">
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>companyDomain</label><span style="color: red">*</span>
+                                <input class="form-control apd-form-input" type="text" id="companyDomain" 
+                                       name="companyDomain"  >
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>country</label><span style="color: red">*</span>
+                                <select id="companyCountry" class="form-control apd-form-select-back selectpicker" has_null="var"
+                                        name="companyCountry" select_text="itemValue" select_value="itemKey" 
+                                        srv_url="nali/country" has_other>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <br>
+                                <label qlang>address</label>              
+                                <input class="form-control apd-form-input" type="text" id="address" 
+                                       name="companyAddress"     >
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>currency</label><span style="color: red">*</span>              
+                                <select id="currency" class="form-control apd-form-select-back selectpicker" has_null="var"
+                                        name="currency" select_text="itemValue" select_value="itemKey" 
+                                        srv_url="nali/currency"  >
+                                </select>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <br>
+                                <label qlang>timeZone</label>  <span style="color: red">*</span>            
+                                 <select id="timezone" class="form-control apd-form-select-back selectpicker" has_null="var"
+                                        name="timezone" select_text="itemValue" select_value="itemKey" 
+                                        srv_url="nali/timezone"  >
+                                </select>
+                                <hr>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4 text-left" >
+                                <span style="color: red">*</span>
+                                 <span  id="requiredField" qlang>requiredFields</span>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4 text-left">
+                                <input class="form-control1" type="checkbox" id="aggrement" 
+                                       name="aggrement"> 
+                                <span qlang>iacceptthe</span>
+                                <a href="http://www.term.com" qlang> thetermsandconditions</a>
+
+                            </div>
+                            <div class="form-group col-md-offset-7 col-md-1">
+                                <br>
+                                <button id="btnStep1Next" class="form-control  button" type="submit" qlang>next</button>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="step2">
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>username</label><span style="color: red">*</span>
+                                <input id="username" type="text" class="form-control apd-form-input" 
+                                       name="username"   />
+                            </div>
+
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>password</label><span style="color: red">*</span>
+                                <input id="password" type="password" class="form-control apd-form-input"
+                                       name="password" "Password" aria-describedby="passwordHelpText"/>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>confirmPassword</label><span style="color: red">*</span>
+                                <input id="password2" type="password" class="form-control apd-form-input" 
+                                       name="password2"   />
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>userPersonName</label><span style="color: red">*</span>
+                                <input id="userPersonName" type="text" class="form-control apd-form-input" 
+                                       name="userPersonName"  >
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>userPersonSurname</label><span style="color: red">*</span>
+                                <input id="userPersonSurname" type="text" class="form-control apd-form-input"
+                                       name="userPersonSurname">
+
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>userPersonMiddlename</label> 
+                                <input id="userPersonMiddlename" type="text" class="form-control apd-form-input"
+                                       name="userPersonMiddlename">
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>sex</label><span style="color: red">*</span>
+                                <select class="form-control apd-form-select-back selectpicker" id="sex" name="sex" 
+                                        has_null="true" select_text="itemValue"  
+                                        select_value="itemKey" srv_url="nali/sex"  >
+                                </select>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>email</label><span style="color: red">*</span>
+                                <input id="email1" type="email" class="form-control apd-form-email" 
+                                       name="email1"   />
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>mobile1</label><span style="color: red">*</span>
+                                <input type="text" class="form-control apd-form-input" id="mobile1"   
+                                       name="mobile1"  >
+                                <hr>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4 text-left" >
+                                <span style="color: red">*</span> 
+                                <span  id="requiredField" qlang>requiredFields</span>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-1">
+                                <br>
+                                <button id="btnStep2Prvs" class="form-control  button" type="submit" qlang>previous</button>
+                                <br>
+                            </div>
+                            <div class="form-group col-md-offset-2 col-md-1">
+                                <br>
+                                <button id="btnStep2Next" class="form-control  button" type="submit" qlang>next</button>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="complete">
+                            <div class="form-group col-md-offset-4 col-md-4">
+                                <label qlang>module</label><span style="color: red">*</span>
+                                <select class="form-control apd-form-select-back selectpicker" id="fkModuleId" name="fkModuleId" 
+                                        has_null="true" select_text="name"  
+                                        select_value="id" srv_url="nasrv/serviceCrGetModuleList4ComboNali"  >
+                                </select>
+                                <hr>
+                            </div>
+                            <div class="form-group col-md-offset-4 col-md-4 text-left" >
+                                <span style="color: red">*</span>
+                                <span  id="requiredField" qlang>requiredFields</span>
+                            </div>
+                           <div class="form-group col-md-offset-7 col-md-1">
+                                <br>
+                                <button id="btnStep3Finish" class="form-control  button" type="submit" qlang>signUp</button>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </section>
+
+    </div>
 </div>
 
 
 
-<h3 qlang>singUpCompany</h3>
-<br>
-<form id="form_signupCompany" class="apd-form" method="POST"
-      action="nasrv/serviceCrSignupCompany">
-
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>companyName</label><span style="color: red">*</span>
-        <input class="form-control apd-form-input" type="text" id="companyName" name="companyName">
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>companyDomain</label><span style="color: red">*</span>
-        <input class="form-control apd-form-input" type="text" id="companyDomain" 
-               name="companyDomain"  >
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>country</label><span style="color: red">*</span>
-        <select id="companyCountry" class="form-control apd-form-select-back selectpicker" has_null="var"
-                name="companyCountry" select_text="itemValue" select_value="itemKey" 
-                srv_url="nali/country" has_other>
-        </select>
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>address</label>              
-        <input class="form-control apd-form-input" type="text" id="address" 
-               name="companyAddress"     >
-        <hr>
-    </div>
-
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>userPersonName</label><span style="color: red">*</span>
-        <input id="userPersonName" type="text" class="form-control apd-form-input" 
-               name="userPersonName"  >
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>userPersonSurname</label><span style="color: red">*</span>
-        <input id="userPersonSurname" type="text" class="form-control apd-form-input"
-               name="userPersonSurname">
-
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>userPersonMiddlename</label> 
-        <input id="userPersonMiddlename" type="text" class="form-control apd-form-input"
-               name="userPersonMiddlename">
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>sex</label><span style="color: red">*</span>
-        <select class="form-control apd-form-select-back selectpicker" id="sex" name="sex" 
-                has_null="true" select_text="itemValue"  
-                select_value="itemKey" srv_url="nali/sex"  >
-        </select>
-    </div>
-
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>username</label><span style="color: red">*</span>
-        <input id="username" type="text" class="form-control apd-form-input" 
-               name="username"   />
-    </div>
-
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>password</label><span style="color: red">*</span>
-        <input id="password" type="password" class="form-control apd-form-input"
-               name="password" "Password" aria-describedby="passwordHelpText"/>
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>confirmPassword</label><span style="color: red">*</span>
-        <input id="password2" type="password" class="form-control apd-form-input" 
-               name="password2"   />
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>email</label><span style="color: red">*</span>
-        <input id="email1" type="email" class="form-control apd-form-email" 
-               name="email1"   />
-    </div>
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>mobile1</label><span style="color: red">*</span>
-        <input type="text" class="form-control apd-form-input" id="mobile1"   
-               name="mobile1"  >
-
-    </div>
-    
-    
-     
-    <div class="form-group col-md-offset-4 col-md-4">
-        <label qlang>module</label><span style="color: red">*</span>
-        <select class="form-control apd-form-select-back selectpicker" id="fkModuleId" name="fkModuleId" 
-                has_null="true" select_text="name"  
-                select_value="id" srv_url="nasrv/serviceCrGetModuleList4ComboNali"  >
-        </select>
-    </div>
-
-   
-    
-    <div class="form-group col-md-offset-4 col-md-4">
-        <button id="btnSignup" class="button expanded apd-form-btn" type="button" 
-                apd-clear-form-data="true" qlang>signUp</button> 
-    </div>
 
 
-</form>
+
+
 <script>
     $('.selectpicker').selectpicker('refresh');
 </script>

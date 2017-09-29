@@ -3395,9 +3395,10 @@ public class CrModel {
     }
 
     public static Carrier getMessageText(Carrier carrier) throws QException {
-        carrier.setValue("text", EntityManager.getMessageText(
-                carrier.getValue("messageCode").toString()));
-        return carrier;
+        Carrier out = new Carrier();
+        String messageCode = carrier.getValue("messageCode").toString();
+        out.setValue("text", EntityManager.getMessageText(messageCode));
+        return out;
     }
 
     public static Carrier insertNewPriceList(Carrier carrier) throws QException {

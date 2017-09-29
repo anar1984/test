@@ -92,6 +92,9 @@ public class CrModel {
     public static final String REPORT_TYPE_APPOINTMENT = "1";
     public static final String REPORT_TYPE_PAYMENT = "2";
 
+    public static final String PAYMENT_STATUS_IS_PAID = "P";
+    public static final String PAYMENT_STATUS_IS_NOT_PAID = "NP";
+
     public Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
         String ln = "";
@@ -222,6 +225,8 @@ public class CrModel {
             ent.addAndStatementField(EntityCrListItemList.ITEM_VALUE);
             ent.setLang(SessionManager.getCurrentLang());
             EntityManager.mapCarrierToEntity(carrier, ent);
+            ent.addSortBy(EntityCrListItemList.PARAM_1);
+            ent.setSortByAsc(true);
             carrier = EntityManager.select(ent);
             carrier.removeKey("startLimit");
             carrier.removeKey("endLimit");
@@ -1444,7 +1449,6 @@ public class CrModel {
             String tnNew = crName.getValue(tn, i, "relId").toString()
                     + crName.getValue(tn, i, "lang").toString();
             String val = crName.getValue(tn, i, "langDef").toString();
-
             outCarrier.setValue(tnNew, val);
         }
         return outCarrier;
@@ -1459,7 +1463,24 @@ public class CrModel {
         for (String k : keys) {
             if (k.endsWith(SessionManager.getCurrentLang())) {
                 c.setValue(CoreLabel.RESULT_SET, i, "id",
-                        k.substring(i, k.length()-SessionManager.getCurrentLang().length()));
+                        k.substring(i, k.length() - SessionManager.getCurrentLang().length()));
+                c.setValue(CoreLabel.RESULT_SET, i, "name", cModule.getValue(k));
+                i++;
+            }
+        }
+        return c;
+    }
+    
+    public static Carrier getModuleList4ComboNali(Carrier carrier) throws QException {
+        Carrier c = new Carrier();
+
+        Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
+        String[] keys = cModule.getKeys();
+        int i = 0;
+        for (String k : keys) {
+            if (k.endsWith(SessionManager.getCurrentLang())) {
+                c.setValue(CoreLabel.RESULT_SET, i, "id",
+                        k.substring(i, k.length() - SessionManager.getCurrentLang().length()));
                 c.setValue(CoreLabel.RESULT_SET, i, "name", cModule.getValue(k));
                 i++;
             }
@@ -2966,6 +2987,23 @@ public class CrModel {
         return nc;
     }
 
+    public Carrier getReportLineList4Payment(Carrier carrier) throws QException {
+        EntityCrReportLine ent = new EntityCrReportLine();
+        ent.setReportType(REPORT_TYPE_PAYMENT);
+        Carrier c = EntityManager.select(ent);
+
+        int rc = c.getTableRowCount(ent.toTableName());
+        Carrier nc = new Carrier();
+        for (int i = 0; i < rc; i++) {
+            nc.setValue(CoreLabel.RESULT_SET, i, "id",
+                    c.getValue(ent.toTableName(), i, "id"));
+            nc.setValue(CoreLabel.RESULT_SET, i, "name",
+                    c.getValue(ent.toTableName(), i, "reportName"));
+        }
+
+        return nc;
+    }
+
     public Carrier getReportLineList4Print(Carrier carrier) throws QException {
         EntityCrAppointment ent = new EntityCrAppointment();
         ent.setId(carrier.getValue("fkSessionId").toString());
@@ -2976,6 +3014,18 @@ public class CrModel {
         rc.setReportId(carrier.getValue("id").toString());
         rc.setSessionId(carrier.getValue("fkSessionId").toString());
 //        rc.setPaymentId("201708230752140570");
+        String arg = QReport.getReport(rc);
+        Carrier c = new Carrier();
+        c.setValue(CoreLabel.RESULT_SET, 0, "reportHtml", arg);
+
+        return c;
+    }
+
+    public Carrier getReportLineList4PrintPayment(Carrier carrier) throws QException {
+        QReportCarrier rc = new QReportCarrier();
+        rc.setReportId(carrier.getValue("id").toString());
+        rc.setPaymentId(carrier.getValue("fkPaymentId").toString());
+
         String arg = QReport.getReport(rc);
         Carrier c = new Carrier();
         c.setValue(CoreLabel.RESULT_SET, 0, "reportHtml", arg);
@@ -4154,5 +4204,39 @@ public class CrModel {
         }
 
         return ocr;
+    }
+
+    public static Carrier confirmPayment(Carrier carrier) throws QException {
+        System.out.println("carrier>>>" + carrier.toXML());
+        Carrier c = new Carrier();
+        String id = carrier.getValue("id").toString().trim();
+        System.out.println("id->" + id);
+        if (id.length() == 0) {
+            return c;
+        }
+
+        EntityCrPayment ent = new EntityCrPayment();
+        ent.setId(id);
+        ent.setPaymentStatus(PAYMENT_STATUS_IS_NOT_PAID);
+        Carrier tc = EntityManager.select(ent);
+
+        if (tc.getTableRowCount(ent.toTableName()) == 0) {
+            return c;
+        }
+
+        ent.setPaymentStatus(PAYMENT_STATUS_IS_PAID);
+        EntityManager.update(ent);
+        return c;
+    }
+
+    public Carrier getPatientFullnameById(Carrier carrier) throws QException {
+        EntityCrPatient ent = new EntityCrPatient();
+        ent.setId(carrier.getValue("fkPatientId").toString());
+        EntityManager.select(ent);
+
+        String fullname = ent.getPatientName() + " " + ent.getPatientSurname() + " "
+                + ent.getPatientMiddleName() + " (" + ent.getPatientBirthDate() + ")";
+        carrier.setValue(CoreLabel.RESULT_SET,0,"patientName", fullname);
+        return carrier;
     }
 }

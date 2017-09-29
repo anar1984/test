@@ -7,10 +7,14 @@ package utility;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import label.CoreLabel;
+import static module.cr.CrModel.getAttributeList4Cache;
 import module.cr.entity.EntityCrEntityLabel;
 import module.cr.entity.EntityCrListItem;
 import module.cr.entity.EntityCrListItemList;
@@ -18,6 +22,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import utility.sqlgenerator.DBConnection;
 import utility.sqlgenerator.EntityManager;
 
 /**
@@ -75,6 +80,7 @@ public class QUtility {
 
     public static String getLabel(String arg) throws QException {
         EntityCrEntityLabel ent = new EntityCrEntityLabel();
+        ent.setDeepWhere(false);
         ent.setLang(SessionManager.getCurrentLang());
         ent.setFieldName(arg.trim());
         Carrier c = EntityManager.select(ent);
@@ -101,6 +107,8 @@ public class QUtility {
         ent.setLang(SessionManager.getCurrentLang());
         ent.setItemCode(code);
         ent.setItemKey(key);
+        ent.addSortBy(EntityCrListItemList.PARAM_1);
+        ent.setSortByAsc(true);
         EntityManager.select(ent);
         return ent.getItemValue();
     }
@@ -111,6 +119,8 @@ public class QUtility {
         ent.setLang(SessionManager.getCurrentLang());
         ent.setItemCode(code);
         ent.setItemValue(itemValue4Search);
+        ent.addSortBy(EntityCrListItemList.PARAM_1);
+        ent.setSortByAsc(true);
         ent.addDeepWhereStatementField("itemValue");
         Carrier tc = EntityManager.select(ent);
 
@@ -128,8 +138,6 @@ public class QUtility {
 //                newC.setValue(itemKey, itemValue);
 //            } 
 //        }
-         
-
         if (tc.getTableRowCount(ent.toTableName()) == 0) {
             ent.setLang("ENG");
             tc = EntityManager.select(ent);
@@ -137,6 +145,33 @@ public class QUtility {
 
         tc = tc.getKVFromTable(ent.toTableName(), "itemKey", "itemValue");
         return tc;
+    }
+
+    public static void main(String[] arg) throws UnsupportedEncodingException, QException, IOException {
+        Connection conn = null;
+        try {
+            conn = new DBConnection().getConnection();
+            conn.setAutoCommit(false);
+            SessionManager.setConnection(Thread.currentThread().getId(), conn);
+            SessionManager.setDomain(SessionManager.getCurrentThreadId(), "apd_23gemsb");
+
+            String pagename = "page_patient";
+            GeneralProperties prop = new GeneralProperties();
+            String filename = prop.getWorkingDir() + "../page/" + pagename + ".html";
+            String ln = "";
+            File file = new File(filename);
+
+            ln = QUtility.checkLangLabel(file);
+            conn.commit();
+            conn.close();
+        } catch (Exception ex) {
+            try {
+                conn.rollback();
+                conn.close();
+            } catch (SQLException ex1) {
+            }
+        }
+
     }
 
     public static String checkLangLabel(File arg) throws QException, IOException {
@@ -163,8 +198,75 @@ public class QUtility {
             String nv = c.isKeyExist(val) ? c.getValue(val).toString() : val;
             element.html(nv);
         }
-
+        doc = fillCombo(doc);
         return doc.toString();
+    }
+
+    private static Document fillCombo(Document doc) throws QException {
+        Carrier c = new Carrier();
+
+        Elements elements = doc.getElementsByClass("apd-form-select-back");
+
+        for (Element element : elements) {
+            String url = element.hasAttr("srv_url") ? element.attr("srv_url") : "";
+            String select_text = element.hasAttr("select_text") ? element.attr("select_text") : "";
+            String select_value = element.hasAttr("select_value") ? element.attr("select_value") : "";
+            String select_separator = element.hasAttr("select_separator") ? element.attr("select_separator") : " ";
+//            String has_null = element.hasAttr("has_null") ? element.attr("has_null") : "";
+            String send_data = element.hasAttr("send_data") ? element.attr("send_data") : "";
+//            String selected_value = element.hasAttr("selected_value") ? element.attr("selected_value") : "";
+//            String select_tn = element.hasAttr("select_tn") ? element.attr("select_tn") : "";
+//            String ph = element.hasAttr("placeholder") ? element.attr("placeholder") : "";
+            String has_other = element.hasAttr("has_other") ? element.attr("has_other") : "";
+//            String has_all = element.hasAttr("has_all") ? element.attr("has_all") : "";
+
+            String url_l = "";
+
+            if (url.startsWith("li/") || url.startsWith("nali/")) {
+                System.out.println("burdan kecibler");
+                String itemCode = url.trim().split("/")[1];
+                url_l = "serviceCrGetListItemByCode";
+                c.setValue("itemCode", itemCode);
+                c.setValue("asc", "itemValue");
+            } else {
+                String[] url_f = url.split("/");
+                url_l = url_f.length > 0 ? url_f[url_f.length - 1] : url;
+            }
+
+            //set send_Data values
+            if (send_data.trim().length() > 0) {
+                String[] vs = send_data.split(",");
+                for (String v : vs) {
+                    String[] arr = v.split("=");
+                    String key = arr[0];
+                    String val = arr[1];
+                    c.setValue(key, val);
+                }
+            }
+
+            c = c.callService(url_l);
+
+            String tn = CoreLabel.RESULT_SET;
+            int rc = c.getTableRowCount(tn);
+            String ln = element.hasAttr("has_null")
+                    ? "<option value=''>" + " " + "</option>"
+                    : "";
+            for (int i = 0; i < rc; i++) {
+                String val = c.getValue(tn, i, select_value).toString();
+                String text = "";
+                String[] vs1 = select_text.split(",");
+                for (String v1 : vs1) {
+                    text += c.getValue(tn, i, v1).toString() + select_separator;
+                }
+                ln += "<option value='" + val + "'>" + text + "</option>";
+            }
+            if (element.hasAttr("has_other")) {
+                ln += "<option value='__2__'>" + getLabel("other") + "</option>";
+            }
+            element.append(ln);
+        }
+
+        return doc;
     }
 
     public static String checkLangLabel(Document doc) throws QException, IOException {
@@ -189,6 +291,7 @@ public class QUtility {
             element.html(nv);
         }
 
+        doc = fillCombo(doc);
         return doc.toString();
     }
 

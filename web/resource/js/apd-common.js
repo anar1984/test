@@ -132,7 +132,7 @@ var g_tbl = {
         "form_copy_popup_id": "",
         "reload_buttion_id": "serviceCrGetInspectionList",
         "table_block": "0",
-        "show_checkbox":"false"
+        "show_checkbox": "false"
     },
     "tbl_inspection1_list": {
         "response_tn": "Response",
@@ -291,10 +291,10 @@ function toggleNewSession(e) {
     $('#currentTime').prop('checked', false);
     $('#currentTime').click();
     var fkPatientId = $('#fkPatientId').attr("pid");
-    if (fkPatientId!='undefined' || (fkPatientId)){
+    if (fkPatientId != 'undefined' || (fkPatientId)) {
         $('#sessionPatientFullname').val($('#fkPatientId').val());
-    }else{
-         $('#sessionPatientFullname').val("");
+    } else {
+        $('#sessionPatientFullname').val("");
     }
     toggleSessionDate($('#currentTime'));
 }
@@ -441,6 +441,7 @@ function addAppointment(el) {
 //            $('#fkPatientId').change();
             $('#tbl_appointment_list').closest('div[class="custom-table"]')
                     .find('.table-filter-comp').first().change();
+
             $('#tbl_appointment_list').find('.apd-table-checkbox').first().attr("checked", false);
             $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
             alert(getMessage('newSessionIsAdded'));
@@ -469,7 +470,7 @@ function getMessage(key) {
 
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+            alert('CoreError');
         }
     });
     return text;
@@ -625,7 +626,7 @@ function fillSwitchList(e, inData) {
 function fillCombobox(e, inData) {
     var dependence_id = $(e).attr('dependence_id');
     var main_id = $(e).attr('id');
-    
+
     //dependence_id varsa ve inData yoxdursa o zaman sorgu gondermeyecek
     if (dependence_id && !inData) {
         return;
@@ -633,13 +634,13 @@ function fillCombobox(e, inData) {
 
     var async = $(e).attr('async');
     if (typeof async === 'undefined' || !async) {
-        async=false;
+        async = false;
     }
-    
+
     if (!main_id) {
         return;
     }
-    
+
     if (!main_id) {
         return;
     }
@@ -667,7 +668,6 @@ function fillCombobox(e, inData) {
     var selected_value = $(e).attr('selected_value');
     var select_tn = $(e).attr('select_tn');
     var ph = $(e).attr('placeholder');
-
     var has_other = $(e).attr('has_other');
     var has_all = $(e).attr('has_all');
 
@@ -1098,7 +1098,6 @@ function patientSelectAction(e) {
     } else {
         $('#tbl_inspection_list').closest('div[class="custom-table"]')
                 .find('.table-filter-comp').first().change();
-
     }
 
 //    if (!$('#tbl_appointment_list').find('.apd-table-checkbox').first().is(':checked')) {
@@ -1171,15 +1170,96 @@ function clearAndshowAllPatientListCombo() {
     console.log("res = " + v);
 }
 
-function toogleOccupationOther(e){
+function toogleOccupationOther(e) {
     var val = $(e).val();
-    if (val==="__2__"){
+    if (val === "__2__") {
         $(e).closest("form[class='apd-form']").find("#occupationOther").removeAttr("disabled");
-    }else{
-         $(e).closest("form[class='apd-form']").find("#occupationOther").prop('disabled', true);
-          $(e).closest("form[class='apd-form']").find("#occupationOther").val('');
+    } else {
+        $(e).closest("form[class='apd-form']").find("#occupationOther").prop('disabled', true);
+        $(e).closest("form[class='apd-form']").find("#occupationOther").val('');
     }
 }
+
+function confirmPayment(e) {
+    var id = $(e).closest('div[class="row apd-page"]').find('table[id=tbl_payment_list]')
+            .find(".apd-table-checkbox:checked").first().val();
+
+    json = {kv: {}};
+    json.kv.id = id;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrConfirmPayment",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            alert(getMessage('successOperation'));
+            $(e).closest('div[class="row apd-page"]').find('table[id=tbl_payment_list]')
+                    .find('.table-filter-comp').first().change();
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+
+}
+
+function findPatientOnPayment(e, hideCombo) {
+    var el = $(e);
+    var div = el.closest("div");
+//    console.log(div.find("label").first().html())
+
+    div.find('.es-list').empty();
+    var id = el.attr("id");
+    var val = el.val();
+
+    json = {kv: {}};
+    json.kv.fullname = val;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrGetPatientList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            var obj = res.tbl;
+//                    for (var i = 0; i < obj.length; i++) {
+            if (obj.length == 0) {
+                return;
+            }
+            var objChild = obj[0]['r'];
+            for (var j = 0; j < objChild.length; j++) {
+                var v = objChild[j]['id'];
+                var t = objChild[j]['patientName'];
+                div.find('.es-list')
+                        .append($("<li/>")
+                                .text(t)
+                                .attr("class", "es-visible apd-editable-combo-li")
+                                .attr("pid", v)
+                                );
+            }
+            if (hideCombo == true) {
+                div.find('.es-list').hide();
+            } else {
+                div.find('.es-list').show();
+            }
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+}
+
+function  setCustomSelectValue(e) {
+    console.log("done beee")
+}
+
 
 
 (function ($) {

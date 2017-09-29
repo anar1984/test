@@ -13,6 +13,7 @@ function init() {
     onload();
     subModuleFormShowListeners();
     reportComboListeners();
+    reportPaymentComboListeners();
     tablePatientClickListener();
     matrixBtnClickListener();
     matrixDeleteBtnClickListener();
@@ -653,20 +654,26 @@ function fillSubmoduleButtonDiv(json) {
 function tablePatientClickListener() {
 
     $(document).on("click", '.apd-table-checkbox', function (e) {
-        $('.apd-table-checkbox').not(this).attr('checked', false);
-        var len = $('.apd-table-checkbox:checked').length;
-        s_h_sm_attribute_buttons();
-        if (len === 1) {
-            var fkSessionId = $(this).val();
+        var f = $(this).closest('div[class=custom-table]').find('.table').attr("id");
+
+        if (f === 'tbl_appointment_list') {
+            $('.apd-table-checkbox').not(this).attr('checked', false);
+            var len = $('.apd-table-checkbox:checked').length;
+            s_h_sm_attribute_buttons();
+            if (len === 1) {
+                var fkSessionId = $(this).val();
 //            $('#fkReportId').removeAttr("disabled");
 //            var mid = $('#fkModuleId').val();
-            var mid = global_var['fkModuleId'];
-            var json = {kv: {}};
-            json.kv.fkModuleId = mid;
-            json.kv.fkSessionId = fkSessionId;
-            fillSubmoduleButtonDiv(json);
-        } else {
+                var mid = global_var['fkModuleId'];
+                var json = {kv: {}};
+                json.kv.fkModuleId = mid;
+                json.kv.fkSessionId = fkSessionId;
+                fillSubmoduleButtonDiv(json);
+            } else {
 //            $('#fkReportId').attr("disabled", "disabled");
+            }
+        } else if (f === 'tbl_payment_list') {
+            $('.apd-table-checkbox').not(this).attr('checked', false);
         }
     });
 }
@@ -838,9 +845,31 @@ function buttonFillFormListener() {
             fillCombobox(this);
             $(this).change();
         });
+
+        $('#' + target_form).find("form").find(".apd-form-select-back").each(function () {
+            var mv = $(this).attr("multiple");
+            if (mv != 'multiple') {
+                $(this).addClass('selectpicker');
+                $(this).attr("data-show-subtext", "true");
+                $(this).attr("data-live-search", "true");
+//                $('.selectpicker').selectpicker('refresh');
+                $(this).selectpicker('refresh');
+
+            }
+        });
+
         $('#' + target_form).find(".apd-form-htmleditor").each(function () {
             $(this).Editor();
         });
+
+
+        $('#' + target_form).find("form").find(".apd-form-custom-select").each(function () {
+            var div = $(this).closest("div");
+            $(this).editableSelect();
+            div.find("input").first().change();
+            div.find('.es-list').first().hide();
+        });
+
         //create json
         json = {kv: {}};
         //fill json
@@ -851,6 +880,8 @@ function buttonFillFormListener() {
             var val = t[1];
             json.kv[key] = val;
         }
+
+
 
 //        $('#' + target_form).find(".apd-form-switch-list").each(function () {
 //            console.log("buttonFillFormListener: "+JSON.stringify(json));
@@ -870,6 +901,7 @@ function buttonFillFormListener() {
             async: false,
             success: function (res) {
                 isResultRedirect(JSON.stringify(res));
+//                console.log("res>>>>"+JSON.stringify(res));
                 //birinci gelen table goturulur. susmaya gore cedvel 
                 //adi Response olmalidir
                 //get key of each element. Output is array of strings
@@ -877,20 +909,26 @@ function buttonFillFormListener() {
                 //set form input values
                 for (var i = 0; i < keys.length; i++) {
                     var v = (res.tbl[0].r[0][keys[i]]) ? res.tbl[0].r[0][keys[i]] : "";
+
                     try {
-                        $('#' + target_form).find('input[id=' + keys[i] + ']').val(v);
+                        $('#' + target_form).find('input[id=' + keys[i] + ']')
+                                .not('.apd-form-custom-select').val(v);
                     } catch (err) {
                     }
+
                     try {
                         $('#' + target_form).find('input[type=file,id=' + keys[i] + ']').attr("file_value", v);
                     } catch (err) {
 
                     }
+
                     $('#' + target_form).find('textarea[id=' + keys[i] + ']').val(v);
+
                     if (v) {
                         $('#' + target_form).find('select[id=' + keys[i] + ']').
                                 find('option[value=' + v + ']').attr("selected", "selected");
                     }
+
                     $('#' + target_form).find('.apd-form-htmleditor').each(function () {
                         var e1 = $(this).attr('id');
                         if (e1 == keys[i]) {
@@ -900,6 +938,18 @@ function buttonFillFormListener() {
                                 $(this).data("editor").children().first().text(v);
                         }
                     });
+
+                    $('#' + target_form).find('.apd-form-custom-select').each(function () {
+                        var id = $(this).attr('id');
+                        if (id === keys[i]) {
+                            var val = fillCustomSelect4Update(this, v);
+                            $(this).attr("pid", v);
+                            $(this).val(val);
+
+                        }
+                    });
+
+
                 }
                 $('.selectpicker').selectpicker('refresh');
             },
@@ -908,6 +958,42 @@ function buttonFillFormListener() {
             }
         });
     });
+}
+
+function fillCustomSelect4Update(e, val) {
+    var r = "";
+    var id = $(e).attr('id');
+    var url = $(e).attr('srv_url');
+    var select_text = $(e).attr('select_text');
+
+    console.log("id=" + id);
+    console.log("url=" + url);
+    console.log("select_text=" + select_text);
+
+    json = {kv: {}};
+    json.kv[id] = val;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/" + url,
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            try {
+                r = res.tbl[0].r[0][select_text];
+            } catch (err) {
+
+            }
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+    console.log("r=" + r);
+    return r;
 }
 
 function buttonTaskTriggerListener() {
@@ -971,7 +1057,8 @@ function buttonTaskTriggerListener() {
         var arr = kv.split(',');
         for (var i in arr) {
             var t = arr[i].split('=');
-            var key = t[0];
+            var key = t[0];                //get onclick fuct name
+
             var val = t[1];
             json.kv[key] = val;
         }
@@ -989,8 +1076,7 @@ function buttonTaskTriggerListener() {
                 var div = el.closest('div[class="custom-table"]');
                 div.find(".table-filter-comp").first().change();
 
-                //get onclick fuct name
-                var func = $('#' + refreshBtnId).click();
+                $('#' + refreshBtnId).click();
                 //execute function
 //                eval(func);
             },
@@ -1029,6 +1115,11 @@ function formButtonListener() {
         el.closest("form[class='apd-form']").find(".apd-form-email").each(function () {
             var k = $(this).attr("id");
             var v = $(this).val();
+            json.kv[k] = v;
+        });
+        el.closest("form[class='apd-form']").find(".apd-form-custom-select").each(function () {
+            var k = $(this).attr("id");
+            var v = $(this).attr("pid");
             json.kv[k] = v;
         });
         el.closest("form[class='apd-form']").find(".apd-form-date").each(function () {
@@ -1286,6 +1377,7 @@ function menuListenerActivies(page_id) {
             fillInspectionMatrixList();
             break;
         case "page_payment":
+            fillReportForPayment();
             break;
         default:
     }
@@ -1318,6 +1410,38 @@ function fillReportForAppointment() {
                             .html(obj[i]["name"]);
 
                     $("#report4Appointment").append($("<li></li>").append(a));
+                }
+            }
+
+        },
+        error: function (res, status) {
+            alert(getMessage('somethingww'));
+        }
+    });
+
+}
+
+function fillReportForPayment() {
+    var json = {kv: {}};
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/srv/serviceCrgetReportLineList4Payment",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            if (res.tbl.length > 0) {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var a = $("<a></a>").addClass("apd-report-payment-cmb-list")
+                            .attr("rid", obj[i]["id"])
+                            .attr("href", "#")
+                            .html(obj[i]["name"]);
+
+                    $("#report4Payment").append($("<li></li>").append(a));
                 }
             }
 
@@ -1528,6 +1652,20 @@ function formActivateListeners() {
             fillCombobox(this);
 //            $(this).change();
         });
+
+        $('#' + target_id).find("form").find(".apd-form-select-back").each(function () {
+            var mv = $(this).attr("multiple");
+            if (mv != 'multiple') {
+                $(this).addClass('selectpicker');
+                $(this).attr("data-show-subtext", "true");
+                $(this).attr("data-live-search", "true");
+//                $('.selectpicker').selectpicker('refresh');
+                $(this).selectpicker('refresh');
+
+            }
+        });
+
+
         $('#' + target_id).find("form").find(".apd-form-switch-list").each(function () {
 //            console.log("formActivateListeners: <empty>");
             fillSwitchList(this);
@@ -1540,6 +1678,19 @@ function formActivateListeners() {
                         selectAllJustVisible: true}
             );
         });
+
+        $('#' + target_id).find("form").find(".apd-form-custom-select").each(function () {
+            var div = $(this).closest("div");
+            var onselect_func = $(this).attr("onselect_func");
+
+            $(this).editableSelect();
+
+            div.find("input").first().change();
+            div.find('.es-list').first().hide();
+        });
+
+
+
         $('#' + target_id).find("form").find(".apd-form-multiselect-manual").each(function () {
             $(this).multiselect(
                     {includeSelectAllOption: true,
@@ -1550,6 +1701,8 @@ function formActivateListeners() {
         $('#' + target_id).find("form").find(".apd-form-htmleditor").each(function () {
             $(this).Editor();
         });
+
+
 
     });
 }
@@ -1598,6 +1751,45 @@ function reportComboListeners() {
         var data = JSON.stringify(json);
         $.ajax({
             url: "api/post/srv/serviceCrGetReportLineList4Print",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                isResultRedirect(JSON.stringify(res));
+                var rhtml = res.tbl[0].r[0].reportHtml;
+                var oPrntWin = window.open("", "_blank", "width=1100,height=1140,left=30,top=30,menubar=yes,toolbar=no,location=no,scrollbars=yes");
+                oPrntWin.document.open();
+                oPrntWin.document.write("<!doctype html><html><head><title>Print</title></head><body onload=\"print();\">" + rhtml + "</body></html>");
+                oPrntWin.document.close();
+            },
+            error: function (res, status) {
+                alert(getMessage('somethingww'));
+            }
+        });
+    });
+}
+
+
+function reportPaymentComboListeners() {
+    $(document).on("click", '.apd-report-payment-cmb-list', function (e) {
+        var rid = $(this).attr("rid");
+//        var moduleId = "55";
+        var fkPaymentId = $('.apd-table-checkbox:checked').val();
+        fkPaymentId = (fkPaymentId) ? fkPaymentId : "";
+        if (fkPaymentId === '') {
+            alert(getMessage('choosePayment'));
+            return;
+        }
+
+        json = {kv: {}};
+        json.kv.id = rid;
+        json.kv.fkPaymentId = fkPaymentId;
+//        json.kv.fkModuleId = moduleId;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/srv/serviceCrGetReportLineList4PrintPayment",
             type: "POST",
             data: data,
             contentType: "application/json",

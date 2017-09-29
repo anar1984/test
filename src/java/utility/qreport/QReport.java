@@ -202,6 +202,10 @@ mobile2,telephone1,telephone2,email1,email2,country,city,postIndex,description
      */
     private static Document doAttributeTag(Document doc, QReportCarrier rcarrier) throws QException {
         String fkSessionId = rcarrier.getSessionId();
+        if (fkSessionId.trim().length()==1){
+            return doc;
+        }
+        
         String tn = CoreLabel.RESULT_SET;
 
         Carrier c = new Carrier();

@@ -521,6 +521,10 @@ public class CrController {
     public Carrier getModuleMainList(Carrier carrier) {
         return carrier;
     }
+    
+    public static Carrier getModuleList4ComboNali(Carrier carrier) throws QException {
+        return carrier;
+    }
 
     public Carrier insertNewSubmodule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
@@ -807,7 +811,7 @@ public class CrController {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrReportLine.ID,
                 cp.hasValue(carrier, EntityCrReportLine.ID));
-        carrier.addController(EntityCrReportLine.REPORT_TYPE  ,
+        carrier.addController(EntityCrReportLine.REPORT_TYPE,
                 cp.hasValue(carrier, EntityCrReportLine.REPORT_TYPE));
         carrier.addController(EntityCrReportLine.REPORT_NAME,
                 cp.hasValue(carrier, EntityCrReportLine.REPORT_NAME));
@@ -838,6 +842,12 @@ public class CrController {
         carrier.addController("general",
                 cp.isExistInEntity(new EntityCrModule(),
                         "fkModuleId", carrier.getValue("fkModuleId").toString()));
+        return carrier;
+    }
+
+    public Carrier getReportLineList4PrintPayment(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("general", cp.hasValue(carrier, "fkPaymentId"));
         return carrier;
     }
 
@@ -1368,10 +1378,25 @@ public class CrController {
     public static Carrier getReportLineList4Appt(Carrier carrier) throws QException {
         return carrier;
     }
-    
+
+    public static Carrier getReportLineList4Payment(Carrier carrier) throws QException {
+        return carrier;
+    }
+
     public static Carrier getModuleList4Combo(Carrier carrier) throws QException {
         Carrier c = new Carrier();
         return c;
+    }
+
+    public static Carrier confirmPayment(Carrier carrier) throws QException {
+
+        return carrier;
+    }
+    
+     public Carrier getPatientFullnameById(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("general", cp.hasValue(carrier, "fkPatientId")); 
+        return carrier;
     }
 
 }

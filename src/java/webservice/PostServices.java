@@ -34,6 +34,7 @@ import javax.ws.rs.core.Response;
 import label.CoreLabel;
 import org.glassfish.jersey.CommonProperties;
 import module.cr.CrModel;
+import org.apache.commons.lang.ArrayUtils;
 import org.jose4j.lang.JoseException;
 import resources.config.Config;
 import utility.Carrier;
@@ -112,7 +113,7 @@ public class PostServices {
         }
 
         if (type.trim().length() > 0) {
-            String img_type[] = Config.getProperty("upload.type."+type).split(",");
+            String img_type[] = Config.getProperty("upload.type." + type).split(",");
             boolean f = false;
             for (String t : img_type) {
                 if (file_extension.trim().toLowerCase().equals(t.trim().toLowerCase())) {
@@ -164,6 +165,7 @@ public class PostServices {
             String password = carrier.getValue("password").toString();
             String domain = carrier.getValue("domain").toString();
             String lang = carrier.getValue("lang").toString();
+            lang = SessionHandler.isLangAvailable(lang) ? lang : "ENG";
             EntityCrUser user = SessionHandler.checkLogin(usename, password, domain);
             user.setLang(lang);
             user.setDomain(user.selectDbname());
@@ -422,7 +424,8 @@ public class PostServices {
         });
     }
 
-    private Response doCallDispatcher(@Context HttpHeaders headers, @PathParam("servicename") String servicename, String json) {
+    private Response doCallDispatcher(@Context HttpHeaders headers,
+            @PathParam("servicename") String servicename, String json) {
         Connection conn = null;
         try {
 
@@ -475,28 +478,29 @@ public class PostServices {
 
     }
 
-    private Response doCallDispatcherNoToken(@Context HttpHeaders headers, @PathParam("servicename") String servicename, String json) {
+    private Response doCallDispatcherNoToken(@Context HttpHeaders headers,
+            @PathParam("servicename") String servicename, String json) {
+        String srv[] = new String[]{"serviceCrSignupPersonal",
+            "serviceCrSignupCompany",
+            "serviceCrSignupCompany",
+            "serviceCrActivateCompany",
+            "serviceCrGetMessageText",
+            "serviceCrGetModuleList4ComboNali"};
+
+        if (!ArrayUtils.contains(srv, servicename)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         Connection conn = null;
         try {
-
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
 
             long serviceTime = System.currentTimeMillis();
             System.out.println("json srv->" + json);
-            //Cookie cookie = headers.getCookies().get("apdtok");
-            //String cs = cookie.getValue();
-            //EntityCrUser user = null;
-
-            //user = SessionHandler.getTokenFromCookie(cs);
-            //SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
-            //SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
-//        SessionManager.setUserName(Thread.currentThread().getId(),"admin1");
-//        if (!hasAccessToService(servicename)) {
-//            return Response.status(Response.Status.FORBIDDEN).build();
-//        }
-            System.out.println("Start-" + SessionManager.getCurrentUsername() + ":" + QDate.getCurrentDate() + ":" + QDate.getCurrentTime() + ":" + servicename);
+            System.out.println("Start-" + SessionManager.getCurrentUsername()
+                    + ":" + QDate.getCurrentDate() + ":" + QDate.getCurrentTime() + ":" + servicename);
 
             System.out.println("json->" + json);
             Carrier c = new Carrier();
@@ -508,7 +512,8 @@ public class PostServices {
             conn.commit();
             //conn.close();
 
-            if (servicename.equals("serviceCrSignupPersonal") || servicename.equals("serviceCrSignupCompany")) {
+            if (servicename.equals("serviceCrSignupPersonal")
+                    || servicename.equals("serviceCrSignupCompany")) {
                 return Response.temporaryRedirect(new URI("/apd/activation.html?id=" + c.getValue(EntityCrUser.ID).toString())).build();
             }
 
@@ -528,7 +533,6 @@ public class PostServices {
             DBConnection.closeConnection(conn);
             SessionManager.cleanSessionThread();
         }
-
     }
 
     @GET
@@ -549,9 +553,9 @@ public class PostServices {
             user = SessionHandler.getTokenFromCookie(cs);
             SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
             SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
-            SessionManager.setDomain( Thread.currentThread().getId(), user.selectDomain());
+            SessionManager.setDomain(Thread.currentThread().getId(), user.selectDomain());
             SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
-            
+
             System.out.println("Getting User: " + (System.currentTimeMillis() - startTime));
 
 //         EntityCrUser user = new EntityCrUser();
@@ -581,39 +585,42 @@ public class PostServices {
         }
     }
 
-    @GET
+    @POST
     @Path(value = "signup/{type}")
     @Compress
     @Produces(value = MediaType.TEXT_HTML)
     public Response signup(@Context HttpHeaders headers, @PathParam(value = "type")
-            final String type) {
+            final String type, final String json) throws QException {
+
         Connection conn = null;
         try {
+
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
 
-            //Cookie cookie = headers.getCookies().get("apdtok");
-            //String cs = cookie.getValue();
-//            EntityCrUser user = null;
-//            long startTime = System.currentTimeMillis();
-//            user = SessionHandler.getTokenFromCookie(cs);
-//            SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
-//            SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
-//            System.out.println("Getting User: " + (System.currentTimeMillis() - startTime));
-//         EntityCrUser user = new EntityCrUser();
-//         user.setUsername("admin1");
+//            System.out.println("json>>>" + json);
+            Carrier carrier = new Carrier();
+            carrier.fromJson(json);
+            String lang = carrier.getValue("lang").toString();
+            lang = SessionHandler.isLangAvailable(lang) ? lang : "ENG";
+            SessionManager.setLang(Thread.currentThread().getId(), lang);
+
             long startTime = System.currentTimeMillis();
             UserController uc;
             if ("company".equals(type)) {
                 uc = new UserController("page_signup_company.html");
-            } else {
+            } else if ("personal".equals(type)) {
                 uc = new UserController("page_signup_personal.html");
+            } else {
+                conn.commit();
+                return Response.status(Response.Status.BAD_REQUEST).entity("").build();
+
             }
             String content = uc.filterText("__singup__");
             System.out.println("Filter HTML: " + (System.currentTimeMillis() - startTime));
             conn.commit();
-            //conn.close();
+
             return Response.status(Response.Status.OK).entity(content).build();
         } catch (QException ex) {
             DBConnection.rollbackConnection(conn);

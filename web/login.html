@@ -6,58 +6,127 @@ and open the template in the editor.
 -->
 <html lang="en" dir="ltr">
     <head>
-        <title>Login To APDVoice.com</title>
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="shortcut icon" href="resource/img/favicon.png">
-        <link rel="stylesheet" href="resource/css/foundation.min.css" type="text/css"> 
+        <!-- Custom Fonts -->
+        <link href="resource/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" type="image/png" href="resource/img/favicon.png">
+
+
+        <!--<link rel="stylesheet" href="resource/css/general.css" type="text/css">--> 
+        <link rel="stylesheet" href="resource/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/modern-business.css" type="text/css">
+        <!--link rel="stylesheet" href="resource/css/customselect.css" type="text/css"--> 
+        <link rel="stylesheet" href="resource/css/bootstrap-select.min.css" type="text/css"> 
+        <link rel="stylesheet" href="resource/css/editor.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/jquerysctipttop.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/multiselect-ui.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/apd-custom.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/calendar.css" type="text/css">
+        <link type="text/css" rel="stylesheet" href="resource/css/icon.css">
+        <link type="text/css" rel="stylesheet" href="resource/css/jquery-editable-select.css">
+        <link rel="stylesheet" href="resource/css/pace/pace-theme-flash.css"  />
+
+
+        <script src="resource/js/jquery.min.js" type="text/javascript"></script>
+        <script src="resource/js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="resource/js/editor.js" type="text/javascript"></script>
+        <script src="resource/js/calendar.js" type="text/javascript"></script> 
+        <script src="resource/js/apd-common.js" type="text/javascript"></script>
+        <script src="resource/js/apd-listener.js" type="text/javascript"></script>
+        <script src="resource/js/apd-table.js" type="text/javascript"></script> 
+        <script src="resource/js/apd-figure.js" type="text/javascript"></script> 
+        <script src="resource/js/bootstrap.min.js" type="text/javascript"></script>
+        <!--script src="resource/js/customselect.js" type="text/javascript"></script--> 
+        <script src="resource/js/bootstrap-select.min.js" type="text/javascript"></script> 
+        <script src="resource/js/jquery.sortable.min.js" type="text/javascript"></script> 
+        <script src="resource/js/multiselect-ui.js" type="text/javascript"></script> 
+        <script src="resource/js/bootstrap.youtubepopup.min.js" type="text/javascript"></script> 
+        <script src="resource/js/xlsx.full.min.js" type="text/javascript"></script> 
+        <script src="resource/js/recorder.js" type="text/javascript"></script>
+        <script src="resource/js/Fr.voice.js" type="text/javascript"></script>  
+        <script src="resource/js/app.js" type="text/javascript"></script> 
+        <script src="resource/js/jstat.js" type="text/javascript"></script> 
+        <script src="resource/js/jquery-editable-select.js" type="text/javascript"></script> 
+        <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript" ></script>
+        <script src="resource/js/pace.min.js" type="text/javascript"></script>
+        <script src="resource/js/apd-lang.js"></script>
+        <script src="resource/js/lang/lang.js"></script>
 
 
 
         <style>
-
-
-            .floated-label-wrapper {
+            body { background-color:white;}
+            .table-sortable {
                 position: relative;
             }
-
-            .floated-label-wrapper label {
-                background: #fefefe;
-                color: #1779ba;
-                font-size: 0.75rem;
-                font-weight: 600;
-                left: 0.75rem;
-                opacity: 0;
-                padding: 0 0.25rem;
+            .table-sortable .sortable-placeholder {
+                height: 37px;
+            }
+            .table-sortable .sortable-placeholder:after {
                 position: absolute;
-                top: 2rem;
-                transition: all 0.15s ease-in;
-                z-index: -1;
+                z-index: 10;
+                content: " ";
+                height: 37px;
+                background: #f9f9f9;
+                left: 0;
+                right: 0;
             }
 
-            .floated-label-wrapper label input[type=text],
-            .floated-label-wrapper label input[type=email],
-            .floated-label-wrapper label input[type=password] {
-                border-radius: 4px;
-                font-size: 1.75em;
-                padding: 0.5em;
+
+            /*material swith*/
+            .material-switch > input[type="checkbox"] {
+                display: none;   
             }
 
-            .floated-label-wrapper label.show {
-                opacity: 1;
-                top: -0.85rem;
-                z-index: 1;
-                transition: all 0.15s ease-in;
+            .material-switch > label {
+                cursor: pointer;
+                height: 0px;
+                position: relative; 
+                width: 40px;  
+            }
+
+            .material-switch > label::before {
+                background: rgb(0, 0, 0);
+                box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+                border-radius: 8px;
+                content: '';
+                height: 16px;
+                margin-top: -8px;
+                position:absolute;
+                opacity: 0.3;
+                transition: all 0.4s ease-in-out;
+                width: 40px;
+            }
+            .material-switch > label::after {
+                background: rgb(255, 255, 255);
+                border-radius: 16px;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+                content: '';
+                height: 24px;
+                left: -4px;
+                margin-top: -8px;
+                position: absolute;
+                top: -4px;
+                transition: all 0.3s ease-in-out;
+                width: 24px;
+            }
+            .material-switch > input[type="checkbox"]:checked + label::before {
+                background: inherit;
+                opacity: 0.5;
+            }
+            .material-switch > input[type="checkbox"]:checked + label::after {
+                background: inherit;
+                left: 20px;
             }
 
             .alert {
                 background-color: #f44336;
                 display: none;
-                width:400px;
+                width: 400px;
                 padding: 10px;
-                margin:auto;
+                margin: auto;
                 margin-top: 20px;
                 color: white;
                 -moz-border-radius: 3px;
@@ -80,155 +149,255 @@ and open the template in the editor.
                 color: black;
             }
 
+            .tabs-content {
+                border: 1px solid #e6e6e6;
+                border-top: 0;
+                background: #fefefe;
+                color: #0a0a0a;
+                transition: all .5s ease;
+            }
 
+            .button {
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0 0 1rem 0;
+                font-family: inherit;
+                padding: 5px;
+                height:30px;
+                -webkit-appearance: none;
+                border: 1px solid transparent;
+                border-radius: 3px;
+                transition: background-color .25s ease-out,color .25s ease-out;
+                font-size: 1.5rem;
+                line-height: 1;
+                text-align: center;
+                cursor: pointer;
+                background-color: #00b289;
+                color: #fefefe;
+            }
+            /*--material switch*/
 
 
         </style>
 
+
+
+
+
     </head>
     <body>
 
-        <div class="top-bar" id="example-menu">
-            <div class="top-bar-left"><a href="http://apdvoice.com"><img src="resource/img/logo.png" alt="APDVoice" style="height:40px"></a></div>
-            <div class="top-bar-right">
-                <select id="lang" name="lang" style="margin-bottom: 1px;">
-                    <option value="ENG">English</option>
-                    <option value="AZE">Azərbaycan</option>
-                </select>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-11">
+                        <a class="navbar-brand" href="www.apdvoice.com"><img class="img-responsive" 
+                                                                             src="resource/img/logo.png" alt="logo">
+                        </a>
+                    </div>
+                    <div class="col-md-1" align="right">
+                        <br>
+                        <select class="form-control"  id="lang" name="lang"
+                                style="margin-bottom: 1px;" onchange="_onchangeLangLogin(this)">
+                        </select>
+                    </div>
+                </div>
             </div>
+
+        </nav>
+        <br>
+        <br>
+        <div class="row " style="width:30%;  margin: auto; text-align: center"    >
+            <h2 id="lblSignin">Sign In</h2>
         </div>
+        <div class="row " style="width:30%;  margin: auto; "    >
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#personal" id="lblPersonal">Personal</a></li>
+                    <li><a data-toggle="tab" href="#company" id="lblCompany">Company</a></li>
 
-
-        <div class="row column medium-6 large-5 align-center">
-
-            <div class="columns">
-
-                <ul class="tabs" data-tabs id="example-tabs">
-                    <li class="tabs-title is-active"><a href="#panel1" aria-checked="true">Personal</a></li>
-                    <li class="tabs-title"><a href="#panel2">Company</a></li>
                 </ul>
+            </div>
+        </div>
 
-                <div class="tabs-content" data-tabs-content="example-tabs">
-                    <div class="tabs-panel is-active" id="panel1">
-                        <form  class="text-center" id="login-form-personal"  method="POST">
-                            <h2>Sign In</h2>
-                            <div class="floated-label-wrapper">
-                                <label for="username">Username</label>
-                                <input type="text" id="pUsername"  name="username" placeholder="Username"  value="" autocomplete="off"/>
+        <div class="row tabs-content" style="width:30%;  margin: auto;   ">
+            <div class="tab-content">
+
+                <!--        company tap-->
+                <div id="personal" class="col-md-12  tab-pane fade in active">
+                    <br>
+                    <div class="col-md-12">
+                        <div class="col-md-12  ">
+                            <div class="tabs-panel is-active" id="panel1">
+                                <form  class="text-center" id="login-form-personal"  method="POST">
+
+                                     
+                                    <div class="form-group col-md-12">
+                                        <!--<label id="lblUsername" for="username">Username</label>-->
+                                        <br>
+                                        <input type="text" id="pUsername" name="username" 
+                                               class="form-control apd-form-input" 
+                                               style="height:30px;"
+                                               placeholder="Username" 
+                                               value="" autocomplete="off"/>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <!--<label  id="lblPassowrd" for="password">Password</label>-->
+                                        <input type="password" id="pPassword" name="password" 
+                                               class="form-control apd-form-input" 
+                                                style="height:30px;"
+                                               placeholder="Password"  autocomplete="off" value="" />
+                                    </div>
+                                    <br>
+
+                                    <div class="form-group col-md-12">
+                                        
+                                        <br>
+                                        <button id="btnSignInPersonal" class="form-control  button" 
+                                                type="submit" value="Sign in">Sign in</button>
+                                        <br>
+                                    </div>
+                                    <br>
+                                    <span id="lblHaveAccount">Don't have an account? </span>
+                                    <a id="lblCreateAccount" href="signup.html?lang=ENG#personal">Create Account</a>
+
+                                </form>
+                                <br>
+
                             </div>
-
-                            <div class="floated-label-wrapper">
-                                <label for="password">Password</label>
-                                <input type="password" id="pPassword" name="password" placeholder="Password"  autocomplete="off" value="" />
-                            </div>
-
-
-                            <div class="floated-label-wrapper">
-                                <button id="btnSignInPersonal" class="expanded button" type="submit" value="Sign in">Sign in</button>
-                            </div>
-                            Don’t have an account? <a href="signup.html#personal">Create Account</a>
-                        </form>
-
-
-                    </div>
-                    <div class="tabs-panel" id="panel2">
-                        <form class="text-center" id="login-form-company"  method="POST">
-                            <h2>Sign In</h2>
-                            <div class="floated-label-wrapper">
-                                <label for="domain">Domain</label>
-                                <input type="text" id="domain"  name="domain" placeholder="Domain"  value="" autocomplete="off"/>
-                            </div>
-                            <div class="floated-label-wrapper">
-                                <label for="username">Username</label>
-                                <input type="text" id="cUsername"  name="username" placeholder="Username"  value="" autocomplete="off"/>
-                            </div>
-
-                            <div class="floated-label-wrapper">
-                                <label for="password">Password</label>
-                                <input type="password" id="cPassword" name="password" placeholder="Password" autocomplete="off" value="" />
-                            </div>
-
-
-                            <div class="floated-label-wrapper">
-                                <button id="btnSignInCompany" class="expanded button" type="submit" value="Sign in">Sign in</button>
-                            </div>
-                            Don’t have an account? <a href="signup.html#company">Create Account</a>
-                        </form>
-
+                        </div>
                     </div>
                 </div>
 
-                <div class="alert" id="login-alert">
-                    <span class="closebtn" onclick="this.parentElement.style.display = 'none';">×</span> 
-                    <strong>Oops!</strong> Username or password is incorrect.
+                <!--        company tap-->
+                <div id="company" class="col-md-12  tab-pane fade  ">
+                    <br>
+                    <div class="col-md-12">
+                        <div class="tabs-panel" id="panel2">
+                            <form class="text-center" id="login-form-company"  method="POST">
+                                <div class="form-group col-md-12">
+                                    <!--<label id="lblDomain" for="domain">Domain</label>-->
+                                    <br>
+                                    <input type="text" id="domain"  name="domain" placeholder="Domain" 
+                                            class="form-control apd-form-input" 
+                                                style="height:30px;"
+                                           value="" autocomplete="off"/>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <!--<label id="lblusername1" for="username">Username</label>-->
+                                    <input type="text" id="cUsername"  name="username" placeholder="Username" 
+                                            class="form-control apd-form-input" 
+                                                style="height:30px;"
+                                           value="" autocomplete="off"/>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <!--<label for="password" ib="lblPassword1">Password</label>-->
+                                    <input type="password" id="cPassword" name="password" 
+                                            class="form-control apd-form-input" 
+                                                style="height:30px;"
+                                           placeholder="Password" autocomplete="off" value="" />
+                                </div>
+
+                                <br>
+                                <div class="form-group col-md-12">
+                                    <br>
+                                    <button id="btnSignInCompany" class="form-control  button" type="submit" 
+                                            value="Sign in">Sign in</button>
+                                    <br>
+                                </div>
+                                
+                                <span id="lblHaveAccount1"> Don't have an account? </span>
+                                <a href="signup.html?lang=ENG#company" id="lblCreateAccount1">Create Account</a>
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
 
 
             </div>
+
+            <div class="col-md-12" >
+                <div class="alert" style="display : none;" id="login-alert">
+                    <span id="incorrentPwd"> Username or password is incorrect.</span>
+                    <span class="closebtn" onclick="this.parentElement.style.display = 'none';">×</span> 
+                </div>
+                <br>
+                <br>
+            </div>
         </div>
-        <script src="resource/js/jquery.min.js" ></script>
-        <script src="resource/js/foundation.min.js"></script>
+
 
         <script>
+            var lng = getUrlParameter('lang');
+            console.log(lng)
+            if (lng === 'undefined' || !lng) {
+                lng = getDefaultLang();
+            }
+            //            setLoginLabels();
+            setLangCombo4($('#lang'), lng);
+            $('#lang').change();
 
-                        $(document).foundation();
-                        $('#btnSignInPersonal').click(function () {
-                            var username = $('#pUsername').val();
-                            var password = $('#pPassword').val();
-                            var lang = $('#lang').find(":selected").val();
-                            var json = {kv: {}};
-                            json.kv.username = username;
-                            json.kv.password = password;
-                            json.kv.lang = lang;
-                            var data = JSON.stringify(json);
-                            //console.log(data);
-                            $.ajax({
-                                url: "api/post/login",
-                                type: "POST",
-                                data: data,
-                                contentType: "application/json",
-                                crossDomain: true,
-                                success: function () {
-                                    document.location = "app.html";
-                                },
-                                error: function (res, status) {
-                                    showAlert();
-                                }
-                            });
-                            return false;
-                        });
+            //            $(document).foundation();
+            $('#btnSignInPersonal').click(function () {
+                var username = $('#pUsername').val();
+                var password = $('#pPassword').val();
+                var lang = $('#lang').find(":selected").val();
+                var json = {kv: {}};
+                json.kv.username = username;
+                json.kv.password = password;
+                json.kv.lang = lang;
+                var data = JSON.stringify(json);
+                //console.log(data);
+                $.ajax({
+                    url: "api/post/login",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    success: function () {
+                        document.location = "app.html";
+                    },
+                    error: function (res, status) {
+                        showAlert();
+                    }
+                });
+                return false;
+            });
 
-                        $('#btnSignInCompany').click(function () {
-                            var domain = $('#domain').val();
-                            var username = $('#cUsername').val();
-                            var password = $('#cPassword').val();
-                            var lang = $('#lang').find(":selected").val();
-                            var json = {kv: {}};
-                            json.kv.username = username;
-                            json.kv.password = password;
-                            json.kv.domain = domain;
-                            json.kv.lang = lang;
-                            var data = JSON.stringify(json);
-                            //console.log(data);
-                            $.ajax({
-                                url: "api/post/login",
-                                type: "POST",
-                                data: data,
-                                contentType: "application/json",
-                                crossDomain: true,
-                                success: function () {
-                                    document.location = "app.html";
-                                },
-                                error: function (res, status) {
-                                    showAlert();
-                                }
-                            });
-                            return false;
-                        });
+            $('#btnSignInCompany').click(function () {
+                var domain = $('#domain').val();
+                var username = $('#cUsername').val();
+                var password = $('#cPassword').val();
+                var lang = $('#lang').find(":selected").val();
+                var json = {kv: {}};
+                json.kv.username = username;
+                json.kv.password = password;
+                json.kv.domain = domain;
+                json.kv.lang = lang;
+                var data = JSON.stringify(json);
+                //console.log(data);
+                $.ajax({
+                    url: "api/post/login",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    success: function () {
+                        document.location = "app.html";
+                    },
+                    error: function (res, status) {
+                        showAlert();
+                    }
+                });
+                return false;
+            });
 
-                        function showAlert() {
-                            document.getElementById('login-alert').style.display = 'block';
-                        }
+            function showAlert() {
+                document.getElementById('login-alert').style.display = 'block';
+            }
 
         </script>
     </body>

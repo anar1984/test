@@ -8,6 +8,7 @@ package auth;
 import java.security.Key;
 import module.cr.entity.EntityCrUser;
 import module.cr.entity.EntityCrCompany;
+import module.cr.entity.EntityCrListItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;
@@ -15,6 +16,8 @@ import org.jose4j.jwe.JsonWebEncryption;
 import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
 import org.jose4j.lang.JoseException;
 import utility.Carrier;
+import utility.QException;
+import utility.QUtility;
 import utility.SessionManager;
 import utility.sqlgenerator.EntityManager;
 
@@ -189,5 +192,18 @@ public class SessionHandler {
             logger.error("encryptUser", ex);
             return "";
         }
+    }
+    
+    public static boolean isLangAvailable(String lang) throws QException{
+        boolean f=true;
+        
+        EntityCrListItem ent = new EntityCrListItem();
+        ent.setDeepWhere(false);
+        ent.setItemCode("language");
+        ent.setItemKey(lang);
+        ent.setLang("ENG");
+        Carrier c = EntityManager.select(ent);
+        return c.getTableRowCount(ent.toTableName())>0;
+         
     }
 }

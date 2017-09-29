@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import label.CoreLabel;
 import module.rp.entity.EntityCrSqlPool;
+import org.owasp.esapi.ESAPI;
 import resources.config.Config;
 import utility.QException;
 import utility.SessionManager;
@@ -623,6 +624,7 @@ public class EntityManager {
     }
 
     public static String getMessageText(String messageCode) throws QException {
+        messageCode = ESAPI.encoder().encodeForHTML(messageCode);
         if (messageCode.trim().equals("")) {
             return "Message code is empty";
         }

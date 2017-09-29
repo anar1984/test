@@ -12,7 +12,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import module.cr.entity.EntityCrUser;
+//import module.cr.entity.EntityCrUser;
 import java.util.List;
 import java.io.File;
 import java.io.FileWriter;
@@ -26,9 +26,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import label.CoreLabel;
-import module.cr.CrModel;
 import module.cr.entity.EntityCrInspectionMatrix;
-import module.cr.entity.EntityCrSubmoduleAttribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -52,7 +50,7 @@ public class Carrier implements Serializable {
     private final Map<String, String> tableSequence;
     private Connection conn;
 
-    private EntityCrUser session;
+    //private EntityCrUser session;
     private String serviceName = "";
     private String includedFields = "";
     private String excludedFields = "";
@@ -1627,13 +1625,13 @@ public class Carrier implements Serializable {
         return f;
     }
 
-    public EntityCrUser getSession() {
+    /*public EntityCrUser getSession() {
         return session;
     }
 
     public void setSession(EntityCrUser session) {
         this.session = session;
-    }
+    }*/
 
     public String[] getValue(String tableName, String columnName) throws QException {
         try {

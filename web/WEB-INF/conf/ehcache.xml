@@ -25,20 +25,6 @@
         <!--disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" /-->
     </cache>
     
-    <!--cache alias="sessionCache" >
-        <key-type>java.lang.String</key-type> 
-        <value-type>java.lang.String/value-type> 
-        <expiry>
-            <tti unit="hours">3</tti>
-        </expiry>
-        <resources>
-            <disk unit="GB">2</disk>
-            <heap unit="MB">200</heap> 
-            <offheap unit="MB">400</offheap>
-        </resources>
-        disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" 
-    </cache-->
-    
 <!--    <cache alias="serviceCache"> 
         <key-type>java.lang.String</key-type> 
         <value-type>java.lang.String</value-type> 

@@ -9,9 +9,9 @@
     </thread-pools-->
     
     <!--disk-store thread-pool="defaultDiskPool" /-->
-    <persistence directory="java.io.tmpdir"/>
+    <persistence directory="java.io.tmpdir" />
     
-    <cache alias="modelCache" >
+    <cache alias="modelCache">
         <key-type>java.lang.String</key-type> 
         <value-type>utility.Carrier</value-type> 
         <expiry>

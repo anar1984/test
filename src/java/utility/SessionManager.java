@@ -29,9 +29,9 @@ public class SessionManager {
 
     private static Map<Long, String> userMap = new HashMap<>();
     private static Map<Long, String> langMap = new HashMap<>();
+    private static Map<Long, Connection> conn = new HashMap<>();
     private static Map<Long, String> domainMap = new HashMap<>();
     private static Map<Long, String> userIdMap = new HashMap<>();
-    private static Map<Long, Connection> conn = new HashMap<>();
     
     private static Map<String, Subject> permissionMap = new HashMap<>();
     

@@ -160,7 +160,6 @@ public class PostServices {
 
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
 
-            String token;
             Carrier carrier = new Carrier();
             carrier.fromJson(jsonData);
 
@@ -174,7 +173,7 @@ public class PostServices {
             user.setLang(lang);
             user.setDomain(user.selectDbname());
 
-            token = SessionHandler.encryptUser(user);
+            String token = SessionHandler.encryptUser(user);
             String fullname = "";
             String id = "";
 //            if (!usename.trim().equals("")) {
@@ -193,7 +192,8 @@ public class PostServices {
             String entity = "{\"fullname\":\"" + fullname + "\"}";
             conn.commit();
             conn.close();
-            return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 10000000, false)).entity(entity).build();
+            //return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 2_592_000, true)).entity(entity).build();
+            return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 2_592_000, false)).entity(entity).build();
         } catch (Exception ex) {
             DBConnection.rollbackConnection(conn);
             System.err.println("Username Or Password is incorrect!!");

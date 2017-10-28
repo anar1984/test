@@ -404,14 +404,18 @@ canvas{
 }
 
 
+
+
+
+
 .wizard {
-    margin: 20px auto;
+    margin: 5px auto;
     background: #fff;
 }
 
 .wizard .nav-tabs {
     position: relative;
-    margin: 40px auto;
+    margin: 5px auto;
     margin-bottom: 0;
     border-bottom-color: #e0e0e0;
 }
@@ -500,7 +504,7 @@ span.round-tab:hover {
 .wizard .nav-tabs > li a {
     width: 70px;
     height: 70px;
-    margin: 20px auto;
+    margin: 10px auto;
     border-radius: 100%;
     padding: 0;
 }
@@ -511,12 +515,64 @@ span.round-tab:hover {
 
 .wizard .tab-pane {
     position: relative;
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 .wizard h3 {
     margin-top: 0;
 }
+
+
+
+
+
+/*material swith*/
+.material-switch > input[type="checkbox"] {
+    display: none;   
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative; 
+    width: 40px;  
+}
+
+.material-switch > label::before {
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 18px;
+    left: -1px;
+    margin-top: -8px;
+    position: absolute;
+    top: -1px;
+    transition: all 0.3s ease-in-out;
+    width: 18px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit;
+    left: 20px;
+}
+/*--material switch*/
 
 @media( max-width : 585px ) {
 

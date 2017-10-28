@@ -23,30 +23,32 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Insert New Permission</h4>
+                    <h4 class="modal-title" qlang>insertNewPermission</h4>
                 </div>
                 <div class="modal-body-1">
                     <form id="form_insertNewPermission" class="apd-form" method="POST" action="srv/serviceCrInsertNewPermission">
-                        
-                        <div class="form-group col-md-6">
-                            <label class="float">permissionType</label>
-                            <select class="form-control apd-form-select" 
-                                    id="permissionType" name="permissionType"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/permissionType">
-                            </select>
-                            
-                        </div>
-
-
                         <div class="form-group col-md-6">
                             <label class="float">permissionString</label>
                             <input class="form-control apd-form-input" type="text" id="permissionString"
                                    name="permissionString"    >
                         </div>
-                        
-                        
-                        
+                        <div class="form-group col-md-6">
+                            <label class="float">permissionType</label>
+                            <select class="form-control apd-form-select-manual" 
+                                    id="permissionType" name="permissionType">
+                                <option value="P">Permission</option>
+                                <option value="M">Module</option>
+                                <option value="S">Submodule</option>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="float">description</label>
+                            <textarea class="form-control apd-form-input" type="text" id="description"
+                                      name="description"    ></textarea>
+                        </div>
+
 
 
                         <div class="form-group col-md-12" align="right">
@@ -77,19 +79,27 @@
                                    name="id"    >
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="float">permissionType</label>
-                            <select class="form-control apd-form-select" 
-                                    id="permissionType" name="permissionType"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/permissionType">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
                             <label class="float">permissionString</label>
                             <input class="form-control apd-form-input" type="text" id="permissionString"
                                    name="permissionString"    >
                         </div>
-                        
+                        <div class="form-group col-md-6">
+                            <label class="float">permissionType</label>
+                            <select class="form-control apd-form-select-manual" 
+                                    id="permissionType" name="permissionType">
+                                <option value="P">Permission</option>
+                                <option value="M">Module</option>
+                                <option value="S">Submodule</option>
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="float">description</label>
+                            <textarea class="form-control apd-form-input" type="text" id="description"
+                                      name="description"    ></textarea>
+                        </div>
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>

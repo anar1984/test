@@ -32,6 +32,11 @@ public class Config {
     private static String selectEndLimitDefault;
     private static String sqlPoolDbNumber;
     private static String downloadPath;
+    private static String companyActivatePath;
+    private static String signupCompanyPaymentType;
+    private static String signupPersonalPaymentType;
+    private static String userPaymentCompanyTrialPeriod;
+    private static String userPaymentCompanyTrialPeriodForList;
 
     public static String getProperty(String key) {
         return configMap.get(key);
@@ -115,6 +120,26 @@ public class Config {
         return downloadPath;
     }
 
+    public static String getCompanyActivatePath() {
+        return companyActivatePath;
+    }
+
+    public static String getSignUpCompanyPaymentType() {
+        return signupCompanyPaymentType;
+    }
+
+    public static String getSignUpPersonalPaymentType() {
+        return signupPersonalPaymentType;
+    }
+
+    public static String getUserPaymentCompanyTrialPeriodForList() {
+        return userPaymentCompanyTrialPeriodForList;
+    }
+
+    public static String getUserPaymentCompanyTrialPeriod() {
+        return userPaymentCompanyTrialPeriod;
+    }
+
     private Config() {
 
     }
@@ -134,10 +159,15 @@ public class Config {
         selectEndLimitDefault = properties.getProperty("db.select.end-limit.default");
         sqlPoolDbNumber = properties.getProperty("db.sql-pool.db-number");
         downloadPath = properties.getProperty("download.path");
+        companyActivatePath = properties.getProperty("company.activate.path");
+        signupCompanyPaymentType = properties.getProperty("signup.company.paymenttype");
+        signupPersonalPaymentType = properties.getProperty("signup.personal.paymenttype");
+        userPaymentCompanyTrialPeriod = properties.getProperty("user.payment.company.trial.period");
+        userPaymentCompanyTrialPeriodForList = properties.getProperty("user.payment.company.trial.period.for.list");
 
         logger.debug("--------------  CONFIGURATION  --------------");
         configMap.forEach((key, value) -> {
-            logger.debug("\t"+key+"="+value);
+            logger.debug("\t" + key + "=" + value);
         });
         logger.debug("---------------------------------------------");
     }

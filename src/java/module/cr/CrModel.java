@@ -5,16 +5,23 @@
  */
 package module.cr;
 
+import auth.SessionHandler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import job.CompanyJob;
 import label.CoreLabel;
 import module.cr.entity.*;
@@ -36,6 +43,7 @@ import utility.qreport.QReportCarrier;
 import utility.sqlgenerator.DBConnection;
 import utility.sqlgenerator.EntityManager;
 import utility.sqlgenerator.IdGenerator;
+import utility.sqlgenerator.QLogger;
 import utility.sqlgenerator.SQLGenerator;
 
 /**
@@ -46,6 +54,16 @@ public class CrModel {
 
     private static final String USER_CONTROLLER_TYPE_ENUB = "2";
     private static final String USER_CONTROLLER_TYPE_COMPONENT = "1";
+
+    private static final String USER_TYPE_ADMIN = "A";
+    private static final String USER_TYPE_DOCTOR = "D";
+    private static final String USER_TYPE_ADMIN_AND_DOCTOR = "AD";
+
+    private static final String USER_RULE_TYPE_BY_RULE = "rule";
+    private static final String USER_RULE_TYPE_BY_ALL = "all";
+    private static final String USER_RULE_TYPE_BY_OWN = "ownrule";
+    private static final String USER_RULE_TYPE_BY_COMPONENT = "comprule";
+
     private static final String LOAD_PAGE_BEGINNER_PAGE = "page_";
     private static final String LOAD_PAGE_BEGINNER_GENERATOR_MODULE = "page_module_";
     private static final String LOAD_PAGE_BEGINNER_PAGE_DINAMIC = "page_dn_";
@@ -92,10 +110,24 @@ public class CrModel {
     public static final String REPORT_TYPE_APPOINTMENT = "1";
     public static final String REPORT_TYPE_PAYMENT = "2";
 
+    public static final String PAYMENT_TYPE_OWNER_COMPANY = "C";
+    public static final String PAYMENT_TYPE_OWNER_PERSONAL = "P";
+
     public static final String PAYMENT_STATUS_IS_PAID = "P";
     public static final String PAYMENT_STATUS_IS_NOT_PAID = "NP";
+    public static final String[] ABC = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+        "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+        "V", "U", "W", "X", "Y", "Z"};
+    public static final String[] ABC_ = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+        "v", "u", "w", "x", "y", "z"};
+    public static final String[] NUMBER = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+    public static final String[] PASSWORD_CHAR = new String[]{"!", "@", "#", "$", "^", "&", "*", "(", ")"};
+    public static final String[] EMAIL_CHAR = new String[]{"@", "."};
 
-    public Carrier getPage(Carrier carrier) throws QException {
+    public static final String mandatoryRulesForCompanies = "mandatoryRulesForCompanies";
+
+    public static Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
         String ln = "";
         if (page.startsWith(LOAD_PAGE_BEGINNER_PAGE_DINAMIC)) {
@@ -119,6 +151,7 @@ public class CrModel {
 
     private static String getStaticHtmlPageBody(String pagename) throws QException {
         try {
+            QLogger.savePageLog(pagename);
 
             GeneralProperties prop = new GeneralProperties();
             String filename = prop.getWorkingDir() + "../page/" + pagename + ".html";
@@ -327,27 +360,39 @@ public class CrModel {
             EntityCrUser ent = new EntityCrUser();
             EntityManager.mapCarrierToEntity(carrier, ent);
             ent.setUserShortId(IdGenerator.getId());
-            //ent.setFkCompanyId(SessionManager.getCurrentUserId());
             EntityManager.insert(ent);
+
+            //set mandatory rules
+            EntityCrRelUserAndRule entUserRule1 = new EntityCrRelUserAndRule();
+            entUserRule1.setFkUserId(ent.getId());
+            entUserRule1.setFkRuleId(getRuleIdByName(mandatoryRulesForCompanies));
+            EntityManager.insert(entUserRule1);
 
             String tn = "permission";
             int rc = carrier.getTableRowCount(tn);
             for (int i = 0; i < rc; i++) {
-//                System.out.println("id" + (i + 1) + carrier.getValue(tn, i, "ruleId").toString());
-                EntityCrRelUserRule entUserRule = new EntityCrRelUserRule();
+                EntityCrRelUserAndRule entUserRule = new EntityCrRelUserAndRule();
                 entUserRule.setFkUserId(ent.getId());
-                entUserRule.setFkRuleId(carrier.getValue(tn, i, "ruleId").toString());
+                entUserRule.setFkRuleId(carrier.getValue(tn, i, "fkRuleId").toString());
                 EntityManager.insert(entUserRule);
             }
 
-            carrier.setValue(EntityCrPerson.ID, ent.getId());
-            return carrier;
+            return new Carrier();
         } catch (Exception ex) {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
+    }
+
+    private static String getRuleIdByName(String arg) throws QException {
+        EntityCrRule ent = new EntityCrRule();
+        ent.setRuleName(arg);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        EntityManager.select(ent);
+        return ent.getId();
     }
 
     public static Carrier updateUser(Carrier carrier) throws QException {
@@ -358,26 +403,32 @@ public class CrModel {
             EntityManager.mapCarrierToEntity(carrier, ent, false);
             EntityManager.update(ent);
 
-            EntityCrRelUserRule entUserRule = new EntityCrRelUserRule();
+            EntityCrRelUserAndRule entUserRule = new EntityCrRelUserAndRule();
             entUserRule.setDeepWhere(false);
             entUserRule.setFkUserId(ent.getId());
             Carrier cUserRule = EntityManager.select(entUserRule);
 
             int rc1 = cUserRule.getTableRowCount(entUserRule.toTableName());
             for (int i = 0; i < rc1; i++) {
-                entUserRule = new EntityCrRelUserRule();
-                entUserRule.setId(cUserRule.getValue(entUserRule.toTableName(), i, EntityCrRelUserRule.ID).toString());
+                entUserRule = new EntityCrRelUserAndRule();
+                entUserRule.setId(cUserRule.getValue(entUserRule.toTableName(), i, "id").toString());
                 EntityManager.delete(entUserRule);
             }
 
             //EntityManager.delete(entUserRule);
+            //set mandatory rules
+            entUserRule = new EntityCrRelUserAndRule();
+            entUserRule.setFkUserId(ent.getId());
+            entUserRule.setFkRuleId(getRuleIdByName(mandatoryRulesForCompanies));
+            EntityManager.insert(entUserRule);
+
             String tn = "permission";
             int rc = carrier.getTableRowCount(tn);
             for (int i = 0; i < rc; i++) {
 //                System.out.println("id" + (i + 1) + carrier.getValue(tn, i, "ruleId").toString());
-                entUserRule = new EntityCrRelUserRule();
+                entUserRule = new EntityCrRelUserAndRule();
                 entUserRule.setFkUserId(ent.getId());
-                entUserRule.setFkRuleId(carrier.getValue(tn, i, "ruleId").toString());
+                entUserRule.setFkRuleId(carrier.getValue(tn, i, "fkRuleId").toString());
                 EntityManager.insert(entUserRule);
             }
 
@@ -1395,6 +1446,7 @@ public class CrModel {
         ent.setId(carrier.getValue("moduleUniqueId").toString());
         EntityManager.select(ent);
         ent.setLiModuleStatus(carrier.getValue("liModuleStatus").toString());
+        ent.setFkPaymentTypeId(carrier.getValue("fkPaymentTypeId").toString());
         EntityManager.update(ent);
 
         EntityCrLangRel entLang = new EntityCrLangRel();
@@ -1463,14 +1515,14 @@ public class CrModel {
         for (String k : keys) {
             if (k.endsWith(SessionManager.getCurrentLang())) {
                 c.setValue(CoreLabel.RESULT_SET, i, "id",
-                        k.substring(i, k.length() - SessionManager.getCurrentLang().length()));
+                        k.substring(0, k.length() - SessionManager.getCurrentLang().length()));
                 c.setValue(CoreLabel.RESULT_SET, i, "name", cModule.getValue(k));
                 i++;
             }
         }
         return c;
     }
-    
+
     public static Carrier getModuleList4ComboNali(Carrier carrier) throws QException {
         Carrier c = new Carrier();
 
@@ -1550,9 +1602,11 @@ public class CrModel {
         ent.setLiModuleStatus(carrier.getValue("liModuleStatus").toString());
         ent.addDeepWhereStatementField("id");
         Carrier c = EntityManager.select(ent);
+
         String tnModule = ent.toTableName();
         String ids = c.getValueLine(tnModule);
         Carrier cprModule = c.getKVFromTable(tnModule, "id", "liModuleStatus");
+        Carrier cprModulePT = c.getKVFromTable(tnModule, "id", "fkPaymentTypeId");
         carrier.removeKey("startLimit");
         carrier.removeKey("endLimit");
 
@@ -1586,6 +1640,7 @@ public class CrModel {
         cName.mergeCarrier(tnName, new String[]{"relId", "lang"},
                 "moduleDescription", cprDesc);
         cName.mergeCarrier(tnName, "relId", "liModuleStatus", cprModule);
+        cName.mergeCarrier(tnName, "relId", "fkPaymentTypeId", cprModulePT);
         cName.mergeCarrier(tnName, "liModuleStatus", "moduleStatusName", cprListItem);
 
         cName.copyTableColumn(tnName, "relId", "moduleUniqueId");
@@ -2119,7 +2174,7 @@ public class CrModel {
     public static Carrier insertNewPatient(Carrier carrier) throws QException {
         EntityCrPatient ent = new EntityCrPatient();
         EntityManager.mapCarrierToEntity(carrier, ent);
-        ent.setFkOwnerUserId(SessionManager.getCurrentUserId());
+//        ent.setFkOwnerUserId(SessionManager.getCurrentUserId());
         ent.setPatientId(genPatientId());
         EntityManager.insert(ent);
         return carrier;
@@ -3167,16 +3222,18 @@ public class CrModel {
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
-            SessionManager.setDomain(SessionManager.getCurrentThreadId(), "apd_23gemsb");
+            SessionManager.setDomain(SessionManager.getCurrentThreadId(), "apd_1lqliu3");
+            SessionManager.setUserId(SessionManager.getCurrentThreadId(), "201710230029010648");
+            SessionManager.setCompanyId(SessionManager.getCurrentThreadId(), "201710221851270308");
 
-            String json = "{\"kv\":{\"startLimit\":0,\"endLimit\":\"25\",\"fkPatientId\":\"201708221705210595\"}}"
+            String json = "{\"kv\":{\"fkUserId\":\"201710260719440045\",\"type\":\"all\"}}"
                     + "";
 
-//            String servicename = "serviceCrGetInspectionList";
+//            String servicename = "serviceCrGetTermPage";
             //
             Carrier c = new Carrier();
             c.fromJson(json);
-            c = getAttributeList4Cache(c);
+            c = getUserRuleList(c);
 //
 //            c.setServiceName(servicename);
 //            c.fromJson(json);
@@ -3445,9 +3502,10 @@ public class CrModel {
     }
 
     public static Carrier getMessageText(Carrier carrier) throws QException {
+        String lang = carrier.getValue("lang").toString();
         Carrier out = new Carrier();
         String messageCode = carrier.getValue("messageCode").toString();
-        out.setValue("text", EntityManager.getMessageText(messageCode));
+        out.setValue("text", EntityManager.getMessageText(messageCode,lang));
         return out;
     }
 
@@ -3507,7 +3565,7 @@ public class CrModel {
     }
 
     public Carrier getDoctorList(Carrier carrier) throws QException {
-        carrier.setValue(EntityCrUser.LI_USER_PERMISSION_CODE, "D");
+        carrier.setValue(EntityCrUser.LI_USER_PERMISSION_CODE, "AD%IN%D");
         carrier = getUserList(carrier);
         return carrier;
     }
@@ -3712,9 +3770,11 @@ public class CrModel {
         ent.setFieldName(carrier.getValue("code").toString());
         EntityManager.select(ent);
 
-        String t = ent.getDescription().trim().length() == 0
-                ? "{" + carrier.getValue("code").toString() + "}"
-                : ent.getDescription();
+        String t = ent.getDescription();
+        if (t.trim().length() == 0) {
+            t = "{" + carrier.getValue("code").toString() + "}";
+            QLogger.saveLabelLog(carrier.getValue("code").toString());
+        }
         carrier.setValue("text", t);
         return carrier;
     }
@@ -3726,9 +3786,11 @@ public class CrModel {
         ent.setFieldName(arg);
         EntityManager.select(ent);
 
-        String t = ent.getDescription().trim().length() == 0
-                ? "{" + arg + "}"
-                : ent.getDescription();
+        String t = ent.getDescription();
+        if (t.trim().length() == 0) {
+            t = "{" + arg + "}";
+            QLogger.saveLabelLog(arg);
+        }
         return t;
     }
 
@@ -3741,31 +3803,34 @@ public class CrModel {
 
     public static Carrier signupCompany(Carrier carrier) throws QException {
         try {
+            EntityCrTempUser entUser = new EntityCrTempUser();
+            EntityManager.mapCarrierToEntity(carrier, entUser);
+            entUser.setUserShortId(IdGenerator.getId());
+            entUser.setLiUserPermissionCode(USER_TYPE_ADMIN_AND_DOCTOR);
+            entUser.setModule(carrier.getValue("fkModuleId").toString());
+            EntityManager.insert(entUser);
+
+            String activationId = IdGenerator.nextRandomSessionId();
             EntityCrCompany entCompany = new EntityCrCompany();
             EntityManager.mapCarrierToEntity(carrier, entCompany);
+            entCompany.setCompanyLang(SessionManager.getCurrentLang());
             entCompany.setStatus(EntityCrCompany.CompanyStatus.VERIFY.toString());
-            String activationId = IdGenerator.nextRandomSessionId();
             entCompany.setActivationId(activationId);
             entCompany.setCompanyType(EntityCrCompany.CompanyType.COMPANY.toString());
-
+            entCompany.setActiveUserCount("1");
+            entCompany.setFkUserId(entUser.getId());
             entCompany.setCompanyDb("apd_" + IdGenerator.nextDbId());
             EntityManager.insert(entCompany);
 
-            EntityCrUser entUser = new EntityCrUser();
-            EntityManager.mapCarrierToEntity(carrier, entUser);
-            entUser.setUserShortId(IdGenerator.getId());
-            entUser.setFkCompanyId(entCompany.getId());//SessionManager.getCurrentUserId()
-            EntityManager.insert(entUser);
-            carrier.setValue(EntityCrUser.ID, entUser.getId());
-
-//            try{
-//                MailSender.send(entUser.getEmail1(), "Company registered",
-//                    "Activate company " + entCompany.getCompanyName() +
-//                            "  http://localhost:8080/apd/api/post/signup/activate/" 
-//                            + activationId);
-//            }catch(Exception e){
-//                System.out.println("excepiton oldu");
-//            }    
+            try {
+                MailSender.send(entUser.getEmail1(),
+                        QUtility.getLabel("mailActivationSubject"),
+                        QUtility.getLabel("mailActivationBody",
+                                new String[]{entCompany.getCompanyName(), activationId})
+                );
+            } catch (Exception e) {
+                System.out.println("excepiton oldu");
+            }
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -3812,27 +3877,51 @@ public class CrModel {
 
     public static Carrier activateCompany(Carrier carrier) throws QException {
         try {
+
+            Carrier outCarrier = new Carrier();
+
             EntityCrCompany entCompany = new EntityCrCompany();
-            EntityManager.mapCarrierToEntity(carrier, entCompany);
+            entCompany.setActivationId(carrier.getValue("activationId").toString());
             entCompany.setStatus(EntityCrCompany.CompanyStatus.VERIFY.toString());
-            EntityManager.select(entCompany);
+            Carrier c1 = EntityManager.select(entCompany);
+
+            if (c1.getTableRowCount(entCompany.toTableName()) == 0) {
+                outCarrier.setValue("res", QUtility.getLabel("activationIdIsNotAvailable"));
+                return outCarrier;
+            }
+
             entCompany.setStatus(EntityCrCompany.CompanyStatus.PENDING.toString());
             EntityManager.update(entCompany);
 
-            CompanyJob.execute(null);
+            String fkTempUserId = entCompany.getFkUserId();
 
-            //Create a new Job 
-            /*JobKey jobKey = JobKey.jobKey("CompanyCreatorJob", "APDVoice");
-            JobDetail job = JobBuilder.newJob(CompanyJob.class).withIdentity(jobKey).storeDurably().build();
+            //CREATE LOCAL_DATABASE
+            createDBOnActivateCompany(entCompany.getCompanyDb().trim());
+
+            //create tables and views
+            createTableAndViewOnActivateCompany(entCompany.getCompanyDb().trim());
+
+            //generate insert script
+            insertScriptOnActivateCompany(entCompany.getCompanyDb().trim());
+
+            //insert admin user info
+            String id = insertAdminUserOnActivateCompany(entCompany.getFkUserId(),
+                    entCompany.getCompanyDb());
+
+            //activate account
+            entCompany.setStatus(EntityCrCompany.CompanyStatus.ACTIVE.toString());
+            entCompany.setFkUserId(id);
+            EntityManager.update(entCompany);
+
+            //add default permission and add default payment within the permission section
+            String fkCompanyId = entCompany.getId();
+            String fkModuleId = getModuleIdByUserId(fkTempUserId);
+            addDefaultPermissionToActivateCompany(fkCompanyId);
+            addDefaultModulePermissionToActivateCompany(fkModuleId, fkCompanyId);
+
+            //send email about activation
+            sendActivationEmail(fkTempUserId, fkCompanyId, entCompany.getCompanyName());
             
-            StdSchedulerFactory stdSchedulerFactory = new StdSchedulerFactory();
-            Scheduler scheduler = stdSchedulerFactory.getScheduler();
-
-            //Register this job to the scheduler
-            scheduler.addJob(job, true);
-
-            //Immediately fire the Job MyJob.class
-            scheduler.triggerJob(jobKey);*/
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -3840,6 +3929,278 @@ public class CrModel {
                     new Object() {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
+    }
+
+    private static void sendActivationEmail(String fkTempUserId, String dbname,String domain) {
+        try {
+            EntityCrTempUser ent = new EntityCrTempUser();
+            ent.setDbname(dbname);
+            ent.setId(fkTempUserId);
+            ent.setStartLimit(0);
+            ent.setEndLimit(0);
+            EntityManager.select(ent);
+            
+            String fullname = ent.getUserPersonSurname()+" "+ent.getUserPersonName()+" "+
+                    ent.getUserPersonMiddlename();
+
+            MailSender.send(ent.getEmail1(),
+                    QUtility.getLabel("mailCompanyActivatedSubject"),
+                    QUtility.getLabel("mailCompanyActivatedBody",
+                            new String[]{fullname, domain})
+            );
+        } catch (Exception e) {
+            System.out.println("excepiton oldu");
+        }
+    }
+
+    private static void addDefaultPaymentOnActivateCompany(
+            String fkCompanyId, String fkPaymentTypeId) throws QException {
+        Carrier carrier = new Carrier();
+        carrier.setValue(EntityCrCompanyPayment.CURRENCY, "USD");
+        carrier.setValue(EntityCrCompanyPayment.FK_COMPANY_ID, fkCompanyId);
+        carrier.setValue(EntityCrCompanyPayment.FK_PAYMENT_TYPE_ID, fkPaymentTypeId);
+        carrier.setValue(EntityCrCompanyPayment.PAYMENT_AMOUNT, "0");
+        carrier.setValue(EntityCrCompanyPayment.PAYMENT_DISCOUNT, "100");
+        carrier.setValue(EntityCrCompanyPayment.PAYMENT_DATE, QDate.getCurrentDate());
+        carrier.setValue(EntityCrCompanyPayment.PAYMENT_TIME, QDate.getCurrentTime());
+        insertNewCompanyPayment(carrier);
+    }
+
+    private static String getPaymentTypeIdByShortname(String shortname) throws QException {
+        EntityCrPaymentType ent = new EntityCrPaymentType();
+        ent.setPaymentTypeShortname(shortname);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        EntityManager.select(ent);
+        return ent.getId();
+    }
+
+    private static void addDefaultPermissionToActivateCompany(String fkCompanyId)
+            throws QException {
+        String[] paymentTypes = Config.getSignUpCompanyPaymentType().split(",");
+
+        for (String pt : paymentTypes) {
+            if (pt.trim().length() == 0) {
+                continue;
+            }
+            String fkPaymentTypeId = getPaymentTypeIdByShortname(pt);
+
+            if (fkPaymentTypeId.trim().length() == 0) {
+                continue;
+            }
+
+            addDefaultPaymentOnActivateCompany(fkCompanyId, fkPaymentTypeId);
+
+            //get rule by payment type
+            EntityCrRelPaymentTypeAndRule ent = new EntityCrRelPaymentTypeAndRule();
+            ent.setFkPaymentTypeId(fkPaymentTypeId);
+            ent.setOwner(PAYMENT_TYPE_OWNER_COMPANY);
+            Carrier c = EntityManager.select(ent);
+
+            String tn = ent.toTableName();
+            int rc = c.getTableRowCount(tn);
+            for (int j = 0; j < rc; j++) {
+                EntityCrRelPaymentTypeAndRule ent1 = new EntityCrRelPaymentTypeAndRule();
+                EntityManager.mapCarrierToEntity(c, tn, j, ent1);
+
+                if (ent1.getFkRuleId().trim().length() == 0) {
+                    continue;
+                }
+
+                int addDay = ent1.getDefaultPeriod().trim().length() == 0
+                        ? 0 : Integer.parseInt(ent1.getDefaultPeriod().trim());
+                String expDate = QDate.convertDateToString(
+                        QDate.add(QDate.getCurrentDate(), addDay));
+
+                EntityCrRelCompanyAndRule entRel = new EntityCrRelCompanyAndRule();
+                entRel.setFkCompanyId(fkCompanyId);
+                entRel.setFkRuleId(ent1.getFkRuleId());
+                entRel.setExpireDate(expDate);
+                EntityManager.insert(entRel);
+
+            }
+        }
+    }
+
+    private static String getModuleIdByUserId(String fkUserId) throws QException {
+
+        if (fkUserId.trim().length() == 0) {
+            return "";
+        }
+
+        EntityCrTempUser ent = new EntityCrTempUser();
+        ent.setId(fkUserId);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        EntityManager.select(ent);
+
+        return ent.getModule();
+    }
+
+    private static void addDefaultModulePermissionToActivateCompany(String fkModuleId,
+            String fkCompanyId)
+            throws QException {
+
+        if (fkModuleId.trim().length() == 0) {
+            return;
+        }
+
+        //get rule by payment type
+        EntityCrModule ent = new EntityCrModule();
+        ent.setId(fkModuleId);
+        Carrier c = EntityManager.select(ent);
+        String paymentTypeId = ent.getFkPaymentTypeId();
+
+        if (c.getTableRowCount(ent.toTableName()) == 0
+                || paymentTypeId.trim().length() == 0) {
+            return;
+        }
+
+        //get rule by payment type
+        EntityCrRelPaymentTypeAndRule ent2
+                = new EntityCrRelPaymentTypeAndRule();
+        ent2.setFkPaymentTypeId(paymentTypeId);
+        ent2.setOwner(PAYMENT_TYPE_OWNER_COMPANY);
+        Carrier tc = EntityManager.select(ent2);
+
+        addDefaultPaymentOnActivateCompany(fkCompanyId, paymentTypeId);
+
+        String tn = ent2.toTableName();
+        int rc = tc.getTableRowCount(tn);
+        for (int j = 0; j < rc; j++) {
+            EntityCrRelPaymentTypeAndRule ent1 = new EntityCrRelPaymentTypeAndRule();
+            EntityManager.mapCarrierToEntity(tc, tn, j, ent1);
+
+            if (ent1.getFkRuleId().trim().length() == 0) {
+                continue;
+            }
+
+            int addDay = ent1.getDefaultPeriod().trim().length() == 0
+                    ? 0 : Integer.parseInt(ent1.getDefaultPeriod().trim());
+            String expDate = QDate.convertDateToString(
+                    QDate.add(QDate.getCurrentDate(), addDay));
+
+            EntityCrRelCompanyAndRule entRel = new EntityCrRelCompanyAndRule();
+            entRel.setFkCompanyId(fkCompanyId);
+            entRel.setFkRuleId(ent1.getFkRuleId());
+            entRel.setExpireDate(expDate);
+            EntityManager.insert(entRel);
+        }
+
+    }
+
+    private static String insertAdminUserOnActivateCompany(String userId, String companyDB)
+            throws QException {
+        if (userId.trim().length() == 0) {
+            throw new QException("Not Found");
+        }
+
+        EntityCrTempUser entTU = new EntityCrTempUser();
+        entTU.setId(userId);
+        Carrier c = EntityManager.select(entTU);
+
+        if (c.getTableRowCount(entTU.toTableName()) != 1) {
+            throw new QException("Not Found");
+        }
+
+        EntityCrUser entU = new EntityCrUser();
+        entU.setDbname(companyDB);
+        entU.setUsername(entTU.getUsername());
+        entU.setPassword(entTU.getPassword());
+        entU.setUserPersonName(entTU.getUserPersonName());
+        entU.setUserPersonSurname(entTU.getUserPersonSurname());
+        entU.setUserPersonMiddlename(entTU.getUserPersonMiddlename());
+        entU.setSex(entTU.getSex());
+        entU.setEmail1(entTU.getEmail1());
+        entU.setMobile1(entTU.getMobile1());
+        entU.setLiUserPermissionCode(entTU.getLiUserPermissionCode());
+        EntityManager.insert(entU);
+
+        return entU.getId();
+
+    }
+
+    private static void createDBOnActivateCompany(String companyDb) throws QException {
+        String query = "CREATE DATABASE IF NOT EXISTS " + companyDb + ";";
+        EntityManager.executeUpdateByQuery(query);
+    }
+
+    private static void createTableAndViewOnActivateCompany(String companyDb) throws QException {
+        Pattern p = Pattern.compile("\\$\\{companyDb\\}");
+        List<EntityCrUserTable> viewList = new ArrayList<>();
+        List<EntityCrUserTable> tableList = new ArrayList<>();
+
+        String types = EntityCrUserTable.Type.TABLE.toString()
+                + CoreLabel.IN + EntityCrUserTable.Type.VIEW.toString();
+
+        EntityCrUserTable entUsrTbl = new EntityCrUserTable();
+        entUsrTbl.setType(types);
+        entUsrTbl.addSortBy(EntityCrUserTable.TYPE);
+        entUsrTbl.addSortBy(EntityCrUserTable.SEQNUM);
+        entUsrTbl.setSortByAsc(true);
+        Carrier crUsrTbl = EntityManager.select(entUsrTbl);
+
+        int rc = crUsrTbl.getTableRowCount(entUsrTbl.toTableName());
+        for (int i = 0; i < rc; i++) {
+            EntityCrUserTable entUsrTbl1 = new EntityCrUserTable();
+            EntityManager.mapCarrierToEntity(crUsrTbl,
+                    entUsrTbl.toTableName(), i, entUsrTbl1, true);
+            if (entUsrTbl1.getType().equals(EntityCrUserTable.Type.TABLE.toString())) {
+                tableList.add(entUsrTbl1);
+            } else if (entUsrTbl1.getType().equals(EntityCrUserTable.Type.VIEW.toString())) {
+                viewList.add(entUsrTbl1);
+            }
+
+        }
+
+        for (int i = 0; i < tableList.size(); i++) {
+            String q = tableList.get(i).getTableScript();
+            if (q.trim().length() > 0) {
+                String vs = p.matcher(q).replaceAll(companyDb);
+                System.out.println("query=" + vs);
+                EntityManager.executeUpdateByQuery(vs);
+                System.out.println("table " + tableList.get(i).getTableName().trim() + " created");
+            }
+        }
+
+        for (int i = 0; i < viewList.size(); i++) {
+            String q = viewList.get(i).getTableScript();
+            if (q.trim().length() > 0) {
+                String vs = p.matcher(q).replaceAll(companyDb);
+                System.out.println("query=" + vs);
+                EntityManager.executeUpdateByQuery(vs);
+                System.out.println("view " + viewList.get(i).getTableName().trim() + " created");
+            }
+        }
+    }
+
+    private static void insertScriptOnActivateCompany(String companyDb) throws QException {
+        Pattern p = Pattern.compile("\\$\\{companyDb\\}");
+
+        String types = EntityCrUserTable.Type.SCRIPT.toString();
+
+        EntityCrUserTable entUsrTbl = new EntityCrUserTable();
+        entUsrTbl.setType(types);
+        entUsrTbl.addSortBy(EntityCrUserTable.TYPE);
+        entUsrTbl.addSortBy(EntityCrUserTable.SEQNUM);
+        entUsrTbl.setSortByAsc(true);
+        Carrier crUsrTbl = EntityManager.select(entUsrTbl);
+
+        int rc = crUsrTbl.getTableRowCount(entUsrTbl.toTableName());
+        for (int i = 0; i < rc; i++) {
+            EntityCrUserTable entUsrTbl1 = new EntityCrUserTable();
+            EntityManager.mapCarrierToEntity(crUsrTbl,
+                    entUsrTbl.toTableName(), i, entUsrTbl1, true);
+            String q = entUsrTbl.getTableScript();
+            if (q.trim().length() > 0) {
+                String vs = p.matcher(q).replaceAll(companyDb);
+                System.out.println("query=" + vs);
+                EntityManager.executeUpdateByQuery(vs);
+                System.out.println("table " + entUsrTbl.getTableName().trim() + " created");
+            }
+
+        }
+
     }
 
     public static Carrier resendEmail(Carrier carrier) throws QException {
@@ -3921,8 +4282,11 @@ public class CrModel {
             ent.setDeepWhere(false);
             EntityManager.mapCarrierToEntity(carrier, ent);
             carrier = EntityManager.select(ent);
-            //carrier.removeColoumn(ent.toTableName(), EntityCrUser.PASSWORD);
             carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+
+            carrier.copyTableColumn(CoreLabel.RESULT_SET, "ruleName", "ruleNameMain");
+
+            addRuleLabel(carrier);
 
             carrier.addTableSequence(CoreLabel.RESULT_SET,
                     EntityManager.getListSequenceByKey("getRuleList"));
@@ -3962,11 +4326,31 @@ public class CrModel {
     }
 
     public static Carrier assignPermissionRule(Carrier carrier) throws QException {
-        EntityCrRelRulePermission ent = new EntityCrRelRulePermission();
-        EntityManager.mapCarrierToEntity(carrier, ent);
-        //ent.setLang(SessionManager.getCurrentLang());
-        EntityManager.insert(ent);
-        return carrier;
+        String fkRuleId = carrier.getValue("fkRuleId").toString();;
+        EntityCrRelRuleAndPermission ent = new EntityCrRelRuleAndPermission();
+        ent.setFkRuleId(fkRuleId);
+        Carrier crRel = EntityManager.select(ent);
+
+//        if (crRel.getTableRowCount(ent.toTableName()) > 0) {
+//            String ids = crRel.getValueLine(ent.toTableName());
+//            ent.setId(ids);
+//            EntityManager.delete(ent);
+//        }
+        String[] permissions = carrier.getValue("fkPermissionId").toString()
+                .split(CoreLabel.SEPERATOR_VERTICAL_LINE);
+        for (String p : permissions) {
+            if (p.trim().length() > 0) {
+                EntityCrRelRuleAndPermission entNew = new EntityCrRelRuleAndPermission();
+                entNew.setFkPermissionId(p);
+                entNew.setFkRuleId(fkRuleId);
+                Carrier tc = EntityManager.select(entNew);
+                if (tc.getTableRowCount(entNew.toTableName()) > 0) {
+                    continue;
+                }
+                EntityManager.insert(entNew);
+            }
+        }
+        return new Carrier();
     }
 
     /*public static Carrier getPermissionListByRule(Carrier carrier) throws QException {
@@ -3992,15 +4376,41 @@ public class CrModel {
     }*/
     public static Carrier getRulePermissionList(Carrier carrier) throws QException {
         try {
+            EntityCrRelRuleAndPermissionList entM = new EntityCrRelRuleAndPermissionList();
+            EntityManager.mapCarrierToEntity(carrier, entM);
+            Carrier crOut = EntityManager.select(entM);
+            String tnMain = entM.toTableName();
 
-            carrier = EntityManager.selectBySql("select rp.id, r.rule_name, p.permission_string from cr_rule r, cr_rel_rule_permission rp, cr_permission p "
-                    + " where r.id=rp.fk_rule_id and rp.fk_permission_id=p.id "
-                    + " and r.status='A' and rp.status='A' and p.status='A'");
+            if (carrier.hasKey("id")) {
+                EntityCrRelRuleAndPermission ent1 = new EntityCrRelRuleAndPermission();
+                ent1.setId(carrier.getValue("id").toString());
+                EntityManager.select(ent1);
 
-            carrier.addTableSequence(CoreLabel.RESULT_SET,
+                if (ent1.getFkRuleId().trim().length() > 0) {
+                    EntityCrRelRuleAndPermission ent2 = new EntityCrRelRuleAndPermission();
+                    ent2.setFkRuleId(ent1.getFkRuleId());
+                    Carrier tc1 = EntityManager.select(ent2);
+
+                    String res = "";
+                    String tn = ent2.toTableName();
+                    int rc = tc1.getTableRowCount(tn);
+                    for (int i = 0; i < rc; i++) {
+                        res += tc1.getValue(tn, i, "fkPermissionId").toString()
+                                + "|";
+                    }
+                    crOut.setValue(tnMain, 0, "fkPermissionId", res);
+                }
+
+            }
+
+            crOut.renameTableName(tnMain, CoreLabel.RESULT_SET);
+
+            addRuleLabel(crOut);
+            //
+            crOut.addTableSequence(CoreLabel.RESULT_SET,
                     EntityManager.getListSequenceByKey("getRulePermissionList"));
-            carrier.addTableRowCount("rowCount", 1000);
-            return carrier;
+            crOut.addTableRowCount("rowCount", EntityManager.getRowCount(entM));
+            return crOut;
         } catch (Exception ex) {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
@@ -4010,32 +4420,130 @@ public class CrModel {
 
     }
 
+    private static void addRuleLabel(Carrier carrier) throws QException {
+
+        Map<String, String> lang = new HashMap<>();
+
+        String col = "ruleName";
+
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String val = carrier.getValue(tn, i, col).toString();
+            if (lang.containsKey(val)) {
+                val = lang.get(val);
+            } else {
+                String v = QUtility.getLabel(val);
+                lang.put(val, v);
+                val = v;
+            }
+            carrier.setValue(tn, i, "ruleName", val);
+        }
+    }
+
+    private static void addRuleLabelById(Carrier carrier) throws QException {
+
+        Map<String, String> lang = new HashMap<>();
+
+        String col = "ruleName";
+        String colId = "fkRuleId";
+
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String valId = carrier.getValue(tn, i, colId).toString();
+            EntityCrRule entRule = new EntityCrRule();
+            entRule.setId(valId);
+            entRule.setStartLimit(0);
+            entRule.setEndLimit(0);
+            EntityManager.select(entRule);
+
+            if (entRule.getRuleName().trim().length() == 0) {
+                carrier.setValue(tn, i, col, "");
+                continue;
+            }
+
+            String val = entRule.getRuleName().trim();
+            if (lang.containsKey(val)) {
+                val = lang.get(val);
+            } else {
+                String v = QUtility.getLabel(val);
+                lang.put(val, v);
+                val = v;
+            }
+            carrier.setValue(tn, i, col, val);
+        }
+    }
+
+    private static void addRoleLabelById(Carrier carrier) throws QException {
+
+        Map<String, String> lang = new HashMap<>();
+
+        String col = "roleName";
+        String colOut = "roleFullname";
+        String colId = "fkRoleId";
+
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String valId = carrier.getValue(tn, i, colId).toString();
+            EntityCrRole entRule = new EntityCrRole();
+            entRule.setId(valId);
+            entRule.setStartLimit(0);
+            entRule.setEndLimit(0);
+            EntityManager.select(entRule);
+
+            if (entRule.getRoleName().trim().length() == 0) {
+                continue;
+            }
+
+            String val = entRule.getRoleName().trim();
+            if (lang.containsKey(val)) {
+                val = lang.get(val);
+            } else {
+                String v = QUtility.getLabel(val);
+                lang.put(val, v);
+                val = v;
+            }
+            carrier.setValue(tn, i, colOut, val);
+        }
+    }
+
     public Carrier deleteRulePermission(Carrier carrier) throws QException {
-        EntityCrRelRulePermission ent = new EntityCrRelRulePermission();
+        EntityCrRelRuleAndPermission ent = new EntityCrRelRuleAndPermission();
         EntityManager.mapCarrierToEntity(carrier, ent);
         EntityManager.delete(ent);
         return carrier;
     }
 
     public static Carrier getRoleList(Carrier carrier) throws QException {
-        try {
-            EntityCrRole ent = new EntityCrRole();
-            ent.setDeepWhere(false);
-            EntityManager.mapCarrierToEntity(carrier, ent);
-            carrier = EntityManager.select(ent);
-            //carrier.removeColoumn(ent.toTableName(), EntityCrUser.PASSWORD);
-            carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
 
-            carrier.addTableSequence(CoreLabel.RESULT_SET,
-                    EntityManager.getListSequenceByKey("getRoleList"));
-            carrier.addTableRowCount("rowCount", EntityManager.getRowCount(ent));
-            return carrier;
-        } catch (Exception ex) {
-            throw new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
-        }
+        EntityCrRole ent = new EntityCrRole();
+        ent.setDeepWhere(false);
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        carrier = EntityManager.select(ent);
+        //carrier.removeColoumn(ent.toTableName(), EntityCrUser.PASSWORD);
+        carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        carrier.copyTableColumn(CoreLabel.RESULT_SET, "id", "fkRoleId");
+        addRoleLabelById(carrier);
+
+        carrier.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getRoleList"));
+        carrier.addTableRowCount("rowCount", EntityManager.getRowCount(ent));
+        return carrier;
+
+    }
+
+    public static Carrier getRoleList4Combo(Carrier carrier) throws QException {
+
+        EntityCrRole ent = new EntityCrRole();
+        carrier = EntityManager.select(ent);
+
+        carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        carrier.copyTableColumn(CoreLabel.RESULT_SET, "id", "fkRoleId");
+        addRoleLabelById(carrier);
+
+        return carrier;
 
     }
 
@@ -4064,97 +4572,215 @@ public class CrModel {
     }
 
     public static Carrier assignRuleRole(Carrier carrier) throws QException {
+        String fkRoleId = carrier.getValue("fkRoleId").toString();;
+
         EntityCrRelRoleRule ent = new EntityCrRelRoleRule();
-        EntityManager.mapCarrierToEntity(carrier, ent);
-        //ent.setLang(SessionManager.getCurrentLang());
-        EntityManager.insert(ent);
-        return carrier;
+        ent.setDeepWhere(false);
+        ent.setFkRoleId(fkRoleId);
+        Carrier crRel = EntityManager.select(ent);
+
+        if (crRel.getTableRowCount(ent.toTableName()) > 0) {
+            String ids = crRel.getValueLine(ent.toTableName());
+            ent.setId(ids);
+            EntityManager.delete(ent);
+        }
+
+        String[] fkRuleId = carrier.getValue("fkRuleId").toString()
+                .split(CoreLabel.SEPERATOR_VERTICAL_LINE);
+        for (String p : fkRuleId) {
+            if (p.trim().length() > 0) {
+                EntityCrRelRoleRule entNew = new EntityCrRelRoleRule();
+                entNew.setDeepWhere(false);
+                entNew.setFkRuleId(p);
+                entNew.setFkRoleId(fkRoleId);
+                Carrier tc = EntityManager.select(entNew);
+                if (tc.getTableRowCount(entNew.toTableName()) > 0) {
+                    continue;
+                }
+                EntityManager.insert(entNew);
+            }
+        }
+        return new Carrier();
     }
 
-    /*public static Carrier getPermissionListByRule(Carrier carrier) throws QException {
-        try {
-            EntityCrPermission ent = new EntityCrPermission();
-            ent.setDeepWhere(false);
-            EntityManager.mapCarrierToEntity(carrier, ent);
-            carrier = EntityManager.select(ent);
-            //carrier.removeColoumn(ent.toTableName(), EntityCrUser.PASSWORD);
-            carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
-
-            carrier.addTableSequence(CoreLabel.RESULT_SET,
-                    EntityManager.getListSequenceByKey("getPermissionList"));
-            carrier.addTableRowCount("rowCount", EntityManager.getRowCount(ent));
-            return carrier;
-        } catch (Exception ex) {
-            throw new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
-        }
-
-    }*/
     public static Carrier getRoleRuleList(Carrier carrier) throws QException {
-        try {
 
-            carrier = EntityManager.selectBySql("select rp.id, r.role_name, p.rule_name from " + SessionManager.getCurrentDomain() + ".cr_role r, "
-                    + SessionManager.getCurrentDomain() + ".cr_rel_role_rule rp, apdvoice.cr_rule p "
-                    + " where r.id=rp.fk_role_id and rp.fk_rule_id=p.id "
-                    + " and r.status='A' and rp.status='A' and p.status='A' ");
+        EntityCrRelRoleRule entM = new EntityCrRelRoleRule();
+        EntityManager.mapCarrierToEntity(carrier, entM);
+        Carrier crOut = EntityManager.select(entM);
+        String tnMain = entM.toTableName();
 
-            carrier.addTableSequence(CoreLabel.RESULT_SET,
-                    EntityManager.getListSequenceByKey("getRoleRuleList"));
-            carrier.addTableRowCount("rowCount", 1000);
-            return carrier;
-        } catch (Exception ex) {
-            throw new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+        if (carrier.hasKey("id")) {
+            EntityCrRelRoleRule ent1 = new EntityCrRelRoleRule();
+            ent1.setId(carrier.getValue("id").toString());
+            EntityManager.select(ent1);
+
+            if (ent1.getFkRoleId().trim().length() > 0) {
+                EntityCrRelRoleRule ent2 = new EntityCrRelRoleRule();
+                ent2.setFkRoleId(ent1.getFkRoleId());
+                Carrier tc1 = EntityManager.select(ent2);
+
+                String res = "";
+                String tn = ent2.toTableName();
+                int rc = tc1.getTableRowCount(tn);
+                for (int i = 0; i < rc; i++) {
+                    res += tc1.getValue(tn, i, "fkRuleId").toString()
+                            + "|";
+                }
+                crOut.setValue(tnMain, 0, "fkRuleId", res);
+            }
+
         }
+
+        crOut.renameTableName(tnMain, CoreLabel.RESULT_SET);
+
+        addRuleLabelById(crOut);
+        addRoleLabelById(crOut);
+        //
+        crOut.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getRoleRuleList"));
+        crOut.addTableRowCount("rowCount", EntityManager.getRowCount(entM));
+        return crOut;
 
     }
 
     public Carrier deleteRoleRule(Carrier carrier) throws QException {
         EntityCrRelRoleRule ent = new EntityCrRelRoleRule();
-        EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setId(carrier.getValue("id").toString());
         EntityManager.delete(ent);
         return carrier;
     }
 
     public static Carrier getUserRuleList(Carrier carrier) throws QException {
-        try {
-//            String id = carrier.getValue("id").toString();
-//            String fkRoleId = carrier.getValue("fkRoleId").toString();
-//            System.out.println("id=" + id);
-//            System.out.println("fkRoleId=" + fkRoleId);
-//
-//            if (fkRoleId == null || fkRoleId.isEmpty()) {
-//                carrier = EntityManager.selectBySql("select r.id, r.rule_name,"
-//                        + " if(ru.fk_rule_id is null,0,1) rule_access  from cr_rule r "
-//                        + "left outer join " + SessionManager.getCurrentDomain() +
-//                        ".cr_rel_user_rule ru on r.id=ru.fk_rule_id and ru.fk_user_id=? and ru.status='A' "
-//                        + "where r.status='A'", new String[]{id});
-//            } else {
-//                carrier = EntityManager.selectBySql("select r.id, r.rule_name, "
-//                        + "if(ru.fk_rule_id is null,0,1) rule_access  from cr_rule r "
-//                        + " join " + SessionManager.getCurrentDomain() + 
-//                        ".cr_rel_role_rule ro on r.id=ro.fk_rule_id and ro.status='A' and ro.fk_role_id=? "
-//                        + " left outer join " + 
-//                        SessionManager.getCurrentDomain() + ".cr_rel_user_rule ru on r.id=ru.fk_rule_id and ru.fk_user_id=? and ru.status='A' "
-//                        + " where r.status='A'", new String[]{fkRoleId, id});
-//            }
-//
-//            carrier.addTableSequence(CoreLabel.RESULT_SET,
-//                    EntityManager.getListSequenceByKey("getUserRuleList"));
-//            carrier.addTableRowCount("rowCount", 1000);
-            return carrier;
 
-        } catch (Exception ex) {
-            throw new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
+        String type = carrier.getValue("type").toString();
+        System.out.println("type=" + type);
+
+        if (type.trim().equals(USER_RULE_TYPE_BY_RULE)) {
+            carrier = getUserRuleListByRole(carrier);
+        } else if (type.trim().equals(USER_RULE_TYPE_BY_OWN)) {
+            carrier = getUserRuleListByOwn(carrier);
+        } else if (type.trim().equals(USER_RULE_TYPE_BY_ALL)) {
+            carrier = getUserRuleListByAll(carrier);
+        }
+        return carrier;
+    }
+
+    private static Carrier getUserRuleListByRole(Carrier carrier) throws QException {
+        String id = carrier.getValue("fkUserId").toString();
+        String fkRoleId = carrier.getValue("fkRoleId").toString();
+        System.out.println("fkUserId=" + id);
+        System.out.println("fkRoleId=" + fkRoleId);
+
+        if (fkRoleId == null || fkRoleId.isEmpty()) {
+            return carrier;
         }
 
+        EntityCrRelRoleRule ent = new EntityCrRelRoleRule();
+        ent.setFkRoleId(fkRoleId);
+        ent.setFkRuleId(getPublishedRuleIdsByCompany());
+        carrier = EntityManager.select(ent);
+        carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        addRoleLabelById(carrier);
+        addRuleLabelById(carrier);
+
+        String[] assignedRuleIds = null;
+        if (id.trim().length() == 0) {
+            assignedRuleIds = new String[]{""};
+        } else {
+            EntityCrRelUserAndRule entRel = new EntityCrRelUserAndRule();
+            entRel.setFkUserId(id);
+            Carrier crRel = EntityManager.select(entRel);
+            assignedRuleIds = crRel.getValue(entRel.toTableName(),
+                    EntityCrRelUserAndRule.FK_RULE_ID);
+        }
+
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String ruleId = carrier.getValue(tn, i, "fkRuleId").toString();
+            String access = Arrays.asList(assignedRuleIds).contains(ruleId) ? "1" : "0";
+            carrier.setValue(tn, i, "ruleAccess", access);
+        }
+
+        return carrier;
+    }
+
+    private static String getPublishedRuleIdsBy() throws QException {
+        EntityCrRule ent = new EntityCrRule();
+        ent.setIsPublic("1");
+        return EntityManager.select(ent).getValueLine(ent.toTableName());
+    }
+
+    private static String getPublishedRuleIdsByCompany() throws QException {
+        String defaultId = "__2__" + CoreLabel.IN;
+        EntityCrRelCompanyAndRule ent = new EntityCrRelCompanyAndRule();
+        ent.setDeepWhere(false);
+        ent.setFkRuleId(getPublishedRuleIdsBy());
+        ent.setExpireDate(CoreLabel.GE + QDate.getCurrentDate());
+        ent.setFkCompanyId(SessionManager.getCurrentCompanyId());
+        return defaultId + EntityManager.select(ent).getValueLine(ent.toTableName(), "fkRuleId");
+    }
+
+    private static Carrier getUserRuleListByAll(Carrier carrier) throws QException {
+        String id = carrier.getValue("fkUserId").toString();
+
+        EntityCrRelCompanyAndRule ent = new EntityCrRelCompanyAndRule();
+        ent.setDeepWhere(false);
+        ent.setExpireDate(CoreLabel.GE + QDate.getCurrentDate());
+        ent.setFkRuleId(getPublishedRuleIdsBy());
+        ent.setFkCompanyId(SessionManager.getCurrentCompanyId());
+        carrier = EntityManager.select(ent);
+
+        carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        addRuleLabelById(carrier);
+
+        String[] assignedRuleIds = null;
+        if (id.trim().length() == 0) {
+            assignedRuleIds = new String[]{""};
+        } else {
+            EntityCrRelUserAndRule entRel = new EntityCrRelUserAndRule();
+            entRel.setFkUserId(id);
+            Carrier crRel = EntityManager.select(entRel);
+            assignedRuleIds = crRel.getValue(entRel.toTableName(),
+                    EntityCrRelUserAndRule.FK_RULE_ID);
+        }
+
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String ruleId = carrier.getValue(tn, i, "fkRuleId").toString();
+            String access = Arrays.asList(assignedRuleIds).contains(ruleId) ? "1" : "0";
+            carrier.setValue(tn, i, "ruleAccess", access);
+        }
+
+        return carrier;
+    }
+
+    private static Carrier getUserRuleListByOwn(Carrier carrier) throws QException {
+        String fkUserId = carrier.getValue("fkUserId").toString();
+        System.out.println("fkUserId=" + fkUserId);
+
+        if (fkUserId == null || fkUserId.isEmpty()) {
+            return carrier;
+        }
+
+        EntityCrRelUserAndRule entRel = new EntityCrRelUserAndRule();
+        entRel.setFkUserId(fkUserId);
+        entRel.setFkRuleId(getPublishedRuleIdsByCompany());
+        Carrier crRel = EntityManager.select(entRel);
+
+        String tn = entRel.toTableName();
+        int rc = crRel.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String access = "1";
+            crRel.setValue(tn, i, "ruleAccess", access);
+        }
+
+        crRel.renameTableName(tn, CoreLabel.RESULT_SET);
+        addRuleLabelById(crRel);
+
+        return crRel;
     }
 
     public Carrier getNextSubmoduleOrderNo(Carrier carrier) throws QException {
@@ -4236,7 +4862,569 @@ public class CrModel {
 
         String fullname = ent.getPatientName() + " " + ent.getPatientSurname() + " "
                 + ent.getPatientMiddleName() + " (" + ent.getPatientBirthDate() + ")";
-        carrier.setValue(CoreLabel.RESULT_SET,0,"patientName", fullname);
+        carrier.setValue(CoreLabel.RESULT_SET, 0, "patientName", fullname);
         return carrier;
     }
+
+    public Carrier isCompanyDomainAvailable(Carrier carrier) throws QException {
+        EntityCrCompany ent = new EntityCrCompany();
+        ent.setStatus("");
+        ent.setCompanyDomain(carrier.getValue("companyDomain").toString());
+        Carrier c = EntityManager.select(ent);
+
+        int f = c.getTableRowCount(ent.toTableName()) > 0 ? 1 : 0;
+        Carrier nc = new Carrier();
+        nc.setValue("res", f);
+        return nc;
+    }
+
+    public static Carrier getTermPage(Carrier carrier) throws QException {
+        try {
+            String lang = carrier.getValue("lang").toString();
+            lang = SessionHandler.isLangAvailable(lang) ? lang : "ENG";
+            SessionManager.setLang(SessionManager.getCurrentThreadId(), lang);
+
+            String filename = "page_term_" + lang;
+            GeneralProperties prop = new GeneralProperties();
+            String fpath = prop.getWorkingDir() + "../page/" + filename + ".html";
+            File file = new File(fpath);
+
+            if (!file.exists()) {
+                filename = "page_term_ENG";
+            }
+
+            Carrier nc = new Carrier();
+            nc.setValue("page", filename);
+            nc = getPage(nc);
+//        System.out.println("xml->>"+nc.toXML());
+            return nc;
+        } catch (UnsupportedEncodingException ex) {
+            throw new QException(new Object() {
+            }.getClass().getEnclosingClass().getName(),
+                    new Object() {
+            }.getClass().getEnclosingMethod().getName(), ex);
+        }
+    }
+
+    public static Carrier isFieldValid(Carrier carrier) throws QException {
+        Carrier resCr = new Carrier();
+        String res = "0";
+
+        String t = carrier.getValue("type").toString();
+        String val = carrier.getValue("value").toString();
+
+        if (t.trim().length() == 0) {
+            resCr.setValue("res", 0);
+            return resCr;
+        }
+
+        if (t.equals("domain") && isDomainFieldValid(val)) {
+            res = "1";
+        } else if (t.equals("username") && isUsernameFieldValid(val)) {
+            res = "1";
+        } else if (t.equals("password") && isPasswordFieldValid(val)) {
+            res = "1";
+        } else if (t.equals("email") && isEmailFieldValid(val)) {
+            res = "1";
+        }
+
+        resCr.setValue("res", res);
+        return resCr;
+    }
+
+    public static boolean isUsernameFieldValid(String arg) {
+
+        boolean f = false;
+        arg = arg.trim();
+        if (arg.length() > 6 && arg.length() < 25 && isStartsWithAlphabet(arg)
+                && isContainsAlphabetAndNumber(arg)) {
+            f = true;
+        }
+        return f;
+    }
+
+    public static boolean isDomainFieldValid(String arg) {
+        boolean f = false;
+        arg = arg.trim();
+        if (arg.length() > 6 && arg.length() < 25 && isStartsWithAlphabet(arg) && isContainsAlphabetAndNumber(arg)) {
+            f = true;
+        }
+        return f;
+    }
+
+    public static boolean isEmailFieldValid(String arg) {
+        boolean f = false;
+        arg = arg.trim();
+        if (arg.length() >= 6 && arg.length() < 100
+                && arg.contains("@")
+                && arg.contains(".")
+                && isContainsEmailCombination(arg)) {
+            f = true;
+        }
+        return f;
+    }
+
+    public static boolean isPasswordFieldValid(String arg) {
+        boolean f = false;
+        arg = arg.trim();
+        if (arg.length() > 7 && arg.length() < 40
+                && isContainsPwdCombination(arg)) {
+            f = true;
+        }
+        return f;
+    }
+
+    public static boolean isStartsWithAlphabet(String arg) {
+        boolean f = false;
+        for (String s : ABC) {
+            if (arg.startsWith(s) || arg.startsWith(s.toLowerCase())) {
+//                System.out.println(s);
+                f = true;
+                break;
+            }
+        }
+        return f;
+    }
+
+    public static boolean isContainsAlphabetAndNumber(String arg) {
+        boolean f = true;
+        for (int i = 0; i < arg.length(); i++) {
+            String v = arg.substring(i, i + 1);
+            if (!(Arrays.asList(ABC).contains(v.toUpperCase())
+                    || Arrays.asList(NUMBER).contains(v))) {
+                f = false;
+                break;
+            }
+        }
+        return f;
+    }
+
+    public static boolean isContainsPwdCombination(String arg) {
+        boolean f = true;
+        for (int i = 0; i < arg.length(); i++) {
+            String v = arg.substring(i, i + 1);
+            if (!(Arrays.asList(ABC).contains(v)
+                    || Arrays.asList(ABC_).contains(v)
+                    || Arrays.asList(PASSWORD_CHAR).contains(v)
+                    || Arrays.asList(NUMBER).contains(v))) {
+                f = false;
+                break;
+            }
+        }
+        return f;
+    }
+
+    public static boolean isContainsEmailCombination(String arg) {
+        boolean f = true;
+        for (int i = 0; i < arg.length(); i++) {
+            String v = arg.substring(i, i + 1);
+            if (!(Arrays.asList(ABC).contains(v)
+                    || Arrays.asList(ABC_).contains(v)
+                    || Arrays.asList(EMAIL_CHAR).contains(v)
+                    || Arrays.asList(NUMBER).contains(v))) {
+                f = false;
+                break;
+            }
+        }
+        return f;
+    }
+
+    public static Carrier getCompanyList(Carrier carrier) throws QException {
+        EntityCrCompany entComp = new EntityCrCompany();
+        EntityManager.mapCarrierToEntity(carrier, entComp);
+        entComp.setStatus("");
+        Carrier cComp = EntityManager.select(entComp);
+        String tnComp = entComp.toTableName();
+
+        carrier.removeKey("startLimit");
+        carrier.removeKey("endLimit");
+
+        Carrier cprLang = QUtility.getListItem("language",
+                carrier.getValue("companyLangName").toString());
+        cComp.mergeCarrier(tnComp, "companyLang", "companyLangName",
+                cprLang, true);
+
+        Carrier cprCntry = QUtility.getListItem("country",
+                carrier.getValue("companyCountryName").toString());
+        cComp.mergeCarrier(tnComp, "companyCountry", "companyCountryName",
+                cprCntry, true);
+
+        Carrier cprTZ = QUtility.getListItem("timezone",
+                carrier.getValue("companyTimeZoneName").toString());
+        cComp.mergeCarrier(tnComp, "companyTimeZone", "companyTimeZoneName",
+                cprTZ, true);
+
+        Carrier cprCrrnc = QUtility.getListItem("currency",
+                carrier.getValue("companyCurrencyName").toString());
+        cComp.mergeCarrier(tnComp, "companyCurrency", "companyCurrencyName",
+                cprCrrnc, true);
+
+        cComp.renameTableColumn(tnComp, "insertDate", "registerDate");
+        cComp.renameTableColumn(tnComp, "status", "companyStatus");
+
+        cComp.renameTableName(tnComp, CoreLabel.RESULT_SET);
+        cComp.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getCompanyList"));
+
+        cComp = addActivationUrlToCompanyList(cComp);
+
+        cComp.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(entComp) + 1);
+
+        return cComp;
+    }
+
+    private static Carrier addActivationUrlToCompanyList(Carrier carrier) throws QException {
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String url = carrier.getValue(tn, i, EntityCrCompany.ACTIVATION_ID).toString();
+//            System.out.println("Config.getCompanyActivatePath()>>>"+Config.getCompanyActivatePath());
+            url = Config.getCompanyActivatePath() + url;
+//            System.out.println("url>>>"+url);
+            carrier.setValue(tn, i, EntityCrCompany.ACTIVATION_ID, url);
+        }
+        return carrier;
+    }
+
+    public static Carrier insertNewUserTable(Carrier carrier) throws QException {
+        EntityCrUserTable ent = new EntityCrUserTable();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.insert(ent);
+        return carrier;
+    }
+
+    public Carrier updateUserTable(Carrier carrier) throws QException {
+        EntityCrUserTable ent = new EntityCrUserTable();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.select(ent);
+        EntityManager.mapCarrierToEntity(carrier, ent, false);
+        EntityManager.update(ent);
+        return carrier;
+    }
+
+    public Carrier deleteUserTable(Carrier carrier) throws QException {
+        EntityCrUserTable ent = new EntityCrUserTable();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getUserTableList(Carrier carrier) throws QException {
+        EntityCrUserTable ent = new EntityCrUserTable();
+        ent.setDeepWhere(false);
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        if (!ent.hasSortBy()) {
+            ent.addSortBy(EntityCrUserTable.TYPE);
+            ent.addSortBy(EntityCrUserTable.SEQNUM);
+        }
+
+        Carrier cUserTable = EntityManager.select(ent);
+        String tn = ent.toTableName();
+
+        cUserTable.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        cUserTable.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getUserTableList"));
+
+        cUserTable.addTableRowCount(CoreLabel.RESULT_SET,
+                EntityManager.getRowCount(ent) + 1);
+
+        return cUserTable;
+    }
+
+    public static Carrier insertNewRelPaymentTypeAndRule(Carrier carrier) throws QException {
+        String paymentType = carrier.getValue("fkPaymentTypeId").toString();;
+        String defPeriod = carrier.getValue("defaultPeriod").toString();
+
+        EntityCrRelPaymentTypeAndRule ent = new EntityCrRelPaymentTypeAndRule();
+        ent.setFkPaymentTypeId(paymentType);
+        ent.setDefaultPeriod(defPeriod);
+        Carrier crPaymentType = EntityManager.select(ent);
+
+        if (crPaymentType.getTableRowCount(ent.toTableName()) > 0) {
+            String ids = crPaymentType.getValueLine(ent.toTableName());
+            ent.setId(ids);
+            EntityManager.delete(ent);
+        }
+        String[] ruleIds = carrier.getValue("fkRuleId").toString()
+                .split(CoreLabel.SEPERATOR_VERTICAL_LINE);
+        for (String id : ruleIds) {
+            if (id.trim().length() > 0) {
+                EntityCrRelPaymentTypeAndRule entNew = new EntityCrRelPaymentTypeAndRule();
+                entNew.setFkRuleId(id);
+                entNew.setFkPaymentTypeId(paymentType);
+                entNew.setOwner(carrier.getValue("owner").toString());
+                entNew.setDefaultPeriod(defPeriod);
+                Carrier tc = EntityManager.select(entNew);
+                if (tc.getTableRowCount(entNew.toTableName()) > 0) {
+                    continue;
+                }
+                EntityManager.insert(entNew);
+            }
+        }
+        return new Carrier();
+    }
+
+    public Carrier deleteRelPaymentTypeAndRule(Carrier carrier) throws QException {
+        EntityCrRelPaymentTypeAndRule ent = new EntityCrRelPaymentTypeAndRule();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getRelPaymentTypeAndRuleList(Carrier carrier) throws QException {
+        EntityCrRelPaymentTypeAndRule entM = new EntityCrRelPaymentTypeAndRule();
+        EntityManager.mapCarrierToEntity(carrier, entM);
+        Carrier crOut = EntityManager.select(entM);
+        String tnMain = entM.toTableName();
+
+        String paymentTypeIds = crOut.getValueLine(tnMain, "fkPaymentTypeId");
+        Carrier crPaymentType = new Carrier();
+        crPaymentType.setValue("id", paymentTypeIds);
+        crPaymentType = getPaymentTypeList(crPaymentType);
+        Carrier cprPaymentType = crPaymentType
+                .getKVFromTable(CoreLabel.RESULT_SET, "id", "paymentTypeShortname");
+        crOut.mergeCarrier(tnMain, "fkPaymentTypeId", "paymentTypeName",
+                cprPaymentType, true);
+
+        if (carrier.hasKey("id")) {
+            EntityCrRelPaymentTypeAndRule ent1 = new EntityCrRelPaymentTypeAndRule();
+            ent1.setId(carrier.getValue("id").toString());
+            EntityManager.select(ent1);
+
+            if (ent1.getFkPaymentTypeId().trim().length() > 0) {
+                EntityCrRelPaymentTypeAndRule ent2 = new EntityCrRelPaymentTypeAndRule();
+                ent2.setFkPaymentTypeId(ent1.getFkPaymentTypeId());
+                Carrier tc1 = EntityManager.select(ent2);
+
+                String res = "";
+                String tn = ent2.toTableName();
+                int rc = tc1.getTableRowCount(tn);
+                for (int i = 0; i < rc; i++) {
+                    res += tc1.getValue(tn, i, "fkRuleId").toString()
+                            + "|";
+                }
+                crOut.setValue(tnMain, 0, "fkRuleId", res);
+            }
+        }
+
+        Carrier cprPymntTpWnr = QUtility.getListItem("paymentTypeOwner",
+                carrier.getValue("ownerName").toString());
+        crOut.mergeCarrier(tnMain, "owner", "ownerName",
+                cprPymntTpWnr, true);
+
+        crOut.renameTableName(tnMain, CoreLabel.RESULT_SET);
+
+        addRuleLabelById(crOut);
+        //
+        crOut.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getRelPaymentTypeAndRuleList"));
+        crOut.addTableRowCount("rowCount", EntityManager.getRowCount(entM));
+        return crOut;
+
+    }
+
+    public static Carrier insertNewRelCompanyAndRule(Carrier carrier) throws QException {
+        String company = carrier.getValue("fkCompanyId").toString();;
+        String expDate = carrier.getValue("expireDate").toString();;
+        EntityCrRelCompanyAndRule ent = new EntityCrRelCompanyAndRule();
+        ent.setFkCompanyId(company);
+        Carrier crCompany = EntityManager.select(ent);
+
+//        if (crCompany.getTableRowCount(ent.toTableName()) > 0) {
+//            String ids = crCompany.getValueLine(ent.toTableName());
+//            ent.setId(ids);
+//            EntityManager.delete(ent);
+//        }
+        String[] ruleIds = carrier.getValue("fkRuleId").toString()
+                .split(CoreLabel.SEPERATOR_VERTICAL_LINE);
+        for (String id : ruleIds) {
+            if (id.trim().length() > 0) {
+                EntityCrRelCompanyAndRule entNew = new EntityCrRelCompanyAndRule();
+                entNew.setFkRuleId(id);
+                entNew.setFkCompanyId(company);
+                entNew.setStartLimit(0);
+                entNew.setEndLimit(0);
+                Carrier tc = EntityManager.select(entNew);
+                if (tc.getTableRowCount(entNew.toTableName()) > 0) {
+                    entNew.setExpireDate(expDate);
+                    EntityManager.update(entNew);
+                } else {
+                    entNew.setExpireDate(expDate);
+                    EntityManager.insert(entNew);
+                }
+            }
+        }
+        return new Carrier();
+    }
+
+    public Carrier deleteRelCompanyAndRule(Carrier carrier) throws QException {
+        EntityCrRelCompanyAndRule ent = new EntityCrRelCompanyAndRule();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getRelCompanyAndRuleList(Carrier carrier) throws QException {
+        EntityCrRelCompanyAndRule entM = new EntityCrRelCompanyAndRule();
+        EntityManager.mapCarrierToEntity(carrier, entM);
+        Carrier crOut = EntityManager.select(entM);
+        String tnMain = entM.toTableName();
+
+        if (carrier.hasKey("id")) {
+            EntityCrRelCompanyAndRule ent1 = new EntityCrRelCompanyAndRule();
+            ent1.setId(carrier.getValue("id").toString());
+            EntityManager.select(ent1);
+
+            if (ent1.getFkCompanyId().trim().length() > 0) {
+                EntityCrRelCompanyAndRule ent2 = new EntityCrRelCompanyAndRule();
+                ent2.setFkCompanyId(ent1.getFkCompanyId());
+                Carrier tc1 = EntityManager.select(ent2);
+
+                String res = "";
+                String tn = ent2.toTableName();
+                int rc = tc1.getTableRowCount(tn);
+                for (int i = 0; i < rc; i++) {
+                    res += tc1.getValue(tn, i, "fkRuleId").toString()
+                            + "|";
+                }
+                crOut.setValue(tnMain, 0, "fkRuleId", res);
+            }
+        }
+
+        crOut.renameTableName(tnMain, CoreLabel.RESULT_SET);
+
+        addRuleLabelById(crOut);
+
+        Carrier crCompany = getCompanyList(new Carrier());
+        crOut.mergeCarrier(CoreLabel.RESULT_SET, "fkCompanyId",
+                crCompany, CoreLabel.RESULT_SET, "id",
+                new String[]{"companyType", "companyName", "companyStatus"});
+
+        //
+        crOut.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getRelCompanyAndRuleList"));
+        crOut.addTableRowCount("rowCount", EntityManager.getRowCount(entM));
+        return crOut;
+
+    }
+
+    public static Carrier insertNewPaymentType(Carrier carrier) throws QException {
+        EntityCrPaymentType ent = new EntityCrPaymentType();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.insert(ent);
+        return carrier;
+    }
+
+    public Carrier updatePaymentType(Carrier carrier) throws QException {
+        EntityCrPaymentType ent = new EntityCrPaymentType();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.select(ent);
+        EntityManager.mapCarrierToEntity(carrier, ent, false);
+        EntityManager.update(ent);
+        return carrier;
+    }
+
+    public Carrier deletePaymentType(Carrier carrier) throws QException {
+        EntityCrPaymentType ent = new EntityCrPaymentType();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getPaymentTypeList(Carrier carrier) throws QException {
+        EntityCrPaymentType ent = new EntityCrPaymentType();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+
+        Carrier cPaymentType = EntityManager.select(ent);
+
+        cPaymentType.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        cPaymentType.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getPaymentTypeList"));
+
+        cPaymentType.addTableRowCount(CoreLabel.RESULT_SET,
+                EntityManager.getRowCount(ent) + 1);
+
+        return cPaymentType;
+    }
+
+    public static Carrier getPaymentTypeList4Combo(Carrier carrier) throws QException {
+        EntityCrPaymentType ent = new EntityCrPaymentType();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+
+        Carrier cPaymentType = EntityManager.select(ent);
+
+        cPaymentType.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        cPaymentType.copyTableColumn(CoreLabel.RESULT_SET,
+                "paymentTypeShortname", "paymentTypeDefinition");
+        addPaymentTypeLabel(cPaymentType);
+
+        cPaymentType.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getPaymentTypeList"));
+
+        cPaymentType.addTableRowCount(CoreLabel.RESULT_SET,
+                EntityManager.getRowCount(ent) + 1);
+
+        return cPaymentType;
+    }
+
+    private static void addPaymentTypeLabel(Carrier carrier) throws QException {
+
+        Map<String, String> lang = new HashMap<>();
+
+        String col = "paymentTypeDefinition";
+
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String val = carrier.getValue(tn, i, col).toString();
+            if (lang.containsKey(val)) {
+                val = lang.get(val);
+            } else {
+                String v = QUtility.getLabel(val);
+                lang.put(val, v);
+                val = v;
+            }
+            carrier.setValue(tn, i, col, val);
+        }
+    }
+
+    public static Carrier insertNewCompanyPayment(Carrier carrier) throws QException {
+        EntityCrCompanyPayment ent = new EntityCrCompanyPayment();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.insert(ent);
+        return carrier;
+    }
+
+    public Carrier updateCompanyPayment(Carrier carrier) throws QException {
+        EntityCrCompanyPayment ent = new EntityCrCompanyPayment();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.select(ent);
+        EntityManager.mapCarrierToEntity(carrier, ent, false);
+        EntityManager.update(ent);
+        return carrier;
+    }
+
+    public Carrier deleteCompanyPayment(Carrier carrier) throws QException {
+        EntityCrCompanyPayment ent = new EntityCrCompanyPayment();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getCompanyPaymentList(Carrier carrier) throws QException {
+        EntityCrCompanyPaymentList ent = new EntityCrCompanyPaymentList();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+
+        Carrier cCompanyPayment = EntityManager.select(ent);
+
+        cCompanyPayment.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        cCompanyPayment.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getCompanyPaymentList"));
+
+        cCompanyPayment.addTableRowCount(CoreLabel.RESULT_SET,
+                EntityManager.getRowCount(ent) + 1);
+
+        return cCompanyPayment;
+    }
+
 }

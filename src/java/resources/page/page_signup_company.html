@@ -1,7 +1,14 @@
 <h3 qlang>singUpCompany</h3>
 
 <div class="container">
-    <div class="row">
+    <div class="row" id="activateionbody" hidden>
+        <div class="callout">
+            <p qlang>accountSuccessfullyCreated </p>
+            <!--<a href="api/post/signup/resend/">Resend activation mail</a>-->
+            <!--<a href="#0">Contact us</a>-->
+        </div>
+    </div>
+    <div class="row" id="mainbody">
         <section>
             <div class="wizard">
                 <div class="wizard-inner">
@@ -14,14 +21,15 @@
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation" class="disabled">
+
+                        <li role="presentation" class="disabled step1CtrlOut" style="pointer-events:none" >
                             <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
-                                <span class="round-tab">
-                                    <i class="glyphicon glyphicon-user"></i>
+                                <span class="round-tab step1CtrlOut">
+                                    <i class="glyphicon glyphicon-user step1CtrlOut"></i>
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation" class="disabled">
+                        <li role="presentation" class="disabled step1_1CtrlOut step2CtrlOut" style="pointer-events:none">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                 <span class="round-tab">
                                     <i class="glyphicon glyphicon-ok"></i>
@@ -31,153 +39,197 @@
                     </ul>
                 </div>
 
-                <form role="form" id="form_signupCompany" class="apd-form" method="POST"
-                      action="nasrv/serviceCrSignupCompany">
-                    <div class="tab-content">
-                        <div class="tab-pane active" role="tabpanel" id="step1">
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>companyName</label><span style="color: red">*</span>
-                                <input class="form-control apd-form-input" type="text" id="companyName" name="companyName">
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>companyDomain</label><span style="color: red">*</span>
-                                <input class="form-control apd-form-input" type="text" id="companyDomain" 
-                                       name="companyDomain"  >
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>country</label><span style="color: red">*</span>
-                                <select id="companyCountry" class="form-control apd-form-select-back selectpicker" has_null="var"
-                                        name="companyCountry" select_text="itemValue" select_value="itemKey" 
-                                        srv_url="nali/country" has_other>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <br>
-                                <label qlang>address</label>              
-                                <input class="form-control apd-form-input" type="text" id="address" 
-                                       name="companyAddress"     >
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>currency</label><span style="color: red">*</span>              
-                                <select id="currency" class="form-control apd-form-select-back selectpicker" has_null="var"
-                                        name="currency" select_text="itemValue" select_value="itemKey" 
-                                        srv_url="nali/currency"  >
-                                </select>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <br>
-                                <label qlang>timeZone</label>  <span style="color: red">*</span>            
-                                 <select id="timezone" class="form-control apd-form-select-back selectpicker" has_null="var"
-                                        name="timezone" select_text="itemValue" select_value="itemKey" 
-                                        srv_url="nali/timezone"  >
-                                </select>
-                                <hr>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4 text-left" >
-                                <span style="color: red">*</span>
-                                 <span  id="requiredField" qlang>requiredFields</span>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4 text-left">
-                                <input class="form-control1" type="checkbox" id="aggrement" 
-                                       name="aggrement"> 
-                                <span qlang>iacceptthe</span>
-                                <a href="http://www.term.com" qlang> thetermsandconditions</a>
+                <!--<form role="form"  >-->
+                <div class="tab-content" style="width:100%;">
+                    <div class="tab-pane active" role="tabpanel" id="step1">
+                        <div class="form-group   col-md-offset-4 col-md-5">
+                            <label qlang>companyName</label><span style="color: red">*</span>
+                             <input class="form-control step1Ctrl" type="text" id="companyName" name="companyName">
+                        </div>
+                        <div class="form-group col-md-offset-4 col-md-5">
+                            <label qlang>companyDomain</label><span style="color: red">*</span>
+                            <a href="#company" data-toggle="popover"  data-html="true"
+                                data-trigger="focus" data-content="companyNameValidateInfo" qlang> 
+                                <i class="glyphicon glyphicon-question-sign"></i></a>
+                            <input class="form-control step1Ctrl" type="text" id="companyDomain" 
+                                   name="companyDomain" onchange="domainValidator(this)"  >
 
-                            </div>
-                            <div class="form-group col-md-offset-7 col-md-1">
-                                <br>
-                                <button id="btnStep1Next" class="form-control  button" type="submit" qlang>next</button>
-                                <br>
-                            </div>
+                            <p class='apd-form-error-msg' id="msgDomain" hidden qlang>domainIsNotAvailable</p> 
+                            <p class='apd-form-error-msg' id="msgDomainValid" hidden qlang>domainIsNotValid</p> 
+
+                        </div>
+                        <div class="form-group   col-md-offset-4 col-md-5">
+                            <label qlang>country</label><span style="color: red">*</span>
+                            <select id="companyCountry" class="form-control apd-form-select-back step1Ctrl selectpicker" has_null="var"
+                                    name="companyCountry" select_text="itemValue" select_value="itemKey" 
+                                    srv_url="nali/country" has_other>
+                            </select>
+                        </div>
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <br>
+                            <label qlang>currency</label><span style="color: red">*</span>              
+                            <select id="companyCurrency" class="form-control apd-form-select-back selectpicker step1Ctrl" has_null="var"
+                                    name="companyCurrency" select_text="itemValue" select_value="itemKey" 
+                                    srv_url="nali/currency">
+                            </select>
+                        </div>
+                        <div class="form-group   col-md-offset-4 col-md-5">
+                            <br>
+                            <label qlang>timeZone</label>  <span style="color: red">*</span>            
+                            <select id="companyTimezone" class="form-control apd-form-select-back selectpicker step1Ctrl_" has_null="var"
+                                    name="companyCurrency" select_text="itemValue" select_value="itemKey" 
+                                    srv_url="nali/timezone"  >
+                            </select>
+
+                        </div>
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <br>
+                            <label qlang>address</label>              
+                            <input class="form-control apd-form-input" type="text" id="companyAddress" 
+                                   name="companyAddress"     > 
+
+                        </div>
+                        <div class="form-group  col-md-12">
+                            <br>
+
                         </div>
 
-                        <div class="tab-pane" role="tabpanel" id="step2">
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>username</label><span style="color: red">*</span>
-                                <input id="username" type="text" class="form-control apd-form-input" 
-                                       name="username"   />
-                            </div>
-
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>password</label><span style="color: red">*</span>
-                                <input id="password" type="password" class="form-control apd-form-input"
-                                       name="password" "Password" aria-describedby="passwordHelpText"/>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>confirmPassword</label><span style="color: red">*</span>
-                                <input id="password2" type="password" class="form-control apd-form-input" 
-                                       name="password2"   />
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>userPersonName</label><span style="color: red">*</span>
-                                <input id="userPersonName" type="text" class="form-control apd-form-input" 
-                                       name="userPersonName"  >
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>userPersonSurname</label><span style="color: red">*</span>
-                                <input id="userPersonSurname" type="text" class="form-control apd-form-input"
-                                       name="userPersonSurname">
-
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>userPersonMiddlename</label> 
-                                <input id="userPersonMiddlename" type="text" class="form-control apd-form-input"
-                                       name="userPersonMiddlename">
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>sex</label><span style="color: red">*</span>
-                                <select class="form-control apd-form-select-back selectpicker" id="sex" name="sex" 
-                                        has_null="true" select_text="itemValue"  
-                                        select_value="itemKey" srv_url="nali/sex"  >
-                                </select>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>email</label><span style="color: red">*</span>
-                                <input id="email1" type="email" class="form-control apd-form-email" 
-                                       name="email1"   />
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>mobile1</label><span style="color: red">*</span>
-                                <input type="text" class="form-control apd-form-input" id="mobile1"   
-                                       name="mobile1"  >
-                                <hr>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4 text-left" >
-                                <span style="color: red">*</span> 
-                                <span  id="requiredField" qlang>requiredFields</span>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-1">
-                                <br>
-                                <button id="btnStep2Prvs" class="form-control  button" type="submit" qlang>previous</button>
-                                <br>
-                            </div>
-                            <div class="form-group col-md-offset-2 col-md-1">
-                                <br>
-                                <button id="btnStep2Next" class="form-control  button" type="submit" qlang>next</button>
-                                <br>
-                            </div>
+                        <div class="form-group  col-md-offset-4 col-md-3 text-left">
+                            <span style="color: red">*</span>
+                            <span  id="requiredField" qlang>requiredFields</span>
+                            <br>
+                            <input class="step1CtrlCheck" type="checkbox" id="aggrement" 
+                                   name="aggrement"> 
+                            <a id="termsandco" href="termsandco.html" qlang target="_blank"> thetermsandconditions</a>
                         </div>
-                        <div class="tab-pane" role="tabpanel" id="complete">
-                            <div class="form-group col-md-offset-4 col-md-4">
-                                <label qlang>module</label><span style="color: red">*</span>
-                                <select class="form-control apd-form-select-back selectpicker" id="fkModuleId" name="fkModuleId" 
-                                        has_null="true" select_text="name"  
-                                        select_value="id" srv_url="nasrv/serviceCrGetModuleList4ComboNali"  >
-                                </select>
-                                <hr>
-                            </div>
-                            <div class="form-group col-md-offset-4 col-md-4 text-left" >
-                                <span style="color: red">*</span>
-                                <span  id="requiredField" qlang>requiredFields</span>
-                            </div>
-                           <div class="form-group col-md-offset-7 col-md-1">
-                                <br>
-                                <button id="btnStep3Finish" class="form-control  button" type="submit" qlang>signUp</button>
-                                <br>
-                            </div>
+                        <div class="form-group  col-md-offset-1_ col-md-2">
+                            <button id="btnStep1Next" class="form-control
+                                    button step1CtrlOut next-step" 
+                                    type="submit" disabled qlang>next</button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="tab-pane " role="tabpanel" id="step2"  >
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <label qlang>username</label><span style="color: red">*</span>
+                            <a href="#company" data-toggle="popover"  data-html="true"
+                                data-trigger="focus" data-content="usernameValidateInfo" qlang> 
+                                <i class="glyphicon glyphicon-question-sign"></i></a>
+                           <input id="username" type="text" class="form-control step2Ctrl" 
+                                   name="username"   />
+                             <p class='apd-form-error-msg' id="msgUsernameValid" hidden qlang>usernameIsNotValid</p> 
+                        </div>
+
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <label qlang>password</label><span style="color: red">*</span>
+                            <a href="#company" data-toggle="popover"  data-html="true"
+                                data-trigger="focus" data-content="passwordValidateInfo" qlang> 
+                                <i class="glyphicon glyphicon-question-sign"></i></a>
+                            <input id="password" type="password" class="form-control step2Ctrl apd-form-input"
+                                   name="password" "Password" aria-describedby="passwordHelpText"/>
+                            <p class='apd-form-error-msg' id="msgPwdValid" hidden qlang>pwdIsNotValid</p> 
+
+                        </div>
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <label qlang>confirmPassword</label><span style="color: red">*</span>
+                            <input id="password2" type="password" class="form-control step2Ctrl apd-form-input" 
+                                   name="password2"   />
+                            <p class='apd-form-error-msg' id="msgPwd2DontMatch" hidden qlang>pwd2DontMatch</p> 
+
+                        </div>
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <label qlang>userPersonName</label><span style="color: red">*</span>
+                            <input id="userPersonName" type="text" class="form-control  step2Ctrl apd-form-input" 
+                                   name="userPersonName"  >
+                        </div>
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <label qlang>userPersonSurname</label><span style="color: red">*</span>
+                            <input id="userPersonSurname" type="text" class="form-control  step2Ctrl apd-form-input"
+                                   name="userPersonSurname">
+                        </div>
+                        <div class="form-group col-md-offset-4 col-md-5">
+                            <label qlang>userPersonMiddlename</label> 
+                            <input id="userPersonMiddlename" type="text" class="form-control apd-form-input"
+                                   name="userPersonMiddlename">
+                        </div>
+                        <div class="form-group col-md-offset-4 col-md-5">
+                            <label qlang>sex</label><span style="color: red">*</span>
+                            <select class="form-control apd-form-select-back selectpicker  step2Ctrl " id="sex" name="sex" 
+                                    has_null="true" select_text="itemValue"  
+                                    select_value="itemKey" srv_url="nali/sex"  >
+                            </select>
+                        </div>
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <br>
+                            <label qlang>email</label><span style="color: red">*</span>
+                            <input id="email1" type="email" class="form-control  step2Ctrl apd-form-email" 
+                                   name="email1"   />
+                            <p class='apd-form-error-msg' id="msgEmailIsNotValid" hidden qlang>emailIsNotValid</p>
+                        </div>
+                        <div class="form-group  col-md-offset-4 col-md-5">
+                            <label qlang>mobile</label><span style="color: red">*</span>
+                            <input type="text" class="form-control apd-form-input step2Ctrl " id="mobile1"   
+                                   name="mobile1"  >
+                            <br>
+                        </div>
+                        <div class="form-group col-md-offset-4 col-md-5 text-left" >
+                            <span style="color: red">*</span> 
+                            <span  id="requiredField" qlang>requiredFields</span>
+                        </div>
+
+                        <div class="form-group col-md-offset-4 col-md-2">
+                            <br>
+                            <button id="btnStep2Prvs" class="form-control  button   prev-step " 
+                                    type="submit" qlang>previous</button>
+                            <br>
+                        </div>
+                        <div class="form-group col-md-offset-1 col-md-2">
+                            <br>
+                            <button id="btnStep2Next" class="form-control step2CtrlOut next-step
+                                    button" type="submit" qlang disabled>next</button>
+                            <br>
                         </div>
                     </div>
-                </form>
+
+
+
+
+
+                    <div class="tab-pane " role="tabpanel" id="complete">
+                        <div class="form-group col-md-offset-4 col-md-5">
+                            <label qlang>module</label><span style="color: red">*</span>
+                            <select class="form-control apd-form-select-back selectpicker step3Ctrl " id="fkModuleId" name="fkModuleId" 
+                                    has_null="true" select_text="name"  
+                                    select_value="id" srv_url="nasrv/serviceCrGetModuleList4ComboNali"  >
+                            </select>
+                            <br>
+                        </div>
+                        <div class="form-group col-md-offset-4 col-md-5 text-left" >
+                            <br>
+                            <span style="color: red">*</span>
+                            <span  id="requiredField" qlang>requiredFields</span>
+                        </div>
+                        <div class="form-group col-md-offset-4 col-md-2">
+                            <br>
+                            <button id="btnStep3Prvs" class="form-control  button   prev-step " 
+                                    type="submit" qlang>previous</button>
+                            <br>
+                        </div>
+                        <div class="form-group col-md-offset-1 col-md-2">
+                            <br>
+                            <button id="btnStep3Finish" class="form-control  button step3CtrlOut" 
+                                    type="submit" qlang disabled onclick="signUp(this)">signUp</button>
+                            <br>
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--</form>-->
 
 
             </div>
@@ -187,13 +239,419 @@
 </div>
 
 
-
-
-
-
-
 <script>
     $('.selectpicker').selectpicker('refresh');
+
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+
+        var lang = $('#lang').val();
+        $('#termsandco').attr('href', 'termsandco.html?lang=' + lang);
+
+        $('.step2Ctrl').change(function () {
+            step2Ctrl();
+        });
+
+        $('.step3Ctrl').change(function () {
+            step3Ctrl();
+        });
+
+        $('.step1Ctrl, .step1CtrlCheck').change(function () {
+            var f = true;
+            $('.step1Ctrl').each(function (e) {
+                var id = $(this).attr('id');
+                if (id !== 'undefined' && id) {
+                    var v = $(this).val().trim();
+//                    console.log($(this).attr('id') + '=' + v);
+                    if ((id !== 'undefined' && f) && (v === 'undefined' || !v)) {
+                        f = false;
+                    }
+                }
+            });
+
+            $('.step1CtrlCheck').each(function (e) {
+                if (!$(this).is(":checked")) {
+                    f = false;
+                }
+            });
+
+            var fdomain = domainValidator($('#companyDomain'));
+//        console.log(fdomain)
+            if (!fdomain) {
+                f = false;
+            }
+//            console.log('f=' + f);
+            if (!f) {
+                step1CtrlOutTrue();
+            } else {
+                step1CtrlOutFalse();
+            }
+        });
+
+        //Initialize tooltips
+        $('.nav-tabs > li a[title]').tooltip();
+
+        //Wizard
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+            var $target = $(e.target);
+
+            if ($target.parent().hasClass('disabled')) {
+                return false;
+            }
+        });
+
+        $(".next-step").click(function (e) {
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+        });
+
+        $(".prev-step").click(function (e) {
+
+            var $active = $('.wizard .nav-tabs li.active');
+            prevTab($active);
+
+        });
+    });
+    function nextTab(elem) {
+        $(elem).next().find('a[data-toggle="tab"]').click();
+    }
+    function prevTab(elem) {
+        $(elem).prev().find('a[data-toggle="tab"]').click();
+    }
+
+    function domainValidator(e) {
+        var f = true;
+        var domain = $(e).val();
+        if (domain === 'undefined' || !domain) {
+            $('#msgDomain').hide();
+            $('#msgDomainValid').hide();
+            return f;
+        }
+        var f1 = hasDomain(e);
+        var f2 = isDomainValid(e);
+
+        if (f1 && f2) {
+            f = true;
+        } else {
+            f = false;
+        }
+
+        return f;
+    }
+
+    function step1CtrlOutTrue() {
+        $('.step1CtrlOut').attr('style', 'pointer-events:none');
+        $('.step1_1CtrlOut').attr('style', 'pointer-events:none');
+
+        $('.step1CtrlOut').attr('disabled', true);
+    }
+
+    function step1CtrlOutFalse() {
+        $('.step1CtrlOut').removeAttr('disabled');
+        $('.step1CtrlOut').attr('style', 'pointer-events:block');
+    }
+
+    function step2CtrlOutTrue() {
+        $('.step2CtrlOut').attr('style', 'pointer-events:none');
+        $('.step1_1CtrlOut').attr('style', 'pointer-events:none');
+
+        $('.step2CtrlOut').attr('disabled', true);
+    }
+
+    function step3CtrlOutTrue() {
+        $('.step3CtrlOut').attr('style', 'pointer-events:none');
+        $('.step3CtrlOut').attr('disabled', true);
+    }
+
+    function step2CtrlOutFalse() {
+        $('.step2CtrlOut').removeAttr('disabled');
+        $('.step2CtrlOut').attr('style', 'pointer-events:block');
+    }
+
+    function step3CtrlOutFalse() {
+        $('.step3CtrlOut').removeAttr('disabled');
+        $('.step3CtrlOut').attr('style', 'pointer-events:block');
+    }
+
+
+
+    function isDomainValid(e) {
+        var f = true;
+        var domain = $(e).val();
+
+        var json = {kv: {}};
+        json.kv.value = domain;
+        json.kv.type = "domain";
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrIsFieldValid",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+//                console.log(JSON.stringify(res));
+                if (res.kv.res === '0') {
+                    $('#msgDomainValid').show();
+                    step1CtrlOutTrue();
+                    f = false;
+                } else {
+                    $('#msgDomainValid').hide();
+                    f = true;
+                }
+
+            },
+            error: function () {
+//                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+        return f;
+    }
+
+
+
+    function hasDomain(e) {
+        var f = true;
+        var domain = $(e).val();
+
+        var json = {kv: {}};
+        json.kv.companyDomain = domain;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrIsCompanyDomainAvailable",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+//                console.log(JSON.stringify(res));
+                if (res.kv.res === '1') {
+                    $('#msgDomain').show();
+                    step1CtrlOutTrue();
+                    f = false;
+                } else {
+                    $('#msgDomain').hide();
+                    f = false;
+                }
+
+            },
+            error: function () {
+//                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+        return f;
+    }
+
+
+    function step2Ctrl() {
+        var f = true;
+        $('.step2Ctrl').each(function (e) {
+            var id = $(this).attr('id');
+            if (id !== 'undefined' && id) {
+                var v = $(this).val().trim();
+//                console.log($(this).attr('id') + '=' + v);
+                if ((f) && (v === 'undefined' || !v)) {
+                    f = false;
+                }
+            }
+        });
+
+
+        if (!isPwd2Match()) {
+            f = false;
+        }
+
+        if (!isUsernameValid()) {
+            f = false;
+        }
+
+        if (!isPasswordValid()) {
+            f = false;
+        }
+
+        if (!isEmailValid()) {
+            f = false;
+        }
+
+
+
+//        console.log(+' f=' + f);
+        if (!f) {
+            step2CtrlOutTrue();
+        } else {
+            step2CtrlOutFalse();
+        }
+    }
+
+    function step3Ctrl() {
+        var f = true;
+        $('.step3Ctrl').each(function (e) {
+            var id = $(this).attr('id');
+            if (id !== 'undefined' && id) {
+                var v = $(this).val().trim();
+//                console.log($(this).attr('id') + '=' + v);
+                if ((f) && (v === 'undefined' || !v)) {
+                    f = false;
+                }
+            }
+        });
+
+
+
+//        console.log(+' f=' + f);
+        if (!f) {
+            step3CtrlOutTrue();
+        } else {
+            step3CtrlOutFalse();
+        }
+    }
+
+    function isPwd2Match( ) {
+        var f = true;
+        var pwd1 = $('#password').val();
+        var pwd2 = $('#password2').val();
+
+        if (!pwd2 || (pwd2 && pwd1 === pwd2)) {
+            $('#msgPwd2DontMatch').hide();
+            f = true;
+        } else {
+            $('#msgPwd2DontMatch').show();
+            f = false;
+        }
+        return f;
+    }
+
+    function isUsernameValid() {
+        var f = true;
+        var username = $('#username').val();
+        if (username === 'undefined' || !username) {
+            $('#msgUsernameValid').hide();
+            return f;
+        }
+        var json = {kv: {}};
+        json.kv.value = username;
+        json.kv.type = "username";
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrIsFieldValid",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+//                console.log(JSON.stringify(res));
+                if (res.kv.res === '0') {
+                    $('#msgUsernameValid').show();
+                    step2CtrlOutTrue();
+                    f = false;
+                } else {
+                    $('#msgUsernameValid').hide();
+                    f = true;
+                }
+            },
+            error: function () {
+//                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+        return f;
+    }
+
+    function isPasswordValid() {
+        var f = true;
+        var password = $('#password').val();
+        if (password === 'undefined' || !password) {
+            $('#msgPwdValid').hide();
+            return f;
+        }
+        var json = {kv: {}};
+        json.kv.value = password;
+        json.kv.type = "password";
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrIsFieldValid",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+//                console.log(JSON.stringify(res));
+                if (res.kv.res === '0') {
+                    $('#msgPwdValid').show();
+                    step2CtrlOutTrue();
+                    f = false;
+                } else {
+                    $('#msgPwdValid').hide();
+                    f = true;
+                }
+            },
+            error: function () {
+//                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+        return f;
+    }
+
+    function isEmailValid() {
+        var f = true;
+        var email1 = $('#email1').val();
+        if (email1 === 'undefined' || !email1) {
+            $('#msgEmailIsNotValid').hide();
+            return f;
+        }
+        var json = {kv: {}};
+        json.kv.value = email1;
+        json.kv.type = "email";
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrIsFieldValid",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+//                console.log(JSON.stringify(res));
+                if (res.kv.res === '0') {
+                    $('#msgEmailIsNotValid').show();
+                    step2CtrlOutTrue();
+                    f = false;
+                } else {
+                    $('#msgEmailIsNotValid').hide();
+                    f = true;
+                }
+            },
+            error: function () {
+//                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+        return f;
+    }
+
+    function signUp(elem) {
+        var $e = $('#btnStep3Finish');
+        var json = {kv: {}};
+        console.log($e.attr('id'))
+        $e.closest('section').find('.form-control').each(function (el) {
+            var id = $(this).attr('id');
+            var v = $(this).val();
+            console.log(id + '-->' + v);
+            json.kv[id] = v;
+        });
+        json.kv.lang = $('#lang').val();
+
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrSignupCompany",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+                $('#mainbody').hide();
+                $('#activateionbody').show();
+            },
+            error: function () {
+                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+    }
 </script>
 
 

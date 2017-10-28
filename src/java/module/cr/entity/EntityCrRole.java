@@ -16,40 +16,17 @@ import utility.CoreEntity;
  * @author nikli
  */
 public class EntityCrRole extends CoreEntity {
-    
+
     public static String ID = "id";
     public static String STATUS = "status";
     public static String INSERT_DATE = "insertDate";
     public static String MODIFICATION_DATE = "modificationDate";
-    
+
     public static final String ROLE_NAME = "roleName";
-    
+    public static final String DESCRIPTION = "description";
+
     private String roleName = "";
-
-    
-    
-    @Override
-    public String toString() {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put(ID, this.getId());
-            obj.put(ROLE_NAME, this.getRoleName());
-        } catch (JSONException ex) {
-            Logger.getLogger(EntityCrRule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return obj.toString();
-    }
-
-    public void fromString(String data) {
-
-        try {
-            JSONObject obj = new JSONObject(data);
-            this.setId(obj.getString(ID));
-            this.setRoleName(obj.getString(ROLE_NAME));
-        } catch (JSONException ex) {
-            Logger.getLogger(EntityCrRule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    private String description = "";
 
     /**
      * @return the ruleName
@@ -64,6 +41,21 @@ public class EntityCrRole extends CoreEntity {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     
     
+    @Override
+    public String selectDbname() {
+        return "apdvoice";
+    }
+    
+
 }

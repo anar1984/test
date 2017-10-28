@@ -1,0 +1,61 @@
+newExpense
+updateExpense
+update
+users
+userData
+permissions
+roles
+allRules
+selectedRules
+rules
+insertNewRule
+isPublic
+assignRule2Permission
+rule
+permission
+ipdate
+id
+<span style="opacity: 0;">_________________________ </span>
+companyAndRule
+assignRule2Company
+company
+insertNewPermission
+name
+Insert
+Close
+companyList
+updateCompany
+paymentTypeAndRule
+assignRule2PaymentType
+paymentType
+owner
+newPriceList
+listStatus
+updatePriceList
+attributes	ENG
+insertNewAttribute	ENG
+attributeCode	ENG
+attributeUniqueId	ENG
+status	ENG
+isGeneral	ENG
+lang	ENG
+Attribute Code	ENG
+Attribute Name	ENG
+attributeUniqueId	ENG
+Status	ENG
+Is General?	ENG
+lang	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+status	ENG
+lang	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+status	ENG
+lang	ENG
+companypayment	ENG
+newCompanyPayment	ENG
+newCompanyPayment	ENG
+updateCompanyPayment	ENG
+successfullyCompanyActiavated
+unsuccessfullyCompanyActiavated

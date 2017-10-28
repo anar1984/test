@@ -104,7 +104,7 @@ function getNextSubmoduleOrderNo(currentNo) {
             r = res.kv.nextNo;
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
     return r;
@@ -127,7 +127,7 @@ function getPreviousSubmoduleOrderNo(currentNo) {
             r = res.kv.nextNo;
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
     return r;
@@ -474,7 +474,7 @@ function matrixItemEditClickListener() {
                 });
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -536,7 +536,7 @@ function matrixDeleteBtnClickListener() {
                 alert(getMessage('successOperation'));
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -608,7 +608,7 @@ function getNewInsCode() {
             }
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
     return cd;
@@ -646,7 +646,7 @@ function fillSubmoduleButtonDiv(json) {
             s_h_sm_attribute_buttons();
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -813,7 +813,7 @@ function fillInspectionMatrixList() {
             }
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -844,6 +844,27 @@ function buttonFillFormListener() {
         $('#' + target_form).find(".apd-form-select").each(function () {
             fillCombobox(this);
             $(this).change();
+
+        });
+
+        $('#' + target_form).find("form").find(".apd-form-multiselect").each(function () {
+            fillCombobox(this);
+            $(this).multiselect(
+                    {includeSelectAllOption: true,
+                        enableFiltering: true,
+                        selectAllJustVisible: true}
+            );
+            $(this).multiselect('rebuild');
+
+        });
+
+        $('#' + target_form).find("form").find(".apd-form-multiselect-manual").each(function () {
+            $(this).multiselect(
+                    {includeSelectAllOption: true,
+                        enableFiltering: true,
+                        selectAllJustVisible: true}
+            );
+            $(this).multiselect('rebuild');
         });
 
         $('#' + target_form).find("form").find(".apd-form-select-back").each(function () {
@@ -882,13 +903,19 @@ function buttonFillFormListener() {
         }
 
 
+        try {
+            $('#' + target_form).find(".apd-form-switch-list").each(function () {
+                console.log("buttonFillFormListener: " + JSON.stringify(json));
 
-//        $('#' + target_form).find(".apd-form-switch-list").each(function () {
-//            console.log("buttonFillFormListener: "+JSON.stringify(json));
-//            
-//            console.log("buttonFillFormListener: "+kv);
-//            fillSwitchList(this,json);
-//        });
+                console.log("buttonFillFormListener: " + kv);
+                var newJson = {kv:{}};
+                newJson.kv.fkUserId = json.kv.id;
+                newJson.kv.type = 'ownrule';
+                fillSwitchList(this, newJson);
+            });
+        } catch (err) {
+
+        }
 
 
         var data = JSON.stringify(json);
@@ -901,6 +928,7 @@ function buttonFillFormListener() {
             async: false,
             success: function (res) {
                 isResultRedirect(JSON.stringify(res));
+//                console.log("pure data>>" + JSON.stringify(res));
 //                console.log("res>>>>"+JSON.stringify(res));
                 //birinci gelen table goturulur. susmaya gore cedvel 
                 //adi Response olmalidir
@@ -924,9 +952,13 @@ function buttonFillFormListener() {
 
                     $('#' + target_form).find('textarea[id=' + keys[i] + ']').val(v);
 
-                    if (v) {
-                        $('#' + target_form).find('select[id=' + keys[i] + ']').
-                                find('option[value=' + v + ']').attr("selected", "selected");
+                    try {
+                        if (v) {
+                            $('#' + target_form).find('select[id=' + keys[i] + ']').
+                                    find('option[value=' + v + ']').attr("selected", "selected");
+                        }
+                    } catch (err) {
+
                     }
 
                     $('#' + target_form).find('.apd-form-htmleditor').each(function () {
@@ -949,12 +981,36 @@ function buttonFillFormListener() {
                         }
                     });
 
+                    $('#' + target_form).find('.apd-form-custom-select').each(function () {
+                        var id = $(this).attr('id');
+                        if (id === keys[i]) {
+                            var val = fillCustomSelect4Update(this, v);
+                            $(this).attr("pid", v);
+                            $(this).val(val);
+
+                        }
+                    });
+
+                    $('#' + target_form).find('.apd-form-multiselect').each(function () {
+                        var id = $(this).attr('id');
+                        console.log("multiselect id=" + id + " ;val=" + v + " key[i]" + keys[i]);
+                        if (id === keys[i]) {
+//                            v = v.sub("\\", "");
+                            var arr = v.split("|");
+                            console.log("array val>>" + JSON.stringify(arr));
+                            $(this).multiselect('select', arr);
+//                            $(this).multiselect('rebuild');
+                        }
+                    });
+
+
+
 
                 }
                 $('.selectpicker').selectpicker('refresh');
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -989,7 +1045,7 @@ function fillCustomSelect4Update(e, val) {
             }
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
     console.log("r=" + r);
@@ -1034,7 +1090,7 @@ function buttonTaskTriggerListener() {
 //                eval(func);
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -1081,7 +1137,7 @@ function buttonTaskTriggerListener() {
 //                eval(func);
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -1139,7 +1195,7 @@ function formButtonListener() {
             json.kv[k] = v;
         });
         //add select values to json
-        el.closest("form[class='apd-form']").find(".apd-form-select").each(function () {
+        el.closest("form[class='apd-form']").find(".apd-form-select, .apd-form-select-back").each(function () {
             var id = $(this).attr('id');
             var val = $(this).find(":selected").val();
             if (val !== '___2___')
@@ -1269,7 +1325,7 @@ function formButtonListener() {
                 }
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -1295,7 +1351,7 @@ function getLastPersonInfo() {
 //            $('.page-content').html(obj);
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -1335,8 +1391,9 @@ function menuListeners(arg) {
 function menuListenerActivies(page_id) {
 //execute page loader
     loadRemotePage(page_id);
-    var func = $('#' + page_id).find('.apd-task-page-loader').attr('onclick');
-    eval(func);
+//    var func = $('#' + page_id).find('.apd-task-page-loader').attr('onclick');
+//    eval(func);
+    $('#' + page_id).find('.apd-task-page-loader').click();
     switch (page_id) {
         case "page_dn_patient":
             fillCombobox($('#fkModuleId'));
@@ -1415,7 +1472,7 @@ function fillReportForAppointment() {
 
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 
@@ -1447,7 +1504,7 @@ function fillReportForPayment() {
 
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 
@@ -1481,7 +1538,7 @@ function fillModuleForAppointment() {
 
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 
@@ -1505,7 +1562,7 @@ function loadRemotePage(pageid) {
             $('.page-content').html(obj);
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -1549,7 +1606,7 @@ function fillComboInTableFilter(json, url, comboThis, colName, checkedValues) {
 
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -1636,7 +1693,7 @@ function tableFilterListener() {
                 }
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     }));
@@ -1670,8 +1727,17 @@ function formActivateListeners() {
 //            console.log("formActivateListeners: <empty>");
             fillSwitchList(this);
         });
+
         $('#' + target_id).find("form").find(".apd-form-multiselect").each(function () {
             fillCombobox(this);
+            $(this).multiselect(
+                    {includeSelectAllOption: true,
+                        enableFiltering: true,
+                        selectAllJustVisible: true}
+            );
+        });
+
+        $('#' + target_id).find("form").find(".apd-form-multiselect-manual").each(function () {
             $(this).multiselect(
                     {includeSelectAllOption: true,
                         enableFiltering: true,
@@ -1691,13 +1757,7 @@ function formActivateListeners() {
 
 
 
-        $('#' + target_id).find("form").find(".apd-form-multiselect-manual").each(function () {
-            $(this).multiselect(
-                    {includeSelectAllOption: true,
-                        enableFiltering: true,
-                        selectAllJustVisible: true}
-            );
-        });
+
         $('#' + target_id).find("form").find(".apd-form-htmleditor").each(function () {
             $(this).Editor();
         });
@@ -1723,12 +1783,8 @@ function formSelectListeners() {
             var e_id = $(this).attr('id');
             fillCombobox(this, json);
         });
-        element.closest('.apd-form').find('ul[dependence_id=' + id + ']').each(function () {
-//            console.log("formSelectListeners: " + JSON.stringify(json));
-            var kv = element.attr('apd-form-fill-kv');
-//            console.log("formSelectListeners: " + kv);
-            fillSwitchList(this, json);
-        });
+        
+        
     });
 }
 
@@ -1765,7 +1821,7 @@ function reportComboListeners() {
                 oPrntWin.document.close();
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -1804,7 +1860,7 @@ function reportPaymentComboListeners() {
                 oPrntWin.document.close();
             },
             error: function (res, status) {
-                alert(getMessage('somethingww'));
+//                alert(getMessage('somethingww'));
             }
         });
     });
@@ -1864,10 +1920,39 @@ function doSubmoduleFormShow(e) {
             }
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getInspectionInfo(fkSessionId, fkSubmoduleId) {
     if (!fkSessionId || !fkSubmoduleId) {
         return '';
@@ -1889,11 +1974,25 @@ function getInspectionInfo(fkSessionId, fkSubmoduleId) {
             r = res;
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
     return r;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function setSubmoduleUpdateFormValues(res) {
 //birinci gelen table goturulur. susmaya gore cedvel 

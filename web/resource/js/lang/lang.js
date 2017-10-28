@@ -12,7 +12,7 @@ var LNG = {
             signin: 'Sign in',
             username: 'Username',
             password: 'Password',
-            haveAccount: 'Don’t have an account?',
+            haveAccount: 'Don\'t have an account?',
             crAccount: 'Create Account',
             incorrectPwd: 'Username or password is incorrect.'
         },
@@ -20,6 +20,7 @@ var LNG = {
         },
         msg: {
             somethingww: 'Something went wrong!',
+            domainIsNotAvailable:'Domain Is not Available'
         }
     },
     AZE: {
@@ -27,7 +28,7 @@ var LNG = {
             personal: 'Fərdi',
             company: 'Şirkət',
             domanin: 'Domain',
-            signin: 'Qeydiyyat',
+            signin: 'Daxil ol',
             username: 'İstifadəçi adı',
             password: 'Parol',
             haveAccount: 'Hesabın yoxdur?',
@@ -38,6 +39,7 @@ var LNG = {
         },
         msg: {
             somethingww: 'Xəta baş verdi!',
+            domainIsNotAvailable:'Domain artıq götürülmüşdür'
         }
     }
 };

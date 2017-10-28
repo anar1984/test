@@ -1,0 +1,80 @@
+<div class="row apd-page" id="page_companyandrule">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label qlang>companyAndRule</label>
+        </div>
+    </div>    
+
+
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetRelCompanyAndRuleList' type="button"
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_relcompanyandrule_list')">  list
+        </button>
+
+        <button id='serviceCrAssignRule2Company' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewRelCompanyAndRule" qlang>insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "relCompanyAndRuleList" class="col-md-12 apd-page-body"> 
+
+    </div>
+
+
+
+    <!-- Modal -->
+
+
+    <div id="insertNewRelCompanyAndRule" apd-form-reload-button-id='serviceCrGetRelCompanyAndRuleList' 
+         class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>assignRule2Company</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewRelCompanyAndRule" class="apd-form" 
+                          method="POST" action="srv/serviceCrInsertNewRelCompanyAndRule">
+                        <div class="form-group col-md-10">
+                            <label class="float" qlang>company</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkCompanyId" name="fkCompanyId"
+                                    select_text="companyName" select_value="id" 
+                                    srv_url="srv/serviceCrGetCompanyList">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="float" qlang>expireDate</label>
+                             <input type="text" class="form-control apd-form-email" 
+                                    id="expireDate" name="expireDate" >
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="float" qlang>rule</label>
+                            <br>
+                            <select class="form-control apd-form-multiselect" 
+                                    multiple 
+                                    id="fkRuleId" name="fkRuleId"
+                                    select_text="ruleName" select_value="id" 
+                                    srv_url="srv/serviceCrGetRuleList">
+                            </select>  
+                        </div>
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" 
+                                    apd-clear-form-data="false" qlang>insert</button>
+                            <button type="button" class="btn btn-default" 
+                                    data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="row apd-page" id="page_company">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label qlang>company</label>
+        </div>
+    </div> 
+    <div  class="col-md-10 apd-page-btn"> 
+        <button id='serviceCrGetCompanyList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_company_list')" qlang>companyList
+        </button>
+        
+        <hr>
+    </div>
+    <div class="col-md-2  text-right">
+
+        <div class="dropdown ">
+            <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="">
+                <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"></i> </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right  multi-level" role="menu" aria-labelledby="dropdownMenu">
+                <li class="dropdown-submenu pull-left toggle-on-click" >
+                    <a tabindex="-1" href="#" qlang> report</a>
+                    <ul class="dropdown-menu dropdown-menu-right " id="report4Company" >
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div >
+
+    <div  id= "companylist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+  
+    <div id="updateCompany" apd-form-reload-button-id='serviceCrGetCompanyList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>updateCompany</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateCompany" class="apd-form" method="POST" action="srv/serviceCrUpdateCompany">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id">
+                        </div>
+                         
+                        <div class="form-group col-md-6">
+                            <label qlang>priceList</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="paymentName,price,currencyName" 
+                                    select_value="id" 
+                                    select_separator="/  " 
+                                    send_data="listStatus=A"
+                                    id="fkPriceListId" name="fkPriceListId" 
+                                    srv_url="srv/serviceCrGetPriceListList"
+                                    onchange="getDiscountedPrice(this)" >
+                            </select> 
+                        </div >
+                        <div class ="form-group col-md-2">
+                            <label qlang>paymentDiscount</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    step="0.00001" min="0" max="100" value="0"
+                                    id="paymentDiscount" name="paymentDiscount" 
+                                    dont_clear
+                                    onchange="getDiscountedPrice(this)">
+                        </div>
+                         
+                        <div class="form-group col-md-9">
+                            <label class="float" qlang>description</label>
+                            <input  class="form-control apd-form-input" type="text" 
+                                    id="description" name="description" >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label qlang>paymentStatus</label>
+                            <select class="form-control apd-form-select-back" select_text="itemValue" 
+                                    select_value="itemKey" id="paymentStatus" name="paymentStatus" 
+                                    srv_url="li/paymentStatus">
+                            </select> 
+                        </div>
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

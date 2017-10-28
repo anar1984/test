@@ -38,15 +38,22 @@ public class DBConnection {
         try {
             prop = new DBConfigurationProperties();
         } catch (UnsupportedEncodingException ex) {
-
+            throw new QException(new Object() {
+            }.getClass().getEnclosingClass().getName(),
+                    new Object() {
+            }.getClass().getEnclosingMethod().getName(),
+                    ex);
         }
-        try {  
+        try {
             setConnection(CoreLabel.DB_PRIMARY);
             int size = Integer.valueOf(this.initialSize);
             int midSize = Integer.valueOf(this.maxIdle);
+            System.out.println("connection qurulur");
             conn = DBConnectionPool.getConnection(this.driver, this.userName,
                     this.password, this.url, size, midSize);
+            System.out.println("connection quruldu");
         } catch (Exception e) {
+            System.out.println("connection ugursuz oldu");
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
@@ -68,12 +75,15 @@ public class DBConnection {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
+             System.out.println("connection qurulur");
             setConnection(dbTypeNumber);
             conn = DBConnectionPool.getConnection(this.driver, this.userName,
                     this.password, this.url,
                     Integer.valueOf(this.initialSize),
                     Integer.valueOf(this.maxIdle));
+             System.out.println("connection quruldu");
         } catch (QException e) {
+             System.out.println("connection ugursuz oldu");
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
@@ -384,8 +394,7 @@ public class DBConnection {
 
         System.out.println("Ok for   mssql");
     }
-    
-    
+
     public static void closeConnection(Connection conn) {
         try {
             if (conn != null && !conn.isClosed()) {
@@ -395,11 +404,12 @@ public class DBConnection {
             QLogger.saveExceptions("closeConnection", "closeConnection", ex.getMessage());
         }
     }
-    
+
     public static void rollbackConnection(Connection conn) {
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.rollback();
+                conn.close();
             }
         } catch (SQLException ex) {
             QLogger.saveExceptions("rollbackConnection", "rollbackConnection", ex.getMessage());

@@ -16,11 +16,21 @@ public class EntityCrModule extends CoreEntity {
     public static String LI_MODULE_STATUS = "liModuleStatus";
     public static String MODULE_DESCRIPTION = "moduleDescription";
     public static String LANG = "lang";
-
+    public static String FK_PAYMENT_TYPE_ID = "fkPaymentTypeId";
+    
+    private String fkPaymentTypeId = "";
     private String moduleName = "";
     private String liModuleStatus = "";
     private String moduleDescription = "";
     private String lang = "";
+
+    public String getFkPaymentTypeId() {
+        return fkPaymentTypeId;
+    }
+
+    public void setFkPaymentTypeId(String fkPaymentTypeId) {
+        this.fkPaymentTypeId = fkPaymentTypeId;
+    }
 
     public String getModuleName() {
         return moduleName;
@@ -53,7 +63,7 @@ public class EntityCrModule extends CoreEntity {
     public void setLang(String lang) {
         this.lang = lang;
     }
-    
+
     @Override
     public String selectDbname() {
         return "apdvoice";

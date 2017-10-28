@@ -38,10 +38,9 @@ public class EntityCrPatient extends CoreEntity {
     public static String FK_OWNER_USER_ID = "fkOwnerUserId";
     public static String PATIENT_ID = "patientId";
     public static String ADDRESS_LINE = "addressLine";
-    public static String OCCUPATION_OTHER="occupationOther";	
+    public static String OCCUPATION_OTHER="occupationOther";
+    
     private String occupationOther="";
-
-
     private String patientId = "";
     public static String PATIENT_IMAGE = "patientImage";
     private String patientImage = "";

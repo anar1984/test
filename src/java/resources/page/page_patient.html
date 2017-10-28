@@ -1,4 +1,4 @@
-<div class="row apd-page" id="page_patient">
+<div component_id="page_patient" class="row apd-page" id="page_patient">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
             <label qlang>mainPage</label>
@@ -6,7 +6,7 @@
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
         <div class="col-md-4  text-left ">
-            <button id='serviceCrGetPatientList' qlang type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+            <button component_id="serviceCrGetPatientList" id='serviceCrGetPatientList' qlang type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                     onclick="loadTable('tbl_patient_list')">patientList
             </button>
             <!--            <button id='serviceCrGetInspectionList' qlang type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
@@ -24,7 +24,7 @@
     <div  id= "patientlist" class="col-md-12 apd-page-body"> 
     </div>
     <!-- Modal -->
-    <div id="insertNewPatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
+    <div component_id="serviceCrInsertNewPatient" id="insertNewPatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -192,7 +192,7 @@
         </div>
     </div>
 
-    <div id="updatePatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
+    <div component_id="serviceCrUpdatePatient" id="updatePatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

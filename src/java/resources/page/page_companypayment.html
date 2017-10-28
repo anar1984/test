@@ -1,0 +1,185 @@
+<div class="row apd-page" id="page_companypayment">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label qlang>companypayment</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetCompanyPaymentList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_companypayment_list')" qlang> list
+        </button>
+        <button id='btn_serviceCrInsertNewCompanyPayment' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewCompanyPayment" qlang>newCompanyPayment    
+        </button>
+        <hr>
+    </div>
+
+
+    <div  id= "companypaymentlist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewCompanyPayment" apd-form-reload-button-id='serviceCrGetCompanyPaymentList' 
+         class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>newCompanyPayment</h4>
+                </div>
+                <div class="modal-body-1  ">
+                    <form id="form_insertNewCompanyPayment" class="apd-form" method="POST" 
+                          action="srv/serviceCrInsertNewCompanyPayment">
+                        <div class="form-group col-md-6">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="companyName" 
+                                    select_value="id" 
+                                    id="fkCompanyId" name="fkCompanyId" 
+                                    srv_url="srv/serviceCrGetCompanyList" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentType</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="paymentTypeShortname" 
+                                    select_value="id" 
+                                    id="fkPaymentTypeId" name="fkPaymentTypeId" 
+                                    srv_url="srv/serviceCrGetPaymentTypeList" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentDate</label>
+                            <input  class="form-control apd-form-input" type="date"
+                                    id="paymentDate" name="paymentDate">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentTime</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    value="060606" dont_clear="1"
+                                    id="paymentTime" name="paymentTime">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentAmount</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentAmount" name="paymentAmount">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="currency" name="currency" 
+                                    srv_url="li/currency" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentDiscount</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentDiscount" name="paymentDiscount">
+                        </div>
+                         
+                        <div class="form-group col-md-6">
+                            <label qlang>description</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="description" name="description">
+                        </div>
+                        
+                         
+                       
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true" qlang>insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updateCompanyPayment" apd-form-reload-button-id='serviceCrGetCompanyPaymentList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>updateCompanyPayment</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updateCompanyPayment" class="apd-form" method="POST" action="srv/serviceCrUpdateCompanyPayment">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="companyName" 
+                                    select_value="id" 
+                                    id="fkCompanyId" name="fkCompanyId" 
+                                    srv_url="srv/serviceCrGetCompanyList" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentType</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="paymentTypeShortname" 
+                                    select_value="id" 
+                                    id="fkPaymentTypeId" name="fkPaymentTypeId" 
+                                    srv_url="srv/serviceCrGetPaymentTypeList" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentDate</label>
+                            <input  class="form-control apd-form-input" type="date"
+                                    id="paymentDate" name="paymentDate">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentTime</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    value="060606" dont_clear="1"
+                                    id="paymentTime" name="paymentTime">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentAmount</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentAmount" name="paymentAmount">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="currency" name="currency" 
+                                    srv_url="li/currency" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentDiscount</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentDiscount" name="paymentDiscount">
+                        </div>
+                         
+                        <div class="form-group col-md-6">
+                            <label qlang>description</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="description" name="description">
+                        </div>
+                        
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

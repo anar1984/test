@@ -215,6 +215,22 @@ public class EntityManager {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
+    
+     public static Carrier executeUpdateByQuery(String query) throws QException {
+        try {
+            Carrier c = new Carrier();
+            if (!query.trim().equals("")) {
+                c = SQLConnection.execDeleteSql(query);
+            }
+             
+            return c;
+        } catch (Exception ex) {
+            throw new QException(new Object() {
+            }.getClass().getEnclosingClass().getName(),
+                    new Object() {
+            }.getClass().getEnclosingMethod().getName(), ex);
+        }
+    }
 
     public static Carrier selectBySql(String sqlQuery) throws QException {
         return selectBySql(sqlQuery, new String[]{});
@@ -623,7 +639,7 @@ public class EntityManager {
         return arg;
     }
 
-    public static String getMessageText(String messageCode) throws QException {
+    public static String getMessageText(String messageCode,String lang) throws QException {
         messageCode = ESAPI.encoder().encodeForHTML(messageCode);
         if (messageCode.trim().equals("")) {
             return "Message code is empty";
@@ -632,7 +648,7 @@ public class EntityManager {
         EntityCrListItem ent = new EntityCrListItem();
         ent.setItemCode("errorMessage");
         ent.setItemKey(messageCode);
-        ent.setLang(SessionManager.getCurrentLang());
+        ent.setLang(lang);
         Carrier carrier = EntityManager.select(ent);
 
         if (ent.getItemValue().trim().equals("")) {
@@ -640,6 +656,10 @@ public class EntityManager {
         } else {
             return ent.getItemValue().trim();
         }
+    }
+    
+     public static String getMessageText(String messageCode) throws QException {
+       return getMessageText(messageCode,SessionManager.getCurrentLang());
     }
 
     public static String getEntityFieldLabel1(String entityName, String fieldName) throws QException {

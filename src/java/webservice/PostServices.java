@@ -41,6 +41,7 @@ import utility.Carrier;
 import utility.FileUpload;
 import utility.QDate;
 import utility.QException;
+import utility.QUtility;
 import utility.SessionManager;
 import utility.UserController;
 import utility.sqlgenerator.DBConnection;
@@ -97,6 +98,7 @@ public class PostServices {
         SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
         SessionManager.setDomain(Thread.currentThread().getId(), user.selectDomain());
         SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
+        SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
         String file_type = carrier.getValue("file_type").toString();
         String file_extension = carrier.getValue("file_extension").toString();
@@ -161,10 +163,12 @@ public class PostServices {
             String token;
             Carrier carrier = new Carrier();
             carrier.fromJson(jsonData);
+
             String usename = carrier.getValue("username").toString();
             String password = carrier.getValue("password").toString();
             String domain = carrier.getValue("domain").toString();
             String lang = carrier.getValue("lang").toString();
+
             lang = SessionHandler.isLangAvailable(lang) ? lang : "ENG";
             EntityCrUser user = SessionHandler.checkLogin(usename, password, domain);
             user.setLang(lang);
@@ -184,10 +188,11 @@ public class PostServices {
             SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
             SessionManager.setLang(Thread.currentThread().getId(), lang);
             SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
+            SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
             String entity = "{\"fullname\":\"" + fullname + "\"}";
             conn.commit();
-            //conn.close();
+            conn.close();
             return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 10000000, false)).entity(entity).build();
         } catch (Exception ex) {
             DBConnection.rollbackConnection(conn);
@@ -269,16 +274,20 @@ public class PostServices {
             @PathParam(value = "code")
             final String itemCode, final String json) {
 
-        executorService.submit(() -> {
-            /*Connection conn = null;
-            Response res = null;
-            try {
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                String srv[] = new String[]{"sex",
+                    "country",
+                    "currency",
+                    "timezone"
+                };
 
-                conn = new DBConnection().getConnection();
-                conn.setAutoCommit(false);
-                SessionManager.setConnection(Thread.currentThread().getId(), conn);
+                if (!ArrayUtils.contains(srv, "")) {
+                    Response resp = Response.status(Response.Status.FORBIDDEN).build();
+                    asyncResponse.resume(resp);
+                }
 
-                long serviceTime = System.currentTimeMillis();
                 System.out.println("json->" + json);
 
                 Carrier carrier = new Carrier();
@@ -286,41 +295,17 @@ public class PostServices {
                 carrier.setValue("itemCode", itemCode);
                 carrier.setValue("asc", "itemValue");
 
-                carrier = CrModel.getListItemList(carrier);
+                String jsonNew = "";
+                try {
+                    jsonNew = carrier.getJson();
+                } catch (QException ex) {
 
-                String entity = carrier.getJson();
-                res = Response.status(Response.Status.OK).entity(entity).build();
+                }
 
-            } catch (QException ex) {
-                res = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
-            } catch (Exception ex) {
-                DBConnection.rollbackConnection(conn);
-                //QLogger.saveExceptions(servicename, json, ex.getMessage());
-                res = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
-            } finally {
-                DBConnection.closeConnection(conn);
+                String servicename = "serviceCrGetListItemList";
+
+                asyncResponse.resume(doCallDispatcherNoToken(headers, servicename, jsonNew));
             }
-
-            asyncResponse.resume(res);*/
-
-            System.out.println("json->" + json);
-
-            Carrier carrier = new Carrier();
-            carrier.fromJson(json);
-            carrier.setValue("itemCode", itemCode);
-            carrier.setValue("asc", "itemValue");
-
-            String jsonNew = "";
-            try {
-                jsonNew = carrier.getJson();
-            } catch (QException ex) {
-
-            }
-
-            String servicename = "serviceCrGetListItemList";
-
-            asyncResponse.resume(doCallDispatcherNoToken(headers, servicename, jsonNew));
-
         });
     }
 
@@ -429,6 +414,8 @@ public class PostServices {
         Connection conn = null;
         try {
 
+            QLogger.saveServiceLog(servicename);
+
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
@@ -445,11 +432,13 @@ public class PostServices {
             SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
             SessionManager.setDomain(Thread.currentThread().getId(), user.selectDomain());
             SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
+            SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
-//        SessionManager.setUserName(Thread.currentThread().getId(),"admin1");
-            //if (!SessionManager.hasAccessToService(servicename)) {
-            //return Response.status(Response.Status.FORBIDDEN).build();
-            //}
+            if (!QUtility.hasPermission(servicename)) {
+                System.out.println(">>> is forbidden>>"+servicename);
+                return Response.status(Response.Status.FORBIDDEN).build();
+            }
+            
             System.out.println("Start-" + SessionManager.getCurrentUsername() + ":" + QDate.getCurrentDate() + ":" + QDate.getCurrentTime() + ":" + servicename);
 
             System.out.println("json->" + json);
@@ -485,7 +474,10 @@ public class PostServices {
             "serviceCrSignupCompany",
             "serviceCrActivateCompany",
             "serviceCrGetMessageText",
-            "serviceCrGetModuleList4ComboNali"};
+            "serviceCrGetModuleList4ComboNali",
+            "serviceCrIsCompanyDomainAvailable",
+            "serviceCrIsFieldValid",
+            "serviceCrGetTermPage"};
 
         if (!ArrayUtils.contains(srv, servicename)) {
             return Response.status(Response.Status.FORBIDDEN).build();
@@ -512,14 +504,14 @@ public class PostServices {
             conn.commit();
             //conn.close();
 
-            if (servicename.equals("serviceCrSignupPersonal")
-                    || servicename.equals("serviceCrSignupCompany")) {
-                return Response.temporaryRedirect(new URI("/apd/activation.html?id=" + c.getValue(EntityCrUser.ID).toString())).build();
-            }
-
-            if (servicename.equals("serviceCrActivateCompany")) {
-                return Response.temporaryRedirect(new URI("/apd/activated.html")).build();
-            }
+//            if (servicename.equals("serviceCrSignupPersonal")
+//                    || servicename.equals("serviceCrSignupCompany")) {
+//                return Response.temporaryRedirect(new URI("/apd/activation.html?id=" + c.getValue(EntityCrUser.ID).toString())).build();
+//            }
+//
+//            if (servicename.equals("serviceCrActivateCompany")) {
+//                return Response.temporaryRedirect(new URI("/apd/activated.html")).build();
+//            }
             return res;
         } catch (JoseException ex) {
             DBConnection.rollbackConnection(conn);
@@ -542,9 +534,13 @@ public class PostServices {
     public Response getContent(@Context HttpHeaders headers) {
         Connection conn = null;
         try {
+            System.out.println("connectin yaradilir");
             conn = new DBConnection().getConnection();
+            System.out.println("setAutoCommit false edilir");
             conn.setAutoCommit(false);
+            System.out.println("connectin yaradildi");
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
+            System.out.println("connectin artiq movcuddur");
 
             Cookie cookie = headers.getCookies().get("apdtok");
             String cs = cookie.getValue();
@@ -555,6 +551,7 @@ public class PostServices {
             SessionManager.setLang(Thread.currentThread().getId(), user.selectLang());
             SessionManager.setDomain(Thread.currentThread().getId(), user.selectDomain());
             SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
+            SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
             System.out.println("Getting User: " + (System.currentTimeMillis() - startTime));
 

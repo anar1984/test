@@ -18,12 +18,17 @@ import static module.cr.CrModel.getAttributeList4Cache;
 import module.cr.entity.EntityCrEntityLabel;
 import module.cr.entity.EntityCrListItem;
 import module.cr.entity.EntityCrListItemList;
+import module.cr.entity.EntityCrPermission;
+import module.cr.entity.EntityCrRelCompanyAndRule;
+import module.cr.entity.EntityCrRelRuleAndPermission;
+import module.cr.entity.EntityCrRelUserAndRule;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import utility.sqlgenerator.DBConnection;
 import utility.sqlgenerator.EntityManager;
+import utility.sqlgenerator.QLogger;
 
 /**
  *
@@ -79,14 +84,39 @@ public class QUtility {
     }
 
     public static String getLabel(String arg) throws QException {
+        return getLabel(arg, SessionManager.getCurrentLang());
+    }
+
+    public static String getLabel(String arg, String lang) throws QException {
         EntityCrEntityLabel ent = new EntityCrEntityLabel();
         ent.setDeepWhere(false);
-        ent.setLang(SessionManager.getCurrentLang());
+        ent.setLang(lang);
         ent.setFieldName(arg.trim());
         Carrier c = EntityManager.select(ent);
         if (c.getTableRowCount(ent.toTableName()) > 0) {
             arg = c.getValue(
                     ent.toTableName(), 0, EntityCrEntityLabel.DESCRIPTION).toString();
+        }
+        return arg;
+    }
+
+    public static String getLabel(String arg, String[] params) throws QException {
+        return getLabel(arg, SessionManager.getCurrentLang(), params);
+    }
+
+    public static String getLabel(String arg, String lang, String[] params) throws QException {
+        EntityCrEntityLabel ent = new EntityCrEntityLabel();
+        ent.setDeepWhere(false);
+        ent.setLang(lang);
+        ent.setFieldName(arg.trim());
+        Carrier c = EntityManager.select(ent);
+        if (c.getTableRowCount(ent.toTableName()) > 0) {
+            arg = c.getValue(
+                    ent.toTableName(), 0, EntityCrEntityLabel.DESCRIPTION).toString();
+        }
+
+        for (int i = 0; i < params.length; i++) {
+            arg.replace("@param" + i, params[i]);
         }
         return arg;
     }
@@ -171,35 +201,13 @@ public class QUtility {
             } catch (SQLException ex1) {
             }
         }
-
     }
 
     public static String checkLangLabel(File arg) throws QException, IOException {
         Document doc = Jsoup.parse(arg, "UTF-8");
+        
+        return checkLangLabel(doc);
 
-        Elements elements = doc.getElementsByAttribute("qlang");
-        String langs = "";
-        for (Element element : elements) {
-            String val = element.html().trim();
-//            System.out.println(val);
-            langs += val + CoreLabel.IN;
-        }
-
-        EntityCrEntityLabel ent = new EntityCrEntityLabel();
-        ent.setFieldName(langs);
-        ent.setLang(SessionManager.getCurrentLang());
-        Carrier c = EntityManager.select(ent);
-
-        c = c.getKeyValuesPairFromTable(ent.toTableName(),
-                EntityCrEntityLabel.FIELD_NAME, EntityCrEntityLabel.DESCRIPTION);
-
-        for (Element element : elements) {
-            String val = element.html().trim();
-            String nv = c.isKeyExist(val) ? c.getValue(val).toString() : val;
-            element.html(nv);
-        }
-        doc = fillCombo(doc);
-        return doc.toString();
     }
 
     private static Document fillCombo(Document doc) throws QException {
@@ -270,12 +278,18 @@ public class QUtility {
     }
 
     public static String checkLangLabel(Document doc) throws QException, IOException {
+        doc = checkPermission(doc);
         Elements elements = doc.getElementsByAttribute("qlang");
         String langs = "";
         for (Element element : elements) {
-            String val = element.html().trim();
+
+            String val = element.hasAttr("data-content")
+                    ? element.attr("data-content").trim() : element.html().trim();
+            System.out.println(val);
             langs += val + CoreLabel.IN;
+
         }
+//        System.out.println("langs->>>" + langs);
 
         EntityCrEntityLabel ent = new EntityCrEntityLabel();
         ent.setFieldName(langs);
@@ -286,13 +300,95 @@ public class QUtility {
                 EntityCrEntityLabel.FIELD_NAME, EntityCrEntityLabel.DESCRIPTION);
 
         for (Element element : elements) {
-            String val = element.html().trim();
-            String nv = c.isKeyExist(val) ? c.getValue(val).toString() : val;
-            element.html(nv);
-        }
+            String val = element.hasAttr("data-content")
+                    ? element.attr("data-content").trim() : element.html().trim();
+            String nv = "";
+            if (c.isKeyExist(val)){
+                nv = c.getValue(val).toString();   
+            }else{
+                nv = val;
+                QLogger.saveLabelLog(val);
+            }
 
+            if (element.hasAttr("data-content")) {
+                element.attr("data-content", nv);
+            } else {
+                element.html(nv);
+            }
+        }
         doc = fillCombo(doc);
         return doc.toString();
+    }
+
+    public static Document checkPermission(Document doc) throws QException, IOException {
+        Elements elements = doc.getElementsByAttribute("component_id");
+        for (Element element : elements) {
+            String comp_id = element.hasAttr("component_id")
+                    ? element.attr("component_id").trim() : "";
+            if (comp_id.trim().length() == 0) {
+                continue;
+            }
+
+            if (!hasPermission(comp_id)){
+              element.remove();
+            }
+            
+        }
+
+        return doc;
+    }
+
+    public static boolean hasPermission(String componentId) throws QException {
+        boolean hasPermission = true;
+
+        EntityCrPermission entPermission = new EntityCrPermission();
+        entPermission.setDeepWhere(false);
+        entPermission.setPermissionString(componentId);
+        entPermission.setStartLimit(0);
+        entPermission.setEndLimit(0);
+        EntityManager.select(entPermission);
+
+        if (entPermission.getId().length() == 0) {
+            return false;
+        }
+
+        EntityCrRelRuleAndPermission entRulePerm = new EntityCrRelRuleAndPermission();
+        entRulePerm.setDeepWhere(false);
+        entRulePerm.setFkPermissionId(entPermission.getId());
+        Carrier crRulePerm = EntityManager.select(entRulePerm);
+
+        if (crRulePerm.getTableRowCount(entRulePerm.toTableName()) == 0) {
+            return false;
+        }
+
+        String rulePermIds = crRulePerm.getValueLine(entRulePerm.toTableName(),
+                "fkRuleId");
+
+        EntityCrRelCompanyAndRule ent = new EntityCrRelCompanyAndRule();
+        ent.setDeepWhere(false);
+        ent.setFkRuleId(rulePermIds);
+        ent.setExpireDate(CoreLabel.GE + QDate.getCurrentDate());
+        ent.setFkCompanyId(SessionManager.getCurrentCompanyId());
+        Carrier crCompRule = EntityManager.select(ent);
+
+        if (crCompRule.getTableRowCount(ent.toTableName()) == 0) {
+            return false;
+        }
+
+        if (SessionManager.isCurrentUserCompanyAdmin()) {
+            return true;
+        } else {
+            EntityCrRelUserAndRule entUsrRule = new EntityCrRelUserAndRule();
+            entUsrRule.setDeepWhere(false);
+            entUsrRule.setFkRuleId(rulePermIds);
+            entUsrRule.setFkUserId(SessionManager.getCurrentUserId());
+            Carrier crUsrRule = EntityManager.select(entUsrRule);
+            if (crUsrRule.getTableRowCount(entUsrRule.toTableName())==0){
+                return false;
+            }
+        }
+
+        return hasPermission;
     }
 
     public static String checkLangLabel(String arg) throws QException, IOException {
@@ -321,4 +417,5 @@ public class QUtility {
 
         return doc.toString();
     }
+
 }

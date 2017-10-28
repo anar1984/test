@@ -16,17 +16,14 @@ import utility.CoreEntity;
  * @author nikli
  */
 public class EntityCrRelRoleRule extends CoreEntity {
-    
-    
+
     public static String ID = "id";
     public static final String FK_ROLE_ID = "fkRoleId";
     public static final String FK_RULE_ID = "fkRuleId";
-    
+
     private String fkRoleId = "";
     private String fkRuleId = "";
 
-    
-    
     @Override
     public String toString() {
         JSONObject obj = new JSONObject();
@@ -78,7 +75,9 @@ public class EntityCrRelRoleRule extends CoreEntity {
         this.fkRoleId = fkRoleId;
     }
 
-    
-    
-    
+    @Override
+    public String selectDbname() {
+        return "apdvoice";
+    }
+
 }

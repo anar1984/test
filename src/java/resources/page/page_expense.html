@@ -1,14 +1,14 @@
-<div class="row apd-page" id="page_expense">
+<div component_id="page_expense" class="row apd-page" id="page_expense">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
             <label qlang>expense</label>
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
-        <button id='serviceCrGetExpenseList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+        <button  component_id="serviceCrGetExpenseList"  id='serviceCrGetExpenseList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_expense_list')" qlang>list
         </button>
-        <button id='btn_serviceCrInsertNewExpense' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+        <button  component_id="serviceCrInsertNewExpense" id='btn_serviceCrInsertNewExpense' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#insertNewExpense" qlang>insert
         </button>
         <hr>
@@ -18,7 +18,7 @@
 
     </div>
     <!-- Modal -->
-    <div id="insertNewExpense" apd-form-reload-button-id='serviceCrGetExpenseList' class="modal fade" role="dialog">
+    <div   component_id="serviceCrInsertNewExpense" id="insertNewExpense" apd-form-reload-button-id='serviceCrGetExpenseList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div id="updateExpense" apd-form-reload-button-id='serviceCrGetExpenseList' class="modal fade" role="dialog">
+    <div   component_id="serviceCrUpdateExpense"  id="updateExpense" apd-form-reload-button-id='serviceCrGetExpenseList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

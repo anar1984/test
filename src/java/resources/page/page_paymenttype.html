@@ -1,0 +1,205 @@
+<div class="row apd-page" id="page_paymenttype">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label qlang>paymenttype</label>
+        </div>
+    </div> 
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetPaymentTypeList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_paymenttype_list')" qlang> list
+        </button>
+        <button id='btn_serviceCrInsertNewPaymentType' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewPaymentType" qlang>newPaymentType    
+        </button>
+        <hr>
+    </div>
+
+
+    <div  id= "paymenttypelist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    <!-- Modal -->
+    <div id="insertNewPaymentType" apd-form-reload-button-id='serviceCrGetPaymentTypeList' 
+         class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>newPaymentType</h4>
+                </div>
+                <div class="modal-body-1  ">
+                    <form id="form_insertNewPaymentType" class="apd-form" method="POST" 
+                          action="srv/serviceCrInsertNewPaymentType">
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentTypeName</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentTypeName" name="paymentTypeName">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentTypeShortname</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentTypeShortname" name="paymentTypeShortname">
+                        </div>
+                        
+                        <div class="form-group col-md-4">
+                            <label qlang>defaultPrice</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    id="defaultPrice" name="defaultPrice">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="currency" name="currency" 
+                                    srv_url="li/currency" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-3">
+                            <label qlang>defaultDiscount</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    id="defaultDiscount" name="defaultDiscount">
+                        </div>
+                         <div class="form-group col-md-3">
+                            <label qlang>defaultPaymentPeriod</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    id="defaultPaymentPeriod" name="defaultPaymentPeriod">
+                        </div>
+                        
+                         <div class="form-group col-md-3">
+                            <label qlang>isPublic</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="isPublic" name="isPublic" 
+                                    srv_url="li/yesno" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-3">
+                            <label qlang>type</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="type" name="type" 
+                                    srv_url="li/paymentypetype" >
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label qlang>userLisenceCount</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="userLisenceCount" name="userLisenceCount">
+                        </div>
+                        
+                         <div class="form-group col-md-3">
+                            <label qlang>userLisenceMonthRange</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="userLisenceMonthRange" name="userLisenceMonthRange">
+                        </div>
+                        
+                       
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true" qlang>insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updatePaymentType" apd-form-reload-button-id='serviceCrGetPaymentTypeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>updatePaymentType</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updatePaymentType" class="apd-form" method="POST" action="srv/serviceCrUpdatePaymentType">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentTypeName</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentTypeName" name="paymentTypeName">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label qlang>paymentTypeShortname</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="paymentTypeShortname" name="paymentTypeShortname">
+                        </div>
+                        
+                        <div class="form-group col-md-4">
+                            <label qlang>defaultPrice</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    id="defaultPrice" name="defaultPrice">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label qlang>currency</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="currency" name="currency" 
+                                    srv_url="li/currency" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-3">
+                            <label qlang>defaultDiscount</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    id="defaultDiscount" name="defaultDiscount">
+                        </div>
+                         <div class="form-group col-md-3">
+                            <label qlang>defaultPaymentPeriod</label>
+                            <input  class="form-control apd-form-input" type="number"
+                                    id="defaultPaymentPeriod" name="defaultPaymentPeriod">
+                        </div>
+                        
+                         <div class="form-group col-md-3">
+                            <label qlang>isPublic</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="isPublic" name="isPublic" 
+                                    srv_url="li/yesno" >
+                            </select> 
+                        </div >
+                        <div class="form-group col-md-3">
+                            <label qlang>type</label>
+                            <select class="form-control apd-form-select-back" 
+                                    select_text="itemValue" 
+                                    select_value="itemKey" 
+                                    id="type" name="type" 
+                                    srv_url="li/paymentypetype" >
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label qlang>userLisenceCount</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="userLisenceCount" name="userLisenceCount">
+                        </div>
+                        
+                         <div class="form-group col-md-3">
+                            <label qlang>userLisenceMonthRange</label>
+                            <input  class="form-control apd-form-input" type="text"
+                                    id="userLisenceMonthRange" name="userLisenceMonthRange">
+                        </div>
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,19 +1,19 @@
-<div class="row apd-page" id="page_payment">
+<div component_id="page_payment" class="row apd-page" id="page_payment">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
             <label qlang>payment</label>
         </div>
     </div> 
     <div  class="col-md-10 apd-page-btn"> 
-        <button id='serviceCrGetPaymentList' type="button" 
+        <button component_id="serviceCrGetPaymentList"  id='serviceCrGetPaymentList' type="button" 
                 class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_payment_list')" qlang> allPayments
         </button>
-        <button id='btn_serviceCrInsertNewPayment' type="button" 
+        <button component_id="serviceCrInsertNewPayment"   id='btn_serviceCrInsertNewPayment' type="button" 
                 class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#insertNewPayment" qlang>newPayment
         </button>
-        <button id='btn_serviceCrInsertNewPayment' type="button" 
+        <button component_id="serviceCrConfirmPayment" id="serviceCrConfirmPayment' type="button" 
                 class="btn btn-md task-button  " 
                 onclick="confirmPayment(this)"
                 qlang>confirmPayment
@@ -40,7 +40,7 @@
 
     </div>
     <!-- Modal -->
-    <div id="insertNewPayment" apd-form-reload-button-id='serviceCrGetPaymentList' 
+    <div  component_id="serviceCrInsertNewPayment" id="insertNewPayment" apd-form-reload-button-id='serviceCrGetPaymentList' 
          class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -80,6 +80,7 @@
                                     select_text="paymentName,price,currencyName" 
                                     select_value="id" 
                                     select_separator="/  " 
+                                    has_null
                                     id="fkPriceListId" name="fkPriceListId" 
                                     send_data="listStatus=A"
                                     srv_url="srv/serviceCrGetPriceListList"
@@ -135,7 +136,7 @@
         </div>
     </div>
 
-    <div id="updatePayment" apd-form-reload-button-id='serviceCrGetPaymentList' class="modal fade" role="dialog">
+    <div component_id="serviceCrUpdatePayment" id="updatePayment" apd-form-reload-button-id='serviceCrGetPaymentList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

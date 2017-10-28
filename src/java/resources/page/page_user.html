@@ -1,14 +1,14 @@
-<div class="row apd-page" id="page_user">
+<div component_id="page_user" class="row apd-page" id="page_user">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
             <label qlang>users</label>
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
-        <button id='serviceCrGetUserList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+        <button  component_id="serviceCrGetUserList"  id='serviceCrGetUserList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_user_list')">List
         </button>
-        <button id='btn_serviceCrInsertNewUser' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+        <button  component_id="serviceCrInsertNewUser"  id='btn_serviceCrInsertNewUser' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#insertNewUser">Insert
         </button>
         <hr>
@@ -18,168 +18,190 @@
 
     </div>
     <!-- Modal -->
-    <div id="insertNewUser" apd-form-reload-button-id='serviceCrGetUserList' class="modal fade" role="dialog">
+    <div component_id="serviceCrInsertNewUser"  id="insertNewUser" apd-form-reload-button-id='serviceCrGetUserList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title" qlang >insertNewUser</h4>
                 </div>
+
                 <div class="modal-body-1">
                     <form id="form_insertNewUser" class="apd-form" method="POST" action="srv/serviceCrInsertNewUser">
 
+                        <div class="col-md-12">
+                            <br>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#userData" qlang>userData</a></li>
+                                <li><a data-toggle="tab" href="#permissions" qlang>permissions</a></li>
 
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >username</label>
-                            <input dont_clear  class="form-control apd-form-input" type="text" id="username"
-                                   name="username"    >
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >password</label>
-                            <input class="form-control apd-form-input" type="password" id="password"
-                                   name="password" placeholder=""  >
-                        </div>
-<!--                        <div class="form-group col-md-6">
-                            <label class="float">userShortId</label>
-                            <input type="text" class="form-control apd-form-input-file"  file_type="image"
-                                   id="userShortId" name="userShortId" >
-                        </div>-->
-
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userPersonName</label>
-                            <input type="text" class="form-control apd-form-input" id="userPersonName" 
-                                   name="userPersonName" placeholder="">
+                            </ul>
                         </div>
 
+                        <div class="col-md-12">
+                            <div class="tab-content">
+                                <!--patientData-->
+                                <div id="userData" class="col-md-12  tab-pane fade in active    ">
+                                    <br>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >username</label>
+                                        <input dont_clear  class="form-control apd-form-input" type="text" id="username"
+                                               name="username"    >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >password</label>
+                                        <input class="form-control apd-form-input" type="password" id="password"
+                                               name="password" placeholder=""  >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userPersonName</label>
+                                        <input type="text" class="form-control apd-form-input" id="userPersonName" 
+                                               name="userPersonName" placeholder="">
+                                    </div>
 
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userPersonSurname</label>
-                            <input type="text" class="form-control apd-form-input" id="userPersonSurname" 
-                                   name="userPersonSurname" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userPersonMiddlename</label>
-                            <input type="text" class="form-control apd-form-input" id="userPersonMiddlename" 
-                                   name="userPersonMiddlename" placeholder="">
-                        </div>
-                        
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userBirthPlace</label>
-                            <input type="text" class="form-control apd-form-input" id="userBirthPlace" 
-                                   name="userBirthPlace" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang  qlang >userBirthDate</label>
-                            <input type="date" class="form-control apd-form-date" id="userBirthDate" 
-                                   name="userBirthDate" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >expireDate</label>
-                            <input type="date" class="form-control apd-form-date" id="expireDate" 
-                                   name="expireDate" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >liUserPermissionCode</label>
-                            <select class="form-control apd-form-select" id="liUserPermissionCode"
-                                    name="liUserPermissionCode"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/userPermissionCode">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >sex</label>
-                            <select class="form-control apd-form-select" id="sex" name="sex"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/sex" has_null>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >occupation</label>
-                            <input type="text" class="form-control apd-form-input" id="occupation" 
-                                   name="occupation" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >mobile1</label>
-                            <input type="text" class="form-control apd-form-input" id="mobile1" 
-                                   name="mobile1">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >mobile2</label>
-                            <input type="text" class="form-control apd-form-input" id="mobile2" 
-                                   name="mobile2" >
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >telephone1</label>
-                            <input type="text" class="form-control apd-form-input" id="telephone1" 
-                                   name="telephone1" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >telephone2</label>
-                            <input type="text" class="form-control apd-form-input" id="telephone2" 
-                                   name="telephone2" placeholder=" ">
-                        </div>
 
-                        <div class="form-group col-md-6 ">
-                            <label class="float" qlang >email1</label>
-                            <input type="email" class="form-control apd-form-email" id="email1" 
-                                   name="email1" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >email2</label>
-                            <input type="email" class="form-control apd-form-email" id="email2" 
-                                   name="email2" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang>userImage</label>
-                            <div class="fileuploader">
-                                <div class="col-md-11">
-                                    <input id="userImage" name="userImage" 
-                                           class="form-control apd-form-input-file" 
-                                           type="file" file_type="image" value="">
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userPersonSurname</label>
+                                        <input type="text" class="form-control apd-form-input" id="userPersonSurname" 
+                                               name="userPersonSurname" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userPersonMiddlename</label>
+                                        <input type="text" class="form-control apd-form-input" id="userPersonMiddlename" 
+                                               name="userPersonMiddlename" placeholder="">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userBirthPlace</label>
+                                        <input type="text" class="form-control apd-form-input" id="userBirthPlace" 
+                                               name="userBirthPlace" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang  qlang >userBirthDate</label>
+                                        <input type="date" class="form-control apd-form-date" id="userBirthDate" 
+                                               name="userBirthDate" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >expireDate</label>
+                                        <input type="date" class="form-control apd-form-date" id="expireDate" 
+                                               name="expireDate" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >liUserPermissionCode</label>
+                                        <select class="form-control apd-form-select" id="liUserPermissionCode"
+                                                name="liUserPermissionCode"
+                                                select_text="itemValue" select_value="itemKey" 
+                                                srv_url="li/userPermissionCode">
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >sex</label>
+                                        <select class="form-control apd-form-select" id="sex" name="sex"
+                                                select_text="itemValue" select_value="itemKey" 
+                                                srv_url="li/sex" has_null>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >occupation</label>
+                                        <input type="text" class="form-control apd-form-input" id="occupation" 
+                                               name="occupation" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >mobile1</label>
+                                        <input type="text" class="form-control apd-form-input" id="mobile1" 
+                                               name="mobile1">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >mobile2</label>
+                                        <input type="text" class="form-control apd-form-input" id="mobile2" 
+                                               name="mobile2" >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >telephone1</label>
+                                        <input type="text" class="form-control apd-form-input" id="telephone1" 
+                                               name="telephone1" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >telephone2</label>
+                                        <input type="text" class="form-control apd-form-input" id="telephone2" 
+                                               name="telephone2" placeholder=" ">
+                                    </div>
+
+                                    <div class="form-group col-md-6 ">
+                                        <label class="float" qlang >email1</label>
+                                        <input type="email" class="form-control apd-form-email" id="email1" 
+                                               name="email1" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >email2</label>
+                                        <input type="email" class="form-control apd-form-email" id="email2" 
+                                               name="email2" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang>userImage</label>
+                                        <div class="fileuploader">
+                                            <div class="col-md-11">
+                                                <input id="userImage" name="userImage" 
+                                                       class="form-control apd-form-input-file" 
+                                                       type="file" file_type="image" value="">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <img style="display: none;" class="  apd-image-spinner" 
+                                                     src="resources/upload/spinner.gif" height="20px" 
+                                                     width="20px">
+                                                <img style="display: none; " class="  
+                                                     apd-image-uploaded" src="resources/upload/uploaded.png"
+                                                     height="20px" width="20px">
+                                                <i style="display: none; font-size: 22px; color: red;" 
+                                                   class="fa fa-warning apd-image-upload-error">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="col-md-1">
-                                    <img style="display: none;" class="  apd-image-spinner" 
-                                         src="resources/upload/spinner.gif" height="20px" 
-                                         width="20px">
-                                    <img style="display: none; " class="  
-                                         apd-image-uploaded" src="resources/upload/uploaded.png"
-                                         height="20px" width="20px">
-                                    <i style="display: none; font-size: 22px; color: red;" 
-                                       class="fa fa-warning apd-image-upload-error">
-                                    </i>
+
+                                <!--permissions-->
+                                <div id="permissions" class="col-md-12  tab-pane fade    ">
+                                    <br>
+                                    <div class="panel panel-default">
+                                        <div class="form-group col-md-10">
+                                            <label class="float" qlang >roles</label>
+                                            <select class="form-control apd-form-select custom-role"  
+                                                    id="fkRoleId" name="fkRoleId"  
+                                                    has_null="1"
+                                                    select_text="roleFullname" select_value="id" 
+                                                    srv_url="srv/serviceCrGetRoleList4Combo"
+                                                    >
+                                            </select>
+                                        </div>
+                                         <div class="form-group col-md-2">
+                                            <br>
+                                            <a href="#" qlang onclick="allRules(this)">allRules</a>
+                                        </div>
+                                        <div class="form-group col-md-12"><br>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <!-- List group -->
+                                            <ul id="fkRuleId" name="fkRuleId"  
+                                                class="list-group apd-form-switch-list"  
+                                                select_id="fkRuleId" tn="permission" 
+                                                select_text="ruleName" select_value="ruleAccess" 
+                                                srv_url="srv/serviceCrGetUserRuleList">
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </div>  
                         </div>
-                        
-                        <div class="form-group col-md-6">
-                            <div class="panel panel-default">
-                                <!-- Default panel contents -->
-                                <div class="panel-heading" qlang >roleNrule</div>
-                               
-                                
-                                <select class="form-control apd-form-select" placeholder="Roles"
-                                        id="fkRoleId" name="fkRoleId" has_all="1"
-                                        select_text="roleName" select_value="id" 
-                                        srv_url="srv/serviceCrGetRoleList">
-                                </select>
-
-                                
-                                
-                                <!-- List group -->
-                                <ul id="ruleId" send_data="id=-," class="list-group apd-form-switch-list"  select_id="id" tn="permission" dependence_id="fkRoleId"
-                                    name="ruleId" select_text="ruleName" select_value="ruleAccess" 
-                                        srv_url="srv/serviceCrGetUserRuleList">
-
-                                </ul>
-                            </div>
-                        </div>
-                         
+                        <br>
 
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" 
-                                     qlang apd-clear-form-data="true">insert</button>
+                                    qlang apd-clear-form-data="true">insert</button>
                             <button type="button" class="btn btn-default" 
-                                     qlang data-dismiss="modal"  role="button">close</button>
+                                    qlang data-dismiss="modal"  role="button">close</button>
                         </div>
                     </form>
                 </div>
@@ -198,160 +220,190 @@
                     <h4 class="modal-title">Update User</h4>
                 </div>
                 <div class="modal-body-1">
-                    <form id="form_insertNewUser" class="apd-form" method="POST" action="srv/serviceCrUpdateUser">
-                        <div class="form-group hidden col-md-6">
-                            <label class="float">id</label>
-                            <input dont_clear class="form-control apd-form-input" type="hidden" id="id"
-                                   name="id"    >
-                        </div>
-                       <div class="form-group col-md-6">
-                            <label class="float" qlang >username</label>
-                            <input dont_clear="true" class="form-control apd-form-input" type="text" id="username"
-                                   name="username"    >
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >password</label>
-                            <input class="form-control apd-form-input" type="password" id="password"
-                                   name="password" placeholder=""  >
-                        </div>
-<!--                        <div class="form-group col-md-6">
-                            <label class="float">userShortId</label>
-                            <input type="text" class="form-control apd-form-input-file"  file_type="image"
-                                   id="userShortId" name="userShortId" >
-                        </div>-->
 
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userPersonName</label>
-                            <input type="text" class="form-control apd-form-input" id="userPersonName" 
-                                   name="userPersonName" placeholder="">
+                    <form id="form_updateUser" class="apd-form" method="POST" action="srv/serviceCrUpdateUser">
+
+                        <div class="col-md-12">
+                            <br>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#userData1" qlang>userData</a></li>
+                                <li><a data-toggle="tab" href="#permissions1" qlang>permissions</a></li>
+
+                            </ul>
                         </div>
 
+                        <div class="col-md-12">
+                            <div class="tab-content">
+                                <!--patientData-->
+                                <div id="userData1" class="col-md-12  tab-pane fade in active    ">
+                                    <br>
+                                    <div class="form-group hidden col-md-6">
+                                        <label class="float">id</label>
+                                        <input dont_clear class="form-control apd-form-input" type="hidden" id="id"
+                                               name="id"    >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >username</label>
+                                        <input dont_clear  class="form-control apd-form-input" type="text" id="username"
+                                               name="username"    >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >password</label>
+                                        <input class="form-control apd-form-input" type="password" id="password"
+                                               name="password" placeholder=""  >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userPersonName</label>
+                                        <input type="text" class="form-control apd-form-input" id="userPersonName" 
+                                               name="userPersonName" placeholder="">
+                                    </div>
 
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userPersonSurname</label>
-                            <input type="text" class="form-control apd-form-input" id="userPersonSurname" 
-                                   name="userPersonSurname" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userPersonMiddlename</label>
-                            <input type="text" class="form-control apd-form-input" id="userPersonMiddlename" 
-                                   name="userPersonMiddlename" placeholder="">
-                        </div>
-                        
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >userBirthPlace</label>
-                            <input type="text" class="form-control apd-form-input" id="userBirthPlace" 
-                                   name="userBirthPlace" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang  qlang >userBirthDate</label>
-                            <input type="date" class="form-control apd-form-date" id="userBirthDate" 
-                                   name="userBirthDate" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >expireDate</label>
-                            <input type="date" class="form-control apd-form-date" id="expireDate" 
-                                   name="expireDate" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >liUserPermissionCode</label>
-                            <select class="form-control apd-form-select" id="liUserPermissionCode"
-                                    name="liUserPermissionCode"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/userPermissionCode">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >sex</label>
-                            <select class="form-control apd-form-select" id="sex" name="sex"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/sex">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >occupation</label>
-                            <input type="text" class="form-control apd-form-input" id="occupation" 
-                                   name="occupation" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >mobile1</label>
-                            <input type="text" class="form-control apd-form-input" id="mobile1" 
-                                   name="mobile1">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >mobile2</label>
-                            <input type="text" class="form-control apd-form-input" id="mobile2" 
-                                   name="mobile2" >
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >telephone1</label>
-                            <input type="text" class="form-control apd-form-input" id="telephone1" 
-                                   name="telephone1" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >telephone2</label>
-                            <input type="text" class="form-control apd-form-input" id="telephone2" 
-                                   name="telephone2" placeholder=" ">
-                        </div>
 
-                        <div class="form-group col-md-6 ">
-                            <label class="float" qlang >email1</label>
-                            <input type="email" class="form-control apd-form-email" id="email1" 
-                                   name="email1" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang >email2</label>
-                            <input type="email" class="form-control apd-form-email" id="email2" 
-                                   name="email2" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="float" qlang>userImage</label>
-                            <div class="fileuploader">
-                                <div class="col-md-11">
-                                    <input id="userImage" name="userImage" 
-                                           class="form-control apd-form-input-file" 
-                                           type="file" file_type="image" value="">
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userPersonSurname</label>
+                                        <input type="text" class="form-control apd-form-input" id="userPersonSurname" 
+                                               name="userPersonSurname" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userPersonMiddlename</label>
+                                        <input type="text" class="form-control apd-form-input" id="userPersonMiddlename" 
+                                               name="userPersonMiddlename" placeholder="">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >userBirthPlace</label>
+                                        <input type="text" class="form-control apd-form-input" id="userBirthPlace" 
+                                               name="userBirthPlace" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang  qlang >userBirthDate</label>
+                                        <input type="date" class="form-control apd-form-date" id="userBirthDate" 
+                                               name="userBirthDate" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >expireDate</label>
+                                        <input type="date" class="form-control apd-form-date" id="expireDate" 
+                                               name="expireDate" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >liUserPermissionCode</label>
+                                        <select class="form-control apd-form-select" id="liUserPermissionCode"
+                                                name="liUserPermissionCode"
+                                                select_text="itemValue" select_value="itemKey" 
+                                                srv_url="li/userPermissionCode">
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >sex</label>
+                                        <select class="form-control apd-form-select" id="sex" name="sex"
+                                                select_text="itemValue" select_value="itemKey" 
+                                                srv_url="li/sex" has_null>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >occupation</label>
+                                        <input type="text" class="form-control apd-form-input" id="occupation" 
+                                               name="occupation" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >mobile1</label>
+                                        <input type="text" class="form-control apd-form-input" id="mobile1" 
+                                               name="mobile1">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >mobile2</label>
+                                        <input type="text" class="form-control apd-form-input" id="mobile2" 
+                                               name="mobile2" >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >telephone1</label>
+                                        <input type="text" class="form-control apd-form-input" id="telephone1" 
+                                               name="telephone1" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >telephone2</label>
+                                        <input type="text" class="form-control apd-form-input" id="telephone2" 
+                                               name="telephone2" placeholder=" ">
+                                    </div>
+
+                                    <div class="form-group col-md-6 ">
+                                        <label class="float" qlang >email1</label>
+                                        <input type="email" class="form-control apd-form-email" id="email1" 
+                                               name="email1" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang >email2</label>
+                                        <input type="email" class="form-control apd-form-email" id="email2" 
+                                               name="email2" placeholder=" ">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="float" qlang>userImage</label>
+                                        <div class="fileuploader">
+                                            <div class="col-md-11">
+                                                <input id="userImage" name="userImage" 
+                                                       class="form-control apd-form-input-file" 
+                                                       type="file" file_type="image" value="">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <img style="display: none;" class="  apd-image-spinner" 
+                                                     src="resources/upload/spinner.gif" height="20px" 
+                                                     width="20px">
+                                                <img style="display: none; " class="  
+                                                     apd-image-uploaded" src="resources/upload/uploaded.png"
+                                                     height="20px" width="20px">
+                                                <i style="display: none; font-size: 22px; color: red;" 
+                                                   class="fa fa-warning apd-image-upload-error">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="col-md-1">
-                                    <img style="display: none;" class="  apd-image-spinner" 
-                                         src="resources/upload/spinner.gif" height="20px" 
-                                         width="20px">
-                                    <img style="display: none; " class="  
-                                         apd-image-uploaded" src="resources/upload/uploaded.png"
-                                         height="20px" width="20px">
-                                    <i style="display: none; font-size: 22px; color: red;" 
-                                       class="fa fa-warning apd-image-upload-error">
-                                    </i>
+
+                                <!--permissions-->
+                                <div id="permissions1" class="col-md-12  tab-pane fade    ">
+                                    <br>
+                                    <div class="panel panel-default">
+                                        <div class="form-group col-md-8">
+                                            <label class="float" qlang >roles</label>
+                                            <select class="form-control apd-form-select custom-role"  
+                                                    id="fkRoleId" name="fkRoleId" 
+                                                    has_null="1"
+                                                    select_text="roleFullname" select_value="id" 
+                                                    srv_url="srv/serviceCrGetRoleList4Combo">
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <br>
+                                            <a href="#" qlang onclick="selectedRules(this)">selectedRules</a>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <br>
+                                            <a href="#" qlang onclick="allRules(this)">allRules</a>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-12">
+                                            <br>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <!-- List group -->
+                                            <ul id="fkRuleId" name="fkRuleId"  
+                                                class="list-group apd-form-switch-list"  
+                                                select_id="fkRuleId" tn="permission" 
+                                                select_text="ruleName" select_value="ruleAccess" 
+                                                srv_url="srv/serviceCrGetUserRuleList">
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </div>  
                         </div>
-                        
-                        <div class="form-group col-md-6">
-                            <div class="panel panel-default">
-                                <!-- Default panel contents -->
-                                <div class="panel-heading" qlang >roleNrule</div>
-                               
-                                
-                                <select class="form-control apd-form-select" placeholder="Roles"
-                                        id="fkRoleId" name="fkRoleId" has_all="1"
-                                        select_text="roleName" select_value="id" 
-                                        srv_url="srv/serviceCrGetRoleList">
-                                </select>
+                        <br>
 
-                                
-                                
-                                <!-- List group -->
-                                <ul id="ruleId" send_data="id=-," class="list-group apd-form-switch-list"  select_id="id" tn="permission" dependence_id="fkRoleId"
-                                    name="ruleId" select_text="ruleName" select_value="ruleAccess" 
-                                        srv_url="srv/serviceCrGetUserRuleList">
-
-                                </ul>
-                            </div>
-                        </div>
-                         
-                        
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" 
+                            <button   component_id="serviceCrUpdateUser" type="button" class="btn btn-default apd-form-btn" 
                                     apd-clear-form-data="false" qlang>update</button>
                             <button type="button" class="btn btn-default" 
                                     data-dismiss="modal"  role="button" qlang>close</button>
@@ -365,3 +417,127 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#fkRoleId').first().click();
+
+        $('.custom-role').change(function () {
+            clickActionOfRole(this);
+        });
+
+
+    });
+
+
+    function clickActionOfRole(e) {
+        var userId = $(e).closest("form").find('#id').val();
+        var fkRoleId = $(e).closest("form").find('#fkRoleId').val();
+        var type = "rule";
+        var json = {kv: {}};
+        json.kv.fkUserId = userId;
+        json.kv.fkRoleId = fkRoleId;
+        json.kv.type = type;
+//        console.log("userId " + userId + ", fkRuleId " + fkRoleId + ", type " + type);
+        fillSwitchList(e, json);
+    }
+
+    function selectedRules(e) {
+        var userId = $(e).closest("form").find('#id').val();
+        var type = "ownrule";
+        var json = {kv: {}};
+        json.kv.fkUserId = userId;
+        json.kv.type = type;
+//        console.log("userId " + userId + ", fkRuleId " + fkRoleId + ", type " + type);
+        fillSwitchList(e, json);
+    }
+
+    function allRules(e) {
+        var userId = $(e).closest("form").find('#id').val();
+        var type = "all";
+        var json = {kv: {}};
+        json.kv.fkUserId = userId;
+        json.kv.type = type;
+//        console.log("userId " + userId + ", fkRuleId " + fkRoleId + ", type " + type);
+        fillSwitchList(e, json);
+    }
+
+    
+
+    function fillSwitchList(parent, json) {
+        console.log(JSON.stringify(json));
+        var e = $(parent).closest("form").find("#fkRuleId");
+
+        $(e).children().remove();
+
+        var url = $(e).attr('srv_url');
+        if (typeof url === 'undefined' || !url) {
+            return;
+        }
+
+        var select_text = $(e).attr('select_text');
+        var select_value = $(e).attr('select_value');
+        var select_id = $(e).attr('select_id');
+        var select_separator = $(e).attr('select_separator');
+        var name = $(e).attr('name');
+
+
+        if (typeof selected_value === 'undefined' || !selected_value) {
+            selected_value = '';
+        }
+        if (typeof select_separator === 'undefined' || !select_separator) {
+            select_separator = ' - ';
+        }
+
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/" + url,
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                isResultRedirect(JSON.stringify(res));
+                console.log(JSON.stringify(res));
+                var obj = res.tbl;
+                for (var i = 0; i < obj.length; i++) {
+                    var objChild = obj[i]['r'];
+
+
+                    for (var j = 0; j < objChild.length; j++) {
+                        var t = '';
+                        var v = objChild[j][select_value];
+                        var val = objChild[j][select_id];
+                        var checked = '';
+                        if (v === '1') {
+                            checked = 'checked';
+                        }
+                        var vs = select_text.split(",");
+                        for (var k = 0; k < vs.length; k++) {
+                            t += objChild[j][vs[k]] + select_separator;
+                        }
+                        t = t.substr(0, t.length - select_separator.length);
+                        var li = '<li class="list-group-item">' + t + '<div class="material-switch pull-right">';
+                        li += '<input id="' + name + j + '" name="' + name + '" type="checkbox" ' + checked + ' value="' + val + '"/>';
+                        li += '<label for="' + name + j + '" class="label-success"></label>';
+                        li += '</div> </li>';
+
+
+
+                        $(e).append($(li));
+                    }
+                    /*if (has_other === '1') {
+                     $(e).append($("<option />").val("__2__").text("Other"));
+                     }*/
+                }
+
+            },
+            error: function (res, status) {
+                alert(getMessage('somethingww'));
+            }
+        });
+
+    }
+
+</script>

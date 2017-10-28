@@ -103,6 +103,46 @@ var g_tbl = {
         "reload_buttion_id": "serviceCrGetPatientList",
         "table_block": "1"
     },
+    "tbl_usertable_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetUserTableList",
+        "delete_url": "srv/serviceCrDeleteUserTable",
+        "result_div_id": "usertablelist",
+        "form_update_popup_id": "updateUserTable",
+        "form_copy_popup_id": "insertNewUserTable",
+        "reload_buttion_id": "serviceCrGetUserTableList",
+        "table_block": "0"
+    },
+    "tbl_paymenttype_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetPaymentTypeList",
+        "delete_url": "srv/serviceCrDeletePaymentType",
+        "result_div_id": "paymenttypelist",
+        "form_update_popup_id": "updatePaymentType",
+        "form_copy_popup_id": "insertNewPaymentType",
+        "reload_buttion_id": "serviceCrGetPaymentTypeList",
+        "table_block": "0"
+    },
+    "tbl_companypayment_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetCompanyPaymentList",
+        "delete_url": "srv/serviceCrDeleteCompanyPayment",
+        "result_div_id": "companypaymentlist",
+        "form_update_popup_id": "updateCompanyPayment",
+        "form_copy_popup_id": "insertNewCompanyPayment",
+        "reload_buttion_id": "serviceCrGetCompanyPaymentList",
+        "table_block": "0"
+    },
+    "tbl_company_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetCompanyList",
+        "delete_url": "",
+        "result_div_id": "companylist",
+        "form_update_popup_id": "updateCompany",
+        "form_copy_popup_id": "",
+        "reload_buttion_id": "serviceCrGetPatientList",
+        "table_block": "0"
+    },
     "tbl_inspectiomatrix_list": {
         "response_tn": "Response",
         "list_url": "srv/serviceCrGetInspectionMatrixBodyList",
@@ -228,8 +268,8 @@ var g_tbl = {
         "list_url": "srv/serviceCrGetRulePermissionList",
         "delete_url": "srv/serviceCrDeleteRulePermission",
         "result_div_id": "rulePermissionList",
-        "form_update_popup_id": "updateRulePermission",
-        "form_copy_popup_id": "insertNewRulePermission",
+        "form_update_popup_id": "assignPermission",
+        "form_copy_popup_id": "assignPermission",
         "reload_buttion_id": "serviceCrGetRulePermissionList",
         "table_block": "0"
     },
@@ -248,11 +288,32 @@ var g_tbl = {
         "list_url": "srv/serviceCrGetRoleRuleList",
         "delete_url": "srv/serviceCrDeleteRoleRule",
         "result_div_id": "roleRuleList",
-        "form_update_popup_id": "updateRoleRule",
-        "form_copy_popup_id": "insertNewRoleRule",
+        "form_update_popup_id": "assignRule",
+        "form_copy_popup_id": "assignRule",
         "reload_buttion_id": "serviceCrGetRoleRuleList",
         "table_block": "0"
+    },
+    "tbl_relpaymenttypeandrule_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetRelPaymentTypeAndRuleList",
+        "delete_url": "srv/serviceCrDeleteRelPaymentTypeAndRule",
+        "result_div_id": "relPaymentTypeAndRuleList",
+        "form_update_popup_id": "insertNewRelPaymentTypeAndRule",
+        "form_copy_popup_id": "insertNewRelPaymentTypeAndRule",
+        "reload_buttion_id": "serviceCrGetRelPaymentTypeAndRuleList",
+        "table_block": "0"
+    },
+    "tbl_relcompanyandrule_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetRelCompanyAndRuleList",
+        "delete_url": "srv/serviceCrDeleteRelCompanyAndRule",
+        "result_div_id": "relCompanyAndRuleList",
+        "form_update_popup_id": "insertNewRelCompanyAndRule",
+        "form_copy_popup_id": "insertNewRelCompanyAndRule",
+        "reload_buttion_id": "serviceCrGetRelCompanyAndRuleList",
+        "table_block": "0"
     }
+
 };
 //
 //'srv/serviceCrGetAttributeList','srv/serviceCrDeleteAttribute','attributelist','updateAttribute','insertNewAttribute','serviceCrGetAttributeList'
@@ -476,6 +537,31 @@ function getMessage(key) {
     return text;
 }
 
+function getMessage(key,lang) {
+    var text = "";
+    var json = {kv: {}};
+    json.kv.messageCode = key;
+    json.kv.lang=lang;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: "api/post/nasrv/serviceCrGetMessageText",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            text = res.kv.text;
+
+        },
+        error: function (res, status) {
+            alert('CoreError');
+        }
+    });
+    return text;
+}
+
 function getLabel(key) {
     var text = "";
     var json = {kv: {}};
@@ -529,99 +615,7 @@ function getQTime(e) {
     return v;
 }
 
-function fillSwitchList(e, inData) {
 
-
-    var json;
-    if (inData) {
-        json = inData;
-    } else {
-        json = {kv: {}};
-    }
-
-
-    $(e).children().remove();
-
-    var url = $(e).attr('srv_url');
-    if (typeof url === 'undefined' || !url) {
-        return;
-    }
-
-    var select_text = $(e).attr('select_text');
-    var select_value = $(e).attr('select_value');
-    var select_id = $(e).attr('select_id');
-    var select_separator = $(e).attr('select_separator');
-    var name = $(e).attr('name');
-    var send_data = $(e).attr('send_data');
-
-    if (typeof selected_value === 'undefined' || !selected_value) {
-        selected_value = '';
-    }
-    if (typeof select_separator === 'undefined' || !select_separator) {
-        select_separator = ' - ';
-    }
-
-    if (typeof send_data !== 'undefined' && send_data) {
-        var vs = send_data.split(",");
-        for (var k = 0; k < vs.length; k++) {
-            var arr = vs[k].split("=");
-            var key = arr[0];
-            var val = arr[1];
-            json.kv[key] = val;
-        }
-    }
-
-
-
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: "api/post/" + url,
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            isResultRedirect(JSON.stringify(res));
-            var obj = res.tbl;
-            for (var i = 0; i < obj.length; i++) {
-                var objChild = obj[i]['r'];
-
-
-                for (var j = 0; j < objChild.length; j++) {
-                    var t = '';
-                    var v = objChild[j][select_value];
-                    var val = objChild[j][select_id];
-                    var checked = '';
-                    if (v === '1') {
-                        checked = 'checked';
-                    }
-                    var vs = select_text.split(",");
-                    for (var k = 0; k < vs.length; k++) {
-                        t += objChild[j][vs[k]] + select_separator;
-                    }
-                    t = t.substr(0, t.length - select_separator.length);
-                    var li = '<li class="list-group-item">' + t + '<div class="material-switch pull-right">';
-                    li += '<input id="' + name + j + '" name="' + name + '" type="checkbox" ' + checked + ' value="' + val + '"/>';
-                    li += '<label for="' + name + j + '" class="label-success"></label>';
-                    li += '</div> </li>';
-
-
-
-                    $(e).append($(li));
-                }
-                /*if (has_other === '1') {
-                 $(e).append($("<option />").val("__2__").text("Other"));
-                 }*/
-            }
-
-        },
-        error: function (res, status) {
-            alert(getMessage('somethingww'));
-        }
-    });
-
-}
 
 function fillCombobox(e, inData) {
     var dependence_id = $(e).attr('dependence_id');
@@ -755,7 +749,7 @@ function fillCombobox(e, inData) {
 
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -813,7 +807,7 @@ function getAgendaOfDoctor(fkDoctorUserId) {
             return r;
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
     return r;
@@ -845,7 +839,7 @@ function getDiscountedPrice(e) {
 
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -976,7 +970,7 @@ function getVoiceAnalyse(filename) {
 //            }
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
     return res;
@@ -1152,7 +1146,7 @@ function filterPatientCombo(hideCombo) {
             }
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }
@@ -1201,7 +1195,7 @@ function confirmPayment(e) {
                     .find('.table-filter-comp').first().change();
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 
@@ -1251,7 +1245,7 @@ function findPatientOnPayment(e, hideCombo) {
             }
         },
         error: function (res, status) {
-            alert(getMessage('somethingww'));
+//            alert(getMessage('somethingww'));
         }
     });
 }

@@ -521,7 +521,7 @@ public class CrController {
     public Carrier getModuleMainList(Carrier carrier) {
         return carrier;
     }
-    
+
     public static Carrier getModuleList4ComboNali(Carrier carrier) throws QException {
         return carrier;
     }
@@ -1139,8 +1139,8 @@ public class CrController {
     public Carrier activateCompany(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         try {
-            //carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));
-            carrier.addController(EntityCrCompany.ACTIVATION_ID, cp.hasValue(carrier, EntityCrCompany.ACTIVATION_ID));
+            carrier.addController(EntityCrCompany.ACTIVATION_ID,
+                    cp.hasValue(carrier, EntityCrCompany.ACTIVATION_ID));
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -1240,40 +1240,42 @@ public class CrController {
 
     public Carrier getRulePermissionList(Carrier carrier) throws QException {
         //ControllerPool cp = new ControllerPool();
-        //carrier.addController(EntityCrRelRulePermission.FK_RULE_ID,
-        //        cp.hasValue(carrier, EntityCrRelRulePermission.FK_RULE_ID));
-        //carrier.addController(EntityCrRelRulePermission.FK_PERMISSION_ID,
-        //        cp.hasValue(carrier, EntityCrRelRulePermission.FK_PERMISSION_ID));
+        //carrier.addController(EntityCrRelRuleAndPermission.FK_RULE_ID,
+        //        cp.hasValue(carrier, EntityCrRelRuleAndPermission.FK_RULE_ID));
+        //carrier.addController(EntityCrRelRuleAndPermission.FK_PERMISSION_ID,
+        //        cp.hasValue(carrier, EntityCrRelRuleAndPermission.FK_PERMISSION_ID));
         return carrier;
     }
 
     public Carrier assignPermissionRule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
-        carrier.addController(EntityCrRelRulePermission.FK_RULE_ID,
-                cp.hasValue(carrier, EntityCrRelRulePermission.FK_RULE_ID));
-        carrier.addController(EntityCrRelRulePermission.FK_PERMISSION_ID,
-                cp.hasValue(carrier, EntityCrRelRulePermission.FK_PERMISSION_ID));
+        carrier.addController(EntityCrRelRuleAndPermission.FK_RULE_ID,
+                cp.hasValue(carrier, EntityCrRelRuleAndPermission.FK_RULE_ID));
+        carrier.addController(EntityCrRelRuleAndPermission.FK_PERMISSION_ID,
+                cp.hasValue(carrier, EntityCrRelRuleAndPermission.FK_PERMISSION_ID));
         return carrier;
     }
 
     public Carrier deleteRulePermission(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
-        carrier.addController(EntityCrRelRulePermission.ID,
-                cp.hasValue(carrier, EntityCrRelRulePermission.ID));
+        carrier.addController(EntityCrRelRuleAndPermission.ID,
+                cp.hasValue(carrier, EntityCrRelRuleAndPermission.ID));
 
         return carrier;
     }
 
     public Carrier getRoleList(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
-        try {
-            return carrier;
-        } catch (Exception ex) {
-            throw new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
-        }
+
+        return carrier;
+
+    }
+    
+    public Carrier getRoleList4Combo(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+
+        return carrier;
+
     }
 
     public Carrier insertNewRole(Carrier carrier) throws QException {
@@ -1303,10 +1305,10 @@ public class CrController {
 
     public Carrier getRoleRuleList(Carrier carrier) throws QException {
         //ControllerPool cp = new ControllerPool();
-        //carrier.addController(EntityCrRelRulePermission.FK_RULE_ID,
-        //        cp.hasValue(carrier, EntityCrRelRulePermission.FK_RULE_ID));
-        //carrier.addController(EntityCrRelRulePermission.FK_PERMISSION_ID,
-        //        cp.hasValue(carrier, EntityCrRelRulePermission.FK_PERMISSION_ID));
+        //carrier.addController(EntityCrRelRuleAndPermission.FK_RULE_ID,
+        //        cp.hasValue(carrier, EntityCrRelRuleAndPermission.FK_RULE_ID));
+        //carrier.addController(EntityCrRelRuleAndPermission.FK_PERMISSION_ID,
+        //        cp.hasValue(carrier, EntityCrRelRuleAndPermission.FK_PERMISSION_ID));
         return carrier;
     }
 
@@ -1392,10 +1394,182 @@ public class CrController {
 
         return carrier;
     }
-    
-     public Carrier getPatientFullnameById(Carrier carrier) throws QException {
+
+    public Carrier getPatientFullnameById(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
-        carrier.addController("general", cp.hasValue(carrier, "fkPatientId")); 
+        carrier.addController("general", cp.hasValue(carrier, "fkPatientId"));
+        return carrier;
+    }
+
+    public Carrier isCompanyDomainAvailable(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("companyDomain", cp.hasValue(carrier, "companyDomain"));
+        return carrier;
+    }
+
+    public Carrier getTermPage(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    public Carrier isFieldValid(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    public Carrier getCompanyList(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    public Carrier insertNewUserTable(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrUserTable.TABLE_NAME,
+                cp.hasValue(carrier, EntityCrUserTable.TABLE_NAME));
+        carrier.addController(EntityCrUserTable.TABLE_SCRIPT,
+                cp.hasValue(carrier, EntityCrUserTable.TABLE_SCRIPT));
+        carrier.addController(EntityCrUserTable.TYPE,
+                cp.hasValue(carrier, EntityCrUserTable.TYPE));
+        carrier.addController(EntityCrUserTable.SEQNUM,
+                cp.hasValue(carrier, EntityCrUserTable.SEQNUM));
+        return carrier;
+    }
+
+    public Carrier updateUserTable(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrUserTable.ID,
+                cp.hasValue(carrier, EntityCrUserTable.ID));
+        carrier.addController(EntityCrUserTable.TABLE_NAME,
+                cp.hasValue(carrier, EntityCrUserTable.TABLE_NAME));
+        carrier.addController(EntityCrUserTable.TABLE_SCRIPT,
+                cp.hasValue(carrier, EntityCrUserTable.TABLE_SCRIPT));
+        carrier.addController(EntityCrUserTable.TYPE,
+                cp.hasValue(carrier, EntityCrUserTable.TYPE));
+        carrier.addController(EntityCrUserTable.SEQNUM,
+                cp.hasValue(carrier, EntityCrUserTable.SEQNUM));
+        return carrier;
+    }
+
+    public Carrier deleteUserTable(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrExpense.ID,
+                cp.hasValue(carrier, EntityCrExpense.ID));
+
+        return carrier;
+    }
+
+    public Carrier getUserTableList(Carrier carrier) {
+        return carrier;
+    }
+
+    public static Carrier insertNewRelPaymentTypeAndRule(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("fkPaymentTypeId", cp.hasValue(carrier, "fkPaymentTypeId"));
+        carrier.addController("fkRuleId", cp.hasValue(carrier, "fkRuleId"));
+        return carrier;
+    }
+
+    public Carrier deleteRelPaymentTypeAndRule(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("id", cp.hasValue(carrier, "id"));
+        return carrier;
+    }
+
+    public static Carrier getRelPaymentTypeAndRuleList(Carrier carrier) throws QException {
+
+        return carrier;
+    }
+
+    public static Carrier insertNewRelCompanyAndRule(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("fkCompanyId", cp.hasValue(carrier, "fkCompanyId"));
+        carrier.addController("fkRuleId", cp.hasValue(carrier, "fkRuleId"));
+        return carrier;
+    }
+
+    public Carrier deleteRelCompanyAndRule(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("id", cp.hasValue(carrier, "id"));
+        return carrier;
+    }
+
+    public static Carrier getRelCompanyAndRuleList(Carrier carrier) throws QException {
+
+        return carrier;
+    }
+
+    public Carrier insertNewPaymentType(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrPaymentType.PAYMENT_TYPE_NAME,
+                cp.hasValue(carrier, EntityCrPaymentType.PAYMENT_TYPE_NAME));
+        carrier.addController(EntityCrPaymentType.PAYMENT_TYPE_SHORTNAME,
+                cp.hasValue(carrier, EntityCrPaymentType.PAYMENT_TYPE_SHORTNAME));
+
+        return carrier;
+    }
+
+    public Carrier updatePaymentType(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrRole.ID,
+                cp.hasValue(carrier, EntityCrRole.ID));
+        carrier.addController(EntityCrPaymentType.PAYMENT_TYPE_NAME,
+                cp.hasValue(carrier, EntityCrPaymentType.PAYMENT_TYPE_NAME));
+        carrier.addController(EntityCrPaymentType.PAYMENT_TYPE_SHORTNAME,
+                cp.hasValue(carrier, EntityCrPaymentType.PAYMENT_TYPE_SHORTNAME));
+
+        return carrier;
+    }
+
+    public Carrier deletePaymentType(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrRole.ID,
+                cp.hasValue(carrier, EntityCrRole.ID));
+
+        return carrier;
+    }
+
+    public Carrier getPaymentTypeList(Carrier carrier) throws QException {
+
+        return carrier;
+    }
+
+    public Carrier getPaymentTypeList4Combo(Carrier carrier) throws QException {
+
+        return carrier;
+    }
+
+    public Carrier insertNewCompanyPayment(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrCompanyPayment.PAYMENT_AMOUNT,
+                cp.hasValue(carrier, EntityCrCompanyPayment.PAYMENT_AMOUNT));
+        carrier.addController(EntityCrCompanyPayment.FK_COMPANY_ID,
+                cp.hasValue(carrier, EntityCrCompanyPayment.FK_COMPANY_ID));
+        carrier.addController(EntityCrCompanyPayment.FK_PAYMENT_TYPE_ID,
+                cp.hasValue(carrier, EntityCrCompanyPayment.FK_PAYMENT_TYPE_ID));
+
+        return carrier;
+    }
+
+    public Carrier updateCompanyPayment(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrRole.ID,
+                cp.hasValue(carrier, EntityCrRole.ID));
+        carrier.addController(EntityCrCompanyPayment.PAYMENT_AMOUNT,
+                cp.hasValue(carrier, EntityCrCompanyPayment.PAYMENT_AMOUNT));
+        carrier.addController(EntityCrCompanyPayment.FK_COMPANY_ID,
+                cp.hasValue(carrier, EntityCrCompanyPayment.FK_COMPANY_ID));
+        carrier.addController(EntityCrCompanyPayment.FK_PAYMENT_TYPE_ID,
+                cp.hasValue(carrier, EntityCrCompanyPayment.FK_PAYMENT_TYPE_ID));
+
+        return carrier;
+    }
+
+    public Carrier deleteCompanyPayment(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController(EntityCrRole.ID,
+                cp.hasValue(carrier, EntityCrRole.ID));
+
+        return carrier;
+    }
+
+    public Carrier getCompanyPaymentList(Carrier carrier) throws QException {
         return carrier;
     }
 

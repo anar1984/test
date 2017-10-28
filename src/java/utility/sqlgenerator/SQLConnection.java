@@ -110,7 +110,7 @@ public class SQLConnection {
         }
     }
 
-    public static Carrier execSelectSql(String arg, String tableName, String databaseNumber, ArrayList values) throws QException {
+    public static Carrier execSelectSql(String arg, String tableName, String databaseNumber1, ArrayList values) throws QException {
         Carrier qc1 = new Carrier();
         ArrayList logLine = new ArrayList();
         try {
@@ -233,10 +233,8 @@ public class SQLConnection {
         try {
             Connection conn = SessionManager.getCurrentConnection();
             Statement stmt = conn.createStatement();
-            
             QLogger.saveLogToFile(arg);
             stmt.execute(arg);
-            stmt.execute("commit");
             stmt.close();
         } catch (Exception e) {
             throw new QException(new Object() {

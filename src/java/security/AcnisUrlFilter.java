@@ -63,11 +63,14 @@ public class AcnisUrlFilter implements Filter {
                 && !url.contains("login") 
                 && !url.contains("index.html") 
                 && !url.contains("signup") 
+                && !url.contains("/termsandco.html") 
                 && !url.contains("/nali/")
                 && !url.contains("/nasrv/")
                 && !url.contains("/activation.html")) {
+            System.out.println("Redirected to "+request.getContextPath() + "/login.html");
             response.sendRedirect(request.getContextPath() + "/login.html");
         } else {
+            System.out.println("Access controled allowed"+res.toString());
             response.addHeader("Access-Controll-Allow-Origin", "*");
             chain.doFilter(req, res);
         }

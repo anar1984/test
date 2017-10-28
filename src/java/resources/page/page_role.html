@@ -5,16 +5,20 @@
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
-        <button id='btn_serviceCrGetRoleList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+        <button id='serviceCrGetRoleList' type="button"
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_role_list')">Role list
         </button>
-        <button id='btn_serviceCrInsertNewRole' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+        <button id='serviceCrInsertNewRole' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#insertNewRole">Insert new Role
         </button>
-        <button id='btn_serviceCrGetRoleRuleList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+        <button id='serviceCrGetRoleRuleList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_role_rule_list')">Rule List
         </button>
-        <button id='btn_serviceCrAssignRuleToRole' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+        <button id='serviceCrAssignRuleToRole' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#assignRule">Assign Rule to Role
         </button>
         <hr>
@@ -42,6 +46,11 @@
                             <label class="float">roleName</label>
                             <input class="form-control apd-form-input" type="text" id="roleName"
                                    name="roleName"    >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">description</label>
+                            <input class="form-control apd-form-input" type="text" id="description"
+                                   name="description"    >
                         </div>
                         
 
@@ -78,9 +87,15 @@
                             <input class="form-control apd-form-input" type="text" id="roleName"
                                    name="roleName"    >
                         </div>
+                        <div class="form-group col-md-6">
+                            <label class="float">description</label>
+                            <input class="form-control apd-form-input" type="text" id="description"
+                                   name="description"    >
+                        </div>
+                        
                         
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
                         </div>
                     </form>
@@ -110,8 +125,9 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="float">Rule</label>
-                            <select class="form-control apd-form-select" 
+                            <label class="float">Rule</label><br>
+                            <select class="form-control apd-form-multiselect" 
+                                    multiple
                                     id="fkRuleId" name="fkRuleId"
                                     select_text="ruleName" select_value="id" 
                                     srv_url="srv/serviceCrGetRuleList">
@@ -119,7 +135,7 @@
                         </div>
                         
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang="">insert</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
                         </div>
                     </form>

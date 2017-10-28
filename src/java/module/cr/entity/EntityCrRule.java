@@ -16,41 +16,29 @@ import utility.CoreEntity;
  * @author nikli
  */
 public class EntityCrRule extends CoreEntity {
-     
+
     public static String ID = "id";
     public static String STATUS = "status";
     public static String INSERT_DATE = "insertDate";
     public static String MODIFICATION_DATE = "modificationDate";
-    
     public static final String RULE_NAME = "ruleName";
-    
+    public static final String DESCRIPTION = "description";
+    public static String IS_PUBLIC = "isPublic";
+
+    private String isPublic = "";
     private String ruleName = "";
+    private String description = "";
+
+    public String getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(String isPublic) {
+        this.isPublic = isPublic;
+    }
 
     
     
-    @Override
-    public String toString() {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put(ID, this.getId());
-            obj.put(RULE_NAME, this.getRuleName());
-        } catch (JSONException ex) {
-            Logger.getLogger(EntityCrRule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return obj.toString();
-    }
-
-    public void fromString(String data) {
-
-        try {
-            JSONObject obj = new JSONObject(data);
-            this.setId(obj.getString(ID));
-            this.setRuleName(obj.getString(RULE_NAME));
-        } catch (JSONException ex) {
-            Logger.getLogger(EntityCrRule.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     /**
      * @return the ruleName
      */
@@ -64,10 +52,18 @@ public class EntityCrRule extends CoreEntity {
     public void setRuleName(String ruleName) {
         this.ruleName = ruleName;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String selectDbname() {
         return "apdvoice";
     }
-    
+
 }

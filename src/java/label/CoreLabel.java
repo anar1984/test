@@ -78,7 +78,7 @@ public class CoreLabel {
     public static String JSON_TABLE_FIELD_ID = "i";
     public static String JSON_TABLE_FIELD_NAME = "n";
     public static String JSON_TABLE_FIELD_TYPE = "t";
-    public static String JSON_TABLE_FIELD_TABLE_NAME = "tn";
+    public static String JSON_TABLE_FIELD_TABLE_NAME = "tn"; 
     public static String JSON_TABLE_RESULT_TABLE_NAME = "r";
     public static String JSON_ERROR_TABLE_RESULT_TABLE_NAME = "err";
     public static String JSON_TABLE_COMMON_RESULT_TABLE_NAME = "tbl";

@@ -39,6 +39,8 @@ public class EntityCrUser extends CoreEntity {
     public static String TELEPHONE_2 = "telephone2";
     public static String EMAIL_1 = "email1";
     public static String EMAIL_2 = "email2";
+    public static String USER_STATUS = "userStatus";
+    private String userStatus = "";
 
     private String fkEmployeeId = "";
     private String liUserPermissionCode = "";
@@ -63,7 +65,18 @@ public class EntityCrUser extends CoreEntity {
     private String email2 = "";
     private String expireDate = "";
     private String lang = "";
-    private String domain="";
+    private String domain = "";
+    private String companyId="";
+
+    public String selectCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+    
+    
 
     public String getUserShortId() {
         return userShortId;
@@ -249,14 +262,14 @@ public class EntityCrUser extends CoreEntity {
         return this.lang;
     }
 
-    public void setDomain(String domain){
-        this.domain=domain;
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
-    
-    public String selectDomain(){
+
+    public String selectDomain() {
         return domain;
     }
-    
+
     @Override
     public String toString() {
         JSONObject obj = new JSONObject();
@@ -265,7 +278,8 @@ public class EntityCrUser extends CoreEntity {
             obj.put("username", this.getUsername());
             obj.put("password", this.getPassword());
             obj.put("lang", this.selectLang());
-            obj.put("domain",this.selectDomain());
+            obj.put("domain", this.selectDomain());
+            obj.put("companyId", this.selectCompanyId());
         } catch (JSONException ex) {
 //            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -281,6 +295,7 @@ public class EntityCrUser extends CoreEntity {
             this.setPassword(obj.getString("password"));
             this.setLang(obj.getString("lang"));
             this.setDomain(obj.getString("domain"));
+            this.setCompanyId(obj.getString("companyId"));
 
         } catch (JSONException ex) {
             Logger.getLogger(EntityCrUser.class.getName()).log(Level.SEVERE, null, ex);

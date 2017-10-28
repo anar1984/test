@@ -1,14 +1,16 @@
-<div class="row apd-page" id="page_pricelist">
+<div component_id="page_pricelist" class="row apd-page" id="page_pricelist">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
             <label qlang>priceList</label>
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
-        <button id='serviceCrGetPriceListList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+        <button   component_id="serviceCrGetPriceListList"  id='serviceCrGetPriceListList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_pricelist_list')">List
         </button>
-        <button id='btn_serviceCrInsertNewPriceList' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+        <button  component_id="serviceCrInsertNewPriceList"  id='btn_serviceCrInsertNewPriceList' type="button"
+                class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#insertNewPriceList">Insert
         </button>
         <hr>
@@ -18,7 +20,7 @@
 
     </div>
     <!-- Modal -->
-    <div id="insertNewPriceList" apd-form-reload-button-id='serviceCrGetPriceListList' class="modal fade" role="dialog">
+    <div component_id="serviceCrInsertNewPriceList"  id="insertNewPriceList" apd-form-reload-button-id='serviceCrGetPriceListList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -72,7 +74,7 @@
         </div>
     </div>
 
-    <div id="updatePriceList" apd-form-reload-button-id='serviceCrGetPriceListList' class="modal fade" role="dialog">
+    <div component_id="serviceCrUpdatePriceList"  id="updatePriceList" apd-form-reload-button-id='serviceCrGetPriceListList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

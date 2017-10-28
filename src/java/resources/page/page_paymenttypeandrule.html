@@ -1,0 +1,90 @@
+<div class="row apd-page" id="page_paymenttypeandrule">
+    <div  class="col-md-12">
+        <div class="row text-center module-heading">
+            <label qlang>paymentTypeAndRule</label>
+        </div>
+    </div>    
+
+
+    <div  class="col-md-12 apd-page-btn"> 
+        <button id='serviceCrGetRelPaymentTypeAndRuleList' type="button"
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_relpaymenttypeandrule_list')">  list
+        </button>
+
+        <button id='serviceCrAssignRule2PaymentType' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewRelPaymentTypeAndRule" qlang>insert
+        </button>
+        <hr>
+    </div>
+
+    <div  id= "relPaymentTypeAndRuleList" class="col-md-12 apd-page-body"> 
+
+    </div>
+
+
+
+    <!-- Modal -->
+
+
+    <div id="insertNewRelPaymentTypeAndRule" apd-form-reload-button-id='serviceCrGetRelPaymentTypeAndRuleList' 
+         class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>assignRule2PaymentType</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewRelPaymentTypeAndRule" class="apd-form" 
+                          method="POST" action="srv/serviceCrInsertNewRelPaymentTypeAndRule">
+                        <div class="form-group col-md-5">
+                            <label class="float" qlang>paymentType</label>
+                            <select class="form-control apd-form-select" 
+                                    id="fkPaymentTypeId" name="fkPaymentTypeId"
+                                    select_text="paymentTypeDefinition" select_value="id" 
+                                    srv_url="srv/serviceCrGetPaymentTypeList4Combo">
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label class="float" qlang>owner</label>
+
+                            <select class="form-control apd-form-select" 
+                                    id="owner" name="owner"
+                                    select_text="itemValue" select_value="itemKey" 
+                                    srv_url="li/paymentTypeOwner">
+                            </select>
+                        </div>
+                         <div class="form-group col-md-2">
+                            <label class="float">defaultPeriod</label>
+                            <input class="form-control apd-form-input" type="text" id="defaultPeriod"
+                                   name="defaultPeriod"    >
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="float" qlang>rule</label>
+                            <br>
+                            <select class="form-control apd-form-multiselect" 
+                                    multiple 
+                                    id="fkRuleId" name="fkRuleId"
+                                    select_text="ruleName" select_value="id" 
+                                    srv_url="srv/serviceCrGetRuleList">
+                            </select>  
+                        </div>
+                       
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" 
+                                    apd-clear-form-data="false" qlang>insert</button>
+                            <button type="button" class="btn btn-default" 
+                                    data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

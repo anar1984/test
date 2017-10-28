@@ -6,11 +6,10 @@ import module.cr.entity.EntityCrUser;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import label.CoreLabel;
 import module.cr.entity.EntityCrPermission;
 import module.cr.entity.EntityCrRelRoleRule;
-import module.cr.entity.EntityCrRelRulePermission;
-import module.cr.entity.EntityCrRelUserRole;
-import module.cr.entity.EntityCrRelUserRule;
+import module.cr.entity.EntityCrRelRuleAndPermission;
 import module.cr.entity.EntityCrRole;
 import module.cr.entity.EntityCrRule;
 import org.ehcache.CacheManager;
@@ -32,6 +31,7 @@ public class SessionManager {
     private static Map<Long, Connection> conn = new HashMap<>();
     private static Map<Long, String> domainMap = new HashMap<>();
     private static Map<Long, String> userIdMap = new HashMap<>();
+    private static Map<Long, String> companyIdMap = new HashMap<>();
     
     private static Map<String, Subject> permissionMap = new HashMap<>();
     
@@ -43,6 +43,16 @@ public class SessionManager {
         conn.remove(getCurrentThreadId());
         domainMap.remove(getCurrentThreadId());
         userIdMap.remove(getCurrentThreadId());
+        companyIdMap.remove(getCurrentThreadId());
+        
+    }
+    
+    public static void setCompanyId(Long threadId,String CompanyId){
+        companyIdMap.put(threadId, CompanyId);
+    }
+    
+    public static String getCompanyId(Long threadId){
+        return companyIdMap.getOrDefault(threadId,"__2__");
     }
     
     public static void setDomain(Long threadId,String domain){
@@ -87,6 +97,10 @@ public class SessionManager {
         return getLang(getCurrentThreadId());
     }
 
+    public static String getCurrentCompanyId() {
+        return getCompanyId(getCurrentThreadId());
+    }
+    
     public static String getUserByThreadId(Long threadId) {
         return userMap.get(threadId);
     }
@@ -333,68 +347,78 @@ public class SessionManager {
         return subject.isPermitted(permission);
     }
     
+    public static boolean isCurrentUserCompanyAdmin() throws QException{
+        String userId = getCurrentUserId();
+        String permissionCode = "A"+CoreLabel.IN+"AD";
+        EntityCrUser entUsr = new EntityCrUser();
+        entUsr.setDeepWhere(false);
+        entUsr.setDbname(getCurrentDomain());
+        entUsr.setId(userId);
+        entUsr.setLiUserPermissionCode(permissionCode);
+        Carrier cr = EntityManager.select(entUsr);
+        return cr.getTableRowCount(entUsr.toTableName())>0;
+    }
     
     private static void loadUserPermissions() throws QException {
         String userId = SessionManager.getCurrentUserId();
         Subject subject = new Subject();
         
-        EntityCrRelUserRole entityCrRelUserRole = new EntityCrRelUserRole();
-        entityCrRelUserRole.setFkUserId(userId);
-        Carrier crRelUserRole = EntityManager.select(entityCrRelUserRole);
-        
-        for(String fkRoleId: crRelUserRole.getValue("EntityCrRelUserRole", EntityCrRelUserRole.FK_ROLE_ID)) {
-            EntityCrRole entityCrRole = new EntityCrRole();
-            entityCrRole.setId(fkRoleId);
-            EntityManager.select(entityCrRole);
-            subject.addRole(entityCrRole.getRoleName());
-            
-            EntityCrRelRoleRule entityCrRelRoleRule = new EntityCrRelRoleRule();
-            entityCrRelRoleRule.setFkRoleId(fkRoleId);
-            Carrier crRelRoleRule = EntityManager.select(entityCrRelRoleRule);
-            
-            for(String fkRuleId: crRelRoleRule.getValue("EntityCrRelRoleRule", EntityCrRelRoleRule.FK_RULE_ID)) {
-                EntityCrRule entityCrRule = new EntityCrRule();
-                entityCrRule.setId(fkRuleId);
-                EntityManager.select(entityCrRule);
-                subject.addRule(entityCrRule.getRuleName());
-                
-                EntityCrRelRulePermission entityCrRelRulePermission = new EntityCrRelRulePermission();
-                entityCrRelRulePermission.setFkRuleId(fkRuleId);
-                Carrier crRelRulePermission = EntityManager.select(entityCrRelRulePermission);
-                
-                for(String fkPermissionId: crRelRulePermission.getValue("EntityCrRelRulePermission", EntityCrRelRulePermission.FK_PERMISSION_ID)) {
-                    EntityCrPermission entityCrPermission = new EntityCrPermission();
-                    entityCrPermission.setId(fkPermissionId);
-                    EntityManager.select(entityCrPermission);
-                    subject.addPermission(entityCrPermission.getPermissionString());
-                }
-            }
-        }
-        
-        EntityCrRelUserRule entityCrRelUserRule = new EntityCrRelUserRule();
-        entityCrRelUserRule.setFkUserId(userId);
-        Carrier crRelUserRule = EntityManager.select(entityCrRelUserRule);
-        
-        for(String fkRuleId: crRelUserRule.getValue("EntityCrRelUserRule", EntityCrRelUserRule.FK_RULE_ID)) {
-            EntityCrRule entityCrRule = new EntityCrRule();
-            entityCrRule.setId(fkRuleId);
-            EntityManager.select(entityCrRule);
-            subject.addRule(entityCrRule.getRuleName());
-
-            EntityCrRelRulePermission entityCrRelRulePermission = new EntityCrRelRulePermission();
-            entityCrRelRulePermission.setFkRuleId(fkRuleId);
-            Carrier crRelRulePermission = EntityManager.select(entityCrRelRulePermission);
-
-            for(String fkPermissionId: crRelRulePermission.getValue("EntityCrRelRulePermission", EntityCrRelRulePermission.FK_PERMISSION_ID)) {
-                EntityCrPermission entityCrPermission = new EntityCrPermission();
-                entityCrPermission.setId(fkPermissionId);
-                EntityManager.select(entityCrPermission);
-                subject.addPermission(entityCrPermission.getPermissionString());
-            }
-            
-        }
-        
-        permissionMap.put(SessionManager.getCurrentUsername(), subject);
+//        entityCrRelUserRole.setFkUserId(userId);
+//        Carrier crRelUserRole = EntityManager.select(entityCrRelUserRole);
+//        
+//        for(String fkRoleId: crRelUserRole.getValue("EntityCrRelUserRole", EntityCrRelUserRole.FK_ROLE_ID)) {
+//            EntityCrRole entityCrRole = new EntityCrRole();
+//            entityCrRole.setId(fkRoleId);
+//            EntityManager.select(entityCrRole);
+//            subject.addRole(entityCrRole.getRoleName());
+//            
+//            EntityCrRelRoleRule entityCrRelRoleRule = new EntityCrRelRoleRule();
+//            entityCrRelRoleRule.setFkRoleId(fkRoleId);
+//            Carrier crRelRoleRule = EntityManager.select(entityCrRelRoleRule);
+//            
+//            for(String fkRuleId: crRelRoleRule.getValue("EntityCrRelRoleRule", EntityCrRelRoleRule.FK_RULE_ID)) {
+//                EntityCrRule entityCrRule = new EntityCrRule();
+//                entityCrRule.setId(fkRuleId);
+//                EntityManager.select(entityCrRule);
+//                subject.addRule(entityCrRule.getRuleName());
+//                
+//                EntityCrRelRuleAndPermission entityCrRelRulePermission = new EntityCrRelRuleAndPermission();
+//                entityCrRelRulePermission.setFkRuleId(fkRuleId);
+//                Carrier crRelRulePermission = EntityManager.select(entityCrRelRulePermission);
+//                
+//                for(String fkPermissionId: crRelRulePermission.getValue("EntityCrRelRulePermission", EntityCrRelRuleAndPermission.FK_PERMISSION_ID)) {
+//                    EntityCrPermission entityCrPermission = new EntityCrPermission();
+//                    entityCrPermission.setId(fkPermissionId);
+//                    EntityManager.select(entityCrPermission);
+//                    subject.addPermission(entityCrPermission.getPermissionString());
+//                }
+//            }
+//        }
+//        
+//        EntityCrRelUserRule entityCrRelUserRule = new EntityCrRelUserRule();
+//        entityCrRelUserRule.setFkUserId(userId);
+//        Carrier crRelUserRule = EntityManager.select(entityCrRelUserRule);
+//        
+//        for(String fkRuleId: crRelUserRule.getValue("EntityCrRelUserRule", EntityCrRelUserRule.FK_RULE_ID)) {
+//            EntityCrRule entityCrRule = new EntityCrRule();
+//            entityCrRule.setId(fkRuleId);
+//            EntityManager.select(entityCrRule);
+//            subject.addRule(entityCrRule.getRuleName());
+//
+//            EntityCrRelRuleAndPermission entityCrRelRulePermission = new EntityCrRelRuleAndPermission();
+//            entityCrRelRulePermission.setFkRuleId(fkRuleId);
+//            Carrier crRelRulePermission = EntityManager.select(entityCrRelRulePermission);
+//
+//            for(String fkPermissionId: crRelRulePermission.getValue("EntityCrRelRulePermission", EntityCrRelRuleAndPermission.FK_PERMISSION_ID)) {
+//                EntityCrPermission entityCrPermission = new EntityCrPermission();
+//                entityCrPermission.setId(fkPermissionId);
+//                EntityManager.select(entityCrPermission);
+//                subject.addPermission(entityCrPermission.getPermissionString());
+//            }
+//            
+//        }
+//        
+//        permissionMap.put(SessionManager.getCurrentUsername(), subject);
         
     }
 

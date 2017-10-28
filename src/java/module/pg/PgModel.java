@@ -235,11 +235,11 @@ public class PgModel {
         }
 
         String ln = getSubmoduleHtml(entArr, insCode);
+        System.out.println("submodule btn ln>>>>"+ln);
         return ln;
     }
 
     private static String getSubmoduleHtml(List<CsSubmodule> entArr, String insCode) {
-
         String ln
                 = div().with(
                         div().withClass("col-md-12 apd-page-btn")

@@ -1,14 +1,24 @@
 package utility.sqlgenerator;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utility.GeneralProperties;
 import utility.SessionManager;
 
 public class QLogger {
 
     private static Logger sqlLogger = LogManager.getLogger("sqlLogger");
+    private static Logger serviceLogger = LogManager.getLogger("serviceLogger");
     private static Logger logger = LogManager.getLogger();
 
     public static void saveExceptions(String classname, String methodname, String log) {
@@ -68,6 +78,114 @@ public class QLogger {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void saveServiceLog(String service) {
+        try {
+
+            GeneralProperties prop = new GeneralProperties();
+            String filename = prop.getWorkingDir() + "../log/services.txt";
+
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String ln = "";
+            boolean f = true;
+            while ((ln = br.readLine()) != null) {
+                System.out.println("ln=" + ln);
+                System.out.println("service=" + service);
+                if (ln.equals(service)) {
+                    f = false;
+                    break;
+                }
+
+            }
+
+            if (f) {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true));
+                bw.newLine();
+                bw.append(service);
+                bw.close();
+            }
+
+            br.close();
+
+        } catch (UnsupportedEncodingException ex) {
+            java.util.logging.Logger.getLogger(QLogger.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(QLogger.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void savePageLog(String page) {
+        try {
+
+            GeneralProperties prop = new GeneralProperties();
+            String filename = prop.getWorkingDir() + "../log/pages.txt";
+
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String ln = "";
+            boolean f = true;
+            while ((ln = br.readLine()) != null) {
+                System.out.println("ln=" + ln);
+                System.out.println("page=" + page);
+                if (ln.equals(page)) {
+                    f = false;
+                    break;
+                }
+
+            }
+
+            if (f) {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true));
+                bw.newLine();
+                bw.append(page);
+                bw.close();
+            }
+
+            br.close();
+
+        } catch (UnsupportedEncodingException ex) {
+            java.util.logging.Logger.getLogger(QLogger.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(QLogger.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public static void saveLabelLog(String page) {
+        try {
+
+            GeneralProperties prop = new GeneralProperties();
+            String filename = prop.getWorkingDir() + "../log/label.txt";
+
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String ln = "";
+            boolean f = true;
+            while ((ln = br.readLine()) != null) {
+                System.out.println("ln=" + ln);
+                System.out.println("page=" + page);
+                if (ln.equals(page)) {
+                    f = false;
+                    break;
+                }
+
+            }
+
+            if (f) {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true));
+                bw.newLine();
+                bw.append(page+"\t"+SessionManager.getCurrentLang());
+                bw.close();
+            }
+
+            br.close();
+
+        } catch (UnsupportedEncodingException ex) {
+            java.util.logging.Logger.getLogger(QLogger.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(QLogger.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

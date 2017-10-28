@@ -5,16 +5,20 @@
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
-        <button id='btn_serviceCrGetRuleList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+        <button id='serviceCrGetRuleList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_rule_list')">Rule list
         </button>
-        <button id='btn_serviceCrInsertNewRule' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+        <button id='serviceCrInsertNewRule' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#insertNewRule">Insert new Rule
         </button>
-        <button id='btn_serviceCrGetRulePermissionList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+        <button id='serviceCrGetRulePermissionList' type="button" 
+                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                 onclick="loadTable('tbl_rule_permission_list')">Permission List
         </button>
-        <button id='btn_serviceCrAssignPermissionToRule' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+        <button id='serviceCrAssignPermissionToRule' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
                 data-toggle="modal" data-target="#assignPermission">Assign Permission to Rule
         </button>
         <hr>
@@ -23,32 +27,48 @@
     <div  id= "rulePermissionList" class="col-md-12 apd-page-body"> 
 
     </div>
-    
-    
-    
+
+
+
     <!-- Modal -->
-    <div id="insertNewRule" apd-form-reload-button-id='serviceCrGetRuleList' class="modal fade" role="dialog">
+    <div id="insertNewRule" apd-form-reload-button-id='serviceCrGetRuleList' 
+         class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Insert New Rule</h4>
+                    <h4 class="modal-title" qlang>insertNewRule</h4>
                 </div>
                 <div class="modal-body-1">
                     <form id="form_insertNewRule" class="apd-form" method="POST" action="srv/serviceCrInsertNewRule">
 
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-5">
                             <label class="float">ruleName</label>
                             <input class="form-control apd-form-input" type="text" id="ruleName"
                                    name="ruleName"    >
                         </div>
-                        
+
+                        <div class="form-group col-md-5">
+                            <label class="float">description</label>
+                            <input class="form-control apd-form-input" type="text" id="description"
+                                   name="description"    >
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="float" qlang>isPublic</label>
+                            <select class="form-control apd-form-select-manual" 
+                                    id="isPublic" name="isPublic">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
 
 
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true">Insert</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn"
+                                    apd-clear-form-data="true">Insert</button>
+                            <button type="button" class="btn btn-default" 
+                                    data-dismiss="modal"  role="button">Close</button>
                         </div>
                     </form>
                 </div>
@@ -73,15 +93,31 @@
                             <input class="form-control apd-form-input" type="hidden" id="id"
                                    name="id"    >
                         </div>
-                        <div class="form-group col-md-6">
+                       <div class="form-group col-md-5">
                             <label class="float">ruleName</label>
                             <input class="form-control apd-form-input" type="text" id="ruleName"
                                    name="ruleName"    >
                         </div>
-                        
+
+                        <div class="form-group col-md-5">
+                            <label class="float">description</label>
+                            <input class="form-control apd-form-input" type="text" id="description"
+                                   name="description"    >
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="float" qlang>isPublic</label>
+                            <select class="form-control apd-form-select-manual" 
+                                    id="isPublic" name="isPublic">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn"
+                                    apd-clear-form-data="false">Update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" 
+                                    role="button">Close</button>
                         </div>
                     </form>
                 </div>
@@ -91,18 +127,18 @@
             </div>
         </div>
     </div>
-    
-    <div id="assignPermission" apd-form-reload-button-id='serviceCrGetRuleList' class="modal fade" role="dialog">
+
+    <div id="assignPermission" apd-form-reload-button-id='serviceCrGetRulePermissionList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Assign Rule to Permission</h4>
+                    <h4 class="modal-title" qlang>assignRule2Permission</h4>
                 </div>
                 <div class="modal-body-1">
                     <form id="form_insertNewRule" class="apd-form" method="POST" action="srv/serviceCrAssignPermissionRule">
                         <div class="form-group col-md-6">
-                            <label class="float">Ruler</label>
+                            <label class="float" qlang>rule</label>
                             <select class="form-control apd-form-select" 
                                     id="fkRuleId" name="fkRuleId"
                                     select_text="ruleName" select_value="id" 
@@ -110,17 +146,20 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="float">Permission</label>
-                            <select class="form-control apd-form-select" 
+                            <label class="float" qlang>permission</label>
+                            <select class="form-control apd-form-multiselect" 
+                                    multiple 
                                     id="fkPermissionId" name="fkPermissionId"
                                     select_text="permissionString" select_value="id" 
                                     srv_url="srv/serviceCrGetPermissionList">
                             </select>
                         </div>
-                        
+
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn" 
+                                    apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" 
+                                    data-dismiss="modal"  role="button" qlang>close</button>
                         </div>
                     </form>
                 </div>

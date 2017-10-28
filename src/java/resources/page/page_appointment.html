@@ -1,4 +1,4 @@
-<div class="row apd-page" id="page_appointment">
+<div component_id="page_appointment" class="row apd-page" id="page_appointment">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
             <label id="headertitle" qlang>sessionList</label>
@@ -21,7 +21,7 @@
         </div>
         <div class="form-group col-md-6" >
             <br>  
-            <button id='btn_searchPatient' type="button" 
+            <button component_id = "" id='btn_searchPatient' type="button" 
                     class="btn btn-md task-button  " 
                     style='margin-top:5px' onclick="filterPatientCombo(this)"
                     >
@@ -34,13 +34,13 @@
                     >
                 showAll
             </button>
-            <button id='btn_serviceCrInsertNewPatient' type="button" 
+            <button component_id = "serviceCrInsertNewPatient"  id='btn_serviceCrInsertNewPatient' type="button" 
                     class="btn btn-md task-button apd-task-create apd-task-form" 
                     style='margin-top:5px'
                     data-toggle="modal"   data-target="#insertNewPatient"  qlang >insertNewPatient
             </button>
 
-            <button id='btn_serviceCrUpdatePatient' type="button" 
+            <button component_id = "serviceCrUpdatePatient" id='btn_serviceCrUpdatePatient' type="button" 
                     class="btn btn-md task-button apd-task-create 
                     apd-task-form-fill  " 
                     style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;' 
@@ -49,14 +49,14 @@
                     data-toggle="modal"   data-target="#updatePatient" qlang>
                 updatePatientInfo
             </button>
-            <button id='btn_newSessionWizard' type="button" 
+            <button component_id = "serviceCrInsertNewAppointment" id='btn_newSessionWizard' type="button" 
                     onclick="toggleNewSession(this)"
                     class="btn btn-md task-button  apd-task-create apd-task-form toggle-on-click" 
                     style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
                     data-toggle="modal"   data-target="#newSessionWizard" qlang>
                 newSession
             </button>
-            <button   type="button" qlang 
+            <button  component_id = "serviceCrFinishSession"  type="button" qlang 
                       class="btn btn-md task-button toggle-on-click  " 
                       style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
                       onclick="finishSession(this)">finishSession
@@ -66,10 +66,12 @@
         <div class="col-md-2  text-right">
             <br>
             <div class="dropdown ">
-                <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="">
+                <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" 
+                   data-target="#" href="">
                     <i class="fa fa-bars" aria-hidden="true" style="font-size:20px;"></i> </span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-right  multi-level" role="menu" aria-labelledby="dropdownMenu">
+                <ul class="dropdown-menu dropdown-menu-right  multi-level" role="menu" 
+                    aria-labelledby="dropdownMenu">
                     <li class="dropdown-submenu pull-left toggle-on-click" >
                         <a tabindex="-1" href="#" qlang> report</a>
                         <ul class="dropdown-menu dropdown-menu-right " id="report4Appointment" >
@@ -124,7 +126,7 @@
 
 
 
-    <div id="popup1" role="dialog" class="modal fade" apd-form-reload-button-id="serviceCrGetAppointmentList">
+    <div  id="popup1" role="dialog" class="modal fade" apd-form-reload-button-id="serviceCrGetAppointmentList">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -132,7 +134,7 @@
                     <h4 class="modal-insert-title-name" id="modal-insert-title-name">Submodule name</h4>
                 </div>
                 <div class="modal-body-1">
-                    <form id="form_insertNewInspection" method="POST" class="apd-form" action="srv/serticeCrInsertNewInspection">
+                    <form id="form_insertNewInspection" method="POST" class="apd-form" action="srv/serviceCrInsertNewInspection">
                         <div class="form-insert-element-body" id="form-insert-element-body"></div>
                         <div class="form-group col-md-12" align="right">
                             <button type="button"
@@ -147,7 +149,7 @@
                                                                 class="btn btn-default    apd-form-submodule-attr-sv-nxt  " 
                                                                 apd-clear-form-data="true" qlang>insert_N_next
                                                         </button>-->
-                            <button type="button"
+                            <button component_id="serviceCrInsertNewInspection" type="button"
                                     class="btn btn-default apd-form-btn apd-form-attr-btn" 
                                     apd-clear-form-data="true" qlang >insert
                             </button>
@@ -225,7 +227,7 @@
 
 
 
-    <div id="insertNewPatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
+    <div component_id="serviceCrInsertNewPatient" id="insertNewPatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -393,7 +395,7 @@
         </div>
     </div>
 
-    <div id="updatePatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
+    <div component_id="serviceCrUpdatePatient" id="updatePatient" apd-form-reload-button-id='serviceCrGetPatientList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -563,7 +565,7 @@
         </div>
     </div>
 
-    <div id="newSessionWizard"   class="modal fade" role="dialog">
+    <div component_id="serviceCrInsertNewAppointment" id="newSessionWizard"   class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

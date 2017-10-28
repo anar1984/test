@@ -5,13 +5,13 @@
  */
 package utility;
 
-//import com.sendgrid.Content;
-//import com.sendgrid.Email;
-//import com.sendgrid.Mail;
-//import com.sendgrid.Method;
-//import com.sendgrid.Request;
-//import com.sendgrid.Response;
-//import com.sendgrid.SendGrid;
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,26 +31,34 @@ import org.apache.logging.log4j.LogManager;
  * @author nikli
  */
 public class MailSender {
-    
+
     private static org.apache.logging.log4j.Logger logger = LogManager.getLogger();
 
     public static void send(String toEmail, String subject, String text) {
-        final String sendgridApiKey = System.getenv("SENDGRID_API_KEY");
-        //final String sendgridSender = System.getenv("SENDGRID_SENDER");
-//        Email from = new Email("APDVoice <no-reply@apdvoice.com>");
-//        Email to = new Email(toEmail);
-//        Content content = new Content("text/html", text);
-//        Mail mail = new Mail(from, subject, to, content);
-//
-//        SendGrid sg = new SendGrid(sendgridApiKey);
-//        Request request = new Request();
-//        request.setMethod(Method.POST);
-//        request.setEndpoint("mail/send");
-//        request.setBody(mail.build());
-//        Response response = sg.api(request);
-//        System.out.println(response.getStatusCode());
-//        System.out.println(response.getBody());
-//        System.out.println(response.getHeaders());
+        try {
+            final String sendgridApiKey = System.getenv("SENDGRID_API_KEY");
+            final String sendgridSender = System.getenv("SENDGRID_SENDER");
+            Email from = new Email("APDVoice <no-reply@apdvoice.com>");
+            Email to = new Email(toEmail);
+            Content content = new Content("text/html", text);
+            Mail mail = new Mail(from, subject, to, content);
+
+            SendGrid sg = new SendGrid(sendgridApiKey);
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+//    public static String getSubjectOfRegistration(){
+//        String
+//    }
 
 }

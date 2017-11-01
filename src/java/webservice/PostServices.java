@@ -193,6 +193,7 @@ public class PostServices {
             String entity = "{\"fullname\":\"" + fullname + "\"}";
             conn.commit();
             conn.close();
+            
             return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 10000000, false)).entity(entity).build();
         } catch (Exception ex) {
             DBConnection.rollbackConnection(conn);
@@ -435,10 +436,10 @@ public class PostServices {
             SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
             if (!QUtility.hasPermission(servicename)) {
-                System.out.println(">>> is forbidden>>"+servicename);
+                System.out.println(">>> is forbidden>>" + servicename);
                 return Response.status(Response.Status.FORBIDDEN).build();
             }
-            
+
             System.out.println("Start-" + SessionManager.getCurrentUsername() + ":" + QDate.getCurrentDate() + ":" + QDate.getCurrentTime() + ":" + servicename);
 
             System.out.println("json->" + json);
@@ -477,7 +478,8 @@ public class PostServices {
             "serviceCrGetModuleList4ComboNali",
             "serviceCrIsCompanyDomainAvailable",
             "serviceCrIsFieldValid",
-            "serviceCrGetTermPage"};
+            "serviceCrGetTermPage",
+            "serviceCrIsPersonalUsernameExist"};
 
         if (!ArrayUtils.contains(srv, servicename)) {
             return Response.status(Response.Status.FORBIDDEN).build();

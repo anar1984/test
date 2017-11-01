@@ -1,0 +1,76 @@
+<br>
+<br>
+<br>
+<div component_id="page_changepwd" class="row apd-page" id="page_changepwd">
+    <form id="form_insertNewPatient" class="apd-form" method="POST" 
+          action="srv/serviceCrChangePassword">
+        <div class="form-group col-md-offset-4 col-md-4">
+            <label qlang>currentPassword</label>
+            <input class="form-control apd-form-input" type="password" id="currentPassword"
+                   name="currentPassword" placeholder=" "  >
+        </div>
+        <div class="form-group col-md-offset-4 col-md-4">
+            <label qlang>newPassword</label>
+            <input type="password" class="form-control apd-form-input" id="newPassword" 
+                   name="newPassword" placeholder="">
+        </div>
+        <div class="form-group col-md-offset-4  col-md-4">
+            <label qlang>confirmNewPassword</label>
+            <input type="password" class="form-control apd-form-input" id="confirmNewPassword" 
+                   name="confirmNewPassword" placeholder="">
+        </div>
+
+        <div class="form-group col-md-offset-4  col-md-4" align="right">
+            <button type="button" class="btn btn-default apd-form-btn1"
+                    apd-clear-form-data="true" onclick="changePassword(this)">change</button>
+
+        </div>
+
+    </form>
+</div>
+
+
+
+</div>
+
+<script>
+
+
+    function changePassword(e) {
+        var f = true;
+        var domain = $(e).val();
+
+        var json = {kv: {}};
+        json.kv.currentPassword = $('#currentPassword').val();
+        json.kv.newPassword = $('#newPassword').val();
+        json.kv.confirmNewPassword = $('#confirmNewPassword').val();
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/srv/serviceCrChangePassword",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+                console.log(JSON.stringify(res));
+                alert(res.kv.res);
+            },
+            error: function () {
+//                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+        return f;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

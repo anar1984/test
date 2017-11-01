@@ -908,7 +908,7 @@ function buttonFillFormListener() {
                 console.log("buttonFillFormListener: " + JSON.stringify(json));
 
                 console.log("buttonFillFormListener: " + kv);
-                var newJson = {kv:{}};
+                var newJson = {kv: {}};
                 newJson.kv.fkUserId = json.kv.id;
                 newJson.kv.type = 'ownrule';
                 fillSwitchList(this, newJson);
@@ -987,6 +987,22 @@ function buttonFillFormListener() {
                             var val = fillCustomSelect4Update(this, v);
                             $(this).attr("pid", v);
                             $(this).val(val);
+
+                        }
+                    });
+
+                    $('#' + target_form).find('.apd-form-date').each(function () {
+                        var id = $(this).attr('id');
+                        if (id === keys[i]) {
+                            try {
+                                var y = v.substring(0, 4);
+                                var m = v.substring(4, 6);
+                                var d = v.substring(6, 8);
+                                $(this).data("DateTimePicker").date(new Date(y, m - 1, d));
+                            } catch (err) {
+
+                            }
+
 
                         }
                     });
@@ -1179,20 +1195,18 @@ function formButtonListener() {
             json.kv[k] = v;
         });
         el.closest("form[class='apd-form']").find(".apd-form-date").each(function () {
-            var v = $(this).val();
-            var inputDate = new Date(v);
-            var y = inputDate.getFullYear();
-            var m = inputDate.getMonth() + 1;
-            var d = inputDate.getDate();
-            if (m < 10) {
-                m = '0' + m;
+            var mom = $(this).data("DateTimePicker").date();
+            if (mom) {
+                console.log("mom>>" + mom)
+                var y = mom.year();
+                var m = mom.month() + 1;
+                m = m < 10 ? '0' + m : m;
+                var d = mom.date();
+                d = d < 10 ? '0' + d : d;
+                v = y.toString() + m.toString() + d.toString();
+                var k = $(this).attr("id");
+                json.kv[k] = v;
             }
-            if (d < 10) {
-                d = '0' + d;
-            }
-            v = y + m + d;
-            var k = $(this).attr("id");
-            json.kv[k] = v;
         });
         //add select values to json
         el.closest("form[class='apd-form']").find(".apd-form-select, .apd-form-select-back").each(function () {
@@ -1783,8 +1797,8 @@ function formSelectListeners() {
             var e_id = $(this).attr('id');
             fillCombobox(this, json);
         });
-        
-        
+
+
     });
 }
 

@@ -6,10 +6,10 @@
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
         <button  component_id="serviceCrGetExpenseList"  id='serviceCrGetExpenseList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                onclick="loadTable('tbl_expense_list')" qlang>list
+                 onclick="loadTable('tbl_expense_list')" qlang>list
         </button>
         <button  component_id="serviceCrInsertNewExpense" id='btn_serviceCrInsertNewExpense' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                data-toggle="modal" data-target="#insertNewExpense" qlang>insert
+                 data-toggle="modal" data-target="#insertNewExpense" qlang>insert
         </button>
         <hr>
     </div>
@@ -29,11 +29,17 @@
                     <form id="form_insertNewExpense" class="apd-form" method="POST" 
                           action="srv/serviceCrInsertNewExpense">
 
+
                         <div class="form-group col-md-6">
-                            <label qlang>expenseDate</label>
-                            <input  class="form-control apd-form-date" type="date"
-                                    id="expenseDate" name="expenseDate"  >
+                            <label class="float" qlang >expenseDate</label>
+                            <div class='input-group date apd-form-date' id="expenseDate"  >
+                                <input type="text" class="form-control apd-form-date">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
+
                         <div class="form-group col-md-3">
                             <label qlang>expenseAmount</label>
                             <input  class="form-control apd-form-input" type="number"
@@ -79,9 +85,13 @@
                             <input class="form-control apd-form-input" type="type" id="id" name="id"    >
                         </div>
                         <div class="form-group col-md-6">
-                            <label qlang>expenseDate</label>
-                            <input  class="form-control apd-form-date" type="date"
-                                    id="expenseDate" name="expenseDate"  >
+                            <label class="float" qlang >expenseDate</label>
+                            <div class='input-group date apd-form-date' id="expenseDate"  >
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label qlang>expenseAmount</label>
@@ -91,7 +101,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label qlang>currency</label>
-                           <select class="form-control apd-form-select" select_text="itemValue" 
+                            <select class="form-control apd-form-select" select_text="itemValue" 
                                     select_value="itemKey" id="expenseCurrency" name="expenseCurrency" 
                                     srv_url="srv/serviceCrGetCurrencyOfCompany">
                             </select> 
@@ -101,7 +111,7 @@
                             <input  class="form-control apd-form-input" type="text" 
                                     id="expensePurpose" name="expensePurpose" >
                         </div>
-                        
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
@@ -115,3 +125,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    
+
+    $(function () {
+        $('.apd-form-date').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+    });
+</script>

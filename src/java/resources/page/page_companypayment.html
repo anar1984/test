@@ -50,10 +50,15 @@
                                     srv_url="srv/serviceCrGetPaymentTypeList" >
                             </select> 
                         </div >
+
                         <div class="form-group col-md-6">
-                            <label qlang>paymentDate</label>
-                            <input  class="form-control apd-form-input" type="date"
-                                    id="paymentDate" name="paymentDate">
+                            <label class="float" qlang >paymentDate</label>
+                            <div class='input-group date apd-form-date' id="paymentDate"  >
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label qlang>paymentTime</label>
@@ -80,15 +85,15 @@
                             <input  class="form-control apd-form-input" type="text"
                                     id="paymentDiscount" name="paymentDiscount">
                         </div>
-                         
+
                         <div class="form-group col-md-6">
                             <label qlang>description</label>
                             <input  class="form-control apd-form-input" type="text"
                                     id="description" name="description">
                         </div>
-                        
-                         
-                       
+
+
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true" qlang>insert</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
@@ -134,9 +139,13 @@
                             </select> 
                         </div >
                         <div class="form-group col-md-6">
-                            <label qlang>paymentDate</label>
-                            <input  class="form-control apd-form-input" type="date"
-                                    id="paymentDate" name="paymentDate">
+                            <label class="float" qlang >paymentDate</label>
+                            <div class='input-group date apd-form-date' id="paymentDate"  >
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label qlang>paymentTime</label>
@@ -163,13 +172,13 @@
                             <input  class="form-control apd-form-input" type="text"
                                     id="paymentDiscount" name="paymentDiscount">
                         </div>
-                         
+
                         <div class="form-group col-md-6">
                             <label qlang>description</label>
                             <input  class="form-control apd-form-input" type="text"
                                     id="description" name="description">
                         </div>
-                        
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
@@ -183,3 +192,13 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+    $(function () {
+        $('.apd-form-date').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+    });
+</script>

@@ -437,13 +437,13 @@ function toggleSessionDate(el) {
 
 
     if (isnow) {
-        $(el).closest(".apd-form").find("#appointmentDate").attr("disabled", "disabled");
+        $(el).closest(".apd-form").find("#appointmentDate").children().attr("disabled", "disabled");
         $(el).closest(".apd-form").find("#appointmentTime1").attr("disabled", "disabled");
         $(el).closest(".apd-form").find("#appointmentTime2").attr("disabled", "disabled");
 
 
     } else {
-        $(el).closest(".apd-form").find("#appointmentDate").removeAttr("disabled");
+        $(el).closest(".apd-form").find("#appointmentDate").children().removeAttr("disabled");
         $(el).closest(".apd-form").find("#appointmentTime1").removeAttr("disabled");
         $(el).closest(".apd-form").find("#appointmentTime2").removeAttr("disabled");
     }
@@ -466,7 +466,7 @@ function addAppointment(el) {
     var apttime2 = "";
 
     if (!isnow) {
-        var apdate = getQDate($(el).closest(".apd-form").find("#appointmentDate"));
+        var apdate = getQDate($(el).closest(".apd-form").find("#appointmentDate").find('input'));
         var apttime1 = getQTime($(el).closest(".apd-form").find("#appointmentTime1"));
         var apttime2 = getQTime($(el).closest(".apd-form").find("#appointmentTime2"));
         if (!apdate || !apttime1 || !apttime2) {

@@ -97,8 +97,12 @@ public class SessionManager {
         return getLang(getCurrentThreadId());
     }
 
-    public static String getCurrentCompanyId() {
-        return getCompanyId(getCurrentThreadId());
+    public static String getCurrentCompanyId() throws QException {
+        String id = getCompanyId(getCurrentThreadId());
+        if (id.trim().length()==0){
+            throw new QException("company_id is not available");
+        }
+        return id;
     }
     
     public static String getUserByThreadId(Long threadId) {

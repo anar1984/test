@@ -17,3 +17,13 @@ page_attribute
 page_module
 page_companypayment
 page_entitylabel
+page_term_ENG
+page_paymenttype
+page_listitem
+page_submoduleattribute
+page_submodule
+page_organpoint
+page_valuetype
+page_usertable
+page_changepwd
+page_test

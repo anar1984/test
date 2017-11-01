@@ -1414,11 +1414,11 @@ public class Carrier implements Serializable {
                 jsonRow1.put(CoreLabel.JSON_TABLE_FIELD_TYPE, type);
                 jsonRow1.put(colNames[j], name);
 
-                if (type.equals(CoreLabel.ENTITY_LABEL_TYPE_DATE)) {
-                    dateList.add(j);
-                } else if (type.equals(CoreLabel.ENTITY_LABEL_TYPE_TIME)) {
-                    timeList.add(j);
-                }
+//                if (type.equals(CoreLabel.ENTITY_LABEL_TYPE_DATE)) {
+//                    dateList.add(j);
+//                } else if (type.equals(CoreLabel.ENTITY_LABEL_TYPE_TIME)) {
+//                    timeList.add(j);
+//                }
                 array1.put(jsonRow1);
             }
 
@@ -1430,22 +1430,22 @@ public class Carrier implements Serializable {
                 String value;
 
                 for (int j = 0; j < colNames.length; j++) {
-                    String vt1 = this.getValue(tablename, i, colNames[j]).toString();
-                    if (dateList.contains(j)) {
-                        if (vt1.trim().length() == 8) {
-                            value = QDate.convertToDateString(vt1);
-                        } else {
-                            value = vt1;
-                        }
-                    } else if (timeList.contains(j)) {
-                        if (vt1.trim().length() == 6) {
-                            value = QDate.convertToTimeString(vt1);
-                        } else {
-                            value = vt1;
-                        }
-                    } else {
+//                    String vt1 = this.getValue(tablename, i, colNames[j]).toString();
+//                    if (dateList.contains(j)) {
+//                        if (vt1.trim().length() == 8) {
+//                            value = QDate.convertToDateString(vt1);
+//                        } else {
+//                            value = vt1;
+//                        }
+//                    } else if (timeList.contains(j)) {
+//                        if (vt1.trim().length() == 6) {
+//                            value = QDate.convertToTimeString(vt1);
+//                        } else {
+//                            value = vt1;
+//                        } 
+//                    } else {
                         value = this.getValue(tablename, i, colNames[j]).toString();
-                    }
+//                    }
                     jsonRow.put(colNames[j], value);
                 }
                 array.put(jsonRow);

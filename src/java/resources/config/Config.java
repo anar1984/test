@@ -38,6 +38,11 @@ public class Config {
     private static String userPaymentCompanyTrialPeriod;
     private static String userPaymentCompanyTrialPeriodForList;
 
+    public static String SYSADMIN_COMPANY_DB_NAME = "sysadmin.company.db.name";
+    public static String SYSADMIN_COMPANY_DB_ID = "sysadmin.company.db.id";
+    public static String SYSADMIN_PREFIX = "sysadmin.prefix";
+    public static String SYSADMIN_PAGE = "sysadmin.page";
+
     public static String getProperty(String key) {
         return configMap.get(key);
     }

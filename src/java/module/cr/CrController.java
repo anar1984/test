@@ -156,7 +156,6 @@ public class CrController {
         ControllerPool cp = new ControllerPool();
         try {
             carrier.addController(EntityCrUser.ID, cp.hasValue(carrier, EntityCrUser.ID));
-            carrier.addController(EntityCrUser.PASSWORD, cp.hasValue(carrier, EntityCrUser.PASSWORD));
             carrier.addController(EntityCrUser.USERNAME, cp.hasValue(carrier, EntityCrUser.USERNAME));
             return carrier;
         } catch (Exception ex) {
@@ -1270,7 +1269,7 @@ public class CrController {
         return carrier;
 
     }
-    
+
     public Carrier getRoleList4Combo(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
 
@@ -1570,6 +1569,20 @@ public class CrController {
     }
 
     public Carrier getCompanyPaymentList(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    public Carrier isPersonalUsernameExist(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("general", cp.hasValue(carrier, "username"));
+        return carrier;
+    }
+
+    public Carrier changePassword(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("currentPassword", cp.hasValue(carrier, "currentPassword"));
+        carrier.addController("newPassword", cp.hasValue(carrier, "newPassword"));
+        carrier.addController("confirmNewPassword", cp.hasValue(carrier, "confirmNewPassword"));
         return carrier;
     }
 

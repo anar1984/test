@@ -276,7 +276,7 @@ public class EntityCrUser extends CoreEntity {
         try {
             obj.put("id", this.getId());
             obj.put("username", this.getUsername());
-            obj.put("password", this.getPassword());
+//            obj.put("password", this.getPassword());
             obj.put("lang", this.selectLang());
             obj.put("domain", this.selectDomain());
             obj.put("companyId", this.selectCompanyId());
@@ -292,7 +292,7 @@ public class EntityCrUser extends CoreEntity {
             JSONObject obj = new JSONObject(data);
             this.setUsername(obj.getString("username"));
             this.setId(obj.getString("id"));
-            this.setPassword(obj.getString("password"));
+//            this.setPassword(obj.getString("password"));
             this.setLang(obj.getString("lang"));
             this.setDomain(obj.getString("domain"));
             this.setCompanyId(obj.getString("companyId"));

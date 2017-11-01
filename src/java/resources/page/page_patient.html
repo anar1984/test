@@ -12,7 +12,7 @@
             <!--            <button id='serviceCrGetInspectionList' qlang type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
                                 onclick="loadTable('tbl_inspection_list')">inspectionList
                         </button>-->
-            <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+            <button component_id="serviceCrInsertNewPatient" id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
                     data-toggle="modal" data-target="#insertNewPatient">Insert
             </button>
         </div>
@@ -48,15 +48,20 @@
                             <input type="text" class="form-control apd-form-input" id="patientMiddleName" 
                                    name="patientMiddleName" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label qlang>patientBirthPlace</label>
                             <input type="text" class="form-control apd-form-input" id="patientBirthPlace" 
                                    name="patientBirthPlace" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label qlang>patientBirthDate</label>
-                            <input type="date" class="form-control apd-form-date" id="patientBirthDate" 
-                                   name="patientBirthDate" placeholder=" ">
+
+                        <div class="form-group col-md-4">
+                            <label class="float" qlang  qlang >patientBirthDate</label>
+                            <div class='input-group date apd-form-date' id="patientBirthDate"  >
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
@@ -65,7 +70,11 @@
                                     async="true" has_null="1"
                                     srv_url="li/maritualStatus">
                             </select>
+
                         </div>
+                        <div class="form-group col-md-12">
+                        </div>
+
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select-back" id="occupation" name="occupation"
@@ -74,7 +83,9 @@
                                     has_other="1"
                                     srv_url="li/occupation">
                             </select>
+
                         </div>
+                        <br>
                         <div class="form-group col-md-4">
                             <label qlang>occupationOther</label>
                             <input type="text" class="form-control apd-form-input" id="occupationOther" 
@@ -82,7 +93,7 @@
                                    name="occupationOther" placeholder="">
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>education</label>
                             <select class="form-control apd-form-select-back" id="education" name="education"
                                     async="true" has_null="1"
@@ -90,7 +101,9 @@
                                     srv_url="li/educationType">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-12">
+                        </div>
+                        <div class="form-group col-md-4">
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select-back" id="sex" name="sex"
                                     async="true" has_null="1"
@@ -98,7 +111,7 @@
                                     srv_url="li/sex">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>bloodGroup</label>
                             <select class="form-control apd-form-select-back" id="bloodGroup" name="bloodGroup"
                                     async="true" select_text="itemValue" select_value="itemKey" 
@@ -106,7 +119,7 @@
                                     srv_url="li/bloodGroup">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>rhFactor</label>
                             <select class="form-control apd-form-select-back" id="rhFactor" name="rhFactor"
                                     async="true" has_null="1"
@@ -114,7 +127,9 @@
                                     srv_url="li/rhFactor">
                             </select>
                         </div>
-
+                        <div class="form-group col-md-12">
+                            <br>
+                        </div>
                         <div class="form-group col-md-3">
                             <label qlang>mobile1</label>
                             <input type="text" class="form-control apd-form-input" id="mobile1" 
@@ -205,7 +220,7 @@
                             <label qlang>id</label>
                             <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="Patient Code"  >
                         </div>
-                        <div class="form-group col-md-4">
+                       <div class="form-group col-md-4">
                             <label qlang>patientName</label>
                             <input class="form-control apd-form-input" type="text" id="patientName"
                                    name="patientName" placeholder=" "  >
@@ -220,24 +235,33 @@
                             <input type="text" class="form-control apd-form-input" id="patientMiddleName" 
                                    name="patientMiddleName" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label qlang>patientBirthPlace</label>
                             <input type="text" class="form-control apd-form-input" id="patientBirthPlace" 
                                    name="patientBirthPlace" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label qlang>patientBirthDate</label>
-                            <input type="date" class="form-control apd-form-date" id="patientBirthDate" 
-                                   name="patientBirthDate" placeholder=" ">
+
+                        <div class="form-group col-md-4">
+                            <label class="float" qlang  qlang >patientBirthDate</label>
+                            <div class='input-group date apd-form-date' id="patientBirthDate"  >
+                                <input type="text" class="form-control ">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
                             <select class="form-control apd-form-select-back" id="maritualStatus" name="maritualStatus"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     srv_url="li/maritualStatus">
                             </select>
+
                         </div>
+                        <div class="form-group col-md-12">
+                        </div>
+
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select-back" id="occupation" name="occupation"
@@ -246,46 +270,53 @@
                                     has_other="1"
                                     srv_url="li/occupation">
                             </select>
+
                         </div>
+                        <br>
                         <div class="form-group col-md-4">
                             <label qlang>occupationOther</label>
                             <input type="text" class="form-control apd-form-input" id="occupationOther" 
                                    disabled
                                    name="occupationOther" placeholder="">
                         </div>
-                        <div class="form-group col-md-3">
+
+                        <div class="form-group col-md-4">
                             <label qlang>education</label>
                             <select class="form-control apd-form-select-back" id="education" name="education"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
                                     srv_url="li/educationType">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-12">
+                        </div>
+                        <div class="form-group col-md-4">
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select-back" id="sex" name="sex"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
                                     srv_url="li/sex">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>bloodGroup</label>
                             <select class="form-control apd-form-select-back" id="bloodGroup" name="bloodGroup"
+                                    async="true" select_text="itemValue" select_value="itemKey" 
                                     has_null="1"
-                                    select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/bloodGroup">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>rhFactor</label>
                             <select class="form-control apd-form-select-back" id="rhFactor" name="rhFactor"
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/rhFactor">
                             </select>
                         </div>
-
+                        <div class="form-group col-md-12">
+                            <br>
+                        </div>
                         <div class="form-group col-md-3">
                             <label qlang>mobile1</label>
                             <input type="text" class="form-control apd-form-input" id="mobile1" 
@@ -332,10 +363,10 @@
                                    name="postIndex" placeholder=" ">
                         </div>
                         <div class="form-group col-md-3">
-                            <label  qlang>isActive</label>
+                            <label qlang>isActive</label>
                             <select class="form-control apd-form-select-back" id="isActive" name="isActive"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
                                     srv_url="li/pa">
                             </select>
                         </div>
@@ -348,7 +379,8 @@
                             <label qlang>addressLine</label>
                             <textarea class="form-control apd-form-textarea" id="addressLine" 
                                       name="addressLine" placeholder=""></textarea>
-                        </div> 
+                        </div>
+                        
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
@@ -362,14 +394,21 @@
         </div>
     </div>
 
-   
 
-    
 
-     
+
+
+
 </div>
 <script>
     $(function () {
         $(".youtube").YouTubeModal({autoplay: 0, width: 640, height: 480});
     });
+
+    $(function () {
+        $('.apd-form-date').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+    });
+
 </script>

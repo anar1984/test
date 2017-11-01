@@ -1,3 +1,8 @@
+<br>
+<br>
+<br>
+<br>
+
 <div class="row apd-page" id="page_test">
     <form id="form_insertNewPatient" class="apd-form" method="POST" action="srv/serviceCrInsertNewPatient">
         <div class="form-group col-md-4">
@@ -21,7 +26,23 @@
                    name="patientBirthPlace" placeholder="">
         </div>
 
+        <div class="form-group col-md-6">
+            <label qlang>adgunu</label>
+            <div class='input-group date apd-form-date' id='datetimepicker1'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+
+
+
+
     </form>
+    <button value="" onclick="getDateManual(this)">Get date value</button>
+    <button value="" onclick="setDateManual(this)">set date value</button>
 </div>
 <hr />
 
@@ -29,17 +50,37 @@
 </div>
 
 <script>
+    function getDateManual(e) {
+        $('.apd-form-date').each(function (ex) {
+            var mom = $(this).data("DateTimePicker").date();
+            var y = mom.year();
+            var m = mom.month() + 1;
+            var d = mom.date();
 
-//    $('#fkPatientId').editableSelect();
+//             return [m.year(), m.month(), m.date(), m.hour(), m.minute(), m.second(), m.millisecond()];
+            console.log("year " + y + '-' + m + '-' + d);
+        });
+    }
 
-    $('#fkPatientId').editableSelect({
-        onSelect: function (element) {
-            alert($(this).val());
-        }
-    });
+    function setDateManual(e) {
+        $('.apd-form-date').each(function (ex) {
 
-    $(document).on("", '.apd-editable-combo-li', function (e) {
-        console.log("list is clicked")
+            $(this).data("DateTimePicker").date(new Date(2013, 11 - 1, 21));
+
+
+//            $('#datetimepicker1').datetimepicker({
+//                defaultDate: '21/10/2013'
+//            });
+
+        });
+    }
+
+
+
+    $(function () {
+        $('.apd-form-date').datetimepicker({
+            format: 'DD-MM-YYYY' 
+        });
     });
 
 

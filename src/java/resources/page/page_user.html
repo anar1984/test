@@ -6,10 +6,10 @@
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
         <button  component_id="serviceCrGetUserList"  id='serviceCrGetUserList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                onclick="loadTable('tbl_user_list')">List
+                 onclick="loadTable('tbl_user_list')">List
         </button>
         <button  component_id="serviceCrInsertNewUser"  id='btn_serviceCrInsertNewUser' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                data-toggle="modal" data-target="#insertNewUser">Insert
+                 data-toggle="modal" data-target="#insertNewUser">Insert
         </button>
         <hr>
     </div>
@@ -33,8 +33,7 @@
                             <br>
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#userData" qlang>userData</a></li>
-                                <li><a data-toggle="tab" href="#permissions" qlang>permissions</a></li>
-
+                                <li><a component_id="addUserPermission" data-toggle="tab" href="#permissions" qlang>permissions</a></li>
                             </ul>
                         </div>
 
@@ -50,9 +49,10 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >password</label>
-                                        <input class="form-control apd-form-input" type="password" id="password"
-                                               name="password" placeholder=""  >
+                                        <input dont_clear  class="form-control apd-form-input" type="password" id="password"
+                                               name="password"    >
                                     </div>
+
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >userPersonName</label>
                                         <input type="text" class="form-control apd-form-input" id="userPersonName" 
@@ -77,14 +77,13 @@
                                                name="userBirthPlace" placeholder="">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="float" qlang  qlang >userBirthDate</label>
-                                        <input type="date" class="form-control apd-form-date" id="userBirthDate" 
-                                               name="userBirthDate" placeholder=" ">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="float" qlang >expireDate</label>
-                                        <input type="date" class="form-control apd-form-date" id="expireDate" 
-                                               name="expireDate" placeholder=" ">
+                                        <label class="float" qlang >userBirthDate</label>
+                                        <div class='input-group date apd-form-date' id='userBirthDate'>
+                                            <input type="text" class="form-control"  >
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >liUserPermissionCode</label>
@@ -162,7 +161,7 @@
                                 </div>
 
                                 <!--permissions-->
-                                <div id="permissions" class="col-md-12  tab-pane fade    ">
+                                <div component_id="addUserPermission" id="permissions" class="col-md-12  tab-pane fade    ">
                                     <br>
                                     <div class="panel panel-default">
                                         <div class="form-group col-md-10">
@@ -175,7 +174,7 @@
                                                     >
                                             </select>
                                         </div>
-                                         <div class="form-group col-md-2">
+                                        <div class="form-group col-md-2">
                                             <br>
                                             <a href="#" qlang onclick="allRules(this)">allRules</a>
                                         </div>
@@ -227,7 +226,7 @@
                             <br>
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#userData1" qlang>userData</a></li>
-                                <li><a data-toggle="tab" href="#permissions1" qlang>permissions</a></li>
+                                <li><a component_id="addUserPermission" data-toggle="tab" href="#permissions1" qlang>permissions</a></li>
 
                             </ul>
                         </div>
@@ -247,11 +246,7 @@
                                         <input dont_clear  class="form-control apd-form-input" type="text" id="username"
                                                name="username"    >
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="float" qlang >password</label>
-                                        <input class="form-control apd-form-input" type="password" id="password"
-                                               name="password" placeholder=""  >
-                                    </div>
+
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >userPersonName</label>
                                         <input type="text" class="form-control apd-form-input" id="userPersonName" 
@@ -277,14 +272,14 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang  qlang >userBirthDate</label>
-                                        <input type="date" class="form-control apd-form-date" id="userBirthDate" 
-                                               name="userBirthDate" placeholder=" ">
+                                        <div class='input-group date apd-form-date' id="userBirthDate"  >
+                                            <input type="text" class="form-control apd-form-date">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="float" qlang >expireDate</label>
-                                        <input type="date" class="form-control apd-form-date" id="expireDate" 
-                                               name="expireDate" placeholder=" ">
-                                    </div>
+
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >liUserPermissionCode</label>
                                         <select class="form-control apd-form-select" id="liUserPermissionCode"
@@ -361,7 +356,7 @@
                                 </div>
 
                                 <!--permissions-->
-                                <div id="permissions1" class="col-md-12  tab-pane fade    ">
+                                <div component_id="addUserPermission" id="permissions1" class="col-md-12  tab-pane fade    ">
                                     <br>
                                     <div class="panel panel-default">
                                         <div class="form-group col-md-8">
@@ -382,7 +377,7 @@
                                             <br>
                                             <a href="#" qlang onclick="allRules(this)">allRules</a>
                                         </div>
-                                        
+
                                         <div class="form-group col-md-12">
                                             <br>
                                         </div>
@@ -404,7 +399,7 @@
 
                         <div class="form-group col-md-12" align="right">
                             <button   component_id="serviceCrUpdateUser" type="button" class="btn btn-default apd-form-btn" 
-                                    apd-clear-form-data="false" qlang>update</button>
+                                      apd-clear-form-data="false" qlang>update</button>
                             <button type="button" class="btn btn-default" 
                                     data-dismiss="modal"  role="button" qlang>close</button>
                         </div>
@@ -429,6 +424,12 @@
 
     });
 
+
+    $(function () {
+        $('.apd-form-date').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+    });
 
     function clickActionOfRole(e) {
         var userId = $(e).closest("form").find('#id').val();
@@ -462,7 +463,7 @@
         fillSwitchList(e, json);
     }
 
-    
+
 
     function fillSwitchList(parent, json) {
         console.log(JSON.stringify(json));

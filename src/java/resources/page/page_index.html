@@ -23,7 +23,8 @@
                 </div>
                 <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1"  >
                     <ul class="nav navbar-nav navbar-right menu-size">
-                        <li class="dropdown">
+                        
+                        <li component_id="main_menu_home" class="dropdown">
                             <a href="#" class="dropdown-toggle"   data-toggle="dropdown"  ><span  qlang>home</span><b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu" >
                                 <li component_id="menu_patient"    page_id="page_patient">
@@ -42,7 +43,7 @@
 
 
 
-                        <li class="dropdown">
+                        <li  component_id="main_menu_finance" class="dropdown">
                             <a href="#" class="dropdown-toggle"    data-toggle="dropdown"><span qlang>finance</span><b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu" >
                                 <li component_id="menu_pricelist" page_id="page_pricelist">
@@ -62,15 +63,112 @@
                         </li>
 
 
-                        <li class="dropdown">
+                        <li  component_id="main_menu_profile"  class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"   ><span qlang>profile</span><b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu" >
                                 <li component_id="menu_user" page_id="page_user">
                                     <a  qlang >user</a>
                                 </li>
+                                <li component_id="menu_changepwd" page_id="page_changepwd">
+                                    <a  qlang >changepwd</a>
+                                </li>
                                 <li component_id="menu_reportline" page_id="page_reportline">
                                     <a qlang >report</a>
                                 </li> 
+                                <li>
+                                    <a href="#" onclick="javascript:logout()" qlang >logout</a>
+                                </li>
+                                <li component_id="menu_test" page_id="page_test">
+                                    <a qlang >test</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li component_id="menu_sysadmin_page" class="dropdown">
+                            <a href="#" class="dropdown-toggle"   data-toggle="dropdown"   ><span  qlang>adminPanel</span><b class="caret"></b></a>
+                            <ul class="dropdown-menu megamenu" >
+                                <li component_id="menu_user" page_id="page_user">
+                                    <a  qlang >user</a>
+                                </li> 
+                                <li component_id="menu_listitem" page_id="page_listitem">
+                                    <a qlang >listItem</a>
+                                </li> 
+                                <li component_id="menu_entitylabel" page_id="page_entitylabel">
+                                    <a qlang >entityLabel</a>
+                                </li> 
+                                <li component_id="menu_attribute" page_id="page_attribute" >
+                                    <a qlang >attribute</a>
+                                </li> 
+                                <li component_id="menu_module" page_id="page_module">
+                                    <a qlang >module</a>
+                                </li> 
+                                <li component_id="menu_submodule" page_id="page_submodule">
+                                    <a qlang >submodule</a>
+                                </li> 
+                                <li component_id="menu_organpoint" page_id="page_organpoint">
+                                    <a qlang >organPoint</a>
+                                </li> 
+                                <li component_id="menu_valuetype" page_id="page_valuetype">
+                                    <a qlang >valueType</a>
+                                </li> 
+                                <li component_id="menu_submoduleattribute" page_id="page_submoduleattribute">
+                                    <a qlang >submoduleAttribute</a>
+                                </li> 
+                                <li component_id="menu_companies" page_id="page_company">
+                                    <a qlang >company</a>
+                                </li> 
+                                <li component_id="menu_usertable" page_id="page_usertable">
+                                    <a qlang >usertable</a>
+                                </li> 
+
+                                <li component_id="menu_test" page_id="page_test">
+                                    <a qlang >test</a>
+                                </li> 
+
+                            </ul>
+                        </li>
+                        <li  component_id="menu_sysadmin_page" class="dropdown">
+                            <a href="#" class="dropdown-toggle"   data-toggle="dropdown"   ><span  qlang>permission</span><b class="caret"></b></a>
+                            <ul class="dropdown-menu megamenu" >
+
+                                <li component_id="menu_permission" page_id="page_permission">
+                                    <a qlang>permission</a>
+                                </li> 
+                                <li component_id="menu_rule" page_id="page_rule">
+                                    <a  qlang >rule</a>
+                                </li> 
+                                <li component_id="menu_role" page_id="page_role">
+                                    <a  qlang >role</a>
+                                </li>
+                                <li component_id="menu_paymenttypeandrule" page_id="page_paymenttypeandrule">
+                                    <a  qlang>paymentTypeAndRule</a>
+                                </li>
+                                <li component_id="menu_companyandrule" page_id="page_companyandrule">
+                                    <a  qlang>companyAndRule</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li  component_id="menu_sysadmin_page" class="dropdown">
+                            <a href="#" class="dropdown-toggle"   data-toggle="dropdown"   ><span  qlang>payment</span><b class="caret"></b></a>
+                            <ul class="dropdown-menu megamenu" >
+
+                                <li component_id="menu_companypayment" page_id="page_companypayment">
+                                    <a qlang>companyPayment</a>
+                                </li> 
+                                <li component_id="menu_paymenttype" page_id="page_paymenttype">
+                                    <a qlang>paymentType</a>
+                                </li> 
+
+
+                            </ul>
+                        </li>
+                        
+                        <li  component_id="menu_sysadmin_page"  class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"   ><span qlang>profile</span><b class="caret"></b></a>
+                            <ul class="dropdown-menu megamenu" >
+                                 
                                 <li>
                                     <a href="#" onclick="javascript:logout()" qlang >logout</a>
                                 </li>

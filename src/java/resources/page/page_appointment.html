@@ -57,9 +57,9 @@
                 newSession
             </button>
             <button  component_id = "serviceCrFinishSession"  type="button" qlang 
-                      class="btn btn-md task-button toggle-on-click  " 
-                      style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
-                      onclick="finishSession(this)">finishSession
+                     class="btn btn-md task-button toggle-on-click  " 
+                     style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
+                     onclick="finishSession(this)">finishSession
             </button>
 
         </div>
@@ -75,10 +75,10 @@
                     <li class="dropdown-submenu pull-left toggle-on-click" >
                         <a tabindex="-1" href="#" qlang> report</a>
                         <ul class="dropdown-menu dropdown-menu-right " id="report4Appointment" >
-<!--                            <li><a class='apd-report-cmb-list' rid='201708090638410249'
-                                   tabindex="-1" href="#">yyyy</a></li>
-                            <li><a class='apd-report-cmb-list' rid='201708090631020540' 
-                                   href="#">4444</a></li> -->
+                            <!--                            <li><a class='apd-report-cmb-list' rid='201708090638410249'
+                                                               tabindex="-1" href="#">yyyy</a></li>
+                                                        <li><a class='apd-report-cmb-list' rid='201708090631020540' 
+                                                               href="#">4444</a></li> -->
                         </ul>
 
 
@@ -87,8 +87,8 @@
                     <li class="dropdown-submenu pull-left">
                         <a tabindex="-1" href="#" qlang> module</a>
                         <ul class="dropdown-menu dropdown-menu-right " id="moduleList" >
-<!--                            <li><a class="apd-module-cmb-list" mid="201706221522420346" 
-                                   tabindex="-1" href="#">APD Voice</a></li>-->
+                            <!--                            <li><a class="apd-module-cmb-list" mid="201706221522420346" 
+                                                               tabindex="-1" href="#">APD Voice</a></li>-->
 
                         </ul>
                     </li>
@@ -251,24 +251,33 @@
                             <input type="text" class="form-control apd-form-input" id="patientMiddleName" 
                                    name="patientMiddleName" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label qlang>patientBirthPlace</label>
                             <input type="text" class="form-control apd-form-input" id="patientBirthPlace" 
                                    name="patientBirthPlace" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label qlang>patientBirthDate</label>
-                            <input type="date" class="form-control apd-form-date" id="patientBirthDate" 
-                                   name="patientBirthDate" placeholder=" ">
+
+                        <div class="form-group col-md-4">
+                            <label class="float" qlang  qlang >patientBirthDate</label>
+                            <div class='input-group date apd-form-date' id="patientBirthDate"  >
+                                <input type="text" class="form-control ">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
                             <select class="form-control apd-form-select-back" id="maritualStatus" name="maritualStatus"
-                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
+                                    async="true" has_null="1"
                                     srv_url="li/maritualStatus">
                             </select>
+
                         </div>
+                        <div class="form-group col-md-12">
+                        </div>
+
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select-back" id="occupation" name="occupation"
@@ -277,46 +286,53 @@
                                     has_other="1"
                                     srv_url="li/occupation">
                             </select>
+
                         </div>
+                        <br>
                         <div class="form-group col-md-4">
                             <label qlang>occupationOther</label>
                             <input type="text" class="form-control apd-form-input" id="occupationOther" 
                                    disabled
                                    name="occupationOther" placeholder="">
                         </div>
-                        <div class="form-group col-md-3">
+
+                        <div class="form-group col-md-4">
                             <label qlang>education</label>
                             <select class="form-control apd-form-select-back" id="education" name="education"
-                                    select_text="itemValue" select_value="itemKey" 
                                     async="true" has_null="1"
+                                    select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/educationType">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-12">
+                        </div>
+                        <div class="form-group col-md-4">
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select-back" id="sex" name="sex"
-                                    select_text="itemValue" select_value="itemKey" 
                                     async="true" has_null="1"
+                                    select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/sex">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>bloodGroup</label>
                             <select class="form-control apd-form-select-back" id="bloodGroup" name="bloodGroup"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    async="true" has_null="1"
+                                    async="true" select_text="itemValue" select_value="itemKey" 
+                                    has_null="1"
                                     srv_url="li/bloodGroup">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>rhFactor</label>
                             <select class="form-control apd-form-select-back" id="rhFactor" name="rhFactor"
-                                    select_text="itemValue" select_value="itemKey" 
                                     async="true" has_null="1"
+                                    select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/rhFactor">
                             </select>
                         </div>
-
+                        <div class="form-group col-md-12">
+                            <br>
+                        </div>
                         <div class="form-group col-md-3">
                             <label qlang>mobile1</label>
                             <input type="text" class="form-control apd-form-input" id="mobile1" 
@@ -363,7 +379,7 @@
                                    name="postIndex" placeholder=" ">
                         </div>
                         <div class="form-group col-md-3">
-                            <label  qlang>isActive</label>
+                            <label qlang>isActive</label>
                             <select class="form-control apd-form-select-back" id="isActive" name="isActive"
                                     async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
@@ -423,24 +439,33 @@
                             <input type="text" class="form-control apd-form-input" id="patientMiddleName" 
                                    name="patientMiddleName" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label qlang>patientBirthPlace</label>
                             <input type="text" class="form-control apd-form-input" id="patientBirthPlace" 
                                    name="patientBirthPlace" placeholder="">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label qlang>patientBirthDate</label>
-                            <input type="date" class="form-control apd-form-date" id="patientBirthDate" 
-                                   name="patientBirthDate" placeholder=" ">
+
+                        <div class="form-group col-md-4">
+                            <label class="float" qlang  qlang >patientBirthDate</label>
+                            <div class='input-group date apd-form-date' id="patientBirthDate"  >
+                                <input type="text" class="form-control ">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
                             <select class="form-control apd-form-select-back" id="maritualStatus" name="maritualStatus"
-                                    has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
+                                    async="true" has_null="1"
                                     srv_url="li/maritualStatus">
                             </select>
+
                         </div>
+                        <div class="form-group col-md-12">
+                        </div>
+
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
                             <select class="form-control apd-form-select-back" id="occupation" name="occupation"
@@ -449,46 +474,53 @@
                                     has_other="1"
                                     srv_url="li/occupation">
                             </select>
+
                         </div>
+                        <br>
                         <div class="form-group col-md-4">
                             <label qlang>occupationOther</label>
                             <input type="text" class="form-control apd-form-input" id="occupationOther" 
                                    disabled
                                    name="occupationOther" placeholder="">
                         </div>
-                        <div class="form-group col-md-3">
+
+                        <div class="form-group col-md-4">
                             <label qlang>education</label>
                             <select class="form-control apd-form-select-back" id="education" name="education"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
-                                    has_null="1"
                                     srv_url="li/educationType">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-12">
+                        </div>
+                        <div class="form-group col-md-4">
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select-back" id="sex" name="sex"
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/sex">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>bloodGroup</label>
                             <select class="form-control apd-form-select-back" id="bloodGroup" name="bloodGroup"
-                                    select_text="itemValue" select_value="itemKey" 
+                                    async="true" select_text="itemValue" select_value="itemKey" 
                                     has_null="1"
                                     srv_url="li/bloodGroup">
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label qlang>rhFactor</label>
                             <select class="form-control apd-form-select-back" id="rhFactor" name="rhFactor"
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/rhFactor">
                             </select>
                         </div>
-
+                        <div class="form-group col-md-12">
+                            <br>
+                        </div>
                         <div class="form-group col-md-3">
                             <label qlang>mobile1</label>
                             <input type="text" class="form-control apd-form-input" id="mobile1" 
@@ -535,9 +567,9 @@
                                    name="postIndex" placeholder=" ">
                         </div>
                         <div class="form-group col-md-3">
-                            <label qlang >isActive</label>
+                            <label qlang>isActive</label>
                             <select class="form-control apd-form-select-back" id="isActive" name="isActive"
-                                    has_null="1"
+                                    async="true" has_null="1"
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/pa">
                             </select>
@@ -551,7 +583,8 @@
                             <label qlang>addressLine</label>
                             <textarea class="form-control apd-form-textarea" id="addressLine" 
                                       name="addressLine" placeholder=""></textarea>
-                        </div> 
+                        </div>
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
@@ -594,19 +627,24 @@
                                             data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
                                     </button>
                                 </div>
+                                 
                                 <div class="form-group col-md-5">
-                                    <label qlang>appointmentDate</label>
-                                    <input class="form-control   apd-form-date" type="date" id="appointmentDate"
-                                           name="appointmentDate"    >
+                                    <label class="float" qlang >appointmentDate</label>
+                                    <div class='input-group date apd-form-date' id="appointmentDate"  >
+                                        <input type="text" class="form-control">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label qlang>timeFrom</label>
-                                    <input class="form-control   apd-form-date" type="time" id="appointmentTime1"
+                                    <input class="form-control   apd-form-time" type="time" id="appointmentTime1"
                                            name="appointmentTime1"    >
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label qlang>timeTo</label>
-                                    <input class="form-control   apd-form-date" type="time" id="appointmentTime2"
+                                    <input class="form-control   apd-form-time" type="time" id="appointmentTime2"
                                            name="appointmentTime2"    >
 
                                 </div>
@@ -673,5 +711,11 @@
 
     $(document).ready(function () {
         $('[data-toggle="popover"]').popover();
+    });
+
+    $(function () {
+        $('.apd-form-date').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
     });
 </script>

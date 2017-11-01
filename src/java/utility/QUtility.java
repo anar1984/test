@@ -331,6 +331,8 @@ public class QUtility {
 
             if (!hasPermission(comp_id)){
               element.remove();
+            }else{
+                element.removeAttr("component_id");
             }
             
         }

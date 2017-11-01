@@ -16,6 +16,7 @@ import org.jose4j.jwe.JsonWebEncryption;
 import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
 import org.jose4j.lang.JoseException;
 import resources.config.Config;
+import utility.CacheUtil;
 import utility.Carrier;
 import utility.QException;
 import utility.QUtility;
@@ -56,12 +57,13 @@ public class SessionHandler {
         } else {
             try {
                 JsonWebEncryption jwe = new JsonWebEncryption();
-                Key key = SKey.getKey();
-                byte[] keyBytes = key.getEncoded();
+                //Key key = SKey.getKey();
+                Key key = CacheUtil.getKeyFromCache(token);
+                /*byte[] keyBytes = key.getEncoded();
                 String ln = "";
                 for (byte b : keyBytes) {
                     ln += b;
-                }
+                }*/
                 jwe.setKey(key);
                 jwe.setCompactSerialization(token);
                 int l = jwe.getPayload().length();
@@ -76,7 +78,8 @@ public class SessionHandler {
     public static EntityCrUser getTokenFromCookie(String tokenString) throws JoseException {
         EntityCrUser token = new EntityCrUser();
         JsonWebEncryption jwe = new JsonWebEncryption();
-        jwe.setKey(SKey.getKey());
+        //jwe.setKey(SKey.getKey());
+        jwe.setKey(CacheUtil.getKeyFromCache(tokenString));
         jwe.setCompactSerialization(tokenString);
         token.fromString(jwe.getPayload());
         return token;
@@ -239,7 +242,8 @@ public class SessionHandler {
             jwe.setKey(key);
             String token = jwe.getCompactSerialization();
             System.out.println("ok");
-
+            
+            CacheUtil.putSessionCache(token, key);
             return token;
         } catch (Exception ex) {
             System.out.println("error");

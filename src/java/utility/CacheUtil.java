@@ -8,6 +8,7 @@ package utility;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.security.Key;
 
 import module.cr.CrModel;
 import org.apache.logging.log4j.LogManager;
@@ -34,11 +35,24 @@ public class CacheUtil {
     public static String CACHE_KEY_SUBMODULE_ATTRIBUTE = "cache.key.submoduleattribute";
     public static String CACHE_KEY_SUBMODULE = "cache.key.submodule";
     
+    private static Cache<String, Carrier> modelCache;
+    
+    private static Cache<String, Key> tokenKeyCache;
+    
+    
 
     public static void initCache(URL configUrl) {
         Configuration xmlConfig = new XmlConfiguration(configUrl);
-        CacheUtil.cacheManager = CacheManagerBuilder.newCacheManager(xmlConfig);
-        CacheUtil.cacheManager.init();
+        cacheManager = CacheManagerBuilder.newCacheManager(xmlConfig);
+        cacheManager.init();
+        
+        try {
+            modelCache = cacheManager.getCache("modelCache", String.class, Carrier.class);
+            tokenKeyCache = cacheManager.getCache("tokenKeyCache", String.class, Key.class);
+        } catch(Exception e) {
+            logger.debug("getCache " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void closeCache() {
@@ -48,20 +62,10 @@ public class CacheUtil {
     }
 
     public static Carrier getFromCache(String cacheKey) throws QException {
-        Cache<String, Carrier> serviceCache = null;
-        
-        try{
-            serviceCache = cacheManager
-                .getCache("modelCache", String.class, Carrier.class);
-        }catch(Exception e){
-            System.out.println("getFromCache"+e.getMessage());
-            e.printStackTrace();
-        }
         Carrier carrier = new Carrier();
-
-        if (serviceCache.containsKey(cacheKey)
+        if (modelCache.containsKey(cacheKey)
                 && cacheManager.getStatus() == Status.AVAILABLE) {
-            carrier = serviceCache.get(cacheKey);
+            carrier = modelCache.get(cacheKey);
             logger.debug("getFromCache.cacheKey=" + cacheKey + " provided from cache");
         } else {
             try {
@@ -93,6 +97,21 @@ public class CacheUtil {
 
         return carrier;
     }
+    
+    public static Key getKeyFromCache(String cacheKey) {
+        if (tokenKeyCache.containsKey(cacheKey)
+                && cacheManager.getStatus() == Status.AVAILABLE) {
+            return tokenKeyCache.get(cacheKey);
+        } else {
+            return null;
+        }
+    }
+    
+    public static void putSessionCache(String cacheKey, Key val) {
+        tokenKeyCache.put(cacheKey, val);
+        logger.debug("putCache.cacheKey=" + cacheKey);
+    }
+    
 
     private static String getPropKey(String cacheKey) {
         int ix = cacheKey.indexOf("::");
@@ -119,11 +138,8 @@ public class CacheUtil {
     }
 
     public static void putCache(String cacheKey, Carrier carrier) {
-        Cache<String, Carrier> serviceCache = cacheManager
-                .getCache("modelCache", String.class, Carrier.class);
-        serviceCache.put(cacheKey, carrier);
+        modelCache.put(cacheKey, carrier);
         logger.debug("putCache.cacheKey=" + cacheKey);
-
     }
 
 }

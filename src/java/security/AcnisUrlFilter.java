@@ -7,6 +7,7 @@ package security;
 
 import auth.SessionHandler;
 import java.io.IOException;
+import java.security.Key;
 import java.util.Arrays;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utility.CacheUtil;
 
 /**
  *
@@ -53,6 +55,10 @@ public class AcnisUrlFilter implements Filter {
                 }
             }
         }
+        
+        //Key test = CacheUtil.getKeyFromCache(token);
+        //System.out.println(test);
+        System.out.println("java.io.tmpdir="+System.getProperty("java.io.tmpdir"));
         
         System.out.println("web service token->>" + token);  
         

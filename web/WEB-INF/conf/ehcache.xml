@@ -9,21 +9,37 @@
     </thread-pools-->
     
     <!--disk-store thread-pool="defaultDiskPool" /-->
-    <persistence directory="java.io.tmpdir" />
+    <persistence directory="${java.io.tmpdir}/ehcache"  />
     
     <cache alias="modelCache">
+        
         <key-type>java.lang.String</key-type> 
         <value-type>utility.Carrier</value-type> 
         <expiry>
             <tti unit="minutes">1</tti>
         </expiry>
         <resources>
-            <disk unit="GB">2</disk>
+            <disk unit="GB" persistent="true">2</disk>
             <heap unit="MB">200</heap> 
             <offheap unit="MB">400</offheap>
         </resources>
         <!--disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" /-->
     </cache>
+    
+    <cache alias="tokenKeyCache">
+        <key-type>java.lang.String</key-type> 
+        <value-type>java.security.Key</value-type> 
+        <expiry>
+            <tti unit="hours">1</tti>
+        </expiry>
+        <resources>
+            <disk unit="GB" persistent="true">2</disk>
+            <heap unit="MB">100</heap> 
+            <offheap unit="MB">150</offheap>
+        </resources>
+        <!--disk-store-settings thread-pool="defaultDiskPool" writer-concurrency="2" /-->
+    </cache>
+
     
 <!--    <cache alias="serviceCache"> 
         <key-type>java.lang.String</key-type> 

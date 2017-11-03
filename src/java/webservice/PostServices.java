@@ -302,7 +302,7 @@ public class PostServices {
 
                 }
 
-                String servicename = "serviceCrGetListItemList";
+                String servicename = "serviceCrGetListItemList4ComboNali";
 
                 asyncResponse.resume(doCallDispatcherNoToken(headers, servicename, jsonNew));
             }
@@ -478,7 +478,8 @@ public class PostServices {
             "serviceCrIsCompanyDomainAvailable",
             "serviceCrIsFieldValid",
             "serviceCrGetTermPage",
-            "serviceCrIsPersonalUsernameExist"};
+            "serviceCrIsPersonalUsernameExist",
+            "serviceCrGetListItemList4ComboNali"};
 
         if (!ArrayUtils.contains(srv, servicename)) {
             return Response.status(Response.Status.FORBIDDEN).build();

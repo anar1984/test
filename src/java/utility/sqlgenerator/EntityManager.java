@@ -215,14 +215,14 @@ public class EntityManager {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }
-    
-     public static Carrier executeUpdateByQuery(String query) throws QException {
+
+    public static Carrier executeUpdateByQuery(String query) throws QException {
         try {
             Carrier c = new Carrier();
             if (!query.trim().equals("")) {
                 c = SQLConnection.execDeleteSql(query);
             }
-             
+
             return c;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -639,27 +639,38 @@ public class EntityManager {
         return arg;
     }
 
-    public static String getMessageText(String messageCode,String lang) throws QException {
+    public static String getMessageText(String messageCode, String lang) throws QException {
         messageCode = ESAPI.encoder().encodeForHTML(messageCode);
         if (messageCode.trim().equals("")) {
             return "Message code is empty";
         }
-
+ 
         EntityCrListItem ent = new EntityCrListItem();
         ent.setItemCode("errorMessage");
         ent.setItemKey(messageCode);
         ent.setLang(lang);
-        Carrier carrier = EntityManager.select(ent);
+        EntityManager.select(ent);
 
         if (ent.getItemValue().trim().equals("")) {
-            return "{" + messageCode + "}";
+            EntityCrListItem ent1 = new EntityCrListItem();
+            ent1.setItemCode("errorMessage");
+            ent1.setItemKey(messageCode);
+            ent1.setLang("ENG");
+
+            EntityManager.select(ent1);
+            if (ent1.getItemValue().trim().equals("")) {
+                return "{" + messageCode + "}";
+            } else {
+                return ent1.getItemValue().trim();
+            }
+
         } else {
             return ent.getItemValue().trim();
         }
     }
-    
-     public static String getMessageText(String messageCode) throws QException {
-       return getMessageText(messageCode,SessionManager.getCurrentLang());
+
+    public static String getMessageText(String messageCode) throws QException {
+        return getMessageText(messageCode, SessionManager.getCurrentLang());
     }
 
     public static String getEntityFieldLabel1(String entityName, String fieldName) throws QException {
@@ -713,7 +724,7 @@ public class EntityManager {
             line += " AND LANG='" + SessionManager.getCurrentLang() + "'";
             line += " AND FIELD_NAME IN (" + inLine + ")";
             line += entityName.trim().length() > 0 ? " AND ENTITY_NAME ='" + entityName + "'" : "";
-            
+
 //            line += " UNION ";
 //            
 //            line += " SELECT  'STRING' AS LABEL_TYPE,ATTRIBUTE_NAME AS DESCRIPTION,CONCAT('sa',ID) AS FIELD_NAME ";
@@ -721,7 +732,6 @@ public class EntityManager {
 //            line += " WHERE STATUS='A' ";
 //            line += " AND LANG='" + SessionManager.getCurrentLang() + "'";
 //            line += " AND CONCAT('sa',ID) IN (" + inLine + ")";
-
             Carrier carrier = SQLConnection.execSelectSql(line,
                     new EntityCrEntityLabel().toTableName(), CoreLabel.DB_PRIMARY, new ArrayList());
 
@@ -734,7 +744,7 @@ public class EntityManager {
         }
     }
 
-     public static Carrier getEntityFieldTypeByMatrixId(String matrixId,String[] fieldName) throws QException {
+    public static Carrier getEntityFieldTypeByMatrixId(String matrixId, String[] fieldName) throws QException {
         try {
             String res = "";
             if (matrixId.length() == 0) {
@@ -755,7 +765,7 @@ public class EntityManager {
             line += " AND FK_PARENT_ID='" + matrixId + "'";
             line += " AND concat('sa',fk_submodule_attribute_id) IN (" + inLine + ")";
             line += " AND SHORT_NAME != ''";
-            
+
             Carrier carrier = SQLConnection.execSelectSql(line,
                     new EntityCrEntityLabel().toTableName(), CoreLabel.DB_PRIMARY, new ArrayList());
 
@@ -768,7 +778,7 @@ public class EntityManager {
         }
     }
 
-     public static void copyCarrier(Carrier sourceCarrier, String tablename, Carrier destinationCarrier) throws QException {
+    public static void copyCarrier(Carrier sourceCarrier, String tablename, Carrier destinationCarrier) throws QException {
         try {
             int rowD = destinationCarrier.getTableRowCount(tablename);
             int rowS = sourceCarrier.getTableRowCount(tablename);

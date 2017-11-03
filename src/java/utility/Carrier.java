@@ -1448,7 +1448,7 @@ public class Carrier implements Serializable {
 //                    }
                     jsonRow.put(colNames[j], value);
                 }
-                array.put(jsonRow);
+                array.put(jsonRow); 
             }
             object.put("r", array);
             object.put("tn", tablename);

@@ -76,7 +76,7 @@ public class QUtility {
     }
 
     public static String convertDecimalToHex(int num) {
-        return convertDecimalToHex(num);
+        return convertDecimalToHex(num); 
     }
 
     public static String getUndefinedLabel() throws QException {
@@ -87,17 +87,43 @@ public class QUtility {
         return getLabel(arg, SessionManager.getCurrentLang());
     }
 
-    public static String getLabel(String arg, String lang) throws QException {
+//    public static String getLabel(String arg, String lang) throws QException {
+//        EntityCrEntityLabel ent = new EntityCrEntityLabel();
+//        ent.setDeepWhere(false);
+//        ent.setLang(lang);
+//        ent.setFieldName(arg.trim());
+//        Carrier c = EntityManager.select(ent);
+//        if (c.getTableRowCount(ent.toTableName()) > 0) {
+//            arg = c.getValue(
+//                    ent.toTableName(), 0, EntityCrEntityLabel.DESCRIPTION).toString();
+//        }
+//        return arg;
+//    }
+    
+    public static String getLabel(String code, String lang) throws QException {
+        String desc = "";
         EntityCrEntityLabel ent = new EntityCrEntityLabel();
         ent.setDeepWhere(false);
         ent.setLang(lang);
-        ent.setFieldName(arg.trim());
+        ent.setFieldName(code);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
         Carrier c = EntityManager.select(ent);
-        if (c.getTableRowCount(ent.toTableName()) > 0) {
-            arg = c.getValue(
-                    ent.toTableName(), 0, EntityCrEntityLabel.DESCRIPTION).toString();
+
+        if (c.getTableRowCount(ent.toTableName()) == 0) {
+            ent.setLang("ENG");
+            Carrier c1 = EntityManager.select(ent);
+            if (c1.getTableRowCount(ent.toTableName()) == 0) {
+                desc = code;
+                 QLogger.saveLabelLog(code);
+            }else{
+                desc = ent.getDescription();
+            }
+        }else{
+            desc = ent.getDescription();
         }
-        return arg;
+
+        return desc;
     }
 
     public static String getLabel(String arg, String[] params) throws QException {
@@ -285,7 +311,7 @@ public class QUtility {
 
             String val = element.hasAttr("data-content")
                     ? element.attr("data-content").trim() : element.html().trim();
-            System.out.println(val);
+//            System.out.println(val);
             langs += val + CoreLabel.IN;
 
         }
@@ -306,10 +332,11 @@ public class QUtility {
             if (c.isKeyExist(val)){
                 nv = c.getValue(val).toString();   
             }else{
+                val = QUtility.getLabel(val);
                 nv = val;
                 QLogger.saveLabelLog(val);
             }
-
+            
             if (element.hasAttr("data-content")) {
                 element.attr("data-content", nv);
             } else {

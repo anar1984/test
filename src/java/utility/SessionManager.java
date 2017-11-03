@@ -24,7 +24,7 @@ public class SessionManager {
     private static final String SEPERATOR = "__";
     private static final String LI_USER_PERMISSION_TYPE_ADMIN = "admin";
     private static final String LI_USER_PERMISSION_TYPE_USER = "user";
-    private static final String DEFAULT_LANG = "ENG";
+    public static final String DEFAULT_LANG = "ENG";
 
     private static Map<Long, String> userMap = new HashMap<>();
     private static Map<Long, String> langMap = new HashMap<>();

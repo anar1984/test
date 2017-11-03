@@ -41,6 +41,25 @@ var LNG = {
             somethingww: 'Xəta baş verdi!',
             domainIsNotAvailable:'Domain artıq götürülmüşdür'
         }
+    },
+    TUR: {
+        login: {
+            personal: 'Personel',
+            company: 'Şirket',
+            domanin: 'Domain',
+            signin: 'Giriş',
+            username: 'Kullanıcı ismi',
+            password: 'Parol',
+            haveAccount: 'Hesabın yokmu?',
+            crAccount: 'Hesab oluştur',
+            incorrectPwd: 'Kullanıcı ismi ve ya parola doğru deyil.'
+        },
+        signup: {
+        },
+        msg: {
+            somethingww: 'Hata baş verdi!',
+            domainIsNotAvailable:'Domain artıq götürülmüşdür'
+        }
     }
 };
 

@@ -70,7 +70,7 @@ public class SessionHandler {
                 return l > 1;
             } catch (Exception ex) {
                 logger.error("checkSession token=" + token, ex);
-                return false;
+                return false;   
             }
         }
     }

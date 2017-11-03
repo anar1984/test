@@ -6,6 +6,7 @@
 package module.cr;
 
 import auth.SessionHandler;
+import controllerpool.ControllerPool;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -249,8 +250,49 @@ public class CrModel {
         return carrier;
     }
 
+    public Carrier getListItemList4ComboNali(Carrier carrier) throws QException {
+
+        EntityCrListItemList ent = new EntityCrListItemList();
+        ent.setDeepWhere(false);
+        ent.setLang(SessionManager.getCurrentLang());
+        ent.setItemCode(carrier.getValue("itemCode").toString());
+        ent.addSortBy(EntityCrListItemList.PARAM_1);
+        ent.setSortByAsc(true);
+        carrier = EntityManager.select(ent);
+        
+        if (carrier.getTableRowCount(ent.toTableName())==0){
+            ent.setLang(SessionManager.DEFAULT_LANG);
+            carrier = EntityManager.select(ent);
+        }
+
+        carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+
+        return carrier;
+    }
+    
+    public static Carrier getListItemByCode(Carrier carrier) throws QException {
+
+        EntityCrListItemList ent = new EntityCrListItemList();
+        ent.setDeepWhere(false);
+        ent.setLang(SessionManager.getCurrentLang());
+        ent.setItemCode(carrier.getValue("itemCode").toString());
+        ent.addSortBy(EntityCrListItemList.PARAM_1);
+        ent.setSortByAsc(true);
+        carrier = EntityManager.select(ent);
+        
+        if (carrier.getTableRowCount(ent.toTableName())==0){
+            ent.setLang(SessionManager.DEFAULT_LANG);
+            carrier = EntityManager.select(ent);
+        }
+
+        carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+
+        return carrier;
+    }
+
+
     public static Carrier getListItemList(Carrier carrier) throws QException {
-        Carrier resultCarrier = new Carrier();
+
         try {
             EntityCrListItemList ent = new EntityCrListItemList();
             ent.setDeepWhere(false);
@@ -275,10 +317,10 @@ public class CrModel {
                     new Object() {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
-        return resultCarrier;
+        return carrier;
     }
 
-    public static Carrier getListItemByCode(Carrier carrier) throws QException {
+    public static Carrier getListItemByCodeOld(Carrier carrier) throws QException {
         Carrier resultCarrier = new Carrier();
         Carrier crResult = new Carrier();
         try {
@@ -2682,7 +2724,7 @@ public class CrModel {
 
         //get and merge attribute info
         Carrier cAttr = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_ATTRIBUTE);//getAttributeList(carrier);
-        System.out.println(" ");
+//        System.out.println(" ");
 
         String fkAttributeIds = getIdsForInspectionList(cAttr,
                 carrier.getValue("attributeName").toString());
@@ -2707,80 +2749,79 @@ public class CrModel {
                 "fkSubmoduleAttributeId", "saSubmoduleAttributeId");
 
         //merge statements;
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> cashler oxundu >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
-
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> cashler oxundu >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
         cIns.mergeCarrier(tnIns, "fkUserId", "doctorFullname", cprUser);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> cprUser   >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> cprUser   >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         cIns.mergeCarrier(tnIns, "fkPatientId", crPatient, CoreLabel.RESULT_SET,
                 "id", new String[]{"patientId", "patientImage", "patientName",
                     "patientSurname", "patientMiddleName", "patientBirthDate",
                     "patientBirthPlace", "sex", "sexName"});
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> crPatient >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> crPatient >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         cIns.mergeCarrier(tnIns, "fkSubmoduleAttributeId", crSA, CoreLabel.RESULT_SET,
                 "id", new String[]{"fkAttributeId", "fkValueTypeId", "fkModuleId",
                     "fkSubmoduleId", "submoduleValue", "hasOther",
                     "sortBy"});
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> crSA >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> crSA >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         cIns.mergeCarrier(tnIns, new String[]{"fkAttributeId", "LANG"},
                 "attributeName", cAttr);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> cAttr name >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> cAttr name >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         cIns.mergeCarrier(tnIns, "fkAttributeId", "attributeCode", cAttr);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> cAttr code>>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> cAttr code>>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         cIns.mergeCarrier(tnIns, new String[]{"fkModuleId", "LANG"},
                 "moduleName", cModule);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>>  cModule>>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>>  cModule>>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         cIns.mergeCarrier(tnIns, new String[]{"fkSubmoduleId", "LANG"},
                 "submoduleName", cSM);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> submoduleName  >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> submoduleName  >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         ////
         cIns.renameTableName(tnIns, CoreLabel.RESULT_SET);
 
         ///  generate finalValue
         cIns = addFinalValue(cIns, carrier.getValue("finalValue").toString());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> final value >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> final value >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         /////
         cIns.addTableSequence(CoreLabel.RESULT_SET,
@@ -3255,14 +3296,14 @@ public class CrModel {
             SessionManager.setUserId(SessionManager.getCurrentThreadId(), "201710230029010648");
             SessionManager.setCompanyId(SessionManager.getCurrentThreadId(), "201710221851270308");
 
-            String json = "{\"kv\":{\"fkUserId\":\"201710260719440045\",\"type\":\"all\"}}"
+            String json = "{\"kv\":{\"fkSubmoduleId\":\"201707071628090571\",\"fkSessionId\":\"201711030736460852 \"}}"
                     + "";
 
 //            String servicename = "serviceCrGetTermPage";
             //
             Carrier c = new Carrier();
             c.fromJson(json);
-            c = getUserRuleList(c);
+            c = getSubmoduleFormBody(c);
 //
 //            c.setServiceName(servicename);
 //            c.fromJson(json);
@@ -3793,34 +3834,11 @@ public class CrModel {
     }
 
     public Carrier getLabel(Carrier carrier) throws QException {
-        EntityCrEntityLabelList ent = new EntityCrEntityLabelList();
-        ent.setDeepWhere(false);
-        ent.setLang(SessionManager.getCurrentLang());
-        ent.setFieldName(carrier.getValue("code").toString());
-        EntityManager.select(ent);
+        String code = carrier.getValue("code").toString();
+        String t = QUtility.getLabel(code);
 
-        String t = ent.getDescription();
-        if (t.trim().length() == 0) {
-            t = "{" + carrier.getValue("code").toString() + "}";
-            QLogger.saveLabelLog(carrier.getValue("code").toString());
-        }
         carrier.setValue("text", t);
         return carrier;
-    }
-
-    public static String getLabel(String arg) throws QException {
-        EntityCrEntityLabelList ent = new EntityCrEntityLabelList();
-        ent.setDeepWhere(false);
-        ent.setLang(SessionManager.getCurrentLang());
-        ent.setFieldName(arg);
-        EntityManager.select(ent);
-
-        String t = ent.getDescription();
-        if (t.trim().length() == 0) {
-            t = "{" + arg + "}";
-            QLogger.saveLabelLog(arg);
-        }
-        return t;
     }
 
     public static Carrier getBasicStatistics(Carrier carrier) throws QException {
@@ -4790,7 +4808,7 @@ public class CrModel {
     public static Carrier getUserRuleList(Carrier carrier) throws QException {
 
         String type = carrier.getValue("type").toString();
-        System.out.println("type=" + type);
+//        System.out.println("type=" + type);
 
         if (type.trim().equals(USER_RULE_TYPE_BY_RULE)) {
             carrier = getUserRuleListByRole(carrier);
@@ -4805,8 +4823,8 @@ public class CrModel {
     private static Carrier getUserRuleListByRole(Carrier carrier) throws QException {
         String id = carrier.getValue("fkUserId").toString();
         String fkRoleId = carrier.getValue("fkRoleId").toString();
-        System.out.println("fkUserId=" + id);
-        System.out.println("fkRoleId=" + fkRoleId);
+//        System.out.println("fkUserId=" + id);
+//        System.out.println("fkRoleId=" + fkRoleId);
 
         if (fkRoleId == null || fkRoleId.isEmpty()) {
             return carrier;
@@ -4895,7 +4913,7 @@ public class CrModel {
 
     private static Carrier getUserRuleListByOwn(Carrier carrier) throws QException {
         String fkUserId = carrier.getValue("fkUserId").toString();
-        System.out.println("fkUserId=" + fkUserId);
+//        System.out.println("fkUserId=" + fkUserId);
 
         if (fkUserId == null || fkUserId.isEmpty()) {
             return carrier;
@@ -4969,10 +4987,10 @@ public class CrModel {
     }
 
     public static Carrier confirmPayment(Carrier carrier) throws QException {
-        System.out.println("carrier>>>" + carrier.toXML());
+//        System.out.println("carrier>>>" + carrier.toXML());
         Carrier c = new Carrier();
         String id = carrier.getValue("id").toString().trim();
-        System.out.println("id->" + id);
+//        System.out.println("id->" + id);
         if (id.length() == 0) {
             return c;
         }
@@ -5602,12 +5620,12 @@ public class CrModel {
         if (rc == 0) {
             carrier.setValue("res", QUtility.getLabel("currentPasswordIsNotCorrect"));
             return carrier;
-        }else{
+        } else {
             ent.setPassword(newPwd);
             EntityManager.update(ent);
             carrier.setValue("res", QUtility.getLabel("passwordChangedSuccesfully"));
         }
-        
+
         return carrier;
     }
 

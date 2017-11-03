@@ -1586,4 +1586,11 @@ public class CrController {
         return carrier;
     }
 
+    public Carrier getListItemList4ComboNali(Carrier carrier) throws QException {
+        ControllerPool cp = new ControllerPool();
+        carrier.addController("general", cp.hasValue(carrier, "itemCode"));
+        return carrier;
+    }
+
+    
 }

@@ -15,16 +15,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import label.CoreLabel;
 import module.cr.CrModel;
 import module.cr.entity.EntityCrAppointment;
-import module.cr.entity.EntityCrAppointmentList;
 import module.cr.entity.EntityCrInspection;
 import module.cr.entity.EntityCrInspectionList;
 import module.cr.entity.EntityCrListItem;
-import module.cr.entity.EntityCrModule;
 import module.cr.entity.EntityCrPatient;
 import module.cr.entity.EntityCrSubmodule;
 import module.cr.entity.EntityCrSubmoduleAttribute;
@@ -32,8 +28,6 @@ import module.cr.entity.EntityCrSubmoduleAttributeList;
 import utility.QUtility;
 import utility.SessionManager;
 import utility.sqlgenerator.EntityManager;
-import utility.sqlgenerator.IdGenerator;
-import utility.sqlgenerator.QLogger;
 
 /**
  *
@@ -813,7 +807,7 @@ public class PgModel {
                                         .attr(l.getItemKey().equals(insVal) ? "selected" : "", "")
                                 ),
                                 ent.getHasOther().equals("yes")
-                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                ? option(QUtility.getLabel("other")).withValue("__2__")
                                 .attr(insVal.equals("__2__") ? "selected" : "", "")
                                 : span()
                         ),
@@ -891,7 +885,7 @@ public class PgModel {
                                         .attr(Arrays.asList(insValArr).contains(l.getItemKey()) ? "selected" : "", "")
                                 ),
                                 ent.getHasOther().equals("yes")
-                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                ? option(QUtility.getLabel("other")).withValue("__2__")
                                 .attr(insVal.equals("__2__") ? "selected" : "", "")
                                 : span()
                         ),
@@ -935,7 +929,7 @@ public class PgModel {
                                         .attr(Arrays.asList(insValArr).contains(l) ? "selected" : "", "")
                                 ),
                                 ent.getHasOther().equals("yes")
-                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                ? option(QUtility.getLabel("other")).withValue("__2__")
                                 .attr(insVal.equals("__2__") ? "selected" : "", "")
                                 : span()
                         ),
@@ -978,7 +972,7 @@ public class PgModel {
                                         .attr(l.equals(insVal) ? "selected" : "", "")
                                 ),
                                 ent.getHasOther().equals("yes")
-                                ? option(CrModel.getLabel("other")).withValue("__2__")
+                                ? option(QUtility.getLabel("other")).withValue("__2__")
                                 .attr(insVal.equals("__2__") ? "selected" : "", "")
                                 : span()
                         ),

@@ -90,3 +90,8 @@ serviceCrGetOrganPointList
 serviceCrGetValueTypeList
 serviceCrGetLabel
 serviceCrChangePassword
+serviceCrInsertNewListItem
+serviceCrUpdateListItem
+serviceCrInsertNewModule
+serviceCrDeleteListItem
+serviceCrUpdateAttribute

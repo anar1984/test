@@ -87,11 +87,11 @@ public class QLogger {
             String filename = prop.getWorkingDir() + "../log/services.txt";
 
             BufferedReader br = new BufferedReader(new FileReader(filename));
-            String ln = "";
+            String ln = ""; 
             boolean f = true;
             while ((ln = br.readLine()) != null) {
-                System.out.println("ln=" + ln);
-                System.out.println("service=" + service);
+//                System.out.println("ln=" + ln);
+//                System.out.println("service=" + service);
                 if (ln.equals(service)) {
                     f = false;
                     break;
@@ -126,8 +126,8 @@ public class QLogger {
             String ln = "";
             boolean f = true;
             while ((ln = br.readLine()) != null) {
-                System.out.println("ln=" + ln);
-                System.out.println("page=" + page);
+//                System.out.println("ln=" + ln);
+//                System.out.println("page=" + page);
                 if (ln.equals(page)) {
                     f = false;
                     break;
@@ -162,8 +162,8 @@ public class QLogger {
             String ln = "";
             boolean f = true;
             while ((ln = br.readLine()) != null) {
-                System.out.println("ln=" + ln);
-                System.out.println("page=" + page);
+//                System.out.println("ln=" + ln);
+//                System.out.println("page=" + page);
                 if (ln.equals(page)) {
                     f = false;
                     break;

@@ -142,7 +142,7 @@ public class QUtility {
         }
 
         for (int i = 0; i < params.length; i++) {
-            arg.replace("@param" + i, params[i]);
+            arg = arg.replace("@param" + i, params[i]);
         }
         return arg;
     }
@@ -277,9 +277,14 @@ public class QUtility {
                     c.setValue(key, val);
                 }
             }
-
+            
+            try{
             c = c.callService(url_l);
-
+            }catch(Exception e){
+                System.out.println("-------------------------------------------------");
+                System.out.println("Exception fillCombo "+e.getMessage());
+                System.out.println("-------------------------------------------------");
+            }
             String tn = CoreLabel.RESULT_SET;
             int rc = c.getTableRowCount(tn);
             String ln = element.hasAttr("has_null")

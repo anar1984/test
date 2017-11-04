@@ -137,6 +137,7 @@ public class CrModel {
         } else if (page.startsWith(LOAD_PAGE_BEGINNER_PAGE)) {
             ln = getStaticHtmlPageBody(page);
         }
+        System.out.println("Get page body >>>>> "+ln);
         carrier.setValue("body", ln);
         return carrier;
     }

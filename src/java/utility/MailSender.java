@@ -25,6 +25,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import org.apache.logging.log4j.LogManager;
+import resources.config.Config;
 
 /**
  *
@@ -36,8 +37,8 @@ public class MailSender {
 
     public static void send(String toEmail, String subject, String text) {
         try {
-            final String sendgridApiKey = System.getenv("SENDGRID_API_KEY");
-            final String sendgridSender = System.getenv("SENDGRID_SENDER");
+            final String sendgridApiKey = Config.getProperty(Config.MAIL_SENDER_SENDGRID_API_KEY);
+//            final String sendgridSender = System.getenv("SENDGRID_SENDER");
             Email from = new Email("APDVoice <no-reply@apdvoice.com>");
             Email to = new Email(toEmail);
             Content content = new Content("text/html", text);

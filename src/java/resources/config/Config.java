@@ -42,6 +42,7 @@ public class Config {
     public static String SYSADMIN_COMPANY_DB_ID = "sysadmin.company.db.id";
     public static String SYSADMIN_PREFIX = "sysadmin.prefix";
     public static String SYSADMIN_PAGE = "sysadmin.page";
+    public static String MAIL_SENDER_SENDGRID_API_KEY  = "mail.sender.sendgrid.api.key";
 
     public static String getProperty(String key) {
         return configMap.get(key);

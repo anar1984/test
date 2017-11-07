@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import label.CoreLabel;
-import org.apache.commons.dbcp.BasicDataSource;
+//import org.apache.commons.dbcp.BasicDataSource;
 import utility.*;
 //import org.apache.commons.dbcp.BasicDataSource;
 
@@ -364,35 +364,7 @@ public class DBConnection {
     }
 
     public static void main(String[] arg) throws Exception {
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/apdvoice?"
-                + "user=root&password=");
-
-        conn.setAutoCommit(false);
-        Statement stmt = conn.createStatement();
-        stmt.execute("SELECT * FROM CR_LIST_ITEM");
-
-        System.out.println("Ok for my sql");
-
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUsername("root");
-        ds.setPassword("");
-        ds.setUrl("jdbc:mysql://localhost/apdvoice");
-        ds.setMaxIdle(200);
-        ds.setMinIdle(50);
-
-        conn = ds.getConnection();
-        stmt = conn.createStatement();
-        stmt.execute("SELECT * FROM CR_LIST_ITEM");
-
-        System.out.println("Ok for my sql 2");
-
-        conn = new DBConnection().getConnection();
-        stmt = conn.createStatement();
-        stmt.execute("SELECT * FROM CR_LIST_ITEM");
-
-        System.out.println("Ok for   mssql");
+         
     }
 
     public static void closeConnection(Connection conn) {

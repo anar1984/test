@@ -1812,3 +1812,272 @@ mandatoryRulesForCompanies	ENG
 ddd	ENG
 mandatoryRulesForCompanies	ENG
 ddd	ENG
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	AZE
+PersonalSignup	AZE
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+usertable	ENG
+usertable	ENG
+role	ENG
+role	ENG
+companyPayment	ENG
+companyPayment	ENG
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	TUR
+PersonalSignup	TUR
+Your account successfully created. Please check your email and click the activatation link.	TUR
+- Minimum 6 characters <br> - Maximum 25 characters <br> - Must start with alphabets <br> - May contains only alphabet and numbers	TUR
+Username is not valid.	TUR
+Username is exist.	TUR
+Password	TUR
+- Minimum 6 characters <br> - Maximum 40 characters <br> - May contains only alphabet, numbers <br> !,@,#,$,^,&,*,(,),_	TUR
+Password is not valid.	TUR
+Confirm Password	TUR
+Passwords don't match.	TUR
+Time Zone	TUR
+Address	TUR
+Required Fields	TUR
+I accept the Terms and Conditions	TUR
+Email	TUR
+Email is not valid.	TUR
+Mobile	TUR
+Required Fields	TUR
+Required Fields	TUR
+Sign Up	TUR
+usertable	ENG
+usertable	ENG
+role	ENG
+role	ENG
+companyPayment	ENG
+companyPayment	ENG
+usertable	ENG
+usertable	ENG
+allUserTables	ENG
+allUserTables	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG
+updateUserTable	ENG
+updateUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG

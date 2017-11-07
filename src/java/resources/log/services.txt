@@ -95,3 +95,4 @@ serviceCrUpdateListItem
 serviceCrInsertNewModule
 serviceCrDeleteListItem
 serviceCrUpdateAttribute
+serviceCrGetInspectionMatrixList

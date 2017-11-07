@@ -2513,7 +2513,7 @@ public class CrModel {
         return carrier;
     }
 
-    public Carrier insertNewInspection(Carrier carrier) throws QException {
+    public static Carrier insertNewInspection(Carrier carrier) throws QException {
         String fkPatientId = carrier.getValue("fkPatientId").toString();
         String inspectionCode = carrier.getValue("fkSessionId").toString();
 
@@ -3297,14 +3297,16 @@ public class CrModel {
             SessionManager.setUserId(SessionManager.getCurrentThreadId(), "201710230029010648");
             SessionManager.setCompanyId(SessionManager.getCurrentThreadId(), "201710221851270308");
 
-            String json = "{\"kv\":{\"fkSubmoduleId\":\"201707071628090571\",\"fkSessionId\":\"201711030736460852 \"}}"
+            String json = "{\"kv\":{\"\":\"\",\"fkPatientId\":\"201711041359090091\",\"smOrderNo\":\"500\",\"fkSessionId\":\"201711051459150092 \",\"sa_201707081329440581\":\"141.49\",\"sa_201707081330020388\":\n" +
+"\"3.343\",\"sa_201707081330200120\":\"21.081\",\"sa_201707081330340526\":\"135.71\",\"sa_201707081403160657\":\"20.02\",\"sa_201707081403510470\":\"144.42\",\"sa_201707081540110846\":\"71.72\","
+                    + "\"sa_201707081541050591\":\"\",\"sa_201707081541200471\":\"6.2190\",\"sa_201707081541560035\":\"\",\"sa_201707081542080285\":\"\",\"sa_201707081542250437\":\"\",\"sa_201707081544140842\":\"file_5993E418B57D5E4.wav\"},\"tbl\":[]}"
                     + "";
 
 //            String servicename = "serviceCrGetTermPage";
             //
             Carrier c = new Carrier();
             c.fromJson(json);
-            c = getSubmoduleFormBody(c);
+            c = insertNewInspection(c);
 //
 //            c.setServiceName(servicename);
 //            c.fromJson(json);

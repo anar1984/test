@@ -34,11 +34,33 @@ public class DBConnectionPool {
 
     public static Connection getConnection(String drivername, String username,
             String pwd, String url, int initialSize, int maxIdle) throws QException {
-//        System.out.println("ok");
+        int rc = initialSize + maxIdle + 10;
+        System.out.println("datasource maximum conn count=" + rc);
         try {
             String s = "";
             setupDataSource(drivername, username, pwd, url, initialSize, maxIdle);
-            return ds.getConnection();
+            Connection conn = null;
+            int i = 0;
+            boolean f = true;
+            while (i <= rc && f) {
+                System.out.println("new datasource connection started");
+                conn = ds.getConnection();
+                System.out.println("new datasource connection got");
+                try {
+                    conn.setAutoCommit(true);
+                    f = false;
+                } catch (Exception e) {
+                    i++;
+                    System.out.println("DB Connection problem attemtp no= " + i);
+                    try{
+                        conn.close();
+                     } catch (Exception e1) {
+                         System.out.println("unsuccessull connection is closed");
+                     }
+                }
+            }
+            System.out.println("datasource conn returned=");
+            return conn;
         } catch (Exception e) {
             System.out.println("DB Connection problem");
             throw new QException(new Object() {
@@ -59,8 +81,8 @@ public class DBConnectionPool {
         return ds;
     }
 
-    public static DataSource setupDataSource(String drivername, 
-            String username, String pwd, String url, int initialSize, 
+    public static DataSource setupDataSource(String drivername,
+            String username, String pwd, String url, int initialSize,
             int maxIdle) {
         ds.setDriverClassName(drivername);
         ds.setUsername(username);
@@ -68,11 +90,10 @@ public class DBConnectionPool {
         ds.setUrl(url);
         ds.setInitialSize(initialSize);
         ds.setMaxIdle(maxIdle);
-       
 
         return ds;
     }
-    
+
     public static void close() {
         try {
             ds.close();

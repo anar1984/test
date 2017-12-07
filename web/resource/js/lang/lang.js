@@ -45,7 +45,7 @@ var LNG = {
     TUR: {
         login: {
             personal: 'Personel',
-            company: 'Şirket',
+            company: 'Kurumsal',
             domanin: 'Domain',
             signin: 'Giriş',
             username: 'Kullanıcı ismi',

@@ -20,16 +20,25 @@ public class EntityCrAppointment extends CoreEntity {
     public static String APPOINTMENT_TIME_1 = "appointmentTime1";
     public static String APPOINTMENT_TIME_2 = "appointmentTime2";
     public static String INSPECTION_CODE = "inspectionCode";
+    public static String FK_PRICE_LIST_ID = "fkPriceListId";
+    
+    private String fkPriceListId = "";
     private String inspectionCode = "";
-
     private String appointmentTime2 = "";
     private String appointmentTime1 = "";
-
     private String fkDoctorUserId = "";
     private String fkPatientId = "";
     private String appointmentDate = "";
     private String appointmentStatus = "";
     private String description = "";
+
+    public String getFkPriceListId() {
+        return fkPriceListId;
+    }
+
+    public void setFkPriceListId(String fkPriceListId) {
+        this.fkPriceListId = fkPriceListId;
+    }
 
     public String getInspectionCode() {
         return inspectionCode;

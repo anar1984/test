@@ -400,11 +400,9 @@ public abstract class CoreEntity {
             return;
         }
 
-        //eger %IN% deyeri olmamalidir
-        if (value.trim().contains(CoreLabel.IN)) {
-            return;
-        }
+         
 
+        value = value.replace(CoreLabel.IN, " ");
         value = value.replace(CoreLabel.FAIZ, "");
         String[] subValue = value.trim().split(" ");
 

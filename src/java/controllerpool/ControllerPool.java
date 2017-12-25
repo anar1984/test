@@ -287,6 +287,7 @@ public class ControllerPool {
     public String isExistInEntity(CoreEntity entity, Carrier carrier) throws QException {
         try {
             EntityManager.mapCarrierToEntity(carrier, entity);
+             entity.setDeepWhere(false);
             Carrier temp = EntityManager.select(entity);
 
             if (temp.getTableRowCount(entity.toTableName()) == 0) {
@@ -306,6 +307,7 @@ public class ControllerPool {
     public String isExistInEntityExcept(CoreEntity entity, Carrier carrier, String exceptId) throws QException {
         try {
             EntityManager.mapCarrierToEntity(carrier, entity);
+             entity.setDeepWhere(false);
             entity.setId("NE%" + exceptId.trim());
             Carrier temp = EntityManager.select(entity);
 
@@ -326,6 +328,7 @@ public class ControllerPool {
     public String isNotExistInEntity(CoreEntity entity, Carrier carrier) throws QException {
         try {
             EntityManager.mapCarrierToEntity(carrier, entity);
+             entity.setDeepWhere(false);
             Carrier temp = EntityManager.select(entity);
 
             if (temp.getTableRowCount(entity.toTableName()) == 0) {
@@ -346,6 +349,7 @@ public class ControllerPool {
     public String isNotExistInEntityExcept(CoreEntity entity, Carrier carrier, String exceptId) throws QException {
         try {
             EntityManager.mapCarrierToEntity(carrier, entity);
+            entity.setDeepWhere(false);
             entity.setId("NE%" + exceptId.trim());
             Carrier temp = EntityManager.select(entity);
 
@@ -367,6 +371,7 @@ public class ControllerPool {
     public String isValueSame(CoreEntity entity, String fieldname, String value, String id) throws QException {
         try {
             EntityManager.setEntityValue(entity, fieldname, value);
+            entity.setDeepWhere(false);
             entity.setId(id.trim());
             Carrier temp = EntityManager.select(entity);
 

@@ -9,6 +9,8 @@ import auth.SessionHandler;
 import controllerpool.ControllerPool;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -18,6 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -27,11 +30,18 @@ import job.CompanyJob;
 import label.CoreLabel;
 import module.cr.entity.*;
 import module.pg.PgModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import resources.config.Config;
 //import smssender.Config;
 import utility.CacheUtil;
 import utility.Carrier;
 import utility.DeepWhere;
+import utility.ExcelWriter;
+import utility.FileUpload;
 import utility.GeneralProperties;
 import utility.MailSender;
 import utility.QDate;
@@ -107,6 +117,9 @@ public class CrModel {
     public static final String VALUE_TYPE_RANGE_INTEGER_MULTI = "15";
     public static final String VALUE_TYPE_YOUTUBE_URL = "17";
     public static final String VALUE_TYPE_SOUND_UPLOAD = "19";
+    public static final String VALUE_TYPE_DATE = "20";
+    public static final String VALUE_TYPE_RANGE_STRING_MULTI_MANUAL = "21";
+    public static final String VALUE_TYPE_RANGE_STRING_MANUAL = "22";
 
     public static final String REPORT_TYPE_APPOINTMENT = "1";
     public static final String REPORT_TYPE_PAYMENT = "2";
@@ -131,24 +144,35 @@ public class CrModel {
     public static Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
         String ln = "";
-        if (page.startsWith(LOAD_PAGE_BEGINNER_PAGE_DINAMIC)) {
-            String pageid = page.split("_")[2];
-            ln = PgModel.genPage(pageid);
-        } else if (page.startsWith(LOAD_PAGE_BEGINNER_PAGE)) {
-            ln = getStaticHtmlPageBody(page);
-        }
-        System.out.println("Get page body >>>>> "+ln);
+        ln = getStaticHtmlPageBody(page);
+//        System.out.println("Get page body >>>>> " + ln);
         carrier.setValue("body", ln);
         return carrier;
     }
 
     public static Carrier genSubmoduleButtonList(Carrier carrier) throws QException {
-        String fkModuleId = carrier.getValue("fkModuleId").toString();
         String fkSessionId = carrier.isKeyExist("fkSessionId")
                 ? carrier.getValue("fkSessionId").toString() : "";
-        String ln = PgModel.genSubmodule(fkModuleId, fkSessionId);
+        String fkModuleId = getModuleIdBySessionId(fkSessionId);
+
+        String ln = fkModuleId.length() > 0
+                ? PgModel.genSubmodule(fkModuleId, fkSessionId)
+                : "";
         carrier.setValue("body", ln);
         return carrier;
+    }
+
+    private static String getModuleIdBySessionId(String sessionId)
+            throws QException {
+        if (sessionId.trim().length() == 0) {
+            return "";
+        }
+        EntityCrAppointmentList ent = new EntityCrAppointmentList();
+        ent.setId(sessionId);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        EntityManager.select(ent);
+        return ent.getFkModuleId();
     }
 
     private static String getStaticHtmlPageBody(String pagename) throws QException {
@@ -260,8 +284,8 @@ public class CrModel {
         ent.addSortBy(EntityCrListItemList.PARAM_1);
         ent.setSortByAsc(true);
         carrier = EntityManager.select(ent);
-        
-        if (carrier.getTableRowCount(ent.toTableName())==0){
+
+        if (carrier.getTableRowCount(ent.toTableName()) == 0) {
             ent.setLang(SessionManager.DEFAULT_LANG);
             carrier = EntityManager.select(ent);
         }
@@ -270,7 +294,7 @@ public class CrModel {
 
         return carrier;
     }
-    
+
     public static Carrier getListItemByCode(Carrier carrier) throws QException {
 
         EntityCrListItemList ent = new EntityCrListItemList();
@@ -280,8 +304,8 @@ public class CrModel {
         ent.addSortBy(EntityCrListItemList.PARAM_1);
         ent.setSortByAsc(true);
         carrier = EntityManager.select(ent);
-        
-        if (carrier.getTableRowCount(ent.toTableName())==0){
+
+        if (carrier.getTableRowCount(ent.toTableName()) == 0) {
             ent.setLang(SessionManager.DEFAULT_LANG);
             carrier = EntityManager.select(ent);
         }
@@ -291,6 +315,26 @@ public class CrModel {
         return carrier;
     }
 
+    public static Carrier getListItemByCodeFromCache(Carrier carrier) throws QException {
+
+        Carrier resultCarrier = new Carrier();
+        Carrier crResult = new Carrier();
+
+        resultCarrier = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_LISTITEM);
+
+        String tn = carrier.getValue("itemCode").toString()
+                + SessionManager.getCurrentLang();
+        int rc = resultCarrier.getTableRowCount(tn);
+
+        for (int i = 0; i < rc; i++) {
+            crResult.setValue(CoreLabel.RESULT_SET, i, "itemKey",
+                    resultCarrier.getValue(tn, i, "itemKey"));
+            crResult.setValue(CoreLabel.RESULT_SET, i, "itemValue",
+                    resultCarrier.getValue(tn, i, "itemValue"));
+        }
+
+        return crResult;
+    }
 
     public static Carrier getListItemList(Carrier carrier) throws QException {
 
@@ -773,27 +817,61 @@ public class CrModel {
     }
 
     public static Carrier insertNewEntityLabel(Carrier carrier) throws QException {
-        try {
+        String description = carrier.getValue("description").toString();
+//        System.out.println("name"+moduleName);
+        if (description.contains(CoreLabel.SEPERATOR_VERTICAL_LINE)
+                || description.contains("|")) {
+//            System.out.println("contains");
+            carrier = insertNewEntityLabelCaseMultiple(carrier);
+        } else {
+            carrier = insertNewEntityLabelCaseSingle(carrier);
+        }
+
+        return carrier;
+    }
+
+    private static Carrier insertNewEntityLabelCaseMultiple(Carrier carrier) throws QException {
+
+        String descs[] = carrier.getValue("description").toString().trim().split("\\|");
+        String langs[] = QUtility.getLangList();
+
+        for (int i = 0; i < langs.length; i++) {
+            String d = descs[i].trim();
+            String l = langs[i].trim();
+
             EntityCrEntityLabel ent = new EntityCrEntityLabel();
             ent.setDeepWhere(false);
             ent.setFieldName(carrier.getValue(EntityCrEntityLabel.FIELD_NAME).toString());
-            ent.setLang(carrier.getValue("lang").toString());
+            ent.setLang(l);
             int rc = EntityManager.select(ent).getTableRowCount(ent.toTableName());
             if (rc > 0) {
-                carrier.addController(EntityCrEntityLabel.FIELD_NAME,
-                        EntityManager.getMessageText("valueIsAvailable"));
-                return carrier;
+                continue;
             }
             EntityManager.mapCarrierToEntity(carrier, ent);
+            ent.setLang(l);
+            ent.setFieldName(carrier.getValue(EntityCrEntityLabel.FIELD_NAME).toString());
+            ent.setDescription(d);
             EntityManager.insert(ent);
-            carrier.setValue(EntityCrPerson.ID, ent.getId());
-            return carrier;
-        } catch (Exception ex) {
-            throw new QException(new Object() {
-            }.getClass().getEnclosingClass().getName(),
-                    new Object() {
-            }.getClass().getEnclosingMethod().getName(), ex);
         }
+
+        return carrier;
+    }
+
+    private static Carrier insertNewEntityLabelCaseSingle(Carrier carrier) throws QException {
+        EntityCrEntityLabel ent = new EntityCrEntityLabel();
+        ent.setDeepWhere(false);
+        ent.setFieldName(carrier.getValue(EntityCrEntityLabel.FIELD_NAME).toString());
+        ent.setLang(carrier.getValue("lang").toString());
+        int rc = EntityManager.select(ent).getTableRowCount(ent.toTableName());
+        if (rc > 0) {
+            carrier.addController(EntityCrEntityLabel.FIELD_NAME,
+                    EntityManager.getMessageText("valueIsAvailable"));
+            return carrier;
+        }
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.insert(ent);
+        carrier.setValue(EntityCrPerson.ID, ent.getId());
+        return carrier;
     }
 
     public static Carrier updateEntityLabel(Carrier carrier) throws QException {
@@ -1315,7 +1393,27 @@ public class CrModel {
             ent.setAppointmentStatus(APPOINTMENT_STATUS_ACTIVE);
         }
         EntityManager.insert(ent);
+
+        if (carrier.getValue("createInvoice").equals("1")) {
+            addPaymentOnNewSession(carrier);
+        }
+
         return carrier;
+    }
+
+    private static void addPaymentOnNewSession(Carrier carrier) throws QException {
+        EntityCrPriceList ent = new EntityCrPriceList();
+        ent.setId(carrier.getValue("fkPriceListId").toString());
+        EntityManager.select(ent);
+
+        carrier.setValue(EntityCrPayment.PAYMENT_AMOUNT, ent.getPrice());
+        carrier.setValue(EntityCrPayment.PAYMENT_CURRENCY, ent.getCurrency());
+        carrier.setValue(EntityCrPayment.PAYMENT_DATE, QDate.getCurrentDate());
+        carrier.setValue(EntityCrPayment.PAYMENT_TIME, QDate.getCurrentTime());
+        carrier.setValue(EntityCrPayment.PAYMENT_DISCOUNT, 0);
+        carrier.setValue(EntityCrPayment.PAYMENT_NO, genPaymentNo());
+        carrier.setValue(EntityCrPayment.PAYMENT_STATUS, PAYMENT_STATUS_IS_NOT_PAID);
+        insertNewPayment(carrier);
     }
 
     public Carrier updateAppointment(Carrier carrier) throws QException {
@@ -1385,14 +1483,39 @@ public class CrModel {
         Carrier cprApptmntStts = QUtility.getListItem("appointmentStatus",
                 carrier.getValue("appointmentStatusName").toString());
         String apptmntStts = convertArrayToFilterLine(cprApptmntStts.getKeys());
-
         Carrier cprApptStatus = getAppointmentStatusForAppoinment(carrier);
         String apptStatusKeys = convertArrayToFilterLine(cprApptStatus.getKeys());
+
+        carrier.setValue("paymentName", carrier.getValue("purpose"));
+        Carrier crpPriceList = getPriceListList(carrier)
+                .getKVFromTable(CoreLabel.RESULT_SET, "id", EntityCrPriceListList.PAYMENT_NAME);
+        boolean hasPriceListVal = carrier.getValue("purpose").toString().length() > 0;
+        String priceListIds = hasPriceListVal
+                ? convertArrayToFilterLine(crpPriceList.getKeys())
+                : "";
+
+        boolean hasModuleVal = carrier.getValue("moduleName").toString().length() > 0;
+        Carrier cModule = new Carrier();
+        cModule.setValue("moduleName", carrier.getValue("moduleName"));
+        cModule = hasModuleVal ? getModuleList(cModule)
+                .getKVFromTable(CoreLabel.RESULT_SET, "id", "moduleName")
+                : CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
+        String fkModuleIds = hasModuleVal
+                ? convertArrayToFilterLine(cModule.getKeys())
+                : "";
+
+        //eger user hekimdirse yalniz oz xestelerini gore biler
+        String fkDoctorUserId = SessionManager.isCurrentUserSimpleDoctor()
+                ? SessionManager.getCurrentUserId()
+                : "";
 
         EntityCrAppointmentList ent = new EntityCrAppointmentList();
         EntityManager.mapCarrierToEntity(carrier, ent);
         ent.setSex(sex);
         ent.setStatus("A");
+        ent.setFkPriceListId(priceListIds);
+        ent.setFkModuleId(fkModuleIds);
+        ent.setFkDoctorUserId(fkDoctorUserId);
         ent.setAppointmentStatus(apptmntStts);
         ent.setAppointmentStatus(apptStatusKeys);
         if (!ent.hasSortBy()) {
@@ -1407,12 +1530,18 @@ public class CrModel {
         Carrier cprPayment = getPaymentInfoForAppointment(carrier);
 
         crAppt.mergeCarrier(tnAppt, "sex", "sexName", cprSex);
+        crAppt.mergeCarrier(tnAppt, "fkPriceListId", "purpose", crpPriceList, !hasPriceListVal);
         crAppt.mergeCarrier(tnAppt, "appointmentStatus",
                 "appointmentStatusName", cprApptStatus);
-
         crAppt.mergeCarrier(tnAppt,
                 new String[]{"fkPatientId", "fkDoctorUserId", "appointmentDate"},
                 "paymentStatus", cprPayment, true);
+
+        String[] moduleField = hasModuleVal
+                ? new String[]{"fkModuleId", ""}
+                : new String[]{"fkModuleId", "LANG"};
+        crAppt.mergeCarrier(tnAppt, moduleField,
+                "moduleName", cModule, !hasModuleVal);
 
         crAppt.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
         crAppt.addTableSequence(CoreLabel.RESULT_SET,
@@ -1486,6 +1615,20 @@ public class CrModel {
     }
 
     public static Carrier insertNewModule(Carrier carrier) throws QException {
+        String moduleName = carrier.getValue("moduleName").toString();
+//        System.out.println("name"+moduleName);
+        if (moduleName.contains(CoreLabel.SEPERATOR_VERTICAL_LINE)
+                || moduleName.contains("|")) {
+//            System.out.println("contains");
+            carrier = insertNewModuleCaseMultiple(carrier);
+        } else {
+            carrier = insertNewModuleCaseSingle(carrier);
+        }
+
+        return carrier;
+    }
+
+    private static Carrier insertNewModuleCaseSingle(Carrier carrier) throws QException {
         String entId = carrier.getValue("moduleUniqueId").toString();
         if (entId.length() == 0) {
             EntityCrModule ent = new EntityCrModule();
@@ -1509,6 +1652,46 @@ public class CrModel {
         entLangDesc.setLangDef(carrier.getValue(EntityCrModule.MODULE_DESCRIPTION).toString());
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
+
+        return carrier;
+    }
+
+    private static Carrier insertNewModuleCaseMultiple(Carrier carrier) throws QException {
+        String mnames[] = carrier.getValue("moduleName").toString().trim().split("\\|");
+        String mdescs[] = carrier.getValue("moduleDescription").toString().trim().split("\\|");
+        String langs[] = QUtility.getLangList();
+
+        EntityCrModule ent = new EntityCrModule();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.insert(ent);
+        String entId = ent.getId();
+
+        for (int i = 0; i < langs.length; i++) {
+            String n = mnames[i].trim();
+            String d = "";
+            try {
+                d = mdescs[i].trim();
+            } catch (Exception e) {
+            }
+
+            String l = langs[i].trim();
+
+            EntityCrLangRel entLang = new EntityCrLangRel();
+            entLang.setRelId(entId);
+            entLang.setLangField(LANG_FIELD_NAME);
+            entLang.setLangType(LANG_TYPE_MODULE);
+            entLang.setLangDef(n);
+            entLang.setLang(l);
+            EntityManager.insert(entLang);
+
+            EntityCrLangRel entLangDesc = new EntityCrLangRel();
+            entLangDesc.setRelId(entId);
+            entLangDesc.setLangField(LANG_FIELD_DESC);
+            entLangDesc.setLangType(LANG_TYPE_MODULE);
+            entLangDesc.setLangDef(d);
+            entLangDesc.setLang(l);
+            EntityManager.insert(entLangDesc);
+        }
 
         return carrier;
     }
@@ -1579,37 +1762,77 @@ public class CrModel {
     }
 
     public static Carrier getModuleList4Combo(Carrier carrier) throws QException {
-        Carrier c = new Carrier();
 
-        Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
-        String[] keys = cModule.getKeys();
-        int i = 0;
-        for (String k : keys) {
-            if (k.endsWith(SessionManager.getCurrentLang())) {
-                c.setValue(CoreLabel.RESULT_SET, i, "id",
-                        k.substring(0, k.length() - SessionManager.getCurrentLang().length()));
-                c.setValue(CoreLabel.RESULT_SET, i, "name", cModule.getValue(k));
-                i++;
+        EntityCrModule ent = new EntityCrModule();
+        ent.setDeepWhere(false);
+        Carrier c = EntityManager.select(ent);
+        String tnModule = ent.toTableName();
+        int rc = c.getTableRowCount(tnModule);
+        String ids = "";
+        Carrier nc = new Carrier();
+        for (int i = 0; i < rc; i++) {
+            String id = c.getValue(tnModule, i, "id").toString();
+            if (QUtility.hasPermission(id)) {
+                int r = nc.getTableRowCount(tnModule);
+                nc.setValue(tnModule, r, "id", id);
+                ids = ids + CoreLabel.IN + id;
             }
         }
-        return c;
+
+        if (nc.getTableRowCount(tnModule) == 0) {
+            return nc;
+        }
+
+        EntityCrLangRel entName = new EntityCrLangRel();
+        entName.setDeepWhere(false);
+        entName.setLang(SessionManager.getCurrentLang());
+        entName.setRelId(ids);
+        entName.setLangType(LANG_TYPE_MODULE);
+        entName.setLangField(LANG_FIELD_NAME);
+        Carrier cprName = EntityManager.select(entName).getKVFromTable(
+                entName.toTableName(), "relId", "langDef");
+
+        nc.mergeCarrier(tnModule, "id", "moduleName", cprName);
+        nc.mergeCarrier(tnModule, "id", "name", cprName);
+        nc.renameTableName(tnModule, CoreLabel.RESULT_SET);
+
+        return nc;
     }
 
     public static Carrier getModuleList4ComboNali(Carrier carrier) throws QException {
-        Carrier c = new Carrier();
-
-        Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
-        String[] keys = cModule.getKeys();
-        int i = 0;
-        for (String k : keys) {
-            if (k.endsWith(SessionManager.getCurrentLang())) {
-                c.setValue(CoreLabel.RESULT_SET, i, "id",
-                        k.substring(i, k.length() - SessionManager.getCurrentLang().length()));
-                c.setValue(CoreLabel.RESULT_SET, i, "name", cModule.getValue(k));
-                i++;
-            }
+        EntityCrModule ent = new EntityCrModule();
+        ent.setDeepWhere(false);
+        Carrier c = EntityManager.select(ent);
+        String tnModule = ent.toTableName();
+        int rc = c.getTableRowCount(tnModule);
+        String ids = "";
+        Carrier nc = new Carrier();
+        for (int i = 0; i < rc; i++) {
+            String id = c.getValue(tnModule, i, "id").toString();
+            int r = nc.getTableRowCount(tnModule);
+            nc.setValue(tnModule, r, "id", id);
+            ids = ids + CoreLabel.IN + id;
+             
         }
-        return c;
+
+        if (nc.getTableRowCount(tnModule) == 0) {
+            return nc;
+        }
+
+        EntityCrLangRel entName = new EntityCrLangRel();
+        entName.setDeepWhere(false);
+        entName.setLang(SessionManager.getCurrentLang());
+        entName.setRelId(ids);
+        entName.setLangType(LANG_TYPE_MODULE);
+        entName.setLangField(LANG_FIELD_NAME);
+        Carrier cprName = EntityManager.select(entName).getKVFromTable(
+                entName.toTableName(), "relId", "langDef");
+
+        nc.mergeCarrier(tnModule, "id", "moduleName", cprName);
+        nc.mergeCarrier(tnModule, "id", "name", cprName);
+        nc.renameTableName(tnModule, CoreLabel.RESULT_SET);
+
+        return nc;
     }
 
     public static Carrier getModuleList(Carrier carrier) throws QException {
@@ -1730,7 +1953,61 @@ public class CrModel {
     }
 
     public static Carrier insertNewSubmodule(Carrier carrier) throws QException {
+        String submoduleName = carrier.getValue("submoduleName").toString();
 
+        if (submoduleName.contains(CoreLabel.SEPERATOR_VERTICAL_LINE)
+                || submoduleName.contains("|")) {
+//            System.out.println("contains");
+            carrier = insertNewSubmoduleCaseMultiple(carrier);
+        } else {
+            carrier = insertNewSubmoduleCaseSingle(carrier);
+        }
+
+        return carrier;
+    }
+
+    private static Carrier insertNewSubmoduleCaseMultiple(Carrier carrier) throws QException {
+        String mnames[] = carrier.getValue("submoduleName").toString().trim().split("\\|");
+        String mdescs[] = carrier.getValue("submoduleDescription").toString().trim().split("\\|");
+        String langs[] = QUtility.getLangList();
+
+        EntityCrSubmodule ent = new EntityCrSubmodule();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setSubmoduleName("");
+        ent.setSubmoduleDescription("");
+        EntityManager.insert(ent);
+        String entId = ent.getId();
+
+        for (int i = 0; i < langs.length; i++) {
+            String n = mnames[i].trim();
+            String d = "";
+            try {
+                d = mdescs[i].trim();
+            } catch (Exception e) {
+            }
+
+            String l = langs[i].trim();
+
+            EntityCrLangRel entLang = new EntityCrLangRel();
+            entLang.setRelId(entId);
+            entLang.setLangField(LANG_FIELD_NAME);
+            entLang.setLangType(LANG_TYPE_SUBMODULE);
+            entLang.setLangDef(n);
+            entLang.setLang(l);
+            EntityManager.insert(entLang);
+
+            EntityCrLangRel entLangDesc = new EntityCrLangRel();
+            entLangDesc.setRelId(entId);
+            entLangDesc.setLangField(LANG_FIELD_DESC);
+            entLangDesc.setLangType(LANG_TYPE_SUBMODULE);
+            entLangDesc.setLangDef(d);
+            entLangDesc.setLang(l);
+            EntityManager.insert(entLangDesc);
+        }
+        return carrier;
+    }
+
+    private static Carrier insertNewSubmoduleCaseSingle(Carrier carrier) throws QException {
         String entId = carrier.getValue("submoduleUniqueId").toString();
         if (entId.length() == 0) {
             EntityCrSubmodule ent = new EntityCrSubmodule();
@@ -1758,7 +2035,6 @@ public class CrModel {
                 EntityCrSubmodule.SUBMODULE_DESCRIPTION).toString());
         entLangDesc.setLang(carrier.getValue("lang").toString());
         EntityManager.insert(entLangDesc);
-
         return carrier;
     }
 
@@ -1867,7 +2143,7 @@ public class CrModel {
 //        Carrier cprSubmoduleType = QUtility.getListItem("submoduleType",
 //                carrier.getValue("submoduleTypeName").toString());
         c.mergeCarrier(tnSubmodule, "id", "submoduleName", cprName);
-        c.mergeCarrier(tnSubmodule, "id", "submoduleDescription", cprDesc);
+        c.mergeCarrier(tnSubmodule, "id", "submoduleDescription", cprDesc, false);
         c.mergeCarrier(tnSubmodule, "liSubmoduleStatus", "submoduleStatusName",
                 cprSubmoduleStatus);
 //        c.mergeCarrier(tnSubmodule, "submoduleType", "submoduleTypeName",
@@ -1879,6 +2155,34 @@ public class CrModel {
 
         c.addTableRowCount(CoreLabel.RESULT_SET,
                 (EntityManager.getRowCount(ent) + 1));
+
+        return c;
+    }
+
+    public static Carrier getSubmoduleList4Import(Carrier carrier) throws QException {
+
+        EntityCrSubmodule ent = new EntityCrSubmodule();
+        ent.setDeepWhere(false);
+        ent.setFkModuleId(carrier.getValue("fkModuleId").toString());
+        Carrier c = EntityManager.select(ent);
+        carrier.removeKey("startLimit");
+        carrier.removeKey("endLimit");
+
+        String tnSubmodule = ent.toTableName();
+        String ids = c.getValueLine(tnSubmodule);
+
+        EntityCrLangRel entName = new EntityCrLangRel();
+        entName.setDeepWhere(false);
+        entName.setLang(SessionManager.getCurrentLang());
+        entName.setRelId(ids);
+        entName.setLangType(LANG_TYPE_SUBMODULE);
+        entName.setLangField(LANG_FIELD_NAME);
+        entName.setLangDef(carrier.getValue("submoduleName").toString());
+        Carrier cprName = EntityManager.select(entName).getKVFromTable(
+                entName.toTableName(), "relId", "langDef");
+
+        c.mergeCarrier(tnSubmodule, "id", "submoduleName", cprName);
+        c.renameTableName(tnSubmodule, CoreLabel.RESULT_SET);
 
         return c;
     }
@@ -2091,10 +2395,22 @@ public class CrModel {
     }
 
     public static Carrier insertNewSubmoduleAttribute(Carrier carrier) throws QException {
-        EntityCrSubmoduleAttribute ent = new EntityCrSubmoduleAttribute();
-        EntityManager.mapCarrierToEntity(carrier, ent);
-//        ent.setLang(SessionManager.getCurrentLang());
-        EntityManager.insert(ent);
+        int interval = 100;
+        String attributeIds[] = carrier.getValue("fkAttributeId").toString().split("\\|");
+        int orderNo = -9000;
+        try {
+            orderNo = Integer.parseInt(carrier.getValue("sortBy").toString());
+        } catch (Exception e) {
+        }
+
+        for (String fkAttributeId : attributeIds) {
+            EntityCrSubmoduleAttribute ent = new EntityCrSubmoduleAttribute();
+            EntityManager.mapCarrierToEntity(carrier, ent);
+            ent.setFkAttributeId(fkAttributeId);
+            ent.setSortBy(String.valueOf(orderNo));
+            EntityManager.insert(ent);
+            orderNo = orderNo + interval;
+        }
         return carrier;
     }
 
@@ -2122,9 +2438,21 @@ public class CrModel {
 
     public static Carrier getSubmoduleAttributeList(Carrier carrier)
             throws QException {
+
+        boolean hasModuleVal = carrier.getValue("moduleName").toString().length() > 0;
+        Carrier cModule = new Carrier();
+        cModule.setValue("moduleName", carrier.getValue("moduleName"));
+        cModule = hasModuleVal ? getModuleList(cModule)
+                .getKVFromTable(CoreLabel.RESULT_SET, "id", "moduleName")
+                : CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
+        String fkModuleIds = hasModuleVal
+                ? convertArrayToFilterLine(cModule.getKeys())
+                : carrier.getValue("fkModuleId").toString();
+
         EntityCrSubmoduleAttribute ent = new EntityCrSubmoduleAttribute();
         ent.setDeepWhere(false);
         EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setFkModuleId(fkModuleIds);
         ent.addDeepWhereStatementField("sortBy");
         ent.addSortBy("sortBy");
         Carrier carrierSA = EntityManager.select(ent);
@@ -2170,6 +2498,12 @@ public class CrModel {
         carrierSA.mergeCarrier(tnSA, "fkSubmoduleId", "submoduleName", cprSM);
         carrierSA.mergeCarrier(tnSA, "hasOther", "hasOtherName", cprHasOther);
         carrierSA.mergeCarrier(tnSA, "isVisible", "isVisibleName", cprIsVisible);
+
+        String[] moduleField = hasModuleVal
+                ? new String[]{"fkModuleId", ""}
+                : new String[]{"fkModuleId", "LANG"};
+        carrierSA.mergeCarrier(tnSA, moduleField,
+                "moduleName", cModule, !hasModuleVal);
 
         // final statement
         carrierSA.renameTableName(tnSA, CoreLabel.RESULT_SET);
@@ -2224,6 +2558,21 @@ public class CrModel {
     }
 
     public static Carrier getSubmoduleFormBody(Carrier carrier) throws QException {
+        if (isSubmodulePrivate(carrier.getValue("fkSubmoduleId").toString())) {
+            carrier = getSubmoduleFormBodyByPrivate(carrier);
+        } else {
+            carrier = getSubmoduleFormBodyByCore(carrier);
+        }
+        return carrier;
+    }
+
+    private static boolean isSubmodulePrivate(String fkSubmoduleId) throws QException {
+        EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+        ent.setId(fkSubmoduleId);
+        return EntityManager.select(ent).getTableRowCount(ent.toTableName()) > 0;
+    }
+
+    private static Carrier getSubmoduleFormBodyByCore(Carrier carrier) throws QException {
         String fkSubmoduleId = carrier.getValue("fkSubmoduleId").toString();
         String fkSessionId = carrier.getValue("fkSessionId").toString();
 
@@ -2231,6 +2580,26 @@ public class CrModel {
         c.setValue("id", fkSubmoduleId);
         c = getSubmoduleList(c);
         String smName = c.getValue(CoreLabel.RESULT_SET, 0, "submoduleName").toString();
+
+        Carrier crIns = new Carrier();
+        crIns.setValue("fkSessionId", fkSessionId);
+        crIns.setValue("fkSubmoduleId", fkSubmoduleId);
+        crIns = getInspectionListBySession(crIns);
+
+        String body = PgModel.getSubmoduleFormBody(fkSubmoduleId, fkSessionId, crIns);
+        carrier.setValue("body", body);
+        carrier.setValue("header", smName);
+        return carrier;
+    }
+
+    private static Carrier getSubmoduleFormBodyByPrivate(Carrier carrier) throws QException {
+        String fkSubmoduleId = carrier.getValue("fkSubmoduleId").toString();
+        String fkSessionId = carrier.getValue("fkSessionId").toString();
+
+        Carrier c = new Carrier();
+        c.setValue("id", fkSubmoduleId);
+        c = getPrivateSubmoduleList(c);
+        String smName = c.getValue(CoreLabel.RESULT_SET, 0, "name").toString();
 
         Carrier crIns = new Carrier();
         crIns.setValue("fkSessionId", fkSessionId);
@@ -2516,6 +2885,7 @@ public class CrModel {
     public static Carrier insertNewInspection(Carrier carrier) throws QException {
         String fkPatientId = carrier.getValue("fkPatientId").toString();
         String inspectionCode = carrier.getValue("fkSessionId").toString();
+        boolean isPrivate = carrier.isKeyExist("isPrivate");
 
         String keys[] = carrier.getKeys();
         for (String key : keys) {
@@ -2526,9 +2896,12 @@ public class CrModel {
             if (k.trim().length() > 0) {
                 EntityCrInspection ent = new EntityCrInspection();
                 ent.setFkPatientId(fkPatientId);
-//                ent.setFkUserId(SessionManager.getCurrentUserId());
                 ent.setInspectionCode(inspectionCode);
-                ent.setFkSubmoduleAttributeId(k);
+                if (!isPrivate) {
+                    ent.setFkSubmoduleAttributeId(k);
+                } else {
+                    ent.setFkPrivateSubmoduleAttributeId(k);
+                }
                 Carrier c = EntityManager.select(ent);
 
                 if (c.getTableRowCount(ent.toTableName()) > 0) {
@@ -2585,7 +2958,12 @@ public class CrModel {
         Carrier crSA = EntityManager.select(entSA);
 
         if (crSA.getTableRowCount(entSA.toTableName()) == 0) {
-            return carrier;
+            EntityCrPrivateAttribute entPA = new EntityCrPrivateAttribute();
+            entPA.setFkPrivateSubmoduleId(carrier.getValue("fkSubmoduleId").toString());
+            crSA = EntityManager.select(entPA);
+            if (crSA.getTableRowCount(entPA.toTableName()) == 0) {
+                return carrier;
+            }
         }
 
         String ids = crSA.getValueLine(entSA.toTableName());
@@ -2650,39 +3028,72 @@ public class CrModel {
         try {
             Carrier cprSex = QUtility.getListItem("sex",
                     carrier.getValue("sexName").toString());
-            String sex = convertArrayToFilterLine(cprSex.getKeys());
+            String sex = carrier.getValue("sexName").toString().length() > 0
+                    ? convertArrayToFilterLine(cprSex.getKeys())
+                    : "";
 
             Carrier cAttr = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_ATTRIBUTE);//getAttributeList(carrier);
-            String fkAttributeIds = getIdsForInspectionList(cAttr,
-                    carrier.getValue("attributeName").toString());
+            String fkAttributeIds = carrier.getValue("attributeName").toString().length() > 0
+                    ? getIdsForInspectionList(cAttr, carrier.getValue("attributeName").toString())
+                    : "";
 
+            Carrier crPA = getPrivateAttributeListLine4Inspection(carrier);
+            Carrier crpPA = crPA.getKVFromTable(CoreLabel.RESULT_SET, "id", EntityCrPrivateAttribute.NAME);
+            String fkPrivateAttributeIds
+                    = carrier.getValue("attributeName").toString().length() > 0
+                    ? crPA.getValueLine(CoreLabel.RESULT_SET)
+                    : carrier.hasKey("fkPrivateSubmoduleAttributeId")
+                    ? carrier.getValue("fkPrivateSubmoduleAttributeId").toString()
+                    : "";
+
+//            System.out.println(" crpPA==" + crpPA.toXML());
+//            System.out.println("fkPrivateAttributeIds==" + fkPrivateAttributeIds);
             Carrier cSM = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_SUBMODULE);
-            String fkSubmoduleIds = getIdsForInspectionList(cSM,
-                    carrier.getValue("submoduleName").toString());
+            String fkSubmoduleIds = carrier.getValue("submoduleName").toString().length() > 0
+                    ? getIdsForInspectionList(cSM, carrier.getValue("submoduleName").toString())
+                    : "";
+
+            Carrier crPS = getPrivateSubmoduleListLine4Inspection(carrier);
+            Carrier crpPS = crPS.getKVFromTable(CoreLabel.RESULT_SET, "id", EntityCrPrivateSubmodule.NAME);
+            String tids = carrier.getValue("submoduleName").toString().length() > 0
+                    ? CoreLabel.IN + crPS.getValueLine(CoreLabel.RESULT_SET)
+                    : "";
+
+//            System.out.println(" submodue private tids==" + tids);
+            fkSubmoduleIds += tids;
 
             Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
-            String fkModuleIds = getIdsForInspectionList(cModule,
-                    carrier.getValue("moduleName").toString());
+            String fkModuleIds = carrier.getValue("moduleName").toString().length() > 0
+                    ? getIdsForInspectionList(cModule, carrier.getValue("moduleName").toString())
+                    : "";
 
             EntityCrInspectionList ent = new EntityCrInspectionList();
             EntityManager.mapCarrierToEntity(carrier, ent);
-            ent.setFkAttributeId(fkAttributeIds);
+            ent.setSex(sex);
             ent.setFkModuleId(fkModuleIds);
             ent.setFkSubmoduleId(fkSubmoduleIds);
-            ent.setSex(sex);
+            ent.setFkAttributeId(fkAttributeIds);
+            ent.setFkPrivateSubmoduleAttributeId(fkPrivateAttributeIds);
+            ent.addOrStatementField(EntityCrInspectionList.FK_SUBMODULE_ATTRIBUTE_ID);
+            ent.addOrStatementField(EntityCrInspectionList.FK_ATTRIBUTE_ID);
+            ent.addOrStatementField(EntityCrInspectionList.FK_PRIVATE_SUBMODULE_ATTRIBUTE_ID);
             String tnIns = ent.toTableName();
             cIns = EntityManager.select(ent);
 
             cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
 
             cIns.mergeCarrier(tnIns, new String[]{"fkAttributeId", "LANG"},
-                    "attributeName", cAttr);
+                    "attributeName", cAttr, true);
+            cIns.mergeCarrier(tnIns, "fkPrivateSubmoduleAttributeId",
+                    "attributeName", crpPA, true);
 
             cIns.mergeCarrier(tnIns, new String[]{"fkModuleId", "LANG"},
                     "moduleName", cModule);
 
+//            System.out.println("cIns >>" + cIns.toXML());
             cIns.mergeCarrier(tnIns, new String[]{"fkSubmoduleId", "LANG"},
-                    "submoduleName", cSM);
+                    "submoduleName", cSM, true);
+            cIns.mergeCarrier(tnIns, "fkSubmoduleId", "submoduleName", crpPS, true);
 
             cIns.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
 //            System.out.println(cIns.toXML());
@@ -2700,12 +3111,30 @@ public class CrModel {
         return cIns;
     }
 
+    private static Carrier getPrivateSubmoduleListLine4Inspection(Carrier carrier)
+            throws QException {
+        EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+        ent.setName(carrier.getValue("submoduleName").toString());
+        Carrier c = EntityManager.select(ent);
+        c.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        return c;
+    }
+
+    private static Carrier getPrivateAttributeListLine4Inspection(Carrier carrier)
+            throws QException {
+        EntityCrPrivateAttribute ent = new EntityCrPrivateAttribute();
+        ent.setName(carrier.getValue("attributeName").toString());
+        Carrier c = EntityManager.select(ent);
+        c.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        return c;
+    }
+
     public static Carrier getInspectionList_cache_old(Carrier carrier) throws QException {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>> start >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(" ");
-        System.out.println(" ");
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>> start >>>>>>>>" + QDate.getCurrentSecond() + QDate.getCurrentMillisecond());
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(" ");
+//        System.out.println(" ");
 
         String sl = carrier.getValue("startLimit").toString();
         String el = carrier.getValue("endLimit").toString();
@@ -2987,7 +3416,8 @@ public class CrModel {
                         + " <i class=\"fa fa-youtube-square\" "
                         + " style=\" font-size:16px;color:#00b289\""
                         + " aria-hidden=\"true\" ></i></a>";
-            } else if (!insValue.equals(haEmptyVal) && vtId.equals(VALUE_TYPE_RANGE_INTEGER_MULTI)) {
+            } else if (!insValue.equals(haEmptyVal) && (vtId.equals(VALUE_TYPE_RANGE_INTEGER_MULTI)
+                    || vtId.equals(VALUE_TYPE_RANGE_STRING_MULTI_MANUAL))) {
                 finalVal = insValue.replace("|", ", ");
             } else {
                 finalVal = insValue;
@@ -3083,9 +3513,26 @@ public class CrModel {
     }
 
     public Carrier getReportLineList(Carrier carrier) throws QException {
+        boolean hasModuleVal = carrier.getValue("moduleName").toString().length() > 0;
+        Carrier cModule = new Carrier();
+        cModule.setValue("moduleName", carrier.getValue("moduleName"));
+        cModule = hasModuleVal ? getModuleList(cModule)
+                .getKVFromTable(CoreLabel.RESULT_SET, "id", "moduleName")
+                : CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
+        String fkModuleIds = hasModuleVal
+                ? convertArrayToFilterLine(cModule.getKeys())
+                : "";
+
         EntityCrReportLine ent = new EntityCrReportLine();
         EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setFkModuleId(fkModuleIds);
         Carrier c = EntityManager.select(ent);
+
+        String[] moduleField = hasModuleVal
+                ? new String[]{"fkModuleId", ""}
+                : new String[]{"fkModuleId", "LANG"};
+        c.mergeCarrier(ent.toTableName(), moduleField,
+                "moduleName", cModule, !hasModuleVal);
 
         c.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
         c.addTableSequence(CoreLabel.RESULT_SET,
@@ -3097,7 +3544,13 @@ public class CrModel {
     }
 
     public Carrier getReportLineList4Appt(Carrier carrier) throws QException {
+        String fkModuleId = getModuleIdBySessionId(carrier.getValue("fkSessionId").toString());
+        if (fkModuleId.trim().length() == 0) {
+            return carrier;
+        }
+
         EntityCrReportLine ent = new EntityCrReportLine();
+        ent.setFkModuleId(fkModuleId);
         ent.setReportType(REPORT_TYPE_APPOINTMENT);
         Carrier c = EntityManager.select(ent);
 
@@ -3147,7 +3600,7 @@ public class CrModel {
         return c;
     }
 
-    public Carrier getReportLineList4PrintPayment(Carrier carrier) throws QException {
+    public static Carrier getReportLineList4PrintPayment(Carrier carrier) throws QException {
         QReportCarrier rc = new QReportCarrier();
         rc.setReportId(carrier.getValue("id").toString());
         rc.setPaymentId(carrier.getValue("fkPaymentId").toString());
@@ -3167,8 +3620,8 @@ public class CrModel {
 
         EntityCrInspectionMatrixMain ent = new EntityCrInspectionMatrixMain();
         ent.setDeepWhere(false);
-        ent.setFkUserId(SessionManager.getCurrentUserId());
-        ent.setMatrixName(carrier.getValue("matrixName").toString());
+//        ent.setFkUserId(SessionManager.getCurrentUserId());
+        ent.setMatrixName(carrier.getValue("matrixName").toString().trim());
         Carrier c = EntityManager.select(ent);
 
         if (c.getTableRowCount(ent.toTableName()) == 0) {
@@ -3176,8 +3629,7 @@ public class CrModel {
         } else {
             EntityCrInspectionMatrix entC = new EntityCrInspectionMatrix();
             entC.setFkParentId(ent.getId());
-            String ids = EntityManager.select(entC).
-                    getValueLine(entC.toTableName(), "id", CoreLabel.IN);
+            String ids = EntityManager.select(entC).getValueLine(entC.toTableName());
             if (ids.length() > 0) {
                 entC.setId(ids);
                 EntityManager.delete(entC);
@@ -3221,7 +3673,6 @@ public class CrModel {
     public static Carrier getInspectionMatrixList(Carrier carrier) throws QException {
         EntityCrInspectionMatrixMain entMain = new EntityCrInspectionMatrixMain();
         EntityManager.mapCarrierToEntity(carrier, entMain);
-        entMain.setFkUserId(SessionManager.getCurrentUserId());
         Carrier cMain = EntityManager.select(entMain);
         String tnMain = entMain.toTableName();
         Carrier cprMain = cMain.getKVFromTable(tnMain, "id", "matrixName");
@@ -3229,6 +3680,7 @@ public class CrModel {
         carrier.removeKey("startLimit");
         carrier.removeKey("endLimit");
 
+//        System.out.println("cInsMat >>>>"+cInsMat.toXML());
         EntityCrInspectionMatrix entInsMat = new EntityCrInspectionMatrix();
         entInsMat.setFkParentId(ids);
         Carrier cInsMat = EntityManager.select(entInsMat);
@@ -3242,13 +3694,11 @@ public class CrModel {
         EntityCrSubmoduleAttribute entSA = new EntityCrSubmoduleAttribute();
         entSA.setId(saIds);
         Carrier cSA = EntityManager.select(entSA);
-        Carrier cprSA = cSA.getKeyValuesPairFromTable(entSA.toTableName(),
-                "id", "fkAttributeId");
-        String attrIds = cSA.getValueLine(entSA.toTableName(),
-                EntityCrSubmoduleAttribute.FK_ATTRIBUTE_ID);
+        Carrier cprSA = cSA.getKeyValuesPairFromTable(entSA.toTableName(), "id", "fkAttributeId");
+        String attrIds = cSA.getValueLine(entSA.toTableName(), "fkAttributeId");
 
         cInsMat.mergeCarrier(tnInsMat, "fkSubmoduleAttributeId",
-                "fkAttributeId", cprSA);
+                "fkAttributeId", cprSA, true);
 
         Carrier cAttr = new Carrier();
         cAttr.setValue("id", attrIds);
@@ -3257,7 +3707,15 @@ public class CrModel {
                 CoreLabel.RESULT_SET, "id", "attributeName");
 
         cInsMat.mergeCarrier(tnInsMat, "fkAttributeId",
-                "attributeName", cprAttr);
+                "attributeName", cprAttr, true);
+
+        EntityCrPrivateAttribute entPA = new EntityCrPrivateAttribute();
+        entPA.setId(saIds);
+        Carrier crPA = EntityManager.select(entPA);
+        Carrier crpPA = crPA.getKVFromTable(entPA.toTableName(), "id", "name");
+
+        cInsMat.mergeCarrier(tnInsMat, "fkSubmoduleAttributeId",
+                "attributeName", crpPA, true);
 
         cInsMat.renameTableName(tnInsMat, CoreLabel.RESULT_SET);
         return cInsMat;
@@ -3265,7 +3723,7 @@ public class CrModel {
 
     public Carrier getInspectionMatrixMainList(Carrier carrier) throws QException {
         EntityCrInspectionMatrixMain ent = new EntityCrInspectionMatrixMain();
-        ent.setFkUserId(SessionManager.getCurrentUserId());
+//        ent.setFkUserId(SessionManager.getCurrentUserId());
         Carrier c = EntityManager.select(ent);
         c.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
         return c;
@@ -3294,19 +3752,17 @@ public class CrModel {
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
             SessionManager.setDomain(SessionManager.getCurrentThreadId(), "apd_1lqliu3");
-            SessionManager.setUserId(SessionManager.getCurrentThreadId(), "201710230029010648");
+            SessionManager.setUserId(SessionManager.getCurrentThreadId(), "201710281154580751");
             SessionManager.setCompanyId(SessionManager.getCurrentThreadId(), "201710221851270308");
 
-            String json = "{\"kv\":{\"\":\"\",\"fkPatientId\":\"201711041359090091\",\"smOrderNo\":\"500\",\"fkSessionId\":\"201711051459150092 \",\"sa_201707081329440581\":\"141.49\",\"sa_201707081330020388\":\n" +
-"\"3.343\",\"sa_201707081330200120\":\"21.081\",\"sa_201707081330340526\":\"135.71\",\"sa_201707081403160657\":\"20.02\",\"sa_201707081403510470\":\"144.42\",\"sa_201707081540110846\":\"71.72\","
-                    + "\"sa_201707081541050591\":\"\",\"sa_201707081541200471\":\"6.2190\",\"sa_201707081541560035\":\"\",\"sa_201707081542080285\":\"\",\"sa_201707081542250437\":\"\",\"sa_201707081544140842\":\"file_5993E418B57D5E4.wav\"},\"tbl\":[]}"
+            String json = "{\"kv\":{\"submoduleName\":\"Compalint on Urology | Urlogiya sah?sind?ki ?ikay?tl?r | Urologiy genel Problemler\",\"submoduleUniqueId\":\"\",\"sortBy\":\"\",\"submoduleDescription\":\"\",\"undefined\":\"ENG\",\"fkModuleId\":\"201712051556230782\",\"liSubmoduleStatus\":\"A\",\"submoduleType\":\"1\",\"lang\":\"ENG\"},\"tbl\":[]}"
                     + "";
 
 //            String servicename = "serviceCrGetTermPage";
             //
             Carrier c = new Carrier();
             c.fromJson(json);
-            c = insertNewInspection(c);
+            c = getModuleList4Combo(c);
 //
 //            c.setServiceName(servicename);
 //            c.fromJson(json);
@@ -3406,12 +3862,22 @@ public class CrModel {
             return carrier;
         }
 
+        int startLimit = 0;
+        int endLimit = 50;
+
+        try {
+            startLimit = Integer.parseInt(carrier.getValue("startLimit").toString());
+            endLimit = Integer.parseInt(carrier.getValue("endLimit").toString());
+        } catch (Exception e) {
+        }
+
+        //get Attribute list from InspectionMatrix
         EntityCrInspectionMatrix entMain = new EntityCrInspectionMatrix();
         entMain.setFkParentId(carrier.getValue("matrixId").toString());
         Carrier cInsMat = EntityManager.select(entMain);
         String tnInsMat = entMain.toTableName();
-        Carrier cprSaShortName = cInsMat.getKeyValuesPairFromTable(tnInsMat,
-                "fkSubmoduleAttributeId", "shortName");
+        String saIds = cInsMat.getValueLine(tnInsMat, "fkSubmoduleAttributeId");
+
         carrier.removeKey("startLimit");
         carrier.removeKey("endLimit");
 
@@ -3419,85 +3885,115 @@ public class CrModel {
             return carrier;
         }
 
-        String saIds = cInsMat.getValueLine(tnInsMat, "fkSubmoduleAttributeId");
+        //attribute id-leri esasinda inspection deyerlerini getir
         carrier.setValue("fkSubmoduleAttributeId", saIds);
+        carrier.setValue("fkPrivateSubmoduleAttributeId", saIds);
         Carrier cIns = getInspectionList(carrier);
         String tnIns = CoreLabel.RESULT_SET;
 
+        //inspect setirleri esasinda inspection matrix hazirla
         int rcIns = cIns.getTableRowCount(tnIns);
         Carrier cFinal = new Carrier();
         Map<String, Integer> sessionIdNRow = new HashMap<>();
         int idx = 0;
 
-        String[] seqArr = {"doctorFullname", "inspectionDate", "inspectionTime",
-            "patientName", "patientSurname", "patientMiddleName",
-            "patientBirthDate", "patientBirthPlace",
-            "sexName", "moduleName", "submoduleName"};
+        String patientSeq = Config.getProperty(Config.MATRIX_PATIENT_FIELDS);
+        String[] seqArr = patientSeq.split(",");
         ArrayList<String> seqList = new ArrayList<>(Arrays.asList(seqArr));
         ArrayList<Integer> removeRows = new ArrayList<>();
 
         for (int i = 0; i < rcIns; i++) {
             String sessId = cIns.getValue(tnIns, i, "inspectionCode").toString();
-            String saId = cIns.getValue(tnIns, i, "fkSubmoduleAttributeId").toString();
-//            String attrName = cIns.getValue(tnIns, i, "attributeName").toString();
             String attrCode = cIns.getValue(tnIns, i, "attributeCode").toString();
             String finalVal = cIns.getValue(tnIns, i, "finalValue").toString();
 
+            //her sessiya uzre bir setir yaranmalidir
             if (!sessionIdNRow.containsKey(sessId)) {
-                cFinal.setValue(tnIns, idx, "id", sessId);
-                cFinal.setValue(tnIns, idx, "doctorFullname",
-                        cIns.getValue(tnIns, i, "doctorFullname"));
-                cFinal.setValue(tnIns, idx, "inspectionDate",
-                        cIns.getValue(tnIns, i, "inspectionDate"));
-                cFinal.setValue(tnIns, idx, "inspectionTime",
-                        cIns.getValue(tnIns, i, "inspectionTime"));
-                cFinal.setValue(tnIns, idx, "patientName",
-                        cIns.getValue(tnIns, i, "patientName"));
-                cFinal.setValue(tnIns, idx, "patientSurname",
-                        cIns.getValue(tnIns, i, "patientSurname"));
-                cFinal.setValue(tnIns, idx, "patientMiddleName",
-                        cIns.getValue(tnIns, i, "patientMiddleName"));
-                cFinal.setValue(tnIns, idx, "patientBirthDate",
-                        cIns.getValue(tnIns, i, "patientBirthDate"));
-                cFinal.setValue(tnIns, idx, "patientBirthPlace",
-                        cIns.getValue(tnIns, i, "patientBirthPlace"));
-                cFinal.setValue(tnIns, idx, "sexName",
-                        cIns.getValue(tnIns, i, "sexName"));
-                cFinal.setValue(tnIns, idx, "moduleName",
-                        cIns.getValue(tnIns, i, "moduleName"));
-                cFinal.setValue(tnIns, idx, "submoduleName",
-                        cIns.getValue(tnIns, i, "submoduleName"));
-
+                idx = createFirstRow4InspectionMatrixBody(cFinal, cIns, tnIns, i, seqArr, sessId);
                 sessionIdNRow.put(sessId, idx);
-                idx++;
             }
 
+            //cari sessiya uzre inspection deyerlerini attributlar uzre uygun
+            //setirlere yerlesdirmek
+            //sessiya uzre cari setiri gotur
             int idy = sessionIdNRow.get(sessId);
+
             //do filter by attirbutes
             String filterVal = carrier.getValue(attrCode).toString();
             cFinal.setValue(tnIns, idy, attrCode, finalVal);
+
+            //filterasiyadan qayidan melumatlar eger filter shertini odemirse
+            //hemin setir silinmelidir
             if (!new DeepWhere(finalVal, filterVal).isMatched()) {
                 removeRows.add(idy);
             }
 
+            //patient melumatlari yeniden tekrarlanmamalidir
             if (!seqList.contains(attrCode)) {
                 seqList.add(attrCode);
             }
         }
 
-        int remIdx = 0;
-        for (int k = 0; k < removeRows.size(); k++) {
-            cFinal.removeRow(tnIns, removeRows.get(k) - remIdx);
-            remIdx++;
-        }
+        removeRowFromInspectionMatrix(cFinal, tnIns, removeRows);
 
         String seq = Arrays.toString(seqList.toArray());
         seq = seq.substring(1, seq.length() - 1).replace(", ", ",");
+
         cFinal.addTableSequence(CoreLabel.RESULT_SET, seq);
+
         cFinal.addTableRowCount(CoreLabel.RESULT_SET, 10000);
         cFinal.setMatrixId(carrier.getValue("matrixId").toString());
 //        System.out.println("json final->" + cFinal.getJson());
         return cFinal;
+    }
+
+    private static void removeRowFromInspectionMatrix(Carrier carrier,
+            String tablename, ArrayList<Integer> removeRows) throws QException {
+        int remIdx = 0;
+        for (int k = 0;
+                k < removeRows.size();
+                k++) {
+            carrier.removeRow(tablename, removeRows.get(k) - remIdx);
+            remIdx++;
+        }
+    }
+
+    private static int createFirstRow4InspectionMatrixBody(Carrier carrierFinal,
+            Carrier carrierSource, String tablename, int sourceIndex,
+            String[] fields, String sessionId)
+            throws QException {
+
+        int rc = carrierFinal.getTableRowCount(tablename);
+
+        carrierFinal.setValue(tablename, rc, "id", sessionId);
+        for (String f : fields) {
+            carrierFinal.setValue(tablename, rc, f,
+                    carrierSource.getValue(tablename, sourceIndex, f));
+        }
+        return rc;
+//        carrierFinal.setValue(tnIns, idx, "id", sessId);
+//        carrierFinal.setValue(tnIns, idx, "doctorFullname",
+//                cIns.getValue(tnIns, i, "doctorFullname"));
+//        carrierFinal.setValue(tnIns, idx, "inspectionDate",
+//                cIns.getValue(tnIns, i, "inspectionDate"));
+//        carrierFinal.setValue(tnIns, idx, "inspectionTime",
+//                cIns.getValue(tnIns, i, "inspectionTime"));
+//        carrierFinal.setValue(tnIns, idx, "patientName",
+//                cIns.getValue(tnIns, i, "patientName"));
+//        carrierFinal.setValue(tnIns, idx, "patientSurname",
+//                cIns.getValue(tnIns, i, "patientSurname"));
+//        carrierFinal.setValue(tnIns, idx, "patientMiddleName",
+//                cIns.getValue(tnIns, i, "patientMiddleName"));
+//        carrierFinal.setValue(tnIns, idx, "patientBirthDate",
+//                cIns.getValue(tnIns, i, "patientBirthDate"));
+//        carrierFinal.setValue(tnIns, idx, "patientBirthPlace",
+//                cIns.getValue(tnIns, i, "patientBirthPlace"));
+//        carrierFinal.setValue(tnIns, idx, "sexName",
+//                cIns.getValue(tnIns, i, "sexName"));
+//        carrierFinal.setValue(tnIns, idx, "moduleName",
+//                cIns.getValue(tnIns, i, "moduleName"));
+//        carrierFinal.setValue(tnIns, idx, "submoduleName",
+//                cIns.getValue(tnIns, i, "submoduleName"));
     }
 
     public Carrier getInspectionMatrixBodyList_(Carrier carrier) throws QException {
@@ -3606,19 +4102,36 @@ public class CrModel {
     }
 
     public static Carrier getPriceListList(Carrier carrier) throws QException {
+        Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
+        String fkModuleIds = carrier.getValue("moduleName").toString().length() > 0
+                ? getIdsForInspectionList(cModule, carrier.getValue("moduleName").toString())
+                : "";
+
+        Carrier cprCrrncy = QUtility.getListItem("currency",
+                carrier.getValue("currencyName").toString());
+        String currency = carrier.getValue("currencyName").toString().length() > 0
+                ? convertArrayToFilterLine(cprCrrncy.getKeys())
+                : "";
+
+        Carrier cprLstStts = QUtility.getListItem("pa",
+                carrier.getValue("listStatusName").toString());
+        String listStatus = carrier.getValue("listStatusName").toString().length() > 0
+                ? convertArrayToFilterLine(cprLstStts.getKeys())
+                : "";
+
         EntityCrPriceList ent = new EntityCrPriceList();
         EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setFkModuleId(fkModuleIds);
+        ent.setCurrency(currency);
+        ent.setListStatus(listStatus);
         Carrier c = EntityManager.select(ent);
         String tnPrclst = ent.toTableName();
         carrier.removeKey("startLimit");
         carrier.removeKey("endLimit");
 
-        Carrier cprCrrncy = QUtility.getListItem("currency",
-                carrier.getValue("currencyName").toString());
         c.mergeCarrier(tnPrclst, "currency", "currencyName", cprCrrncy);
-
-        Carrier cprLstStts = QUtility.getListItem("pa",
-                carrier.getValue("listStatusName").toString());
+        c.mergeCarrier(tnPrclst, new String[]{"fkModuleId", "LANG"},
+                "moduleName", cModule);
         c.mergeCarrier(tnPrclst, "listStatus", "listStatusName", cprLstStts);
 
         c.renameTableName(tnPrclst, CoreLabel.RESULT_SET);
@@ -3631,9 +4144,17 @@ public class CrModel {
     }
 
     public static Carrier getCurrencyOfCompany(Carrier carrier) throws QException {
-        //itemCode = currency
-        carrier.setValue(CoreLabel.RESULT_SET, 0, "itemKey", "AZN");
-        carrier.setValue(CoreLabel.RESULT_SET, 0, "itemValue", "AZN");
+        String val = "";
+        EntityCrCompany ent = new EntityCrCompany();
+        ent.setId(SessionManager.getCurrentCompanyId());
+
+        if (EntityManager.select(ent).getTableRowCount(ent.toTableName()) > 0) {
+            val = ent.getCompanyCurrency();
+        }
+
+        carrier.setValue(CoreLabel.RESULT_SET, 0, "itemKey", val);
+        carrier.setValue(CoreLabel.RESULT_SET, 0, "itemValue", val);
+
         return carrier;
     }
 
@@ -3876,13 +4397,13 @@ public class CrModel {
 
             String txt = QUtility.getLabel("mailActivationBody",
                     new String[]{entCompany.getCompanyName(), activationId, entCompany.getCompanyLang()});
-            System.out.println("Activation mail body >>" + txt);
+//            System.out.println("Activation mail body >>" + txt);
             MailSender.send(entUser.getEmail1(),
                     QUtility.getLabel("mailActivationSubject"), txt);
-            System.out.println("activation mail sent to " + entCompany.getCompanyName());
+//            System.out.println("activation mail sent to " + entCompany.getCompanyName());
 
         } catch (Exception e) {
-            System.out.println("excepiton oldu");
+//            System.out.println("excepiton oldu");
         }
         return carrier;
 
@@ -3916,13 +4437,13 @@ public class CrModel {
 
             String txt = QUtility.getLabel("mailActivationBody",
                     new String[]{entCompany.getCompanyName(), activationId, entCompany.getCompanyLang()});
-            System.out.println("Activation mail body >>" + txt);
+//            System.out.println("Activation mail body >>" + txt);
             MailSender.send(entUser.getEmail1(),
                     QUtility.getLabel("mailActivationSubject"), txt);
-            System.out.println("activation mail sent to " + entCompany.getCompanyName());
+//            System.out.println("activation mail sent to " + entCompany.getCompanyName());
 
         } catch (Exception e) {
-            System.out.println("excepiton oldu");
+//            System.out.println("excepiton oldu");
         }
         return carrier;
 
@@ -3930,7 +4451,7 @@ public class CrModel {
 
     public static Carrier activateCompany(Carrier carrier) throws QException {
         try {
-
+            boolean f = true;
             Carrier outCarrier = new Carrier();
 
             EntityCrCompany entCompany = new EntityCrCompany();
@@ -3946,32 +4467,56 @@ public class CrModel {
 //            entCompany.setStatus(EntityCrCompany.CompanyStatus.PENDING.toString());
 //            EntityManager.update(entCompany);
             String fkTempUserId = entCompany.getFkUserId();
-
-            //CREATE LOCAL_DATABASE
-            createDBOnActivateCompany(entCompany.getCompanyDb().trim());
-
-            //create tables and views
-            createTableAndViewOnActivateCompany(entCompany.getCompanyDb().trim());
-
-            //generate insert script
-            insertScriptOnActivateCompany(entCompany.getCompanyDb().trim());
-
-            //insert admin user info
-            String id = insertAdminUserOnActivateCompany(entCompany.getFkUserId(),
-                    entCompany.getCompanyDb());
-
-            //add default permission and add default payment within the permission section
             String fkCompanyId = entCompany.getId();
             String fkModuleId = getModuleIdByUserId(fkTempUserId);
 
-            if (entCompany.getCompanyType().equals(EntityCrCompany.CompanyType.COMPANY.toString())) {
-                addDefaultPermissionToActivateCompany(fkCompanyId);
-                addDefaultModulePermissionToActivateCompany(fkModuleId, fkCompanyId);
-            } else if (entCompany.getCompanyType().equals(EntityCrCompany.CompanyType.PERSONAL.toString())) {
-                addDefaultPermissionToActivatePersonal(fkCompanyId);
-                addDefaultModulePermissionToActivatePersonal(fkModuleId, fkCompanyId);
+            //CREATE LOCAL_DATABASE
+            try {
+                createDBOnActivateCompany(entCompany.getCompanyDb().trim());
+            } catch (Exception e) {
+                f = false;
             }
 
+            //create tables and views
+            try {
+                createTableAndViewOnActivateCompany(entCompany.getCompanyDb().trim());
+            } catch (Exception e) {
+                f = false;
+            }
+            //insert admin user info
+            String id = "";
+
+            try {
+                id = insertAdminUserOnActivateCompany(entCompany.getFkUserId(),
+                        entCompany.getCompanyDb());
+            } catch (Exception e) {
+                f = false;
+            }
+            //generate insert script
+            try {
+                insertScriptOnActivateCompany(entCompany.getCompanyDb(), fkModuleId, id);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                f = false;
+            }
+
+            //add default permission and add default payment within the permission section
+            try {
+                if (entCompany.getCompanyType().equals(EntityCrCompany.CompanyType.COMPANY.toString())) {
+                    addDefaultPermissionToActivateCompany(fkCompanyId);
+                    System.out.println("addDefaultPermissionToActivateCompany done");
+                    addDefaultModulePermissionToActivateCompany(fkModuleId, fkCompanyId);
+                    System.out.println("addDefaultModulePermissionToActivateCompany done");
+
+                } else if (entCompany.getCompanyType().equals(EntityCrCompany.CompanyType.PERSONAL.toString())) {
+                    addDefaultPermissionToActivatePersonal(fkCompanyId);
+                    System.out.println("addDefaultPermissionToActivatePersonal done");
+                    addDefaultModulePermissionToActivatePersonal(fkModuleId, fkCompanyId);
+                    System.out.println("addDefaultModulePermissionToActivatePersonal done");
+                }
+            } catch (Exception e) {
+                f = false;
+            }
             //activate account
             entCompany.setStatus(EntityCrCompany.CompanyStatus.ACTIVE.toString());
             entCompany.setFkUserId(id);
@@ -3980,6 +4525,9 @@ public class CrModel {
             //send email about activation
             sendActivationEmail(fkTempUserId, fkCompanyId, entCompany.getCompanyName());
 
+            if (!f) {
+                throw new QException("error");
+            }
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -4007,7 +4555,7 @@ public class CrModel {
                             new String[]{fullname, domain})
             );
         } catch (Exception e) {
-            System.out.println("excepiton oldu");
+//            System.out.println("excepiton oldu");
         }
     }
 
@@ -4291,6 +4839,7 @@ public class CrModel {
                 + CoreLabel.IN + EntityCrUserTable.Type.VIEW.toString();
 
         EntityCrUserTable entUsrTbl = new EntityCrUserTable();
+        entUsrTbl.setDeepWhere(false);
         entUsrTbl.setType(types);
         entUsrTbl.addSortBy(EntityCrUserTable.TYPE);
         entUsrTbl.addSortBy(EntityCrUserTable.SEQNUM);
@@ -4314,9 +4863,9 @@ public class CrModel {
             String q = tableList.get(i).getTableScript();
             if (q.trim().length() > 0) {
                 String vs = p.matcher(q).replaceAll(companyDb);
-                System.out.println("query=" + vs);
+//                System.out.println("query=" + vs);
                 EntityManager.executeUpdateByQuery(vs);
-                System.out.println("table " + tableList.get(i).getTableName().trim() + " created");
+//                System.out.println("table " + tableList.get(i).getTableName().trim() + " created");
             }
         }
 
@@ -4331,12 +4880,16 @@ public class CrModel {
         }
     }
 
-    private static void insertScriptOnActivateCompany(String companyDb) throws QException {
+    private static void insertScriptOnActivateCompany(String companyDb, String fkModuleId,
+            String fkDoctorUserId) throws QException {
         Pattern p = Pattern.compile("\\$\\{companyDb\\}");
+        Pattern p1 = Pattern.compile("\\$\\{fkModuleId\\}");
+        Pattern p2 = Pattern.compile("\\$\\{fkDoctorUserId\\}");
 
         String types = EntityCrUserTable.Type.SCRIPT.toString();
 
         EntityCrUserTable entUsrTbl = new EntityCrUserTable();
+        entUsrTbl.setDeepWhere(false);
         entUsrTbl.setType(types);
         entUsrTbl.addSortBy(EntityCrUserTable.TYPE);
         entUsrTbl.addSortBy(EntityCrUserTable.SEQNUM);
@@ -4348,12 +4901,31 @@ public class CrModel {
             EntityCrUserTable entUsrTbl1 = new EntityCrUserTable();
             EntityManager.mapCarrierToEntity(crUsrTbl,
                     entUsrTbl.toTableName(), i, entUsrTbl1, true);
-            String q = entUsrTbl.getTableScript();
-            if (q.trim().length() > 0) {
-                String vs = p.matcher(q).replaceAll(companyDb);
-                System.out.println("query=" + vs);
-                EntityManager.executeUpdateByQuery(vs);
-                System.out.println("table " + entUsrTbl.getTableName().trim() + " created");
+
+//            System.out.println("carrier  getTableScript() =" + crUsrTbl.getValue());
+//            System.out.println("entUsrTbl.getTableScript() =" + entUsrTbl1.getTableScript());
+            String q = entUsrTbl1.getTableScript();
+
+            System.out.println("------------------------------------------------------");
+            System.out.println("xalis query=" + q);
+            System.out.println("----------------------------------------------------------");
+            System.out.println("");
+            System.out.println("");
+//            System.out.println("xalis query=" + q);
+            String query[] = q.split("\\{\\|\\|\\}");
+            for (String sq : query) {
+                if (sq.trim().length() > 0) {
+                    String vs = p.matcher(sq).replaceAll(companyDb);
+                    vs = p1.matcher(vs).replaceAll(fkModuleId);
+                    vs = p2.matcher(vs).replaceAll(fkDoctorUserId);
+                    System.out.println("------------------------------------------------------");
+                    System.out.println("deyishilmis query=" + vs);
+                    System.out.println("----------------------------------------------------------");
+                    System.out.println("");
+                    System.out.println("");
+                    EntityManager.executeUpdateByQuery(vs);
+                    System.out.println("table " + entUsrTbl1.getTableName().trim() + " created");
+                }
             }
 
         }
@@ -4941,28 +5513,57 @@ public class CrModel {
     }
 
     public Carrier getNextSubmoduleOrderNo(Carrier carrier) throws QException {
-        EntityCrSubmodule ent = new EntityCrSubmodule();
-        ent.setDeepWhere(false);
-        ent.setSortBy(CoreLabel.GT + carrier.getValue("currentNo").toString());
-        ent.addSortBy(EntityCrSubmodule.SORT_BY);
-        ent.setSortByAsc(true);
-        ent.setStartLimit(0);
-        ent.setEndLimit(0);
-        EntityManager.select(ent);
-        carrier.setValue("nextNo", ent.getSortBy());
+        boolean isPrivate = carrier.isKeyExist("isPrivate");
+
+        if (isPrivate) {
+            EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+            ent.setDeepWhere(false);
+            ent.setOrderNo(CoreLabel.GT + carrier.getValue("currentNo").toString());
+            ent.addSortBy(EntityCrPrivateSubmodule.ORDER_NO);
+            ent.setSortByAsc(true);
+            ent.setStartLimit(0);
+            ent.setEndLimit(0);
+            EntityManager.select(ent);
+            carrier.setValue("nextNo", ent.getOrderNo());
+        } else {
+            EntityCrSubmodule ent = new EntityCrSubmodule();
+            ent.setDeepWhere(false);
+            ent.setSortBy(CoreLabel.GT + carrier.getValue("currentNo").toString());
+            ent.addSortBy(EntityCrSubmodule.SORT_BY);
+            ent.setSortByAsc(true);
+            ent.setStartLimit(0);
+            ent.setEndLimit(0);
+            EntityManager.select(ent);
+            carrier.setValue("nextNo", ent.getSortBy());
+        }
         return carrier;
     }
 
     public Carrier getPreviousSubmoduleOrderNo(Carrier carrier) throws QException {
-        EntityCrSubmodule ent = new EntityCrSubmodule();
-        ent.setDeepWhere(false);
-        ent.setSortBy(CoreLabel.LT + carrier.getValue("currentNo").toString());
-        ent.addSortBy(EntityCrSubmodule.SORT_BY);
-        ent.setSortByAsc(false);
-        ent.setStartLimit(0);
-        ent.setEndLimit(0);
-        EntityManager.select(ent);
-        carrier.setValue("nextNo", ent.getSortBy());
+        boolean isPrivate = carrier.isKeyExist("isPrivate");
+
+        if (isPrivate) {
+            EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+            ent.setDeepWhere(false);
+            ent.setOrderNo(CoreLabel.LT + carrier.getValue("currentNo").toString());
+            ent.addSortBy(EntityCrPrivateSubmodule.ORDER_NO);
+            ent.setSortByAsc(false);
+            ent.setStartLimit(0);
+            ent.setEndLimit(0);
+            EntityManager.select(ent);
+            carrier.setValue("nextNo", ent.getOrderNo());
+        } else {
+            EntityCrSubmodule ent = new EntityCrSubmodule();
+            ent.setDeepWhere(false);
+            ent.setSortBy(CoreLabel.LT + carrier.getValue("currentNo").toString());
+            ent.addSortBy(EntityCrSubmodule.SORT_BY);
+            ent.setSortByAsc(false);
+            ent.setStartLimit(0);
+            ent.setEndLimit(0);
+            EntityManager.select(ent);
+            carrier.setValue("nextNo", ent.getSortBy());
+        }
+
         return carrier;
     }
 
@@ -5008,6 +5609,8 @@ public class CrModel {
         }
 
         ent.setPaymentStatus(PAYMENT_STATUS_IS_PAID);
+        ent.setPaymentDate(QDate.getCurrentDate());
+        ent.setPaymentTime(QDate.getCurrentTime());
         EntityManager.update(ent);
         return c;
     }
@@ -5294,10 +5897,12 @@ public class CrModel {
     public static Carrier insertNewRelPaymentTypeAndRule(Carrier carrier) throws QException {
         String paymentType = carrier.getValue("fkPaymentTypeId").toString();;
         String defPeriod = carrier.getValue("defaultPeriod").toString();
+        String owner = carrier.getValue("owner").toString();
 
         EntityCrRelPaymentTypeAndRule ent = new EntityCrRelPaymentTypeAndRule();
         ent.setFkPaymentTypeId(paymentType);
         ent.setDefaultPeriod(defPeriod);
+        ent.setOwner(owner);
         Carrier crPaymentType = EntityManager.select(ent);
 
         if (crPaymentType.getTableRowCount(ent.toTableName()) > 0) {
@@ -5312,7 +5917,7 @@ public class CrModel {
                 EntityCrRelPaymentTypeAndRule entNew = new EntityCrRelPaymentTypeAndRule();
                 entNew.setFkRuleId(id);
                 entNew.setFkPaymentTypeId(paymentType);
-                entNew.setOwner(carrier.getValue("owner").toString());
+                entNew.setOwner(owner);
                 entNew.setDefaultPeriod(defPeriod);
                 Carrier tc = EntityManager.select(entNew);
                 if (tc.getTableRowCount(entNew.toTableName()) > 0) {
@@ -5630,6 +6235,724 @@ public class CrModel {
         }
 
         return carrier;
+    }
+
+    public Carrier getOwnCompanyInfo(Carrier carrier) throws QException {
+        String id = SessionManager.getCurrentCompanyId();
+        if (id.trim().length() == 0) {
+            return carrier;
+        }
+
+        EntityCrCompany ent = new EntityCrCompany();
+        ent.setId(id);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        carrier = EntityManager.select(ent);
+
+        carrier.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        return carrier;
+    }
+
+    public Carrier updateCompanyInfo(Carrier carrier) throws QException {
+        String id = SessionManager.getCurrentCompanyId();
+        if (id.trim().length() == 0) {
+            return carrier;
+        }
+
+        EntityCrCompany ent = new EntityCrCompany();
+        ent.setId(id);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        Carrier c = EntityManager.select(ent);
+
+        if (c.getTableRowCount(ent.toTableName()) > 0) {
+            ent.setCompanyName(carrier.getValue("companyName").toString());
+            ent.setCompanyCountry(carrier.getValue("companyCountry").toString());
+            ent.setCompanyCurrency(carrier.getValue("companyCurrency").toString());
+            ent.setCompanyTimeZone(carrier.getValue("companyTimezone").toString());
+            ent.setCompanyAddress(carrier.getValue("companyAddress").toString());
+            ent.setLogoUrl(carrier.getValue("logoUrl").toString());
+            EntityManager.update(ent);
+        }
+
+        return carrier;
+    }
+
+    public static Carrier insertNewPrivateSubmodule(Carrier carrier) throws QException {
+//        if (carrier.getValue("orderNo").toString().trim().length() < 6) {
+//            carrier.addController("orderNo", "orderNoShouldBeAtLeastSixCharacter");
+//            return carrier;
+//        }
+        EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.insert(ent);
+        return carrier;
+    }
+
+    public Carrier updatePrivateSubmodule(Carrier carrier) throws QException {
+//        if (carrier.getValue("orderNo").toString().trim().length() < 6) {
+//            carrier.addController("orderNo", "orderNoShouldBeAtLeastSixCharacter");
+//            return carrier;
+//        }
+
+        EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.select(ent);
+        EntityManager.mapCarrierToEntity(carrier, ent, false);
+        EntityManager.update(ent);
+        return carrier;
+    }
+
+    public Carrier deletePrivateSubmodule(Carrier carrier) throws QException {
+        EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getPrivateSubmoduleList(Carrier carrier) throws QException {
+
+        String fkModuleId = carrier.getValue("fkModuleId").toString();
+
+        String fkPrivateSubmoduleId = "";
+
+        if (carrier.isKeyExist("id")) {
+            fkPrivateSubmoduleId = carrier.getValue("id").toString();
+        } else if (fkPrivateSubmoduleId.length() == 0 && fkModuleId.length() > 0) {
+            Carrier c = new Carrier();
+            c.setValue("fkModuleId", fkModuleId);
+            c = getPrivateAttributeList(c);
+            if (c.getTableRowCount(CoreLabel.RESULT_SET) > 0) {
+                fkPrivateSubmoduleId = c.getValueLine(CoreLabel.RESULT_SET,
+                        "fkPrivateSubmoduleId");
+            } else {
+                fkPrivateSubmoduleId = "-1";
+            }
+        }
+
+        EntityCrPrivateSubmodule ent = new EntityCrPrivateSubmodule();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setId(fkPrivateSubmoduleId);
+        Carrier cPrivateSubmodule = EntityManager.select(ent);
+
+        cPrivateSubmodule.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        cPrivateSubmodule.copyTableColumn(CoreLabel.RESULT_SET, "name", "submoduleName");
+        cPrivateSubmodule.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getPrivateSubmoduleList"));
+
+        cPrivateSubmodule.addTableRowCount(CoreLabel.RESULT_SET,
+                EntityManager.getRowCount(ent) + 1);
+
+        return cPrivateSubmodule;
+    }
+
+    public Carrier getPrivateValueTypeList(Carrier carrier) throws QException {
+
+        Carrier newCarrier = new Carrier();
+        newCarrier.setValue(EntityCrListItem.ITEM_CODE, "valueType");
+        newCarrier.setValue(EntityCrListItem.PARAM_2, "PR");
+        newCarrier.setValue("asc", EntityCrListItem.PARAM_1);
+        newCarrier = getListItemList(newCarrier);
+        if (newCarrier.getTableRowCount(CoreLabel.RESULT_SET) == 0) {
+            newCarrier.setValue(EntityCrListItem.ITEM_CODE, "valueType");
+            newCarrier.setValue(EntityCrListItem.LANG, "ENG");
+            newCarrier.setValue(EntityCrListItem.PARAM_2, "PR");
+            newCarrier.setValue("asc", EntityCrListItem.PARAM_1);
+            newCarrier = getListItemList(newCarrier);
+        }
+
+        return newCarrier;
+
+    }
+
+    public static Carrier insertNewPrivateAttribute(Carrier carrier) throws QException {
+        EntityCrPrivateAttribute ent = new EntityCrPrivateAttribute();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+//        ent.setLang(SessionManager.getCurrentLang());
+        EntityManager.insert(ent);
+        return carrier;
+    }
+
+    public Carrier updatePrivateAttribute(Carrier carrier) throws QException {
+        EntityCrPrivateAttribute ent = new EntityCrPrivateAttribute();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.select(ent);
+        EntityManager.mapCarrierToEntity(carrier, ent, false);
+        EntityManager.update(ent);
+        return carrier;
+    }
+
+    public Carrier deletePrivateAttribute(Carrier carrier) throws QException {
+        EntityCrPrivateAttribute ent = new EntityCrPrivateAttribute();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getPrivateAttributeList4Matrix(Carrier carrier)
+            throws QException {
+        carrier.setValue("fkModuleId", carrier.getValue("fkMainModuleId"));
+        return getPrivateAttributeList(carrier);
+    }
+
+    public static Carrier getPrivateAttributeList(Carrier carrier)
+            throws QException {
+
+        Carrier crPS = new Carrier();
+        String sname = carrier.getValue("submoduleName").toString();
+        crPS.setValue("name", sname);
+        crPS = getPrivateSubmoduleList(crPS);
+
+        String fkPrivateSubmoduleIds = carrier.getValue("fkPrivateSubmoduleId").toString();
+        Carrier crpPS = crPS.getKVFromTable(CoreLabel.RESULT_SET, "id", "name");
+        if (sname.trim().length() > 0) {
+            fkPrivateSubmoduleIds = crPS.getValueLine(CoreLabel.RESULT_SET);
+        }
+
+        EntityCrPrivateAttribute ent = new EntityCrPrivateAttribute();
+        ent.setDeepWhere(true);
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setName(carrier.getValue("attributeName").toString());
+        ent.addDeepWhereStatementField("sortBy");
+        ent.addSortBy("sortBy");
+        ent.setFkPrivateSubmoduleId(fkPrivateSubmoduleIds);
+        Carrier carrierSA = EntityManager.select(ent);
+        String tnSA = ent.toTableName();
+        carrier.removeKey("startLimit");
+        carrier.removeKey("endLimit");
+
+        Carrier cprVT = QUtility.getListItem("valueType",
+                carrier.getValue("valueTypeName").toString());
+
+        Carrier carrierMd = new Carrier();
+        carrierMd.setValue("moduleName", carrier.getValue("moduleName"));
+        carrierMd = getModuleList(carrierMd);
+        Carrier cprMD = carrierMd.getKVFromTable(CoreLabel.RESULT_SET,
+                "id", "moduleName");
+
+        //merge statement
+        carrierSA.mergeCarrier(tnSA, "fkValueTypeId", "valueTypeName", cprVT);
+        carrierSA.mergeCarrier(tnSA, "fkModuleId", "moduleName", cprMD);
+        carrierSA.mergeCarrier(tnSA, "fkPrivateSubmoduleId", "submoduleName", crpPS);
+
+        carrierSA.copyTableColumn(tnSA, "name", "attributeName");
+
+        // final statement
+        carrierSA.renameTableName(tnSA, CoreLabel.RESULT_SET);
+        carrierSA.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getPrivateAttributeList"));
+
+        carrierSA.addTableRowCount(CoreLabel.RESULT_SET, EntityManager.getRowCount(ent) + 1);
+
+        return carrierSA;
+    }
+
+    public static Carrier getAttributeListByModule(Carrier carrier) throws QException {
+        Carrier cin = new Carrier();
+        Carrier cout = new Carrier();
+        String tn = CoreLabel.RESULT_SET;
+
+        cin.setValue("fkModuleId", carrier.getValue("fkModuleId"));
+
+        Carrier c = getSubmoduleAttributeList(cin);
+        int rc = c.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            cout.setValue(tn, i, "id", c.getValue(tn, i, "id"));
+            cout.setValue(tn, i, "attributeName", c.getValue(tn, i, "attributeName"));
+        }
+
+        Carrier c1 = getPrivateAttributeList(cin);
+        int rc1 = c1.getTableRowCount(tn);
+        for (int i = 0; i < rc1; i++) {
+            cout.setValue(tn, rc + i, "id", c1.getValue(tn, i, "id"));
+            cout.setValue(tn, rc + i, "attributeName", c1.getValue(tn, i, "name"));
+        }
+        return cout;
+    }
+
+    public static Carrier insertNewRelPriceListAndSubmodule(Carrier carrier) throws QException {
+        String fkPriceListId = carrier.getValue("fkPriceListId").toString();;
+
+        EntityCrRelPriceListAndSubmodule ent = new EntityCrRelPriceListAndSubmodule();
+        ent.setDeepWhere(false);
+        ent.setFkPriceListId(fkPriceListId);
+        Carrier crRel = EntityManager.select(ent);
+
+        if (crRel.getTableRowCount(ent.toTableName()) > 0) {
+            String ids = crRel.getValueLine(ent.toTableName());
+            ent.setId(ids);
+            EntityManager.delete(ent);
+        }
+
+        String[] fkSubmoduleId = carrier.getValue("fkSubmoduleId").toString()
+                .split(CoreLabel.SEPERATOR_VERTICAL_LINE);
+        for (String p : fkSubmoduleId) {
+            if (p.trim().length() > 0) {
+                EntityCrRelPriceListAndSubmodule entNew = new EntityCrRelPriceListAndSubmodule();
+                entNew.setDeepWhere(false);
+                entNew.setFkSubmoduleId(p);
+                entNew.setFkPriceListId(fkPriceListId);
+                Carrier tc = EntityManager.select(entNew);
+                if (tc.getTableRowCount(entNew.toTableName()) > 0) {
+                    continue;
+                }
+                EntityManager.insert(entNew);
+            }
+        }
+        return new Carrier();
+    }
+
+    public static Carrier getRelPriceListAndSubmoduleList(Carrier carrier) throws QException {
+        boolean hasSModuleVal = carrier.getValue("submoduleName").toString().length() > 0;
+        Carrier cSModule = new Carrier();
+        cSModule.setValue("submoduleName", carrier.getValue("submoduleName"));
+        cSModule = hasSModuleVal ? getSubmoduleList(cSModule)
+                .getKVFromTable(CoreLabel.RESULT_SET, "id", "submoduleName")
+                : CacheUtil.getFromCache(CacheUtil.CACHE_KEY_SUBMODULE);
+        String fkSModuleIds = hasSModuleVal
+                ? convertArrayToFilterLine(cSModule.getKeys())
+                : "";
+
+        EntityCrRelPriceListAndSubmoduleList entM = new EntityCrRelPriceListAndSubmoduleList();
+        EntityManager.mapCarrierToEntity(carrier, entM);
+        entM.setFkSubmoduleId(fkSModuleIds);
+        Carrier crOut = EntityManager.select(entM);
+        String tnMain = entM.toTableName();
+
+        String[] moduleField = hasSModuleVal
+                ? new String[]{"fkSubmoduleId", ""}
+                : new String[]{"fkSubmoduleId", "LANG"};
+        crOut.mergeCarrier(tnMain, moduleField,
+                "submoduleName", cSModule, !hasSModuleVal);
+
+        if (carrier.hasKey("id")) {
+            EntityCrRelPriceListAndSubmodule ent1 = new EntityCrRelPriceListAndSubmodule();
+            ent1.setId(carrier.getValue("id").toString());
+            EntityManager.select(ent1);
+
+            if (ent1.getFkPriceListId().trim().length() > 0) {
+                EntityCrRelPriceListAndSubmodule ent2 = new EntityCrRelPriceListAndSubmodule();
+                ent2.setFkPriceListId(ent1.getFkPriceListId());
+                Carrier tc1 = EntityManager.select(ent2);
+
+                String res = "";
+                String tn = ent2.toTableName();
+                int rc = tc1.getTableRowCount(tn);
+                for (int i = 0; i < rc; i++) {
+                    res += tc1.getValue(tn, i, "fkSubmoduleId").toString()
+                            + "|";
+                }
+                crOut.setValue(tnMain, 0, "fkSubmoduleId", res);
+            }
+
+        }
+
+        crOut.renameTableName(tnMain, CoreLabel.RESULT_SET);
+
+        crOut.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getRelPriceListAndSubmoduleList"));
+        crOut.addTableRowCount("rowCount", EntityManager.getRowCount(entM));
+        return crOut;
+
+    }
+
+    public Carrier deleteRelPriceListAndSubmodule(Carrier carrier) throws QException {
+        EntityCrRelPriceListAndSubmodule ent = new EntityCrRelPriceListAndSubmodule();
+        ent.setId(carrier.getValue("id").toString());
+        EntityManager.delete(ent);
+        return carrier;
+    }
+
+    public static Carrier getSubmoduleListByPriceList(Carrier carrier) throws QException {
+        EntityCrPriceList entPL = new EntityCrPriceList();
+        entPL.setId(carrier.getValue("fkPriceListId").toString());
+        EntityManager.select(entPL);
+
+        if (entPL.getFkModuleId().length() == 0) {
+            return carrier;
+        }
+
+        Carrier cSModule = new Carrier();
+        cSModule.setValue("fkModuleId", entPL.getFkModuleId());
+        cSModule = getSubmoduleList(cSModule);
+
+        Carrier crPS = new Carrier();
+        crPS.setValue("fkModuleId", entPL.getFkModuleId());
+        crPS = getPrivateSubmoduleList(crPS);
+
+        Carrier crOut = new Carrier();
+        String tn = CoreLabel.RESULT_SET;
+        int rc = cSModule.getTableRowCount(tn);
+        int rcPS = crPS.getTableRowCount(tn);
+
+        for (int i = 0; i < rc; i++) {
+            crOut.setValue(tn, i, "id", cSModule.getValue(tn, i, "id"));
+            crOut.setValue(tn, i, "submoduleName", cSModule.getValue(tn, i, "submoduleName"));
+        }
+
+        int trc = crOut.getTableRowCount(tn);
+        for (int i = 0; i < rcPS; i++) {
+            crOut.setValue(tn, trc + i, "id", crPS.getValue(tn, i, "id"));
+            crOut.setValue(tn, trc + i, "submoduleName", crPS.getValue(tn, i, "submoduleName"));
+        }
+
+        return crOut;
+    }
+
+    public Carrier changeLang(Carrier carrier) throws QException {
+
+        return carrier;
+    }
+
+    public Carrier getAccountInfo(Carrier carrier) throws QException {
+        Carrier c = new Carrier();
+
+        EntityCrUser ent = new EntityCrUser();
+        ent.setDeepWhere(false);
+        ent.setUsername(SessionManager.getCurrentUsername());
+        ent.setDbname(SessionManager.getCurrentDomain());
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        c = EntityManager.select(ent);
+        c.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+
+        c.removeColoumn(CoreLabel.RESULT_SET, EntityCrUser.PASSWORD);
+        c.removeColoumn(CoreLabel.RESULT_SET, EntityCrUser.LI_USER_PERMISSION_CODE);
+        c.removeColoumn(CoreLabel.RESULT_SET, EntityCrUser.FK_COMPANY_ID);
+        c.removeColoumn(CoreLabel.RESULT_SET, EntityCrUser.FK_EMPLOYEE_ID);
+        c.removeColoumn(CoreLabel.RESULT_SET, EntityCrUser.TG_USER_ID);
+        c.removeColoumn(CoreLabel.RESULT_SET, EntityCrUser.USER_STATUS);
+        c.removeColoumn(CoreLabel.RESULT_SET, EntityCrUser.TG_USER_ID);
+        return c;
+    }
+
+    public static Carrier runScript(Carrier carrier) throws QException {
+        Pattern p = Pattern.compile("\\$\\{companyDb\\}");
+
+        String types = EntityCrUserTable.Type.BUGSCRIPT.toString();
+
+        EntityCrUserTable entUsrTbl = new EntityCrUserTable();
+        entUsrTbl.setType(types);
+        entUsrTbl.addSortBy(EntityCrUserTable.TYPE);
+        entUsrTbl.addSortBy(EntityCrUserTable.SEQNUM);
+        entUsrTbl.setSortByAsc(true);
+        Carrier crUsrTbl = EntityManager.select(entUsrTbl);
+
+        int rc = crUsrTbl.getTableRowCount(entUsrTbl.toTableName());
+        for (int i = 0; i < rc; i++) {
+            EntityCrUserTable entUsrTbl1 = new EntityCrUserTable();
+            EntityManager.mapCarrierToEntity(crUsrTbl,
+                    entUsrTbl.toTableName(), i, entUsrTbl1, true);
+            if (entUsrTbl1.getTableScript().length() > 0) {
+                String sc[] = entUsrTbl1.getTableScript().split("\\{\\|\\|\\}");
+                String tables[] = sc[0].split(",");
+                for (String tn : tables) {
+                    if (tn.trim().length() == 0) {
+                        continue;
+                    }
+                    for (int j = 1; j < sc.length; j++) {
+                        String q = sc[j];
+                        if (q.trim().length() > 0) {
+                            String vs = p.matcher(q).replaceAll(tn);
+                            System.out.println(" \n \n script for bugscript>>>>> \n " + vs);
+                            try {
+                                EntityManager.executeUpdateByQuery(vs);
+                                System.out.println(" \n \n script for bugscript done \n  \n");
+                            } catch (Exception e) {
+                                System.out.println("exception=" + e.getMessage());
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        return carrier;
+    }
+
+    public static Carrier importModule(Carrier carrier) throws QException, UnsupportedEncodingException {
+        String filename = carrier.getValue("fileUrl").toString();
+        GeneralProperties prop = new GeneralProperties();
+
+        String fileName = prop.coreFullPath() + "../../resources/upload/" + filename;
+
+        File excelFile = new File(fileName);
+        FileInputStream file = null;
+
+        try {
+            file = new FileInputStream(excelFile);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ExcelWriter.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet;
+        if (excelFile.exists() && file != null) {
+            try {
+                workbook = new XSSFWorkbook(file);
+
+            } catch (Exception ex) {
+                Logger.getLogger(ExcelWriter.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        sheet = workbook.getSheet("module");
+        Iterator<Row> iterator = sheet.iterator();
+        Row row1 = iterator.next();
+
+        int cc = 200;
+        ArrayList<String> cols = new ArrayList<String>();
+        for (int i = 1; i < cc; i++) {
+            String val = getValueOfCell(row1.getCell(i));
+            if (val.trim().length() > 0) {
+                cols.add(val);
+            }
+
+        }
+
+        Carrier c = new Carrier();
+        int rc = 0;
+
+        while (iterator.hasNext()) {
+            Row row = iterator.next();
+            if (getValueOfCell(row.getCell(1)).trim().length() == 0) {
+                continue;
+            }
+            //1-ci col ENG_NAME, 0-CI COL ISE PAYMENT_TYPE_SHORT_NAME olur her
+            //zaman
+            String relId = "";
+            String fkModuleId = getFkModuleIdByEngName(getValueOfCell(row.getCell(1)));
+            if (fkModuleId.trim().length() == 0) {
+                relId = insertModuleLine(getValueOfCell(row.getCell(0)));
+            }
+
+            for (int i = 0; i < cols.size(); i++) {
+                String field[] = cols.get(i).split("_");
+                String type = field[1];
+                String lang = field[0];
+                String val = getValueOfCell(row.getCell(1 + i));
+                if (type.trim().equals("NAME")) {
+                    insertRelLangName(relId, val, lang, LANG_TYPE_MODULE);
+                } else if (type.trim().equals("DESC")) {
+                    insertRelLangDesc(relId, val, lang, LANG_TYPE_MODULE);
+                }
+            }
+
+//            String startDate = getValueOfCell(row.getCell(0));
+        }
+
+        return carrier;
+    }
+
+    private static String insertModuleLine(String paymentShortName) throws QException {
+        EntityCrPaymentType entPT = new EntityCrPaymentType();
+        entPT.setPaymentTypeShortname(paymentShortName);
+        EntityManager.select(entPT);
+
+        EntityCrModule ent = new EntityCrModule();
+        ent.setLang("ENG");
+        ent.setFkPaymentTypeId(paymentShortName);
+        ent.setLiModuleStatus("A");
+        EntityManager.insert(ent);
+        return ent.getId();
+    }
+
+    private static String getFkModuleIdByEngName(String name) throws QException {
+        Carrier c = new Carrier();
+        c.setValue("moduleName", name);
+        c = getModuleList(c);
+        return c.getValue(CoreLabel.RESULT_SET, 0, "id").toString();
+    }
+
+    private static String getFkSubmoduleIdByEngName(String fkModuleId, String name) throws QException {
+        Carrier c = new Carrier();
+        c.setValue("submoduleName", name);
+        c.setValue("fkModuleId", fkModuleId);
+        c = getSubmoduleList4Import(c);
+        return c.getValue(CoreLabel.RESULT_SET, 0, "id").toString();
+    }
+
+    private static String getValueOfCell(Cell cell) {
+        String res = "";
+        try {
+            cell.setCellType(CellType.STRING);
+            res = cell.getStringCellValue();
+        } catch (Exception e) {
+        }
+        return res;
+    }
+
+    private static void insertRelLangName(String relId, String name,
+            String lang, String langType) throws QException {
+        EntityCrLangRel entLang = new EntityCrLangRel();
+        entLang.setRelId(relId);
+        entLang.setLangField(LANG_FIELD_NAME);
+        entLang.setLangType(langType);
+        entLang.setLang(lang);
+        entLang.setStartLimit(0);
+        entLang.setEndLimit(0);
+        Carrier c = EntityManager.select(entLang);
+
+        if (c.getTableRowCount(entLang.toTableName()) == 0) {
+            entLang.setLangDef(name);
+            EntityManager.insert(entLang);
+        } else {
+            entLang.setLangDef(name);
+            EntityManager.update(entLang);
+        }
+    }
+
+    private static void insertRelLangDesc(String relId, String desc,
+            String lang, String langType) throws QException {
+        EntityCrLangRel entLang = new EntityCrLangRel();
+        entLang.setRelId(relId);
+        entLang.setLangField(LANG_FIELD_DESC);
+        entLang.setLangType(langType);
+        entLang.setLang(lang);
+        entLang.setStartLimit(0);
+        entLang.setEndLimit(0);
+        Carrier c = EntityManager.select(entLang);
+
+        if (c.getTableRowCount(entLang.toTableName()) == 0) {
+            entLang.setLangDef(desc);
+            EntityManager.insert(entLang);
+        } else {
+            entLang.setLangDef(desc);
+            EntityManager.update(entLang);
+        }
+
+    }
+
+    public static Carrier importSubmodule(Carrier carrier) throws QException, UnsupportedEncodingException {
+        String filename = carrier.getValue("fileUrl").toString();
+        GeneralProperties prop = new GeneralProperties();
+
+        String fileName = prop.coreFullPath() + "../../resources/upload/" + filename;
+
+        File excelFile = new File(fileName);
+        FileInputStream file = null;
+
+        try {
+            file = new FileInputStream(excelFile);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ExcelWriter.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet;
+        if (excelFile.exists() && file != null) {
+            try {
+                workbook = new XSSFWorkbook(file);
+
+            } catch (Exception ex) {
+                Logger.getLogger(ExcelWriter.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        sheet = workbook.getSheet("submodule");
+        Iterator<Row> iterator = sheet.iterator();
+        Row row1 = iterator.next();
+
+        int cc = 200;
+        ArrayList<String> cols = new ArrayList<String>();
+        for (int i = 2; i < cc; i++) {
+            String val = getValueOfCell(row1.getCell(i));
+            if (val.trim().length() > 0) {
+                cols.add(val);
+            }
+
+        }
+
+        Carrier c = new Carrier();
+        int rc = 0;
+
+        while (iterator.hasNext()) {
+            Row row = iterator.next();
+            if (getValueOfCell(row.getCell(2)).trim().length() == 0) {
+                continue;
+            }
+            //0-ci col MODULE_NAME, 1-CI COL ISE order_no,2-eng_name olur her
+            //zaman
+            String relId = "";
+            String orderNo = getValueOfCell(row.getCell(1));
+            String fkModuleId = getFkModuleIdByEngName(getValueOfCell(row.getCell(0)));
+            String fkSubmoduleId = getFkSubmoduleIdByEngName(fkModuleId, getValueOfCell(row.getCell(2)));
+
+            if (fkSubmoduleId.trim().length() == 0) {
+                relId = insertSubmoduleLine(fkModuleId, orderNo);
+            }
+
+            for (int i = 0; i < cols.size(); i++) {
+                String field[] = cols.get(i).split("_");
+                String type = field[1];
+                String lang = field[0];
+                String val = getValueOfCell(row.getCell(2 + i));
+                if (type.trim().equals("NAME")) {
+                    insertRelLangName(relId, val, lang, LANG_TYPE_SUBMODULE);
+                } else if (type.trim().equals("DESC")) {
+                    insertRelLangDesc(relId, val, lang, LANG_TYPE_SUBMODULE);
+                }
+            }
+
+//            String startDate = getValueOfCell(row.getCell(0));
+        }
+
+        return carrier;
+    }
+
+    private static String insertSubmoduleLine(String fkModuleId, String orderNo) throws QException {
+        EntityCrSubmodule ent = new EntityCrSubmodule();
+        ent.setFkModuleId(fkModuleId);
+        ent.setLiSubmoduleStatus("A");
+        ent.setSortBy(orderNo);
+        ent.setSubmoduleType("1");
+        EntityManager.insert(ent);
+        return ent.getId();
+    }
+
+    public static Carrier getSubmoduleListByModuleId(Carrier carrier) throws QException {
+        EntityCrSubmodule ent = new EntityCrSubmodule();
+        ent.setDeepWhere(false);
+        ent.setFkModuleId(carrier.getValue("fkModuleId").toString());
+        ent.setSortBy(carrier.getValue("sortBy").toString());
+        ent.addSortBy("sortBy");
+        ent.setSortByAsc(true);
+        Carrier c = EntityManager.select(ent);
+        carrier.removeKey("startLimit");
+        carrier.removeKey("endLimit");
+
+        String tnSubmodule = ent.toTableName();
+        String ids = c.getValueLine(tnSubmodule);
+
+        EntityCrLangRel entName = new EntityCrLangRel();
+        entName.setDeepWhere(false);
+        entName.setLang(SessionManager.getCurrentLang());
+        entName.setRelId(ids);
+        entName.setLangType(LANG_TYPE_SUBMODULE);
+        entName.setLangField(LANG_FIELD_NAME);
+        Carrier cprName = EntityManager.select(entName).getKVFromTable(
+                entName.toTableName(), "relId", "langDef");
+
+        EntityCrLangRel entDesc = new EntityCrLangRel();
+        entDesc.setDeepWhere(false);
+        entDesc.setLang(SessionManager.getCurrentLang());
+        entDesc.setRelId(ids);
+        entDesc.setLangType(LANG_TYPE_SUBMODULE);
+        entDesc.setLangField(LANG_FIELD_DESC);
+        Carrier cprDesc = EntityManager.select(entDesc).getKVFromTable(
+                entDesc.toTableName(), "relId", "langDef");
+
+        c.mergeCarrier(tnSubmodule, "id", "submoduleName", cprName);
+        c.mergeCarrier(tnSubmodule, "id", "submoduleDescription", cprDesc, false);
+
+        c.renameTableName(tnSubmodule, CoreLabel.RESULT_SET);
+        return c;
     }
 
 }

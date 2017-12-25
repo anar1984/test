@@ -41,7 +41,7 @@ public class CompanyJob /*implements Job*/ {
                 Connection conn = SessionManager.getCurrentConnection();//new DBConnection().getConnection();
                 //conn.setAutoCommit(false);
                 //SessionManager.setConnection(Thread.currentThread().getId(), conn);
-                System.out.println("ok 1");
+//                System.out.println("ok 1");
                 PreparedStatement pst = conn.prepareStatement("select lower(table_name) "
                         + "table_name from apdvoice.cr_user_tables where type='t'");
                 ResultSet rst = pst.executeQuery();
@@ -49,7 +49,7 @@ public class CompanyJob /*implements Job*/ {
                 while (rst.next()) {
                     tableList.add(rst.getString(1));
                 }
-                System.out.println("ok 2");
+//                System.out.println("ok 2");
 
                 pst = conn.prepareStatement("SELECT ut.table_script "
                         + "FROM apdvoice.cr_user_tables ut WHERE ut.type='v' ORDER BY SEQNUM");
@@ -89,14 +89,14 @@ public class CompanyJob /*implements Job*/ {
                     //conn.setCatalog("apd_"+companyDomain);
                     for (String tableName : tableList) {
                         stmt.executeUpdate("CREATE TABLE " + companyDb + "." + tableName + " LIKE apdvoice." + tableName);
-                        System.out.println("table created: " + companyDb + "." + tableName);
+//                        System.out.println("table created: " + companyDb + "." + tableName);
                     }
 
                     for (String viewScript : viewList) {
                         //stmt.executeUpdate(viewScript.replace("${companyDb}", companyDb));
                         String vs = p.matcher(viewScript).replaceAll(companyDb);
                         stmt.executeUpdate(vs);
-                        System.out.println("view created: " + vs);
+//                        System.out.println("view created: " + vs);
                     }
 
                     /*if (companyType.equals(EntityCrCompany.CompanyType.COMPANY.toString())) {
@@ -117,7 +117,7 @@ public class CompanyJob /*implements Job*/ {
 
 //                MailSender.send(email, "Company registered", "Your company " + 
 //                        companyDb + " registered successfully.");
-                    System.out.println(companyDb + " company created");
+//                    System.out.println(companyDb + " company created");
 
                 }
 

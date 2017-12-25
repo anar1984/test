@@ -17,12 +17,22 @@ public class EntityCrPriceList extends CoreEntity {
     public static String LIST_STATUS = "listStatus";
     public static String DESCRIPTION = "description";
     public static String CURRENCY = "currency";
+    public static String FK_MODULE_ID = "fkModuleId";
+    
+    private String fkModuleId = "";
     private String currency = "";
-
     private String paymentName = "";
     private String price = "";
     private String listStatus = "";
     private String description = "";
+
+    public String getFkModuleId() {
+        return fkModuleId;
+    }
+
+    public void setFkModuleId(String fkModuleId) {
+        this.fkModuleId = fkModuleId;
+    }
 
     public String getCurrency() {
         return currency;

@@ -592,9 +592,7 @@ function createPureTableHtml(var_tablename, data) {
             if (heeden_table_coloumn.indexOf(keys[i]) > -1) {
                 continue;
             }
-            var td = $('<td class="apd-table-td _c' + i + '" align="center" valign="center"></td>');
-            td.addClass('apd-table-td');
-            td.html(objChildBody[j][keys[i]]);
+            
             //get sum by column
             var ctype = colType[keys[i]];
             var first2Digits = keys[i].substring(0, 2);
@@ -609,6 +607,17 @@ function createPureTableHtml(var_tablename, data) {
                     f_val_c[keys[i]] = (f_val_c[keys[i]]) ? parseInt(f_val_c[keys[i]]) + 1 : 1;
                 }
             }
+            
+            //add cell value
+            var td = $('<td class="apd-table-td _c' + i + '" align="center" valign="center"></td>');
+            td.addClass('apd-table-td');
+            var val = objChildBody[j][keys[i]];
+            if (ctype === 'DATE'){
+                val = val.substring(6, 8)+'-'+val.substring(4, 6)+'-'+val.substring(0, 4);
+            }else if (ctype === 'TIME'){
+                val = val.substring(0, 2)+':'+val.substring(2, 4);
+            } 
+            td.html(val);
             tr.append(td);
         }
         body.append(tr);
@@ -795,8 +804,7 @@ function fillTableBodyByid(var_tablename, data, start_ind) {
                 td.attr("style", "display: none;");
             }
 
-            td.html(objChildBody[j][colnames[i]]);
-            tr.append(td);
+           
             //get sum by column
             var ctype = colType[colnames[i]];
             var first2Digits = colnames[i].substring(0, 2);
@@ -811,7 +819,19 @@ function fillTableBodyByid(var_tablename, data, start_ind) {
                     f_val[colnames[i]] = newVal;
                     f_val_c[colnames[i]] = (f_val_c[colnames[i]]) ? parseInt(f_val_c[colnames[i]]) + 1 : 1;
                 }
-            }
+            } 
+            
+            //add cell value
+            var val = objChildBody[j][colnames[i]];
+            if (ctype === 'DATE'){
+                val = val.substring(6, 8)+'-'+val.substring(4, 6)+'-'+val.substring(0, 4);
+            }else if (ctype === 'TIME'){
+                val = val.substring(0, 2)+':'+val.substring(2, 4);
+            } 
+            td.html(val);
+            tr.append(td);
+            
+           
         }
         body.append(tr);
     }

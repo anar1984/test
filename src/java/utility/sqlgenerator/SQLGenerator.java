@@ -655,7 +655,7 @@ public class SQLGenerator {
                     }
                     oldKey = "";
                     ln += SPACE + singleClause;
-                    ln += rc > 2  ? AND: OR;
+                    ln += rc > 2 ? AND : OR;
 
                 }
 
@@ -777,7 +777,9 @@ public class SQLGenerator {
                 valueArr.add(val);
             }
         } else if (val.startsWith(FAIZ) || val.endsWith(FAIZ)) {
-            operation = "LOWER(" + modifyKey(addEntityNameToAS, tablename, key.trim().toLowerCase()) + ")" + SPACE + COMMAND_LK;
+//            operation = "LOWER(" + modifyKey(addEntityNameToAS, tablename, key.trim().toLowerCase()) + ")" + SPACE + COMMAND_LK;
+            operation = modifyKey(addEntityNameToAS, tablename, key.trim().toLowerCase()) + SPACE + COMMAND_LK;
+
             valueArr.add(val.replaceAll(FAIZ, "%"));
         } else if (val.contains(BN)) {
             String v[] = val.split(BN);

@@ -85,7 +85,7 @@ public class SMSSender {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            System.out.println("Output from Server .... \n");
+//            System.out.println("Output from Server .... \n");
             String rline = "";
             while ((output = br.readLine()) != null) {
                 rline = rline + output;

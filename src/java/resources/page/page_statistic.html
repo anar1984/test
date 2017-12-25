@@ -9,7 +9,7 @@
             <li class="active"><a data-toggle="tab" href="#rawdata" qlang>rawdata</a></li>
             <li><a data-toggle="tab" href="#stat" qlang>basicstatistic</a></li>
             <li><a data-toggle="tab" href="#figure" qlang>figure</a></li> 
-            <li><a data-toggle="tab" href="#regression" qlang>regression</a></li>
+            <li component_id="regression"><a data-toggle="tab" href="#regression" qlang>regression</a></li>
         </ul>
     </div>
 
@@ -131,7 +131,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Inspection Matrix</h4>
+                <h4 class="modal-title" qlang>addInspectionMatrix</h4>
             </div>
             <div class="modal-body-1">
                 <form id="form_insertNewReportLine" class="apd-form" method="POST" 
@@ -151,18 +151,19 @@
 
                     <div class="form-group col-md-3">
                         <label  qlang class="float">module</label>
-                        <select class="form-control apd-form-select" id="fkMainModuleId" name="fkMainModuleId"
+                        <select class="form-control apd-form-select" id="fkModuleId" name="fkModuleId"
                                 select_text="moduleName" select_value="id"  
-                                srv_url="srv/serviceCrGetModuleList">
+                                has_null="1"
+                                srv_url="srv/serviceCrGetModuleList4Combo">
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label qlang>attribute</label>
-                        <select class="form-control apd-form-select" 
+                        <select class="form-control apd-form-select-back" 
                                 id="fkSubmoduleAttibutesId" name="fkSubmoduleAttibutesId"
                                 select_text="attributeName" select_value="id" 
-                                dependence_id="fkMainModuleId"
-                                srv_url="srv/serviceCrGetSubmoduleAttributeList">
+                                dependence_id="fkModuleId"
+                                srv_url="srv/serviceCrGetAttributeListByModule">
                         </select>
                     </div>
                     <div class="form-group col-md-3">

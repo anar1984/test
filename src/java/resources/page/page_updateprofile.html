@@ -1,23 +1,291 @@
-<div class="row apd-page" id="page_company">
+<div component_id="page_updateprofile" class="row apd-page" id="page_updateprofile">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
-            <label qlang>company</label>
+            <label qlang>account</label>
         </div>
     </div> 
-    <div  class="col-md-10 apd-page-btn"> 
-        <button id='serviceCrGetCompanyList' type="button" 
-                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                onclick="loadTable('tbl_company_list')" qlang>companyList
-        </button>
-        
-        <hr>
-    </div>
-     
 
-    <div  id= "companylist" class="col-md-12 apd-page-body"> 
 
+    <form id="form_updateUser" class="apd-form" method="POST" action="srv/serviceCrUpdateUser">
+
+
+        <div class="col-md-12">
+
+            <!--patientData-->
+
+            <br>
+            <div class="form-group hidden col-md-6">
+                <label class="float">id</label>
+                <input dont_clear class="form-control apd-form-input" type="hidden" id="id"
+                       name="id">
+            </div>
+            
+            <div class="form-group hidden col-md-6">
+                <label class="float" qlang >username</label>
+                <input dont_clear  class="form-control apd-form-input" type="text" id="username"
+                       name="username">
+            </div>
+
+            <div class="form-group col-md-offset-2 col-md-4">
+                <label class="float" qlang >userPersonName</label>
+                <input type="text" class="form-control apd-form-input" id="userPersonName" 
+                       name="userPersonName" placeholder="">
+            </div>
+
+
+            <div class="form-group  col-md-4">
+                <label class="float" qlang >userPersonSurname</label>
+                <input type="text" class="form-control apd-form-input" id="userPersonSurname" 
+                       name="userPersonSurname" placeholder="">
+            </div>
+            <div class="form-group col-md-offset-2 col-md-4">
+                <label class="float" qlang >userPersonMiddlename</label>
+                <input type="text" class="form-control apd-form-input" id="userPersonMiddlename" 
+                       name="userPersonMiddlename" placeholder="">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="float" qlang >userBirthPlace</label>
+                <input type="text" class="form-control apd-form-input" id="userBirthPlace" 
+                       name="userBirthPlace" placeholder="">
+            </div>
+            <div class="form-group col-md-offset-2 col-md-4">
+                <label class="float" qlang  qlang >userBirthDate</label>
+                <div class='input-group date apd-form-date' id="userBirthDate"  >
+                    <input type="text" class="form-control apd-form-date">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group col-md-4">
+                <label class="float" qlang >sex</label>
+                <select class="form-control apd-form-select-back" id="sex" name="sex"
+                        select_text="itemValue" select_value="itemKey" 
+                        srv_url="li/sex" has_null>
+                </select>
+            </div> 
+
+            <div class="form-group col-md-12">
+            </div>
+            <div class="form-group col-md-offset-2 col-md-4">
+                <label class="float" qlang >occupation</label>
+                <input type="text" class="form-control apd-form-input" id="occupation" 
+                       name="occupation" placeholder="">
+            </div>
+            <div class="form-group col-md-4">
+                <label class="float" qlang >mobile1</label>
+                <input type="text" class="form-control apd-form-input" id="mobile1" 
+                       name="mobile1">
+            </div>
+            <div class="form-group col-md-offset-2 col-md-4">
+                <label class="float" qlang >mobile2</label>
+                <input type="text" class="form-control apd-form-input" id="mobile2" 
+                       name="mobile2" >
+            </div>
+            <div class="form-group col-md-4">
+                <label class="float" qlang >telephone1</label>
+                <input type="text" class="form-control apd-form-input" id="telephone1" 
+                       name="telephone1" placeholder=" ">
+            </div>
+            <div class="form-group col-md-offset-2 col-md-4">
+                <label class="float" qlang >telephone2</label>
+                <input type="text" class="form-control apd-form-input" id="telephone2" 
+                       name="telephone2" placeholder=" ">
+            </div>
+
+            <div class="form-group col-md-4 ">
+                <label class="float" qlang >email1</label>
+                <input type="email" class="form-control apd-form-email" id="email1" 
+                       name="email1" placeholder=" ">
+            </div>
+            <div class="form-group col-md-offset-2 col-md-4">
+                <label class="float" qlang >email2</label>
+                <input type="email" class="form-control apd-form-email" id="email2" 
+                       name="email2" placeholder=" ">
+            </div>
+
+
+            <div class="form-group col-md-4">
+                <label class="float" qlang>userImage</label>
+                <div class="fileuploader">
+                    <div class="col-md-11">
+                        <input id="userImage" name="userImage" 
+                               class="form-control apd-form-input-file" 
+                               type="file" file_type="image" value="">
+                    </div>
+                    <i class="apd-image-trigger fa  fa-picture-o"
+                       style="font-size:14px;color:#00b289;display: none" 
+                       id="logoInput"
+                       apd_image_alt="insValue" data-toggle="modal" 
+                       data-target="#apdImageViewer" aria-hidden="true" v_id="sa_201707091117240999">
+                    </i>
+                    <div class="col-md-1">
+                        <img style="display: none; " class="  apd-image-spinner" src="resources/upload/spinner.gif" height="20px" width="20px">
+                        <img style="display: none; " class="  apd-image-uploaded" src="resources/upload/uploaded.png" height="20px" width="20px">
+                        <i style="font-size:22px;color:red;display: none; " class="fa fa-warning apd-image-upload-error"></i>
+                        <i class="apd-image-trigger fa  fa-picture-o  " style="font-size:14px;color:#00b289;display: none" apd_image_url="resources/upload/" apd_image_alt="insValue" data-toggle="modal" data-target="#apdImageViewer" aria-hidden="true" v_id="sa_201707081543050682"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="form-group col-md-offset-2 col-md-8" align="right">
+            <button   component_id1="serviceCrUpdateUser1" type="button" class="btn btn-default apd-form-btn" 
+                      apd-clear-form-data="false" qlang>update</button>
+           
+        </div>
+    </form>
+
+
+    <div id="apdImageViewer"   class="modal fade col-md-12" role="dialog">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"  qlang >imageViewer</h4>
+                </div>
+                <div class="modal-body-1">
+                    <div id="myCarousel211" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators" >
+                        </ol>
+                        <div class="carousel-inner">
+                        </div>
+                        <a class="left carousel-control" href="#myCarousel211" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only"  qlang >previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel211" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only"  qlang >next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
     </div>
-    <!-- Modal -->
-  
-    
+
+
 </div>
+<script>
+    $('.selectpicker').selectpicker('refresh');
+
+    getCompanyInfo();
+
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+        var lang = $('#lang').val();
+        $('#termsandco').attr('href', 'termsandco.html?lang=' + lang);
+    });
+
+
+
+    function update(elem) {
+        var $e = $('#btnStep3Finish');
+        var json = {kv: {}};
+        console.log($e.attr('id'))
+        $e.closest('section').find('.form-control').each(function (el) {
+            var id = $(this).attr('id');
+            var v = $(this).val();
+            console.log(id + '-->' + v);
+            json.kv[id] = v;
+        });
+        json.kv.lang = $('#lang').val();
+
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrUpdateUser",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+                $('#mainbody').hide();
+                $('#activateionbody').show();
+            },
+            error: function () {
+                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+    }
+
+    function getCompanyInfo() {
+        $.ajax({
+            url: "api/post/srv/serviceCrGetAccountInfo",
+            type: "POST",
+            contentType: 'text/html',
+            success: function (res) {
+                isResultRedirect(JSON.stringify(res));
+
+                var keys = Object.keys(res.tbl[0].r[0]);
+                //set form input values
+
+
+                for (var i = 0; i < keys.length; i++) {
+                    var v = (res.tbl[0].r[0][keys[i]]) ? res.tbl[0].r[0][keys[i]] : "";
+                    try {
+                        $('input[id=' + keys[i] + ']').val(v);
+//                        $('input[id=' + keys[i] + ']').attr("file_value", v);
+                    } catch (err) {
+                    }
+                    try {
+                        if (v) {
+                            $('select[id=' + keys[i] + ']').
+                                    find('option[value=' + v + ']').attr("selected", "selected");
+                        }
+                    } catch (err) {
+                    }
+                }
+
+                $('.apd-form-date').each(function () {
+                    var id = $(this).attr('id');
+                    console.log("id=" + id)
+                    var v = (res.tbl[0].r[0][id]) ? res.tbl[0].r[0][id] : "";
+                    console.log("v=" + v)
+                    if (id === keys[i]) {
+                        try {
+                            var y = v.substring(0, 4);
+                            var m = v.substring(4, 6);
+                            var d = v.substring(6, 8);
+                            $(this).data("DateTimePicker").date(new Date(y, m - 1, d));
+                        } catch (err) {
+
+                        }
+
+
+                    }
+                });
+
+
+                //has logo
+//                try {
+                if (res.tbl[0].r[0].userImage) {
+                    $("#userImage").attr("file_value", res.tbl[0].r[0].userImage);
+                    $("#logoInput").attr("apd_image_url", "resources/upload/" + res.tbl[0].r[0].userImage);
+                    $("#logoInput").show();
+                }
+//                } catch (err) {
+//                }
+
+                $('.selectpicker').selectpicker('refresh');
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    $(function () {
+        $('.apd-form-date').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+    });
+</script>

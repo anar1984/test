@@ -20,7 +20,7 @@ import utility.sqlgenerator.IdGenerator;
 public class FileUpload {
 
     public synchronized String uploadImage(String base64String, String ext) throws QException {
-        System.out.println("1");
+//        System.out.println("1");
         String userId = "111111";
         try {
             userId = SessionManager.getCurrentUserId();

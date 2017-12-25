@@ -1,3 +1,5 @@
+/* global Pace */
+
 function init() {
     fileListeners();
     comboModuleListListener();
@@ -56,7 +58,8 @@ function submoduleinsertAndNextPageListener() {
     $(document).on("click", '.apd-form-submodule-attr-sv-nxt ', function (evt) {
         var el = $(evt.target);
         var orderNo = el.closest('form[class=apd-form]').find('#smOrderNo').val();
-        var nextNo = getPreviousSubmoduleOrderNo(orderNo)
+        var isPrivate = el.closest('form[class=apd-form]').find('#isPrivate').val();
+        var nextNo = getPreviousSubmoduleOrderNo(orderNo, isPrivate);
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
         doSubmoduleFormShow(e);
@@ -68,7 +71,10 @@ function submodulePreviousPageListener() {
     $(document).on("click", '.apd-form-submodule-attr-prvs', function (evt) {
         var el = $(evt.target);
         var orderNo = el.closest('form[class=apd-form]').find('#smOrderNo').val();
-        var nextNo = getPreviousSubmoduleOrderNo(orderNo)
+//        var isPrivate = el.closest('form[class=apd-form]').find('#isPrivate').val();
+//        var nextNo = getPreviousSubmoduleOrderNo(orderNo, isPrivate);
+         var nextNo = $('#apd-submodule-button-list-id').
+                find("button[sort_by='"+orderNo+"']").prev().attr("sort_by");
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
         doSubmoduleFormShow(e);
@@ -80,16 +86,23 @@ function submoduleNextPageListener() {
 //         $('#popup1').modal('toggle');
         var el = $(evt.target);
         var orderNo = el.closest('form[class=apd-form]').find('#smOrderNo').val();
-        var nextNo = getNextSubmoduleOrderNo(orderNo)
+//        var isPrivate = el.closest('form[class=apd-form]').find('#isPrivate').val();
+//        var nextNo = getNextSubmoduleOrderNo(orderNo, isPrivate);
+        var nextNo = $('#apd-submodule-button-list-id').
+                find("button[sort_by='"+orderNo+"']").next().attr("sort_by");
+//        console.log("nextNo-"+nextNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
         doSubmoduleFormShow(e);
     });
 }
 
-function getNextSubmoduleOrderNo(currentNo) {
+function getNextSubmoduleOrderNo(currentNo, isPrivate) {
     var json = {kv: {}};
     json.kv.currentNo = currentNo;
+    if (isPrivate) {
+        json.kv.isPrivate = isPrivate;
+    }
     var data = JSON.stringify(json);
     var r = '-1';
     $.ajax({
@@ -110,9 +123,14 @@ function getNextSubmoduleOrderNo(currentNo) {
     return r;
 }
 
-function getPreviousSubmoduleOrderNo(currentNo) {
+function getPreviousSubmoduleOrderNo(currentNo, isPrivate) {
     var json = {kv: {}};
     json.kv.currentNo = currentNo;
+
+    if (isPrivate) {
+        json.kv.isPrivate = isPrivate;
+    }
+
     var data = JSON.stringify(json);
     var r = '-1';
     $.ajax({
@@ -635,7 +653,7 @@ function fillSubmoduleButtonDiv(json) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
             var obj = "";
@@ -659,19 +677,32 @@ function tablePatientClickListener() {
         if (f === 'tbl_appointment_list') {
             $('.apd-table-checkbox').not(this).attr('checked', false);
             var len = $('.apd-table-checkbox:checked').length;
-            s_h_sm_attribute_buttons();
+
             if (len === 1) {
                 var fkSessionId = $(this).val();
-//            $('#fkReportId').removeAttr("disabled");
+                if (fkSessionId) {
+                    var json = {kv: {}};
+//                json.kv.fkModuleId = mid;
+                    json.kv.fkSessionId = fkSessionId;
+                    fillReportForAppointment();
+                    fillSubmoduleButtonDiv(json);
+                }
+
+                $("#apd-submodule-button-list-id").show("");
+                $("#btnFinishSession").show("");
 //            var mid = $('#fkModuleId').val();
-                var mid = global_var['fkModuleId'];
-                var json = {kv: {}};
-                json.kv.fkModuleId = mid;
-                json.kv.fkSessionId = fkSessionId;
-                fillSubmoduleButtonDiv(json);
+//                var mid = global_var['fkModuleId'];
+
             } else {
-//            $('#fkReportId').attr("disabled", "disabled");
+
+                $("#report4Appointment").html("");
+                $("#apd-submodule-button-list-id").hide("");
+                $("#btnFinishSession").hide("");
+//$("#btn_serviceCrUpdatePatient").attr("disabled", "disabled");
+
+
             }
+            s_h_sm_attribute_buttons();
         } else if (f === 'tbl_payment_list') {
             $('.apd-table-checkbox').not(this).attr('checked', false);
         }
@@ -1393,7 +1424,8 @@ function clearForm(formId, actionType) {
 }
 
 function menuListeners(arg) {
-    $(document).on("click", '.megamenu li', function (e) {
+    $(document).on("click", '.megamenu li,.megamenu_', function (e) {
+
         var id = $(this).attr('page_id');
         //call manual functions
         menuListenerActivies(id);
@@ -1409,25 +1441,20 @@ function menuListenerActivies(page_id) {
 //    eval(func);
     $('#' + page_id).find('.apd-task-page-loader').click();
     switch (page_id) {
-        case "page_dn_patient":
-            fillCombobox($('#fkModuleId'));
-//            fillCombobox($('#fkReportId'));
-            fillInspectionComboByTableClick("");
-            break;
         case "page_appointment":
-            fillModuleForAppointment();
-            $('.apd-module-cmb-list:eq(0)').click();
-            $('#fkModuleId').click();
-            fillCombobox($('#fkDoctorUserId'));
+//            fillModuleForAppointment();
+//            $('.apd-module-cmb-list:eq(0)').click();
+//            $('#fkModuleId').click();
+//            fillCombobox($('#fkDoctorUserId'));
             $('#fkPatientId').editableSelect({
                 onSelect: function (element) {
                     patientSelectAction(this);
                 }
             });
             filterPatientCombo(true);
-            patientSelectAction();
+//            patientSelectAction();
             loadSession("");
-            fillReportForAppointment();
+//            fillReportForAppointment();
 
             break;
         case "page_statistic":
@@ -1461,17 +1488,20 @@ function clickFirstElementOfMatritList() {
 
 
 function fillReportForAppointment() {
+    var id = $(".apd-table-checkbox:checked").first().val();
     var json = {kv: {}};
+    json.kv.fkSessionId = id;
     var data = JSON.stringify(json);
     $.ajax({
-        url: "api/post/srv/serviceCrgetReportLineList4Appt",
+        url: "api/post/srv/serviceCrGetReportLineList4Appt",
         type: "POST",
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
+             $("#report4Appointment").html("");
             if (res.tbl.length > 0) {
                 var obj = res.tbl[0].r;
                 for (var i in obj) {
@@ -1493,6 +1523,7 @@ function fillReportForAppointment() {
 }
 
 function fillReportForPayment() {
+
     var json = {kv: {}};
     var data = JSON.stringify(json);
     $.ajax({
@@ -1563,21 +1594,24 @@ function loadRemotePage(pageid) {
     var json = {kv: {}};
     json.kv["page"] = pageid;
     var data = JSON.stringify(json);
-    $.ajax({
-        url: "api/post/srv/serviceCrGetPage",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            isResultRedirect(JSON.stringify(res));
-            var obj = res.kv.body;
-            $('.page-content').html(obj);
-        },
-        error: function (res, status) {
+    Pace.restart();
+    Pace.track(function() {
+        $.ajax({
+            url: "api/post/srv/serviceCrGetPage",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                isResultRedirect(JSON.stringify(res));
+                var obj = res.kv.body;
+                $('.page-content').html(obj);
+            },
+            error: function (res, status) {
 //            alert(getMessage('somethingww'));
-        }
+            }
+        });
     });
 }
 
@@ -1902,8 +1936,9 @@ function doSubmoduleFormShow(e) {
     var el = $(e);
     var smodule_id = el.attr("submodule_id");
     if (typeof smodule_id === 'undefined' || !smodule_id) {
-        alert(getMessage("submoduleIsNotSelected"));
-        return;
+//        alert(getMessage("submoduleIsNotSelected"));
+//        return;
+        smodule_id = $(".apd-subm-attr-button").first().attr("submodule_id");
     }
 
     json = {kv: {}};

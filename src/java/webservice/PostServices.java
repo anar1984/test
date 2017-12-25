@@ -34,6 +34,7 @@ import javax.ws.rs.core.Response;
 import label.CoreLabel;
 import org.glassfish.jersey.CommonProperties;
 import module.cr.CrModel;
+import module.cr.entity.EntityCrCompany;
 import org.apache.commons.lang.ArrayUtils;
 import org.jose4j.lang.JoseException;
 import resources.config.Config;
@@ -83,7 +84,7 @@ public class PostServices {
     @Path("upload")
     @Produces(MediaType.APPLICATION_JSON)
     public Response doPostRequestUpload(@Context HttpHeaders headers, String jsonData) throws Exception {
-        System.out.println("geldi");
+//        System.out.println("geldi");
         Carrier carrier = new Carrier();
 //        System.out.println("uploaded file json->" + jsonData);
         carrier.fromJson(jsonData);
@@ -154,7 +155,7 @@ public class PostServices {
     private Response doDoPostRequestForLogin(@Context HttpHeaders headers, String jsonData) {
         Connection conn = null;
         try {
-            System.out.println("json->" + jsonData);
+//            System.out.println("json->" + jsonData);
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
 
@@ -176,14 +177,7 @@ public class PostServices {
             String token = SessionHandler.encryptUser(user);
             String fullname = "";
             String id = "";
-//            if (!usename.trim().equals("")) {
-//                EntityCrUser ent = new EntityCrUser();
-//                ent.setDeepWhere(false);
-//                ent.setUsername(usename);
-//                EntityManager.select(ent);
-//                fullname = "Admin Admin";
-//            }
-            System.out.println("ok4");
+//           
             SessionManager.setUserName(Thread.currentThread().getId(), user.getUsername());
             SessionManager.setLang(Thread.currentThread().getId(), lang);
             SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
@@ -196,7 +190,7 @@ public class PostServices {
             return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 2_592_000, false)).entity(entity).build();
         } catch (Exception ex) {
             DBConnection.rollbackConnection(conn);
-            System.err.println("Username Or Password is incorrect!!");
+            System.err.println("Username Or Password is incorrect!!-");
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } finally {
             DBConnection.closeConnection(conn);
@@ -236,7 +230,7 @@ public class PostServices {
             @PathParam(value = "code")
             final String itemCode, final String json) {
         executorService.submit(() -> {
-            System.out.println("json->" + json);
+//            System.out.println("json->" + json);
 
             Carrier carrier = new Carrier();
             carrier.fromJson(json);
@@ -288,8 +282,7 @@ public class PostServices {
                     asyncResponse.resume(resp);
                 }
 
-                System.out.println("json->" + json);
-
+//                System.out.println("json->" + json);
                 Carrier carrier = new Carrier();
                 carrier.fromJson(json);
                 carrier.setValue("itemCode", itemCode);
@@ -435,17 +428,23 @@ public class PostServices {
             SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
             if (!QUtility.hasPermission(servicename)) {
-                System.out.println(">>> is forbidden>>" + servicename);
+//                System.out.println(">>> is forbidden>>" + servicename);
                 return Response.status(Response.Status.FORBIDDEN).build();
             }
 
             System.out.println("Start-" + SessionManager.getCurrentUsername() + ":" + QDate.getCurrentDate() + ":" + QDate.getCurrentTime() + ":" + servicename);
 
-            System.out.println("json->" + json);
+//            System.out.println("json->" + json);
             Carrier c = new Carrier();
             c.setServiceName(servicename);
 //            System.out.println("json->" + json);
             c.fromJson(json);
+
+            if (servicename.trim().equals("serviceCrChangeLang")) {
+                return changeLang(headers, c);
+
+            }
+
             Response res = CallDispatcher.callService(c);
             System.out.println(servicename + " | - Service Executing Time: " + (System.currentTimeMillis() - serviceTime));
             conn.commit();
@@ -467,6 +466,33 @@ public class PostServices {
 
     }
 
+    private Response changeLang(@Context HttpHeaders headers, Carrier carrier) throws QException {
+        EntityCrUser ent = new EntityCrUser();
+        ent.setDeepWhere(false);
+        ent.setUsername(SessionManager.getCurrentUsername());
+        ent.setDbname(SessionManager.getCurrentDomain());
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        EntityManager.select(ent);
+
+        EntityCrCompany entComp = new EntityCrCompany();
+        entComp.setDeepWhere(false);
+        entComp.setCompanyDb(SessionManager.getCurrentDomain());
+        entComp.setStartLimit(0);
+        entComp.setEndLimit(0);
+        EntityManager.select(entComp);
+
+        System.out.println("username=" + ent.getUsername());
+
+        carrier.setValue("username", SessionManager.getCurrentUsername());
+        carrier.setValue("password", ent.getPassword());
+        carrier.setValue("domain", entComp.getCompanyDomain());
+
+        System.out.println("json=" + carrier.getJson());
+        return doDoPostRequestForLogin(headers, carrier.getJson());
+
+    }
+
     private Response doCallDispatcherNoToken(@Context HttpHeaders headers,
             @PathParam("servicename") String servicename, String json) {
         String srv[] = new String[]{"serviceCrSignupPersonal",
@@ -479,7 +505,8 @@ public class PostServices {
             "serviceCrIsFieldValid",
             "serviceCrGetTermPage",
             "serviceCrIsPersonalUsernameExist",
-            "serviceCrGetListItemList4ComboNali"};
+            "serviceCrGetListItemList4ComboNali",
+            "serviceCrGetLabel"};
 
         if (!ArrayUtils.contains(srv, servicename)) {
             return Response.status(Response.Status.FORBIDDEN).build();
@@ -496,7 +523,7 @@ public class PostServices {
             System.out.println("Start-" + SessionManager.getCurrentUsername()
                     + ":" + QDate.getCurrentDate() + ":" + QDate.getCurrentTime() + ":" + servicename);
 
-            System.out.println("json->" + json);
+//            System.out.println("json->" + json);
             Carrier c = new Carrier();
             c.setServiceName(servicename);
 //            System.out.println("json->" + json);
@@ -536,13 +563,13 @@ public class PostServices {
     public Response getContent(@Context HttpHeaders headers) {
         Connection conn = null;
         try {
-            System.out.println("connectin yaradilir");
+//            System.out.println("connectin yaradilir");
             conn = new DBConnection().getConnection();
-            System.out.println("setAutoCommit false edilir");
+//            System.out.println("setAutoCommit false edilir");
             conn.setAutoCommit(false);
-            System.out.println("connectin yaradildi");
+//            System.out.println("connectin yaradildi");
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
-            System.out.println("connectin artiq movcuddur");
+//            System.out.println("connectin artiq movcuddur");
 
             Cookie cookie = headers.getCookies().get("apdtok");
             String cs = cookie.getValue();
@@ -555,14 +582,13 @@ public class PostServices {
             SessionManager.setUserId(Thread.currentThread().getId(), user.getId());
             SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
-            System.out.println("Getting User: " + (System.currentTimeMillis() - startTime));
-
+//            System.out.println("Getting User: " + (System.currentTimeMillis() - startTime));
 //         EntityCrUser user = new EntityCrUser();
 //         user.setUsername("admin1");
             startTime = System.currentTimeMillis();
             UserController uc = new UserController();
             String content = uc.filterText(user.getUsername());
-            System.out.println("Filter HTML: " + (System.currentTimeMillis() - startTime));
+//            System.out.println("Filter HTML: " + (System.currentTimeMillis() - startTime));
             conn.commit();
             //conn.close();
             return Response.status(Response.Status.OK).entity(content).build();
@@ -617,7 +643,7 @@ public class PostServices {
 
             }
             String content = uc.filterText("__singup__");
-            System.out.println("Filter HTML: " + (System.currentTimeMillis() - startTime));
+//            System.out.println("Filter HTML: " + (System.currentTimeMillis() - startTime));
             conn.commit();
 
             return Response.status(Response.Status.OK).entity(content).build();

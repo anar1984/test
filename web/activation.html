@@ -196,7 +196,7 @@
         $('#lang').change();
 
 
-        var msgA = getMessage("actiavationIsInProgress", lng);
+        var msgA = getLabel("actiavationIsInProgress", lng);
         $('#mainpage').empty();
         $('#mainpage').append(msgA);
 
@@ -214,8 +214,8 @@
                 type: "GET",
                 contentType: 'text/html',
                 success: function (res) {
-                    var msg = getMessage("successfullyCompanyActiavated", lng);
-                    var lgn = getMessage("login", lng);
+                    var msg = getLabel("successfullyCompanyActiavated", lng);
+                    var lgn = getLabel("login", lng);
                     console.log("Successful>>>" + msg);
                     console.log("res>>>" + res);
                     $('#mainpage').empty();
@@ -227,7 +227,7 @@
                     //                        init();
                 },
                 error: function () {
-                    var msg = getMessage("unsuccessfullyCompanyActiavated", lng);
+                    var msg = getLabel("unsuccessfullyCompanyActiavated", lng);
                     console.log("UNsuccessful>>>" + msg);
                     $('#mainpage').empty();
                     $('#mainpage').append(msg);

@@ -32,11 +32,9 @@ public class SessionManager {
     private static Map<Long, String> domainMap = new HashMap<>();
     private static Map<Long, String> userIdMap = new HashMap<>();
     private static Map<Long, String> companyIdMap = new HashMap<>();
-    
+
     private static Map<String, Subject> permissionMap = new HashMap<>();
-    
-    
-    
+
     public static void cleanSessionThread() {
         userMap.remove(getCurrentThreadId());
         langMap.remove(getCurrentThreadId());
@@ -44,30 +42,29 @@ public class SessionManager {
         domainMap.remove(getCurrentThreadId());
         userIdMap.remove(getCurrentThreadId());
         companyIdMap.remove(getCurrentThreadId());
-        
+
     }
-    
-    public static void setCompanyId(Long threadId,String CompanyId){
+
+    public static void setCompanyId(Long threadId, String CompanyId) {
         companyIdMap.put(threadId, CompanyId);
     }
-    
-    public static String getCompanyId(Long threadId){
-        return companyIdMap.getOrDefault(threadId,"__2__");
+
+    public static String getCompanyId(Long threadId) {
+        return companyIdMap.getOrDefault(threadId, "__2__");
     }
-    
-    public static void setDomain(Long threadId,String domain){
+
+    public static void setDomain(Long threadId, String domain) {
         domainMap.put(threadId, domain);
     }
-    
-    public static String getDomain(Long threadId){
+
+    public static String getDomain(Long threadId) {
         return domainMap.get(threadId);
     }
- 
-    public static String getCurrentDomain(){
-        return domainMap.getOrDefault(getCurrentThreadId(),"apdvoice");
+
+    public static String getCurrentDomain() {
+        return domainMap.getOrDefault(getCurrentThreadId(), "apdvoice");
     }
- 
- 
+
     public static Connection getCurrentConnection() {
         return conn.get(getCurrentThreadId());
     }
@@ -79,6 +76,7 @@ public class SessionManager {
     public static void setUserName(Long threadId, String userName) {
         userMap.put(threadId, userName);
     }
+
     public static void setUserId(Long threadId, String userId) {
         userIdMap.put(threadId, userId);
     }
@@ -99,16 +97,16 @@ public class SessionManager {
 
     public static String getCurrentCompanyId() throws QException {
         String id = getCompanyId(getCurrentThreadId());
-        if (id.trim().length()==0){
+        if (id.trim().length() == 0) {
             throw new QException("company_id is not available");
         }
         return id;
     }
-    
+
     public static String getUserByThreadId(Long threadId) {
         return userMap.get(threadId);
     }
-    
+
     public static String getUserIdByThreadId(Long threadId) {
         return userIdMap.get(threadId);
     }
@@ -121,7 +119,7 @@ public class SessionManager {
         String username = "";
         username = SessionManager.getUserByThreadId(Thread.currentThread().getId());
         //if (username == null) {
-          //  username = "admin1";
+        //  username = "admin1";
         //}
         return username;
     }
@@ -232,25 +230,39 @@ public class SessionManager {
 
     public static String getFullnameOfCurrentUser() throws QException {
         try {
-            String usename = SessionManager.getUserByThreadId(Thread.currentThread().getId());
-            String fullname = "Anar Rustamov";
-//            if (!usename.trim().equals("")) {
-//                EntityCrUser ent = new EntityCrUser();
-//                ent.setUsername(usename);
-//                EntityManager.select(ent);
-//                if (!ent.getFkEmployeeId().equals("")) {
-//                    EntityHrEmployee entHr = new EntityHrEmployee();
-//                    entHr.setId(ent.getFkEmployeeId());
-//                    EntityManager.select(entHr);
-//                    if (!entHr.getFkPersonId().equals("")) {
-//                        EntityCrPerson entPerson = new EntityCrPerson();
-//                        entPerson.setId(entHr.getFkPersonId());
-//                        EntityManager.select(entPerson);
-//                        fullname = entPerson.getName() + " " + entPerson.getSurname() + " " + entPerson.getMiddlename();
-//                    }
-//                }
-//            }
+
+            EntityCrUser ent = new EntityCrUser();
+            ent.setDeepWhere(false);
+            ent.setUsername(SessionManager.getCurrentUsername());
+            ent.setDbname(SessionManager.getCurrentDomain());
+            ent.setStartLimit(0);
+            ent.setEndLimit(0);
+            EntityManager.select(ent);
+
+            String fullname = ent.getUserPersonName() + " "
+                    + ent.getUserPersonSurname() + " " + ent.getUserPersonMiddlename();
             return fullname;
+        } catch (Exception ex) {
+            throw new QException(new Object() {
+            }.getClass().getEnclosingClass().getName(),
+                    new Object() {
+            }.getClass().getEnclosingMethod().getName(), ex);
+        }
+    }
+    
+    public static EntityCrUser getCurrentUserInfo() throws QException {
+        try {
+
+            EntityCrUser ent = new EntityCrUser();
+            ent.setDeepWhere(false);
+            ent.setUsername(SessionManager.getCurrentUsername());
+            ent.setDbname(SessionManager.getCurrentDomain());
+            ent.setStartLimit(0);
+            ent.setEndLimit(0);
+            EntityManager.select(ent);
+
+             
+            return ent;
         } catch (Exception ex) {
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
@@ -310,20 +322,19 @@ public class SessionManager {
             }.getClass().getEnclosingMethod().getName(), ex);
         }
     }*/
-    
     public static boolean hasAccessToService(String serviceName) throws QException {
         Subject subject = permissionMap.get(getCurrentUsername());
         if (subject == null) {
             loadUserPermissions();
             subject = permissionMap.get(getCurrentUsername());
         }
-        return subject.isPermitted("post:srv:"+serviceName);
+        return subject.isPermitted("post:srv:" + serviceName);
     }
-    
+
     public static boolean isSysAdmin() throws QException {
         return hasRole("SYSADMIN");
     }
-    
+
     public static boolean hasRole(String roleName) throws QException {
         Subject subject = permissionMap.get(getCurrentUsername());
         if (subject == null) {
@@ -332,7 +343,7 @@ public class SessionManager {
         }
         return subject.hasRole(roleName);
     }
-    
+
     public static boolean hasRule(String ruleName) throws QException {
         Subject subject = permissionMap.get(getCurrentUsername());
         if (subject == null) {
@@ -341,7 +352,7 @@ public class SessionManager {
         }
         return subject.hasRule(ruleName);
     }
-    
+
     public static boolean isPermitted(String permission) throws QException {
         Subject subject = permissionMap.get(getCurrentUsername());
         if (subject == null) {
@@ -350,23 +361,35 @@ public class SessionManager {
         }
         return subject.isPermitted(permission);
     }
-    
-    public static boolean isCurrentUserCompanyAdmin() throws QException{
+
+    public static boolean isCurrentUserCompanyAdmin() throws QException {
         String userId = getCurrentUserId();
-        String permissionCode = "A"+CoreLabel.IN+"AD";
+        String permissionCode = "A" + CoreLabel.IN + "AD";
         EntityCrUser entUsr = new EntityCrUser();
         entUsr.setDeepWhere(false);
         entUsr.setDbname(getCurrentDomain());
         entUsr.setId(userId);
         entUsr.setLiUserPermissionCode(permissionCode);
         Carrier cr = EntityManager.select(entUsr);
-        return cr.getTableRowCount(entUsr.toTableName())>0;
+        return cr.getTableRowCount(entUsr.toTableName()) > 0;
     }
-    
+
+    public static boolean isCurrentUserSimpleDoctor() throws QException {
+        String userId = getCurrentUserId();
+        String permissionCode = "D";
+        EntityCrUser entUsr = new EntityCrUser();
+        entUsr.setDeepWhere(false);
+        entUsr.setDbname(getCurrentDomain());
+        entUsr.setId(userId);
+        entUsr.setLiUserPermissionCode(permissionCode);
+        Carrier cr = EntityManager.select(entUsr);
+        return cr.getTableRowCount(entUsr.toTableName()) > 0;
+    }
+
     private static void loadUserPermissions() throws QException {
         String userId = SessionManager.getCurrentUserId();
         Subject subject = new Subject();
-        
+
 //        entityCrRelUserRole.setFkUserId(userId);
 //        Carrier crRelUserRole = EntityManager.select(entityCrRelUserRole);
 //        
@@ -423,7 +446,6 @@ public class SessionManager {
 //        }
 //        
 //        permissionMap.put(SessionManager.getCurrentUsername(), subject);
-        
     }
 
 }

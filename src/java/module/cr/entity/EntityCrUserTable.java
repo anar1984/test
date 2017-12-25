@@ -25,7 +25,8 @@ public class EntityCrUserTable extends CoreEntity {
     public enum Type {
         VIEW("V"),
         TABLE("T"),
-        SCRIPT("S");       
+        SCRIPT("S"),      
+        BUGSCRIPT("BS");       
         private final String status;
 
         Type(String status) {

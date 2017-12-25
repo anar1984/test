@@ -35,7 +35,7 @@ public class DBConnectionPool {
     public static Connection getConnection(String drivername, String username,
             String pwd, String url, int initialSize, int maxIdle) throws QException {
         int rc = initialSize + maxIdle + 10;
-        System.out.println("datasource maximum conn count=" + rc);
+//        System.out.println("datasource maximum conn count=" + rc);
         try {
             String s = "";
             setupDataSource(drivername, username, pwd, url, initialSize, maxIdle);
@@ -43,26 +43,26 @@ public class DBConnectionPool {
             int i = 0;
             boolean f = true;
             while (i <= rc && f) {
-                System.out.println("new datasource connection started");
+//                System.out.println("new datasource connection started");
                 conn = ds.getConnection();
-                System.out.println("new datasource connection got");
+//                System.out.println("new datasource connection got");
                 try {
                     conn.setAutoCommit(true);
                     f = false;
                 } catch (Exception e) {
                     i++;
-                    System.out.println("DB Connection problem attemtp no= " + i);
+//                    System.out.println("DB Connection problem attemtp no= " + i);
                     try{
                         conn.close();
                      } catch (Exception e1) {
-                         System.out.println("unsuccessull connection is closed");
+//                         System.out.println("unsuccessull connection is closed");
                      }
                 }
             }
-            System.out.println("datasource conn returned=");
+//            System.out.println("datasource conn returned=");
             return conn;
         } catch (Exception e) {
-            System.out.println("DB Connection problem");
+//            System.out.println("DB Connection problem");
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {

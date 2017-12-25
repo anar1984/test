@@ -23,7 +23,7 @@ public class MainClass {
         String f = "name";
         String st = "\"li\"";
          String s = new WhereSingle(f,st,new ArrayList()).exec();
-         System.out.println(s);
+//         System.out.println(s);
  
 //        test8();
     }
@@ -40,7 +40,7 @@ public class MainClass {
             Carrier c = new Carrier();
             c.setServiceName(servicename);
             c.fromJson(json);
-            System.out.println(c.getJson());
+//            System.out.println(c.getJson());
 //            System.out.println(c.getJson());
             CallDispatcher.callService(c);
         } catch (Exception ex) {

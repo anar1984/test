@@ -23,7 +23,7 @@
                 </div>
                 <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1"  >
                     <ul class="nav navbar-nav navbar-right menu-size">
-                        
+
                         <li component_id="main_menu_home" class="dropdown">
                             <a href="#" class="dropdown-toggle"   data-toggle="dropdown"  ><span  qlang>home</span><b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu" >
@@ -46,9 +46,6 @@
                         <li  component_id="main_menu_finance" class="dropdown">
                             <a href="#" class="dropdown-toggle"    data-toggle="dropdown"><span qlang>finance</span><b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu" >
-                                <li component_id="menu_pricelist" page_id="page_pricelist">
-                                    <a qlang >priceList</a>
-                                </li> 
                                 <li component_id="menu_payment" page_id="page_payment">
                                     <a qlang >payment</a>
                                 </li> 
@@ -69,15 +66,24 @@
                                 <li component_id="menu_user" page_id="page_user">
                                     <a  qlang >user</a>
                                 </li>
-                                <li component_id="menu_changepwd" page_id="page_changepwd">
-                                    <a  qlang >changepwd</a>
-                                </li>
                                 <li component_id="menu_reportline" page_id="page_reportline">
                                     <a qlang >report</a>
                                 </li> 
-                                <li>
-                                    <a href="#" onclick="javascript:logout()" qlang >logout</a>
+                                <li component_id="menu_changepwd21" page_id="page_changepwd">
+                                    <a  qlang >changepwd</a>
                                 </li>
+                                <li component_id="menu_updatecompany" page_id="page_updatecompany">
+                                    <a qlang >updateCompanyInfo</a>
+                                </li> 
+                                <li component_id="menu_pricelist" page_id="page_pricelist">
+                                    <a qlang >inspectionType</a>
+                                </li> 
+                                <li component_id="menu_privateattribute" page_id="page_privateattribute">
+                                    <a qlang >privateAttribute</a>
+                                </li> 
+                               
+
+
                                 <li component_id="menu_test" page_id="page_test">
                                     <a qlang >test</a>
                                 </li>
@@ -164,11 +170,11 @@
 
                             </ul>
                         </li>
-                        
+
                         <li  component_id="menu_sysadmin_page"  class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"   ><span qlang>profile</span><b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu" >
-                                 
+
                                 <li>
                                     <a href="#" onclick="javascript:logout()" qlang >logout</a>
                                 </li>
@@ -180,9 +186,47 @@
                         </li>
 
 
-                        <li class="">
-                            <a  class="lang-row" id="lang_id">ENG</a>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <img id="imgNavLangActive" src="resources/upload/"   class="img-thumbnail icon-small"
+                                     qcurrentlangsrc> 
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a id="navIta" href="#" lang_type="ENG" class="language"> <img id="imgNavLangEng" src="resources/upload/ENG.png"   class="img-thumbnail icon-small ">  <span id="navLangEng">English</span></a></li>
+                                <li><a id="navDeu" href="#" lang_type="AZE" class="language"> <img id="imgNavLangAze" src="resources/upload/AZE.png"  class="img-thumbnail icon-small  ">  <span id="navLangAze">Azərbaycan</span></a></li>
+                                <li><a id="navFra" href="#" lang_type="TUR" class="language"> <img id="imgNavLangTur" src="resources/upload/TUR.png"   class="img-thumbnail icon-small  ">  <span id="navLangTur">Türkçe</span></a></li> 
+                            </ul>
                         </li>
+
+                        <li component_id1="menu_user_profile class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="resources/upload/" 
+                                     class="profile-image img-circle" 
+                                     style="height: 30px; width: 30px;" quserlogo> 
+                                <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <span class="center" qusername
+                                      style="margin-left: 5px">anar</span>
+                                <li class="divider"></li>
+                                <li class="megamenu_" component_id="menu_updateprofile" page_id="page_updateprofile">
+                                    <a href="#"><i class="fa fa-cog"></i> <span qlang>account</span></a>
+                                </li>
+                                <li class="divider"></li>
+                                <li class="megamenu_"  component_id="menu_changepwd" page_id="page_changepwd">
+                                    <a href="#"><i class="fa fa-edit"></i> <span qlang>changepwd</span></a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a  onclick="javascript:logout()" href="#"><i class="fa fa-sign-out"></i><span qlang>logout</span></a></li>
+
+                            </ul>
+
+                        </li>
+
+                        <!--                        <li class="">
+                                                    <a  class="lang-row" id="lang_id">ENG</a>
+                                                </li>-->
                     </ul>
                 </div>
             </div>
@@ -221,5 +265,40 @@
     $(document).ready(function () {
         init();
     });
+
+    $('.language').click(function (e) {
+        changeLang(this);
+        location.reload();
+    });
+
+    function changeLang(e) {
+        var lang = $(e).attr("lang_type");
+        console.log(lang);
+        if (lang === 'undefined' || !lang) {
+            return;
+        }
+
+        var json = {kv: {}};
+        json.kv.lang = lang
+
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/srv/serviceCrChangeLang",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                isResultRedirect(JSON.stringify(res));
+                console.log(JSON.stringify(res))
+            },
+            error: function () {
+
+            }
+        });
+    }
+    ;
+
 </script>
 </html>

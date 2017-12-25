@@ -118,7 +118,7 @@ public class IdGenerator {
     
     public static void main(String[] args) {
         for (int i = 0; i < 100; i++) {
-            System.out.println( new BigInteger(32, RANDOM).toString(32));
+//            System.out.println( new BigInteger(32, RANDOM).toString(32));
         }
         
     }

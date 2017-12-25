@@ -129,14 +129,7 @@ public class EntityManager {
     public static Carrier select(CoreEntity entity, String tablename, String databaseNumber) throws QException {
         Carrier carrier = new Carrier();
         try {
-            if (entity.hasIntervalField()) {
-                carrier = groupByInterval(entity);
-            } else if (entity.hasSumBy()) {
-                String[] groupByFields = entity.selectGroupBy();
-                carrier = groupBy(entity, groupByFields, entity.selectSumBy());
-            } else {
-                carrier = coreSelect(entity, tablename, databaseNumber);
-            }
+            carrier = coreSelect(entity, tablename, databaseNumber);
             return carrier;
         } catch (Exception ex) {
             throw new QException(new Object() {
@@ -644,7 +637,7 @@ public class EntityManager {
         if (messageCode.trim().equals("")) {
             return "Message code is empty";
         }
- 
+
         EntityCrListItem ent = new EntityCrListItem();
         ent.setItemCode("errorMessage");
         ent.setItemKey(messageCode);

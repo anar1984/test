@@ -1,111 +1,168 @@
-<div class="row apd-page" id="page_submoduleattribute">
+<div component_id='page_privateattribute' class="row apd-page" id="page_privateattribute">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
-            <label>Submodule Attributes</label>
+            <label qlang>privateAttribute</label>
         </div>
     </div> 
     <div  class="col-md-12 apd-page-btn"> 
-        <button id='serviceCrGetSubmoduleAttributeList' type="button" class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                onclick="loadTable('tbl_submoduleattribute_list')">List
+
+        <button id='btn_serviceCrInsertNewPrivateSubmodule' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewPrivateSubmodule" qlang>newSubmodule
         </button>
-        <button id='btn_serviceCrInsertNewSubmoduleAttribute' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                data-toggle="modal" data-target="#insertNewSubmoduleAttribute">Insert
+        <button id='serviceCrGetPrivateSubmoduleList' type="button" 
+                class="btn btn-md task-button apd-task-load" 
+                onclick="loadTable('tbl_privatesubmodule_list')" qlang>submoduleList
+        </button>
+        <button id='btn_serviceCrInsertNewPrivateSubmodule' type="button" 
+                class="btn btn-md task-button apd-task-create apd-task-form" 
+                data-toggle="modal" data-target="#insertNewPrivateAttribute" qlang>insertNewPrivateAttribute
+        </button>
+         <button id='serviceCrGetPrivateAttributeList' type="button" 
+                 class="btn btn-md task-button apd-task-load apd-task-page-loader" 
+                onclick="loadTable('tbl_privateattribute_list')" qlang>attributeList
         </button>
         <hr>
     </div>
 
-    <div  id= "submoduleattributelist" class="col-md-12 apd-page-body"> 
+    <div  id= "privatesubmodulelist" class="col-md-12 apd-page-body"> 
 
     </div>
+    <div  id= "privateattributelist" class="col-md-12 apd-page-body"> 
+
+    </div>
+    
     <!-- Modal -->
-    <div id="insertNewSubmoduleAttribute" apd-form-reload-button-id='serviceCrGetSubmoduleAttributeList' class="modal fade" role="dialog">
+    <div id="insertNewPrivateSubmodule" apd-form-reload-button-id='serviceCrGetPrivateSubmoduleList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Insert New Submodule Attribute</h4>
+                    <h4 class="modal-title">newSubmodule</h4>
                 </div>
                 <div class="modal-body-1">
-                    <form id="form_insertNewSubmoduleAttribute" class="apd-form" method="POST" action="srv/serviceCrInsertNewSubmoduleAttribute">
+                    <form id="form_insertNewPrivateSubmodule" class="apd-form" method="POST" action="srv/serviceCrInsertNewPrivateSubmodule">
+
+
+
+                        <div class="form-group col-md-9">
+                            <label class="float" qlang>submoduleName</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="name" name="name" 
+                                   >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="float" qlang>orderNo</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="orderNo" name="orderNo" >
+                        </div>
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="true" qlang>insert</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="updatePrivateSubmodule" apd-form-reload-button-id='serviceCrGetPrivateSubmoduleList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>updateSubmodule</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_updatePrivateSubmodule" class="apd-form" method="POST" action="srv/serviceCrUpdatePrivateSubmodule">
+                        <div class="form-group col-md-6 hidden"> 
+                            <label class="float">id</label>
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="PrivateSubmodule Code"  >
+                        </div>
+                        <div class="form-group col-md-9">
+                            <label class="float" qlang>name</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="name" name="name" 
+                                   >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="float" qlang>orderNo</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="orderNo" name="orderNo" >
+                        </div>
+
+                        <div class="form-group col-md-12" align="right">
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="insertNewPrivateAttribute" apd-form-reload-button-id='serviceCrGetPrivateAttributeList' class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" qlang>insertNewPrivateAttribute</h4>
+                </div>
+                <div class="modal-body-1">
+                    <form id="form_insertNewPrivateAttribute" class="apd-form" 
+                          method="POST" action="srv/serviceCrInsertNewPrivateAttribute">
 
                         <div class="form-group col-md-4">
                             <label qlang>module</label>
-                            <select class="form-control apd-form-select" 
+                            <select class="form-control apd-form-select-back" 
                                     id="fkModuleId" name="fkModuleId"
                                     select_text="moduleName" select_value="id" 
-                                    srv_url="srv/serviceCrGetModuleList">
+                                    srv_url="srv/serviceCrGetModuleList4Combo">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Submodule</label>
-                            <select class="form-control apd-form-select" 
-                                    id="fkSubmoduleId" name="fkSubmoduleId"
-                                    select_text="submoduleName" select_value="id" 
-                                    dependence_id="fkModuleId"
-                                    srv_url="srv/serviceCrGetSubmoduleList">
+                            <label qlang>submodule</label>
+                            <select class="form-control apd-form-select-back" 
+                                    id="fkPrivateSubmoduleId" name="fkPrivateSubmoduleId"
+                                    select_text="name" select_value="id" 
+                                    srv_url="srv/serviceCrGetPrivateSubmoduleList">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Attribute</label>
-                            <select class="form-control apd-form-select" 
-                                    id="fkAttributeId" name="fkAttributeId"
-                                    select_text="attributeName" select_value="id" 
-                                    srv_url="srv/serviceCrGetAttributeList">
-                            </select>
+                            <label qlang>attribute</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="name" name="name" >
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label>Value Type</label>
-                            <select class="form-control apd-form-select" 
+                            <label qlang>valueType</label>
+                            <select class="form-control apd-form-select-back" 
                                     id="fkValueTypeId" name="fkValueTypeId"
                                     select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/valueType">
+                                    srv_url="srv/serviceCrGetPrivateValueTypeList">
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Organ Point</label>
-                            <select class="form-control apd-form-select" 
-                                    id="fkOrganPointId" name="fkOrganPointId"
-                                    select_text="organPointName" select_value="id" 
-                                    srv_url="srv/serviceCrGetOrganPointList">
-                            </select>
-                        </div>
-
-
-                        <div class="form-group col-md-6">
-                            <label class="float">Submodule Value</label>
+                            <label class="float" qlang>value</label>
                             <input type="text" class="form-control apd-form-input" 
-                                   id="submoduleValue" name="submoduleValue" 
-                                   placeholder="Submodule Value">
+                                   id="value" name="value"  >
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="float">Order No</label>
+                        <div class="form-group col-md-2">
+                            <label class="float" qlang>orderNo</label>
                             <input type="text" class="form-control apd-form-input" 
-                                   id="sortBy" name="sortBy" 
-                                   placeholder="Order No">
+                                   id="sortBy" name="sortBy">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            <label>Has Other</label>
-                            <select class="form-control apd-form-select" 
-                                    id="hasOther" name="hasOther"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/yesno">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Is Visible?</label>
-                            <select class="form-control apd-form-select"
-                                    id="isVisible" name="isVisible"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/yesno">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label >Description</label>
-                            <textarea class="form-control apd-form-textarea" 
-                                      id="submoduleDescription" 
-                                      name="submoduleDescription"></textarea>
+                        
+                        <div class="form-group col-md-10">
+                            <label qlang>description</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="description" name="description">
                         </div> 
 
                         <div class="form-group col-md-12" align="right">
@@ -120,104 +177,71 @@
 
         </div>
     </div>
-
-    <div id="updateSubmoduleAttribute" apd-form-reload-button-id='serviceCrGetSubmoduleAttributeList' class="modal fade" role="dialog">
+    
+    
+    <div id="updatePrivateAttribute" apd-form-reload-button-id='serviceCrGetPrivateAttributeList' class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update Submodule Attribute</h4>
+                    <h4 class="modal-title" qlang>updateAttribute</h4>
                 </div>
                 <div class="modal-body-1">
-                    <form id="form_updateSubmoduleAttribute" class="apd-form" method="POST" action="srv/serviceCrUpdateSubmoduleAttribute">
+                    <form id="form_updatePrivateSubmodule" class="apd-form" 
+                          method="POST" action="srv/serviceCrUpdatePrivateAttribute">
                         <div class="form-group col-md-6 hidden"> 
                             <label class="float">id</label>
-                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="SubmoduleAttribute Code"  >
+                            <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="PrivateSubmodule Code"  >
                         </div>
-                       <div class="form-group col-md-4">
+                        <div class="form-group col-md-4">
                             <label qlang>module</label>
-                            <select class="form-control apd-form-select" 
+                            <select class="form-control apd-form-select-back" 
                                     id="fkModuleId" name="fkModuleId"
                                     select_text="moduleName" select_value="id" 
-                                    srv_url="srv/serviceCrGetModuleList">
+                                    srv_url="srv/serviceCrGetModuleList4Combo">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Submodule</label>
-                            <select class="form-control apd-form-select" 
-                                    id="fkSubmoduleId" name="fkSubmoduleId"
-                                    select_text="submoduleName" select_value="id" 
-                                    dependence_id="fkModuleId"
-                                    srv_url="srv/serviceCrGetSubmoduleList">
+                            <label qlang>submodule</label>
+                            <select class="form-control apd-form-select-back" 
+                                    id="fkPrivateSubmoduleId" name="fkPrivateSubmoduleId"
+                                    select_text="name" select_value="id" 
+                                    srv_url="srv/serviceCrGetPrivateSubmoduleList">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Attribute</label>
-                            <select class="form-control apd-form-select" 
-                                    id="fkAttributeId" name="fkAttributeId"
-                                    select_text="attributeName" select_value="id" 
-                                    srv_url="srv/serviceCrGetAttributeList">
-                            </select>
+                            <label qlang>attribute</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="name" name="name" >
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label>Value Type</label>
-                            <select class="form-control apd-form-select" 
+                            <label qlang>valueType</label>
+                            <select class="form-control apd-form-select-back" 
                                     id="fkValueTypeId" name="fkValueTypeId"
                                     select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/valueType">
+                                    srv_url="srv/serviceCrGetPrivateValueTypeList">
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Organ Point</label>
-                            <select class="form-control apd-form-select" 
-                                    id="fkOrganPointId" name="fkOrganPointId"
-                                    select_text="organPointName" select_value="id" 
-                                    srv_url="srv/serviceCrGetOrganPointList">
-                            </select>
-                        </div>
-
-
-                        <div class="form-group col-md-6">
-                            <label class="float">Submodule Value</label>
+                            <label class="float" qlang>value</label>
                             <input type="text" class="form-control apd-form-input" 
-                                   id="submoduleValue" name="submoduleValue" 
-                                   placeholder="Submodule Value">
+                                   id="value" name="value"  >
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="float">Order No</label>
+                        <div class="form-group col-md-2">
+                            <label class="float" qlang>orderNo</label>
                             <input type="text" class="form-control apd-form-input" 
-                                   id="sortBy" name="sortBy" 
-                                   placeholder="Order No">
+                                   id="sortBy" name="sortBy">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            <label>Has Other</label>
-                            <select class="form-control apd-form-select" 
-                                    id="hasOther" name="hasOther"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/yesno">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Is Visible?</label>
-                            <select class="form-control apd-form-select"
-                                    id="isVisible" name="isVisible"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/yesno">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label >Description</label>
-                            <textarea class="form-control apd-form-textarea" 
-                                      id="submoduleDescription" 
-                                      name="submoduleDescription"></textarea>
-                        </div> 
-
-
+                        
+                        <div class="form-group col-md-10">
+                            <label qlang>description</label>
+                            <input type="text" class="form-control apd-form-input" 
+                                   id="description" name="description">
+                        </div>  
                         <div class="form-group col-md-12" align="right">
-                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false">Update</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+                            <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>
                         </div>
                     </form>
                 </div>
@@ -227,4 +251,5 @@
             </div>
         </div>
     </div>
+
 </div>

@@ -31,7 +31,11 @@ public class EntityCrAppointmentList extends CoreEntity {
     public static String FK_OWNER_USER_ID = "fkOwnerUserId";
     public static String PAYMENT_STATUS = "paymentStatus";
     public static String SEX = "sex";
-
+    public static String FK_PRICE_LIST_ID = "fkPriceListId";
+    public static String FK_MODULE_ID = "fkModuleId";
+    
+    private String fkModuleId = "";
+    private String fkPriceListId = "";
     private String id = "";
     private String status = "";
     private String insertDate = "";
@@ -55,6 +59,22 @@ public class EntityCrAppointmentList extends CoreEntity {
     private String fkOwnerUserId = "";
     private String paymentStatus = "";
     private String sex = "";
+
+    public String getFkModuleId() {
+        return fkModuleId;
+    }
+
+    public void setFkModuleId(String fkModuleId) {
+        this.fkModuleId = fkModuleId;
+    }
+
+    public String getFkPriceListId() {
+        return fkPriceListId;
+    }
+
+    public void setFkPriceListId(String fkPriceListId) {
+        this.fkPriceListId = fkPriceListId;
+    }
 
     public String getId() {
         return id;
@@ -239,7 +259,5 @@ public class EntityCrAppointmentList extends CoreEntity {
     public void setSex(String sex) {
         this.sex = sex;
     }
-    
-     
 
 }

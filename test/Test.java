@@ -36,7 +36,7 @@ public class Test {
             c.setServiceName("ServiceUcSelectMenus");
 //            System.out.println(c.getActiveJSON());
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+//            System.out.println(ex.getMessage());
         }
        
     }
@@ -50,7 +50,7 @@ public class Test {
         String inputLine;
 
         while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
+//            System.out.println(inputLine);
         }
         in.close();
     }

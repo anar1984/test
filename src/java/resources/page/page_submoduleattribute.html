@@ -42,12 +42,13 @@
                                     id="fkSubmoduleId" name="fkSubmoduleId"
                                     select_text="submoduleName" select_value="id" 
                                     dependence_id="fkModuleId"
-                                    srv_url="srv/serviceCrGetSubmoduleList">
+                                    srv_url="srv/serviceCrGetSubmoduleListByModuleId">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Attribute</label>
-                            <select class="form-control apd-form-select" 
+                            <select class="form-control apd-form-multiselect" 
+                                    multiple
                                     id="fkAttributeId" name="fkAttributeId"
                                     select_text="attributeName" select_value="id" 
                                     srv_url="srv/serviceCrGetAttributeList">
@@ -148,12 +149,12 @@
                                     id="fkSubmoduleId" name="fkSubmoduleId"
                                     select_text="submoduleName" select_value="id" 
                                     dependence_id="fkModuleId"
-                                    srv_url="srv/serviceCrGetSubmoduleList">
+                                    srv_url="srv/serviceCrGetSubmoduleListByModuleId">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Attribute</label>
-                            <select class="form-control apd-form-select" 
+                            <select class="form-control apd-form-select-back" 
                                     id="fkAttributeId" name="fkAttributeId"
                                     select_text="attributeName" select_value="id" 
                                     srv_url="srv/serviceCrGetAttributeList">

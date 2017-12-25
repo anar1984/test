@@ -42,7 +42,7 @@ public class AcnisUrlFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         String url = request.getRequestURI();
-        System.out.println("url->>>> " + url);
+//        System.out.println("url->>>> " + url);
         
         String token = null;
         Cookie[] cookies = request.getCookies();
@@ -58,9 +58,9 @@ public class AcnisUrlFilter implements Filter {
         
         //Key test = CacheUtil.getKeyFromCache(token);
         //System.out.println(test);
-        System.out.println("java.io.tmpdir="+System.getProperty("java.io.tmpdir"));
+//        System.out.println("java.io.tmpdir="+System.getProperty("java.io.tmpdir"));
         
-        System.out.println("web service token->>" + token);  
+//        System.out.println("web service token->>" + token);  
         
 
         if (url.trim().length()==0 || url.trim().equals("/apd1/")  || url.trim().equals("/") ){
@@ -73,10 +73,10 @@ public class AcnisUrlFilter implements Filter {
                 && !url.contains("/nali/")
                 && !url.contains("/nasrv/")
                 && !url.contains("/activation.html")) {
-            System.out.println("Redirected to "+request.getContextPath() + "/login.html");
+//            System.out.println("Redirected to "+request.getContextPath() + "/login.html");
             response.sendRedirect(request.getContextPath() + "/login.html");
         } else {
-            System.out.println("Access controled allowed"+res.toString());
+//            System.out.println("Access controled allowed"+res.toString());
             response.addHeader("Access-Controll-Allow-Origin", "*");
             chain.doFilter(req, res);
         }

@@ -1,23 +1,214 @@
-<div class="row apd-page" id="page_company">
+<div component_id="page_updatecompany" class="row apd-page" id="page_updatecompany">
     <div  class="col-md-12">
         <div class="row text-center module-heading">
-            <label qlang>company</label>
+            <label qlang>updateCompanyInfo</label>
         </div>
     </div> 
-    <div  class="col-md-10 apd-page-btn"> 
-        <button id='serviceCrGetCompanyList' type="button" 
-                class="btn btn-md task-button apd-task-load apd-task-page-loader" 
-                onclick="loadTable('tbl_company_list')" qlang>companyList
-        </button>
-        
-        <hr>
-    </div>
-     
 
-    <div  id= "companylist" class="col-md-12 apd-page-body"> 
+    <form id="form_updateCompany" class="apd-form" method="POST" action="srv/serviceCrUpdateCompanyInfo">
+        <div class="tab-content" style="width:100%;">
 
+            <div class="form-group   col-md-offset-4 col-md-5">
+                <label qlang>companyName</label><span style="color: red">*</span>
+                <input class="form-control apd-form-input" type="text" id="companyName" name="companyName">
+            </div>
+
+
+            <div class="form-group   col-md-offset-4 col-md-5">
+                <label qlang>country</label><span style="color: red">*</span>
+                <select id="companyCountry" class="form-control apd-form-select-back step1Ctrl selectpicker" has_null="var"
+                        name="companyCountry" select_text="itemValue" select_value="itemKey" 
+                        srv_url="nali/country" has_other>
+                </select>
+            </div>
+            <div class="form-group  col-md-offset-4 col-md-5">
+                <br>
+                <label qlang>currency</label><span style="color: red">*</span>              
+                <select id="companyCurrency" class="form-control apd-form-select-back selectpicker step1Ctrl" has_null="var"
+                        name="companyCurrency" select_text="itemValue" select_value="itemKey" 
+                        srv_url="li/currency">
+                </select>
+            </div>
+            <div class="form-group   col-md-offset-4 col-md-5">
+                <br>
+                <label qlang>timeZone</label>  <span style="color: red">*</span>            
+                <select id="companyTimezone" class="form-control apd-form-select-back selectpicker step1Ctrl_" has_null="var"
+                        name="companyCurrency" select_text="itemValue" select_value="itemKey" 
+                        srv_url="li/timezone"  >
+                </select>
+
+            </div>
+            <div class="form-group  col-md-offset-4 col-md-5">
+                <br>
+                <label qlang>address</label>              
+                <input class="form-control apd-form-input" type="text" id="companyAddress" 
+                       name="companyAddress"     > 
+
+            </div>
+            <div class="form-group col-md-offset-4 col-md-5" style="min-height: 60px">
+                <label class="float" qlang>logoUrl</label>
+                <div class="fileuploader">
+                    <div class="col-md-11">
+                        <input id="logoUrl" name="logoUrl" class="form-control apd-form-input-file" value=""
+                               type="file" file_type="image">
+                    </div>
+                    <i class="apd-image-trigger fa  fa-picture-o"
+                       style="font-size:14px;color:#00b289;display: none" 
+                       id="logoInput"
+
+                       apd_image_alt="insValue" data-toggle="modal" 
+                       data-target="#apdImageViewer" aria-hidden="true" v_id="sa_201707091117240999">
+                    </i>
+                    <div class="col-md-1">
+                        <img style="display: none; " class="  apd-image-spinner" src="resources/upload/spinner.gif" height="20px" width="20px">
+                        <img style="display: none; " class="  apd-image-uploaded" src="resources/upload/uploaded.png" height="20px" width="20px">
+                        <i style="font-size:22px;color:red;display: none; " class="fa fa-warning apd-image-upload-error"></i>
+                        <i class="apd-image-trigger fa  fa-picture-o  " style="font-size:14px;color:#00b289;display: none" apd_image_url="resources/upload/" apd_image_alt="insValue" data-toggle="modal" data-target="#apdImageViewer" aria-hidden="true" v_id="sa_201707081543050682"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group col-md-offset-4 col-md-5 text-left" >
+                <br>
+                <span style="color: red">*</span>
+                <span  id="requiredField" qlang>requiredFields</span>
+            </div>
+
+            <!--            <div class="form-group col-md-offset-4 col-md-1 text-right">
+                            <br>
+                            <button id="btnStep3Finish" class="   button step3CtrlOut" 
+                                    type="button" qlang onclick="update(this)" >update</button>
+                            <br>
+                        </div>-->
+
+            <div class="form-group  col-md-offset-4 col-md-5" align="right">
+                <button type="button" class="btn btn-default apd-form-btn button" apd-clear-form-data="false" qlang>update</button>
+            </div>
+
+
+        </div>
+    </form>
+
+    <div id="apdImageViewer"   class="modal fade col-md-12" role="dialog">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"  qlang >imageViewer</h4>
+                </div>
+                <div class="modal-body-1">
+                    <div id="myCarousel211" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators" >
+                        </ol>
+                        <div class="carousel-inner">
+                        </div>
+                        <a class="left carousel-control" href="#myCarousel211" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only"  qlang >previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel211" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only"  qlang >next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
     </div>
-    <!-- Modal -->
-  
-    
+
+
 </div>
+<script>
+    $('.selectpicker').selectpicker('refresh');
+
+    getCompanyInfo();
+
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+        var lang = $('#lang').val();
+        $('#termsandco').attr('href', 'termsandco.html?lang=' + lang);
+    });
+
+
+
+    function update(elem) {
+        var $e = $('#btnStep3Finish');
+        var json = {kv: {}};
+        console.log($e.attr('id'))
+        $e.closest('section').find('.form-control').each(function (el) {
+            var id = $(this).attr('id');
+            var v = $(this).val();
+            console.log(id + '-->' + v);
+            json.kv[id] = v;
+        });
+        json.kv.lang = $('#lang').val();
+
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: "api/post/nasrv/serviceCrUpdateCompanyInfo",
+            type: "POST",
+            data: data,
+            contentType: 'text/html',
+            success: function (res) {
+                $('#mainbody').hide();
+                $('#activateionbody').show();
+            },
+            error: function () {
+                alert("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+    }
+
+    function getCompanyInfo() {
+        $.ajax({
+            url: "api/post/srv/serviceCrGetOwnCompanyInfo",
+            type: "POST",
+            contentType: 'text/html',
+            success: function (res) {
+                isResultRedirect(JSON.stringify(res));
+                console.log(JSON.stringify(res))
+                var keys = Object.keys(res.tbl[0].r[0]);
+                //set form input values
+
+
+                for (var i = 0; i < keys.length; i++) {
+                    var v = (res.tbl[0].r[0][keys[i]]) ? res.tbl[0].r[0][keys[i]] : "";
+                    try {
+                        $('input[id=' + keys[i] + ']').val(v);
+//                        $('input[id=' + keys[i] + ']').attr("file_value", v);
+                    } catch (err) {
+                    }
+                    try {
+                        if (v) {
+                            $('select[id=' + keys[i] + ']').
+                                    find('option[value=' + v + ']').attr("selected", "selected");
+                        }
+                    } catch (err) {
+                    }
+                }
+
+                //has logo
+                console.log("logoUrl>>>" + res.tbl[0].r[0].logoUrl);
+//                try {
+                    if (res.tbl[0].r[0].logoUrl) {
+                        console.log("logoUrl inside>>>" + res.tbl[0].r[0].logoUrl);
+                        console.log("logoUrl val>>>" +  $("#logoUrl").attr("name"));
+                        $("#logoUrl").attr("file_value", res.tbl[0].r[0].logoUrl);
+                        $("#logoInput").attr("apd_image_url", "resources/upload/" + res.tbl[0].r[0].logoUrl);
+                        $("#logoInput").show();
+                    }
+//                } catch (err) {
+//                }
+
+                $('.selectpicker').selectpicker('refresh');
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>

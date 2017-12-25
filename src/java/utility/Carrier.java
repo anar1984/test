@@ -1806,7 +1806,8 @@ public class Carrier implements Serializable {
             if (tc.isKeyExist(val)) {
                 this.setValue(coreTablename, i, newCol, tc.getValue(val));
             } else if (keepOriginal) {
-                this.setValue(coreTablename, i, newCol, "");
+                String v1 = this.getValue(coreTablename, i, newCol).toString();
+                this.setValue(coreTablename, i, newCol, v1);
             } else {
                 this.removeRow(coreTablename, i);
                 i--;

@@ -43,7 +43,7 @@
             <button component_id = "serviceCrUpdatePatient" id='btn_serviceCrUpdatePatient' type="button" 
                     class="btn btn-md task-button apd-task-create 
                     apd-task-form-fill  " 
-                    style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;' 
+                    style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px; display: none;' 
                     apd-form-fill-url="srv/serviceCrGetPatientList" 
                     apd-form-fill-kv="id=201708120805030545" 
                     data-toggle="modal"   data-target="#updatePatient" qlang>
@@ -52,14 +52,15 @@
             <button component_id = "serviceCrInsertNewAppointment" id='btn_newSessionWizard' type="button" 
                     onclick="toggleNewSession(this)"
                     class="btn btn-md task-button  apd-task-create apd-task-form toggle-on-click" 
-                    style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
+                    style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;display: none; '
                     data-toggle="modal"   data-target="#newSessionWizard" qlang>
                 newSession
             </button>
             <button  component_id = "serviceCrFinishSession"  type="button" qlang 
+                     id="btnFinishSession"
                      class="btn btn-md task-button toggle-on-click  " 
-                     style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px;'
-                     onclick="finishSession(this)">finishSession
+                     style='margin-top:5px;font-size: 12px;  padding-left: 14px;padding-right: 14px; display: none;'
+                     onclick="finishSession(this)" >finishSession
             </button>
 
         </div>
@@ -72,26 +73,15 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right  multi-level" role="menu" 
                     aria-labelledby="dropdownMenu">
-                    <li class="dropdown-submenu pull-left toggle-on-click" >
-                        <a tabindex="-1" href="#" qlang> report</a>
-                        <ul class="dropdown-menu dropdown-menu-right " id="report4Appointment" >
-                            <!--                            <li><a class='apd-report-cmb-list' rid='201708090638410249'
-                                                               tabindex="-1" href="#">yyyy</a></li>
-                                                        <li><a class='apd-report-cmb-list' rid='201708090631020540' 
-                                                               href="#">4444</a></li> -->
-                        </ul>
 
-
-                    </li>
-                    <br>
-                    <li class="dropdown-submenu pull-left">
-                        <a tabindex="-1" href="#" qlang> module</a>
-                        <ul class="dropdown-menu dropdown-menu-right " id="moduleList" >
-                            <!--                            <li><a class="apd-module-cmb-list" mid="201706221522420346" 
-                                                               tabindex="-1" href="#">APD Voice</a></li>-->
-
-                        </ul>
-                    </li>
+                    <!--                    <li class="dropdown-submenu pull-left">
+                                            <a tabindex="-1" href="#" qlang> module</a>
+                                            <ul class="dropdown-menu dropdown-menu-right " id="moduleList" >
+                                                                            <li><a class="apd-module-cmb-list" mid="201706221522420346" 
+                                                                                   tabindex="-1" href="#">APD Voice</a></li>
+                    
+                                            </ul>
+                                        </li>-->
                     <li>
                         <a tabindex="-1" href="#" qlang 
                            onclick='loadInspectionListBySession(this)'>inspectionList</a>
@@ -99,6 +89,11 @@
                     <li>
                         <a tabindex="-1" href="#" qlang 
                            onclick='loadSession(this)'>sessionList</a>
+                    </li>
+                    <li class="dropdown-submenu pull-left toggle-on-click" >
+                        <a tabindex="-1" href="#" qlang> report</a>
+                        <ul class="dropdown-menu dropdown-menu-right" id="report4Appointment" >
+                        </ul>
                     </li>
 
                     </button>
@@ -609,7 +604,7 @@
                     <div  class="col-md-12" id="newSessionDiv"  >
                         <form id="form_insertNewSession" class="apd-form" method="POST"> 
                             <div  class="col-md-12  "  >
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-5">
                                     <label qlang>doctor</label> 
                                     <select class="form-control apd-form-select-back" id="fkDoctorUserId" name="fkDoctorUserId" select_separator=" " 
                                             select_text="userPersonName,userPersonSurname,userPersonMiddlename"    select_value="id" 
@@ -621,14 +616,22 @@
                                     <input class="form-control" type="text" dont_clear id="sessionPatientFullname" name="sessionPatientFullname"
                                            disabled >
                                 </div>
-                                <div class="form-group col-md-2" align=" ">
-                                    <label qlang><span style="opacity: 0;">_________________________    </span> </label>
-                                    <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                                            data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
-                                    </button>
+
+                                <div class="form-group col-md-3">
+                                    <label qlang>purpose</label>
+                                    <select class="form-control apd-form-select-back" 
+                                            select_text="paymentName" 
+                                            select_value="id"  
+                                            id="fkPriceListId" name="fkPriceListId" 
+                                            send_data="listStatus=A"
+                                            srv_url="srv/serviceCrGetPriceListList">
+                                    </select> 
+                                </div >
+                                <div class="form-group col-md-12">
+
                                 </div>
-                                 
-                                <div class="form-group col-md-5">
+
+                                <div class="form-group col-md-3">
                                     <label class="float" qlang >appointmentDate</label>
                                     <div class='input-group date apd-form-date' id="appointmentDate"  >
                                         <input type="text" class="form-control">
@@ -653,7 +656,12 @@
                                     <input class="apd-form-check" type="checkbox" id="currentTime"
                                            name="currentTime" onclick="toggleSessionDate(this)"><span qlang>now</span>
                                 </div>
-
+                                <div class="form-group col-md-2" align=" ">
+                                    <label qlang><span style="opacity: 0;">_________________________    </span> </label>
+                                    <button id='btn_serviceCrInsertNewPatient' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
+                                            data-toggle="modal"   data-target="#agendaModal" onclick="setTimeout(showAgenda, 1000)" qlang >viewAgenda
+                                    </button>
+                                </div>
                                 <div class="form-group col-md-12" align="left">
                                     <label qlang>description</label>
                                     <input class="form-control apd-form-check" type="input" id="description"
@@ -661,7 +669,9 @@
                                     <br>
                                 </div>
                                 <div class="form-group col-md-12" align="right">
-                                    <br>  
+                                    <br> 
+                                    <input type="checkbox" checked   id="createInvoice">
+                                    <span qlang>createInvoice</span>
                                     <button type="button" style="color:green;" 
                                             class="btn btn-default apd-form-btn-add-appointment"  
                                             qlang onclick="addAppointment(this);">newSession
@@ -718,4 +728,20 @@
             format: 'DD-MM-YYYY'
         });
     });
+
+
+    function generalActionOnPatientFilter() {
+        var val = $("#fkPatientId").attr("pid");
+        console.log("pid on select " + val);
+        if (val) {
+            $('#btn_serviceCrUpdatePatient').show("");
+            $('#btn_newSessionWizard').show("");
+            
+        } else {
+//             $('#btn_serviceCrUpdatePatient').attr("disabled", "disabled");
+            $('#btn_serviceCrUpdatePatient').hide("");
+            $('#btn_newSessionWizard').hide("");
+            
+        }
+    }
 </script>

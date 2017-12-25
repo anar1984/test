@@ -150,7 +150,7 @@ public class CallDispatcher {
                 }
                 if (f1) {
                     carrier.removeColoumn(CoreLabel.RESULT_SET, colName);
-                    System.out.println("remove field-->" + colName);
+//                    System.out.println("remove field-->" + colName);
 
                 }
             }

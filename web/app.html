@@ -85,6 +85,28 @@
 
         </style>
         <script>
+//            jQuery.each(["get", "post"], function (i, method) {
+//                jQuery[ method ] = function (url, data, callback, type) {
+//                    let
+//                    rtn;
+//                    if (jQuery.isFunction(data)) {
+//                    type = type || callback;
+//                            callback = data;
+//                            data = undefined;
+//                    }
+//                    Pace.track(() = > {
+//                    rtn = jQuery.ajax(jQuery.extend({
+//                    url: url,
+//                            type: method,
+//                            dataType: type,
+//                            data: data,
+//                            success: callback
+//                    }, jQuery.isPlainObject(url) && url));
+//                    });
+//                            return rtn;
+//                } ;
+//            });
+
             $(document).ready(function () {
                 paceOptions = {
                     ajax: {
@@ -100,6 +122,9 @@
 
                     }
                 });
+
+
+
 
                 $.ajax({
                     url: "api/post/getContent",

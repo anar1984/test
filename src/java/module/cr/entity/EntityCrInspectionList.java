@@ -15,6 +15,7 @@ public class EntityCrInspectionList extends CoreEntity {
     public static String FK_USER_ID = "fkUserId";
     public static String FK_PATIENT_ID = "fkPatientId";
     public static String FK_SUBMODULE_ATTRIBUTE_ID = "fkSubmoduleAttributeId";
+    public static String FK_PRIVATE_SUBMODULE_ATTRIBUTE_ID = "fkPrivateSubmoduleAttributeId";
     public static String SA_SUBMODULE_ATTRIBUTE_ID = "saSubmoduleAttributeId";
     public static String INSPECTION_VALUE = "inspectionValue";
     public static String INSPECTION_DATE = "inspectionDate";
@@ -35,9 +36,9 @@ public class EntityCrInspectionList extends CoreEntity {
     public static String PATIENT_BIRTH_PLACE = "patientBirthPlace";
     public static String SEX = "sex";
     public static String SUBMODULE_VALU = "submoduleValue";
-    
-    private String submoduleValue = "";
 
+    private String submoduleValue = "";
+    private String fkPrivateSubmoduleAttributeId = "";
     private String patientBirthDate = "";
     private String patientBirthPlace = "";
     private String sex = "";
@@ -60,6 +61,14 @@ public class EntityCrInspectionList extends CoreEntity {
     private String patientSurname = "";
     private String patientMiddleName = "";
     private String attributeCode = "";
+
+    public String getFkPrivateSubmoduleAttributeId() {
+        return fkPrivateSubmoduleAttributeId;
+    }
+
+    public void setFkPrivateSubmoduleAttributeId(String fkPrivateSubmoduleAttributeId) {
+        this.fkPrivateSubmoduleAttributeId = fkPrivateSubmoduleAttributeId;
+    }
 
     public String getSubmoduleValue() {
         return submoduleValue;

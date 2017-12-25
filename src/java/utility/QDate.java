@@ -20,7 +20,7 @@ public class QDate {
         Date date = QDate.convertStringToTime("210545");
         Date date1 = QDate.convertStringToTime("200545");
         
-        System.out.println(QDate.getDifferenceInSeconds(date1, date));
+//        System.out.println(QDate.getDifferenceInSeconds(date1, date));
         
     }
 

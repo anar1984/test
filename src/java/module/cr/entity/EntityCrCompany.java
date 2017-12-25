@@ -29,7 +29,9 @@ public class EntityCrCompany extends CoreEntity {
     public static String COMPANY_LANG = "companyLang";
     public static String ACTIVE_USER_COUNT = "activeUserCount";
     public static String PERSON_USERNAME = "personUsername";
-
+    public static String LOGO_URL = "logoUrl";
+    
+    private String logoUrl = "";
     private String personUsername = "";
     private String activeUserCount = "";
     private String companyLang = "";
@@ -54,7 +56,7 @@ public class EntityCrCompany extends CoreEntity {
         CREATE("C"),
         DELETED("D");
         private final String status;
- 
+
         CompanyStatus(String status) {
             this.status = status;
         }
@@ -77,6 +79,16 @@ public class EntityCrCompany extends CoreEntity {
             return this.type;
         }
     }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    
 
     public String getPersonUsername() {
         return personUsername;

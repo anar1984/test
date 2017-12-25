@@ -63,6 +63,16 @@ var g_tbl = {
         "reload_buttion_id": "serviceCrGetPriceListList",
         "table_block": "0"
     },
+    "tbl_pricelistandsubmodule_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetRelPriceListAndSubmoduleList",
+        "delete_url": "srv/serviceCrDeleteRelPriceListAndSubmodule",
+        "result_div_id": "pricelistlist",
+        "form_update_popup_id": "assignSubmodule",
+        "form_copy_popup_id": "assignSubmodule",
+        "reload_buttion_id": "serviceCrGetRelPriceListAndSubmoduleList",
+        "table_block": "0"
+    },
     "tbl_user_list": {
         "response_tn": "Response",
         "list_url": "srv/serviceCrGetUserList",
@@ -312,6 +322,26 @@ var g_tbl = {
         "form_copy_popup_id": "insertNewRelCompanyAndRule",
         "reload_buttion_id": "serviceCrGetRelCompanyAndRuleList",
         "table_block": "0"
+    },
+    "tbl_privatesubmodule_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetPrivateSubmoduleList",
+        "delete_url": "srv/serviceCrDeletePrivateSubmodule",
+        "result_div_id": "privatesubmodulelist",
+        "form_update_popup_id": "updatePrivateSubmodule",
+        "form_copy_popup_id": "insertNewPrivateSubmodule",
+        "reload_buttion_id": "serviceCrGetPrivateSubmoduleList",
+        "table_block": "0"
+    },
+    "tbl_privateattribute_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetPrivateAttributeList",
+        "delete_url": "srv/serviceCrDeletePrivateAttribute",
+        "result_div_id": "privatesubmodulelist",
+        "form_update_popup_id": "updatePrivateAttribute",
+        "form_copy_popup_id": "insertNewPrivateAttribute",
+        "reload_buttion_id": "serviceCrGetPrivateAttributeList",
+        "table_block": "0"
     }
 
 };
@@ -391,11 +421,11 @@ function loadSession(e) {
 //    json.kv.fkPatientId = $('#fkPatientId').val();
     $('#headertitle').html($(e).html());
     loadTable('tbl_appointment_list');
-    enableSubmoduleDiv();
-    showAddInspection();
-    $('.toggle-on-click').show(1000);
+//    enableSubmoduleDiv();
+//    showAddInspection();
+//    $('.toggle-on-click').show(1000);
     $('#newSessionToggle').attr("style", "border-color:#00b289;background-color:#00b289;");
-//     $('.toggle-on-click').show(1000);
+     $('.toggle-on-click').show(1000);
 //    $('#tbl_appointment_list .apd-table-checkbox').click();
 }
 
@@ -460,7 +490,10 @@ function addAppointment(el) {
         alert(getMessage('patientIsNotEntered'));
         return;
     }
+
+    var priceListId = $(el).closest(".apd-form").find("#fkPriceListId").val();
     var isnow = $(el).closest(".row").find("#currentTime").prop('checked');
+    var createInvoice =  $(el).closest(".row").find("#createInvoice").prop('checked')?"1" :"0";
     var apdate = "";
     var apttime1 = "";
     var apttime2 = "";
@@ -487,6 +520,9 @@ function addAppointment(el) {
     json.kv.appointmentTime2 = apttime2;
     json.kv.isNow = isnow;
     json.kv.description = desc;
+    json.kv.fkPriceListId = priceListId;
+    json.kv.createInvoice = createInvoice;
+    
     showAddInspection();
     var data = JSON.stringify(json);
     $.ajax({
@@ -537,11 +573,11 @@ function getMessage(key) {
     return text;
 }
 
-function getMessage(key,lang) {
+function getMessage(key, lang) {
     var text = "";
     var json = {kv: {}};
     json.kv.messageCode = key;
-    json.kv.lang=lang;
+    json.kv.lang = lang;
     var data = JSON.stringify(json);
     $.ajax({
         url: "api/post/nasrv/serviceCrGetMessageText",
@@ -568,7 +604,7 @@ function getLabel(key) {
     json.kv.code = key;
     var data = JSON.stringify(json);
     $.ajax({
-        url: "api/post/srv/serviceCrGetLabel",
+        url: "api/post/nasrv/serviceCrGetLabel",
         type: "POST",
         data: data,
         contentType: "application/json",
@@ -1063,6 +1099,7 @@ function fillStatistic(e) {
 }
 
 
+
 function patientSelectAction(e) {
 
 //    filterPatientCombo(e);
@@ -1097,7 +1134,7 @@ function patientSelectAction(e) {
 //    if (!$('#tbl_appointment_list').find('.apd-table-checkbox').first().is(':checked')) {
 //        $('#tbl_appointment_list').find('.apd-table-checkbox').first().click();
 //    }
-
+    generalActionOnPatientFilter();
 }
 
 function filterPatientCombo(hideCombo) {
@@ -1125,6 +1162,7 @@ function filterPatientCombo(hideCombo) {
             var obj = res.tbl;
 //                    for (var i = 0; i < obj.length; i++) {
             if (obj.length == 0) {
+                generalActionOnPatientFilter();
                 return;
             }
             var objChild = obj[0]['r'];
@@ -1132,12 +1170,16 @@ function filterPatientCombo(hideCombo) {
                 var v = objChild[j]['id'];
                 var t = objChild[j]['patientName'];
 //                $('#fkPatientId').append($("<option />").val(v).text(t));
-                $('.es-list')
-                        .append($("<li/>")
-                                .text(t)
-                                .attr("class", "es-visible apd-editable-combo-li")
-                                .attr("pid", v)
-                                );
+                if (v) {
+                    $('.es-list')
+                            .append($("<li/>")
+                                    .text(t)
+                                    .attr("class", "es-visible apd-editable-combo-li")
+                                    .attr("pid", v)
+                                    );
+                }else{
+                    generalActionOnPatientFilter();
+                }
             }
             if (hideCombo == true) {
                 $('.es-list').hide();

@@ -76,7 +76,7 @@ public class QUtility {
     }
 
     public static String convertDecimalToHex(int num) {
-        return convertDecimalToHex(num); 
+        return convertDecimalToHex(num);
     }
 
     public static String getUndefinedLabel() throws QException {
@@ -99,7 +99,6 @@ public class QUtility {
 //        }
 //        return arg;
 //    }
-    
     public static String getLabel(String code, String lang) throws QException {
         String desc = "";
         EntityCrEntityLabel ent = new EntityCrEntityLabel();
@@ -115,11 +114,11 @@ public class QUtility {
             Carrier c1 = EntityManager.select(ent);
             if (c1.getTableRowCount(ent.toTableName()) == 0) {
                 desc = code;
-                 QLogger.saveLabelLog(code);
-            }else{
+                QLogger.saveLabelLog(code);
+            } else {
                 desc = ent.getDescription();
             }
-        }else{
+        } else {
             desc = ent.getDescription();
         }
 
@@ -231,7 +230,7 @@ public class QUtility {
 
     public static String checkLangLabel(File arg) throws QException, IOException {
         Document doc = Jsoup.parse(arg, "UTF-8");
-        
+
         return checkLangLabel(doc);
 
     }
@@ -257,7 +256,7 @@ public class QUtility {
             String url_l = "";
 
             if (url.startsWith("li/") || url.startsWith("nali/")) {
-                System.out.println("burdan kecibler");
+//                System.out.println("burdan kecibler");
                 String itemCode = url.trim().split("/")[1];
                 url_l = "serviceCrGetListItemByCode";
                 c.setValue("itemCode", itemCode);
@@ -277,13 +276,13 @@ public class QUtility {
                     c.setValue(key, val);
                 }
             }
-            
-            try{
-            c = c.callService(url_l);
-            }catch(Exception e){
-                System.out.println("-------------------------------------------------");
-                System.out.println("Exception fillCombo "+e.getMessage());
-                System.out.println("-------------------------------------------------");
+
+            try {
+                c = c.callService(url_l);
+            } catch (Exception e) {
+//                System.out.println("-------------------------------------------------");
+//                System.out.println("Exception fillCombo "+e.getMessage());
+//                System.out.println("-------------------------------------------------");
             }
             String tn = CoreLabel.RESULT_SET;
             int rc = c.getTableRowCount(tn);
@@ -310,6 +309,11 @@ public class QUtility {
 
     public static String checkLangLabel(Document doc) throws QException, IOException {
         doc = checkPermission(doc);
+        doc = checkUsernameTag(doc);
+        doc = checkUserlogoTag(doc);
+        doc = checkCurrentlangTag(doc);
+        doc = checkCurrentlangSrcTag(doc);
+
         Elements elements = doc.getElementsByAttribute("qlang");
         String langs = "";
         for (Element element : elements) {
@@ -334,14 +338,14 @@ public class QUtility {
             String val = element.hasAttr("data-content")
                     ? element.attr("data-content").trim() : element.html().trim();
             String nv = "";
-            if (c.isKeyExist(val)){
-                nv = c.getValue(val).toString();   
-            }else{
+            if (c.isKeyExist(val)) {
+                nv = c.getValue(val).toString();
+            } else {
                 val = QUtility.getLabel(val);
                 nv = val;
                 QLogger.saveLabelLog(val);
             }
-            
+
             if (element.hasAttr("data-content")) {
                 element.attr("data-content", nv);
             } else {
@@ -361,12 +365,74 @@ public class QUtility {
                 continue;
             }
 
-            if (!hasPermission(comp_id)){
-              element.remove();
-            }else{
+            if (!hasPermission(comp_id)) {
+                element.remove();
+            } else {
                 element.removeAttr("component_id");
             }
-            
+
+        }
+
+        return doc;
+    }
+
+    public static Document checkUsernameTag(Document doc) throws QException, IOException {
+        Elements elements = doc.getElementsByAttribute("qusername");
+
+        if (elements.isEmpty()) {
+            return doc;
+        }
+        for (Element element : elements) {
+            element.html(SessionManager.getFullnameOfCurrentUser());
+        }
+
+        return doc;
+    }
+
+    public static Document checkUserlogoTag(Document doc) throws QException, IOException {
+        Elements elements = doc.getElementsByAttribute("quserlogo");
+
+        if (elements.isEmpty()) {
+            return doc;
+        }
+        for (Element element : elements) {
+            String url = element.attr("src");
+            String img = SessionManager.getCurrentUserInfo().getUserImage();
+            img = img.length() > 0
+                    ? img
+                    : "userprofile.png";
+            url = url + img;
+            element.attr("src", url);
+        }
+
+        return doc;
+    }
+
+    public static Document checkCurrentlangTag(Document doc) throws QException, IOException {
+        Elements elements = doc.getElementsByAttribute("qcurrentlang");
+
+        if (elements.isEmpty()) {
+            return doc;
+        }
+        for (Element element : elements) {
+            String lang = SessionManager.getCurrentLang();
+            element.html(lang);
+        }
+
+        return doc;
+    }
+
+    public static Document checkCurrentlangSrcTag(Document doc) throws QException, IOException {
+        Elements elements = doc.getElementsByAttribute("qcurrentlangsrc");
+
+        if (elements.isEmpty()) {
+            return doc;
+        }
+        for (Element element : elements) {
+            String url = element.attr("src");
+            String img = SessionManager.getCurrentLang() + ".png";
+            url = url + img;
+            element.attr("src", url);
         }
 
         return doc;
@@ -417,7 +483,7 @@ public class QUtility {
             entUsrRule.setFkRuleId(rulePermIds);
             entUsrRule.setFkUserId(SessionManager.getCurrentUserId());
             Carrier crUsrRule = EntityManager.select(entUsrRule);
-            if (crUsrRule.getTableRowCount(entUsrRule.toTableName())==0){
+            if (crUsrRule.getTableRowCount(entUsrRule.toTableName()) == 0) {
                 return false;
             }
         }
@@ -450,6 +516,22 @@ public class QUtility {
         }
 
         return doc.toString();
+    }
+
+    public static String[] getLangList() throws QException {
+        EntityCrListItem ent = new EntityCrListItem();
+        ent.setDeepWhere(false);
+        ent.setLang("ENG");
+        ent.setItemCode("language");
+        ent.addSortBy(EntityCrListItemList.PARAM_1);
+        ent.setSortByAsc(true);
+        Carrier c = EntityManager.select(ent);
+
+        String arr[] = new String[c.getTableRowCount(ent.toTableName())];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = c.getValue(ent.toTableName(),i,"itemKey").toString();
+        }
+        return arr;
     }
 
 }

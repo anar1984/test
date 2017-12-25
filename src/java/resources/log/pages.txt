@@ -27,3 +27,5 @@ page_valuetype
 page_usertable
 page_changepwd
 page_test
+page_updatecompany
+page_privateattribute

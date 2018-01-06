@@ -423,6 +423,8 @@ public class CrController {
                 cp.hasValue(carrier, EntityCrAppointment.FK_DOCTOR_USER_ID));
         carrier.addController("general",
                 cp.hasValue(carrier, EntityCrAppointment.FK_PATIENT_ID));
+        carrier.addController(EntityCrAppointment.FK_PRICE_LIST_ID,
+                cp.hasValue(carrier, EntityCrAppointment.FK_PRICE_LIST_ID));
         carrier.addController("general",
                 cp.hasValue(carrier, EntityCrAppointment.FK_PRICE_LIST_ID));
         carrier.addController("general",

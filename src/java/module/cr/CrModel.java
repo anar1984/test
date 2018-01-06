@@ -144,10 +144,47 @@ public class CrModel {
     public static Carrier getPage(Carrier carrier) throws QException {
         String page = carrier.getValue("page").toString();
         String ln = "";
+        try {
+            ln = CacheUtil.getFromCache(SessionManager.getCurrentUserId() + "||" + page)
+                    .getValue("page").toString();
+        } catch (Exception e) {
+        }
+
+        System.out.println("Get page body from cache>>>>> ");
+        if (ln.trim().length() == 0) {
+            fillPageBody();
         ln = getStaticHtmlPageBody(page);
+            System.out.println("Get page body new call>>>>> ");
+        }
 //        System.out.println("Get page body >>>>> " + ln);
         carrier.setValue("body", ln);
         return carrier;
+    }
+
+    public static Carrier fillPageBody() {
+        Carrier c = new Carrier();//bu carrier hec bir ise yaramir sadece error yaranma halinda emeliyyatin dayandirilmasi ucun nezerde tutulub
+        ArrayList<String> pagelist = new ArrayList<>();
+        File[] files = new File("C:\\Users\\OTARKHAN\\Desktop\\APDDinamic\\src\\java\\resources\\page").listFiles();
+        for (File file : files) {
+            if (file.getName().endsWith(".html")) {
+                pagelist.add(file.getName().substring(0, file.getName().lastIndexOf(".")));
+
+            }
+        }
+        try {
+
+            for (String page : pagelist) {
+                if (QUtility.hasPermission(page)) {
+                    c.setValue("page", getStaticHtmlPageBody(page));
+                    CacheUtil.putCache(SessionManager.getCurrentUserId() + "||" + page, c);
+                }
+            }
+        } catch (QException ex) {
+            Logger.getLogger(CrModel.class.getName()).log(Level.SEVERE, null, ex);
+
+            return c;
+        }
+        return c;
     }
 
     public static Carrier genSubmoduleButtonList(Carrier carrier) throws QException {

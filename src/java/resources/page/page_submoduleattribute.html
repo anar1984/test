@@ -9,7 +9,7 @@
                 onclick="loadTable('tbl_submoduleattribute_list')">List
         </button>
         <button id='btn_serviceCrInsertNewSubmoduleAttribute' type="button" class="btn btn-md task-button apd-task-create apd-task-form" 
-                data-toggle="modal" data-target="#insertNewSubmoduleAttribute">Insert
+                data-toggle="modal" data-target="#insertNewSubmoduleAttribute" onclick="loadAttr(this)">Insert
         </button>
         <hr>
     </div>
@@ -229,3 +229,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    
+    function loadAttr(e){
+//            el = $('#form_insertNewSubmoduleAttribute').find('#fkAttributeId');
+//            
+//            el.empty();
+//            fillCombobox(el);
+//            $(el).multiselect(
+//                    {includeSelectAllOption: true,
+//                        enableFiltering: true,
+//                        selectAllJustVisible: true}
+//            );
+    }    
+    </script>

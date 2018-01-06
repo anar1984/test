@@ -1430,6 +1430,11 @@ public class CrModel {
         EntityCrAppointment ent = new EntityCrAppointment();
         ent.setId(carrier.getValue("id").toString());
         EntityManager.select(ent);
+        EntityCrUser user = new EntityCrUser();
+        user.setId(SessionManager.getCurrentUserId());
+        EntityManager.select(user);
+        String permCode = user.getLiUserPermissionCode();
+        if (permCode.equals("A") || permCode.equals("AD")) {
 
         if (ent.getInspectionCode().trim().length() == 0) {
             carrier.addController("general",
@@ -1449,7 +1454,11 @@ public class CrModel {
                     EntityManager.getMessageText("operationWithValueCannotBeDeleted"));
             return carrier;
         }
-
+        } else {
+            carrier.addController("general",
+                    "You don't have a permission for this operation");
+            return carrier;
+        }
         return carrier;
     }
 
@@ -2745,9 +2754,22 @@ public class CrModel {
 
     public Carrier deletePatient(Carrier carrier) throws QException {
         EntityCrPatient ent = new EntityCrPatient();
+        EntityCrInspection list = new EntityCrInspection();
+
         EntityManager.mapCarrierToEntity(carrier, ent);
+
+        list.setFkPatientId(ent.getId());
+        Carrier c = EntityManager.select(list);
+        int rc = c.getTableRowCount(list.toTableName());
+        if (rc == 0) {
         EntityManager.delete(ent);
         return carrier;
+        } else {
+            carrier.addController("general", EntityManager.getMessageText("operationWithValueCannotBeDeleted"));
+            //  EntityManager.getMessage",operationWithValueCannotBeDeleted Text("operationWithValueCannotBeDeleted"
+            return carrier;
+        }
+
     }
 
     public static Carrier getPatientList4Appointment(Carrier carrier) throws QException {
@@ -4237,7 +4259,10 @@ public class CrModel {
     public static Carrier getPaymentList(Carrier carrier) throws QException {
         EntityCrPayment entPymnt = new EntityCrPayment();
         EntityManager.mapCarrierToEntity(carrier, entPymnt);
-//        entPymnt.setFkDoctorUserId(SessionManager.getCurrentUserId());
+        String fkDoctorUserId = SessionManager.isCurrentUserSimpleDoctor()
+                ? SessionManager.getCurrentUserId()
+                : "";
+        entPymnt.setFkDoctorUserId(fkDoctorUserId);
         Carrier cPymnt = EntityManager.select(entPymnt);
         String tnPymnt = entPymnt.toTableName();
         String ptntIds = cPymnt.getValueLine(tnPymnt, "fkPatientId");

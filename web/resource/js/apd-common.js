@@ -425,7 +425,7 @@ function loadSession(e) {
 //    showAddInspection();
 //    $('.toggle-on-click').show(1000);
     $('#newSessionToggle').attr("style", "border-color:#00b289;background-color:#00b289;");
-     $('.toggle-on-click').show(1000);
+    // $('.toggle-on-click').show(1000);
 //    $('#tbl_appointment_list .apd-table-checkbox').click();
 }
 

@@ -1476,6 +1476,9 @@ public class CrModel {
     }
 
     public static Carrier getAppointmentList(Carrier carrier) throws QException {
+        String sl = carrier.getValue("startLimit").toString();
+        String el = carrier.getValue("endLimit").toString();
+        
         Carrier cprSex = QUtility.getListItem("sex",
                 carrier.getValue("sexName").toString());
         String sex = convertArrayToFilterLine(cprSex.getKeys());
@@ -1518,6 +1521,8 @@ public class CrModel {
         ent.setFkDoctorUserId(fkDoctorUserId);
         ent.setAppointmentStatus(apptmntStts);
         ent.setAppointmentStatus(apptStatusKeys);
+        ent.setStartLimit(sl);
+        ent.setEndLimit(el);
         if (!ent.hasSortBy()) {
             ent.addSortBy(EntityCrAppointment.APPOINTMENT_STATUS);
             ent.addSortBy(EntityCrAppointment.APPOINTMENT_DATE);

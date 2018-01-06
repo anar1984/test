@@ -830,6 +830,9 @@ public class ValueTypeHtml {
     }
 
     private String getHasOther() {
+        if(isPrivate) {
+            return privateAttribute.getHasOther();
+		}
         return submoduleAttribute.getHasOther();
     }
 

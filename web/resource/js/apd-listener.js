@@ -74,7 +74,7 @@ function submodulePreviousPageListener() {
 //        var isPrivate = el.closest('form[class=apd-form]').find('#isPrivate').val();
 //        var nextNo = getPreviousSubmoduleOrderNo(orderNo, isPrivate);
          var nextNo = $('#apd-submodule-button-list-id').
-                find("button[sort_by='"+orderNo+"']").prev().attr("sort_by");
+                find("button[sort_by='" + orderNo + "']").prev().attr("sort_by");
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
         doSubmoduleFormShow(e);
@@ -1866,6 +1866,11 @@ function reportComboListeners() {
                 var oPrntWin = window.open("", "_blank", "width=1100,height=1140,left=30,top=30,menubar=yes,toolbar=no,location=no,scrollbars=yes");
                 oPrntWin.document.open();
                 oPrntWin.document.write("<!doctype html><html><head><title>Print</title></head><body onload=\"print();\">" + rhtml + "</body></html>");
+                oPrntWin.onfocus = function () {
+                    setTimeout(function () {
+                        oPrntWin.close();
+                    }, 100);
+                };
                 oPrntWin.document.close();
             },
             error: function (res, status) {
@@ -1905,6 +1910,11 @@ function reportPaymentComboListeners() {
                 var oPrntWin = window.open("", "_blank", "width=1100,height=1140,left=30,top=30,menubar=yes,toolbar=no,location=no,scrollbars=yes");
                 oPrntWin.document.open();
                 oPrntWin.document.write("<!doctype html><html><head><title>Print</title></head><body onload=\"print();\">" + rhtml + "</body></html>");
+                oPrntWin.onfocus = function () {
+                    setTimeout(function () {
+                        oPrntWin.close();
+                    }, 100);
+                };
                 oPrntWin.document.close();
             },
             error: function (res, status) {

@@ -1594,8 +1594,8 @@ function loadRemotePage(pageid) {
     var json = {kv: {}};
     json.kv["page"] = pageid;
     var data = JSON.stringify(json);
-    Pace.restart();
-    Pace.track(function() {
+    console.log("hey");   
+$.blockUI({ message: '<h1> Just a moment...</h1>' }); 
         $.ajax({
             url: "api/post/srv/serviceCrGetPage",
             type: "POST",
@@ -1607,13 +1607,16 @@ function loadRemotePage(pageid) {
                 isResultRedirect(JSON.stringify(res));
                 var obj = res.kv.body;
                 $('.page-content').html(obj);
+                $.unblockUI();
             },
             error: function (res, status) {
 //            alert(getMessage('somethingww'));
             }
         });
-    });
-}
+    console.log("end of blocking");
+       
+    };
+
 
 function panelListener() {
     $('.main_panel').hide(function (e) {

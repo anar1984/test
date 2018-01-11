@@ -29,7 +29,8 @@ public class EntityCrPrivateAttribute extends CoreEntity {
     public static String SORT_BY = "sortBy";
     public static String NAME = "name";
     public static String CODE = "code";
-    public static String HAS_OTHER = "hasOther";
+//    public static String HAS_OTHER = "hasOther";
+    
     private String code = "";
     private String name = "";
     private String fkValueTypeId = "";
@@ -38,16 +39,17 @@ public class EntityCrPrivateAttribute extends CoreEntity {
     private String value = "";
     private String description = "";
     private String sortBy = "";
-    private String hasOther="";
+//    private String hasOther="";
 
     
-    public String getHasOther(){
-        return hasOther;
-    }
- 
-    public void setHasOther(String hasOther){
-        this.hasOther=hasOther;
-    }
+//    public String getHasOther(){
+//        return hasOther;
+//    }
+// 
+//    public void setHasOther(String hasOther){
+//        this.hasOther=hasOther;
+//    }
+    
     public String getCode() {
         return code;
     }

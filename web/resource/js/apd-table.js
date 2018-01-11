@@ -395,6 +395,7 @@ function loadTable(var_tablename, data) {
     json.kv['startLimit'] = 0;
     json.kv['endLimit'] = global_var.default_per_page;
     var data = JSON.stringify(json);
+   
     $.ajax({
         url: "api/post/" + list_url,
         type: "POST",
@@ -420,6 +421,7 @@ function loadTable(var_tablename, data) {
             alert(getMessage('somethingww'));
         }
     });
+    
 }
 
 function getTableButtonHtml(var_tablename) {

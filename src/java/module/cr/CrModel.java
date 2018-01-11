@@ -145,15 +145,18 @@ public class CrModel {
         String page = carrier.getValue("page").toString();
         String ln = "";
         try {
-            ln = CacheUtil.getFromCache(SessionManager.getCurrentUserId() + "||" + page)
+            ln = CacheUtil.getFromCache(SessionManager.getCurrentCompanyId() + "||"
+                    + SessionManager.getCurrentUserId() + "||" + page)
                     .getValue("page").toString();
+            carrier.setValue("body", ln);
         } catch (Exception e) {
+            System.out.println("error no get cahce util.get ");
         }
 
         System.out.println("Get page body from cache>>>>> ");
         if (ln.trim().length() == 0) {
             fillPageBody();
-        ln = getStaticHtmlPageBody(page);
+            ln = getStaticHtmlPageBody(page);
             System.out.println("Get page body new call>>>>> ");
         }
 //        System.out.println("Get page body >>>>> " + ln);
@@ -161,29 +164,42 @@ public class CrModel {
         return carrier;
     }
 
-    public static Carrier fillPageBody() {
-        Carrier c = new Carrier();//bu carrier hec bir ise yaramir sadece error yaranma halinda emeliyyatin dayandirilmasi ucun nezerde tutulub
+    public static Carrier fillPageBody() throws QException {
         ArrayList<String> pagelist = new ArrayList<>();
-        File[] files = new File("C:\\Users\\OTARKHAN\\Desktop\\APDDinamic\\src\\java\\resources\\page").listFiles();
-        for (File file : files) {
-            if (file.getName().endsWith(".html")) {
-                pagelist.add(file.getName().substring(0, file.getName().lastIndexOf(".")));
-
-            }
-        }
+        Carrier c = new Carrier();
+        //bu carrier hec bir ise yaramir sadece error yaranma halinda emeliyyatin dayandirilmasi ucun nezerde tutulub
         try {
 
-            for (String page : pagelist) {
-                if (QUtility.hasPermission(page)) {
-                    c.setValue("page", getStaticHtmlPageBody(page));
-                    CacheUtil.putCache(SessionManager.getCurrentUserId() + "||" + page, c);
+            GeneralProperties prop = new GeneralProperties();
+            String filename = prop.getWorkingDir() + "../page";
+
+            File[] files = new File(filename).listFiles();
+            for (File file : files) {
+                if (file.getName().endsWith(".html")) {
+                    pagelist.add(file.getName().substring(0, file.getName().lastIndexOf(".")));
+
                 }
             }
-        } catch (QException ex) {
-            Logger.getLogger(CrModel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
 
-            return c;
+            System.err.println("error oldu");
+            throw new QException(ex);
         }
+
+        for (String page : pagelist) {
+            try {
+                if (QUtility.hasPermission(page)) {
+                    System.out.println("permission yoxlanildi >>>"+page);
+                    c.setValue("page", getStaticHtmlPageBody(page));
+                    CacheUtil.putCache(SessionManager.getCurrentCompanyId() + "||"
+                            + SessionManager.getCurrentUserId() + "||" + page, c);
+                }
+            } catch (QException ex) {
+                System.out.println("page error on >>>>"+page);
+                Logger.getLogger(CrModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         return c;
     }
 
@@ -1473,24 +1489,24 @@ public class CrModel {
         String permCode = user.getLiUserPermissionCode();
         if (permCode.equals("A") || permCode.equals("AD")) {
 
-        if (ent.getInspectionCode().trim().length() == 0) {
-            carrier.addController("general",
-                    EntityManager.getMessageText("appointmentIsNotSelected"));
-            return carrier;
-        }
+            if (ent.getInspectionCode().trim().length() == 0) {
+                carrier.addController("general",
+                        EntityManager.getMessageText("appointmentIsNotSelected"));
+                return carrier;
+            }
 
-        EntityCrInspection entIns = new EntityCrInspection();
-        entIns.setInspectionCode(ent.getInspectionCode());
-        Carrier tc = EntityManager.select(entIns);
-        int rc = tc.getTableRowCount(entIns.toTableName());
+            EntityCrInspection entIns = new EntityCrInspection();
+            entIns.setInspectionCode(ent.getInspectionCode());
+            Carrier tc = EntityManager.select(entIns);
+            int rc = tc.getTableRowCount(entIns.toTableName());
 
-        if (rc == 0) {
-            EntityManager.delete(ent);
-        } else {
-            carrier.addController("general",
-                    EntityManager.getMessageText("operationWithValueCannotBeDeleted"));
-            return carrier;
-        }
+            if (rc == 0) {
+                EntityManager.delete(ent);
+            } else {
+                carrier.addController("general",
+                        EntityManager.getMessageText("operationWithValueCannotBeDeleted"));
+                return carrier;
+            }
         } else {
             carrier.addController("general",
                     "You don't have a permission for this operation");
@@ -1524,7 +1540,7 @@ public class CrModel {
     public static Carrier getAppointmentList(Carrier carrier) throws QException {
         String sl = carrier.getValue("startLimit").toString();
         String el = carrier.getValue("endLimit").toString();
-        
+
         Carrier cprSex = QUtility.getListItem("sex",
                 carrier.getValue("sexName").toString());
         String sex = convertArrayToFilterLine(cprSex.getKeys());
@@ -1863,7 +1879,7 @@ public class CrModel {
             int r = nc.getTableRowCount(tnModule);
             nc.setValue(tnModule, r, "id", id);
             ids = ids + CoreLabel.IN + id;
-             
+
         }
 
         if (nc.getTableRowCount(tnModule) == 0) {
@@ -2804,8 +2820,8 @@ public class CrModel {
         Carrier c = EntityManager.select(list);
         int rc = c.getTableRowCount(list.toTableName());
         if (rc == 0) {
-        EntityManager.delete(ent);
-        return carrier;
+            EntityManager.delete(ent);
+            return carrier;
         } else {
             carrier.addController("general", EntityManager.getMessageText("operationWithValueCannotBeDeleted"));
             //  EntityManager.getMessage",operationWithValueCannotBeDeleted Text("operationWithValueCannotBeDeleted"
@@ -3123,7 +3139,7 @@ public class CrModel {
                     ? CoreLabel.IN + crPS.getValueLine(CoreLabel.RESULT_SET)
                     : "";
 
-//            System.out.println(" submodue private tids==" + tids);
+            System.out.println(" submodue private tids==" + tids);
             fkSubmoduleIds += tids;
 
             Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);

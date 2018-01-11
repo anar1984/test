@@ -44,7 +44,6 @@
         <script src="resource/js/bootstrap.min.js" type="text/javascript"></script>
         <!--script src="resource/js/customselect.js" type="text/javascript"></script--> 
         <script src="resource/js/bootstrap-select.min.js" type="text/javascript"></script> 
-        <script src="resource/js/jquery.blockUI.js" type="text/javascript"></script> 
         <script src="resource/js/jquery.sortable.min.js" type="text/javascript"></script> 
         <script src="resource/js/multiselect-ui.js" type="text/javascript"></script> 
         <script src="resource/js/bootstrap.youtubepopup.min.js" type="text/javascript"></script> 
@@ -58,6 +57,8 @@
         <script src="resource/js/pace.min.js" type="text/javascript"></script>
         <script src="resource/js/moment.js" type="text/javascript"></script>
         <script src="resource/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <!--<script src="resource/js/jquery.blockUI.js" type="text/javascript"></script>--> 
+        
 
 
 
@@ -107,22 +108,22 @@
 //                            return rtn;
 //                } ;
 //            });
-
+//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
             $(document).ready(function () {
-                paceOptions = {
-                    ajax: {
-                        trackMethods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
-                    }
-                };
+//                paceOptions = {
+//                    ajax: {
+//                        trackMethods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
+//                    }
+//                };
 
                 //$(document).ajaxStart(function() { Pace.restart(); });
 
-                $.ajaxSetup({
-                    beforeSend: function (xhr) {
-                        Pace.restart();
-
-                    }
-                });
+//                $.ajaxSetup({
+//                    beforeSend: function (xhr) {
+//                        Pace.restart();
+//
+//                    }
+//                });
 
 
 

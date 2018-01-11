@@ -40,7 +40,8 @@ public class CacheUtil {
     private static Cache<String, Key> tokenKeyCache;
     
     
-
+    
+    
     public static void initCache(URL configUrl) {
         Configuration xmlConfig = new XmlConfiguration(configUrl);
         cacheManager = CacheManagerBuilder.newCacheManager(xmlConfig);
@@ -138,7 +139,9 @@ public class CacheUtil {
     }
 
     public static void putCache(String cacheKey, Carrier carrier) {
+        modelCache.remove(cacheKey);
         modelCache.put(cacheKey, carrier);
+        
         logger.debug("putCache.cacheKey=" + cacheKey);
     }
 

@@ -16,7 +16,7 @@
         <key-type>java.lang.String</key-type> 
         <value-type>utility.Carrier</value-type> 
         <expiry>
-            <tti unit="minutes">1</tti>
+            <tti unit="hours">1</tti>
         </expiry>
         <resources>
             <disk unit="GB" persistent="true">2</disk>
@@ -30,7 +30,7 @@
         <key-type>java.lang.String</key-type> 
         <value-type>java.security.Key</value-type> 
         <expiry>
-            <tti unit="hours">1</tti>
+            <tti unit="days">100</tti>
         </expiry>
         <resources>
             <disk unit="GB" persistent="true">2</disk>

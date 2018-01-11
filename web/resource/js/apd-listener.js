@@ -73,7 +73,7 @@ function submodulePreviousPageListener() {
         var orderNo = el.closest('form[class=apd-form]').find('#smOrderNo').val();
 //        var isPrivate = el.closest('form[class=apd-form]').find('#isPrivate').val();
 //        var nextNo = getPreviousSubmoduleOrderNo(orderNo, isPrivate);
-         var nextNo = $('#apd-submodule-button-list-id').
+        var nextNo = $('#apd-submodule-button-list-id').
                 find("button[sort_by='" + orderNo + "']").prev().attr("sort_by");
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
@@ -89,7 +89,7 @@ function submoduleNextPageListener() {
 //        var isPrivate = el.closest('form[class=apd-form]').find('#isPrivate').val();
 //        var nextNo = getNextSubmoduleOrderNo(orderNo, isPrivate);
         var nextNo = $('#apd-submodule-button-list-id').
-                find("button[sort_by='"+orderNo+"']").next().attr("sort_by");
+                find("button[sort_by='" + orderNo + "']").next().attr("sort_by");
 //        console.log("nextNo-"+nextNo)
         var e = $(".apd-subm-attr-button[sort_by='" + nextNo + "']");
         var t = e.attr("submodule_id");
@@ -1393,6 +1393,7 @@ function getLastPersonInfo() {
             var fname = res.kv.patientName;
             $('#fkPatientId').val(fname);
             $('#fkPatientId').attr("pid", pid);
+            generalActionOnPatientFilter();
 //            $('.page-content').html(obj);
         },
         error: function (res, status) {
@@ -1501,7 +1502,7 @@ function fillReportForAppointment() {
         async: true,
         success: function (res) {
             isResultRedirect(JSON.stringify(res));
-             $("#report4Appointment").html("");
+            $("#report4Appointment").html("");
             if (res.tbl.length > 0) {
                 var obj = res.tbl[0].r;
                 for (var i in obj) {
@@ -1591,11 +1592,14 @@ function fillModuleForAppointment() {
 
 
 function loadRemotePage(pageid) {
-    var json = {kv: {}};
-    json.kv["page"] = pageid;
-    var data = JSON.stringify(json);
-    console.log("hey");   
-$.blockUI({ message: '<h1> Just a moment...</h1>' }); 
+    Pace.restart();
+    Pace.track(function () {
+        var json = {kv: {}};
+        json.kv["page"] = pageid;
+        var data = JSON.stringify(json);
+        console.log("hey");
+//    $.blockUI();
+
         $.ajax({
             url: "api/post/srv/serviceCrGetPage",
             type: "POST",
@@ -1607,15 +1611,17 @@ $.blockUI({ message: '<h1> Just a moment...</h1>' });
                 isResultRedirect(JSON.stringify(res));
                 var obj = res.kv.body;
                 $('.page-content').html(obj);
-                $.unblockUI();
+                console.log("end of blocking");
             },
             error: function (res, status) {
 //            alert(getMessage('somethingww'));
             }
         });
-    console.log("end of blocking");
-       
-    };
+    });
+
+//    $.unblockUI();
+}
+;
 
 
 function panelListener() {
@@ -1712,6 +1718,7 @@ function tableFilterListener() {
         });
         g_tbl[var_tablename].arrChecked = arrChecked;
         var data = JSON.stringify(json);
+
         $.ajax({
             url: "api/post/" + url,
             type: "POST",
@@ -1742,11 +1749,16 @@ function tableFilterListener() {
                         }
                     }
                 }
+                console.log("end of blocking");
+
             },
             error: function (res, status) {
+                console.log("end of blocking");
+                $.unblockUI();
 //                alert(getMessage('somethingww'));
             }
         });
+
     }));
 }
 

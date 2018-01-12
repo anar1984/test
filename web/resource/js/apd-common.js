@@ -493,7 +493,7 @@ function addAppointment(el) {
 
     var priceListId = $(el).closest(".apd-form").find("#fkPriceListId").val();
     var isnow = $(el).closest(".row").find("#currentTime").prop('checked');
-    var createInvoice =  $(el).closest(".row").find("#createInvoice").prop('checked')?"1" :"0";
+    var createInvoice = $(el).closest(".row").find("#createInvoice").prop('checked') ? "1" : "0";
     var apdate = "";
     var apttime1 = "";
     var apttime2 = "";
@@ -522,7 +522,7 @@ function addAppointment(el) {
     json.kv.description = desc;
     json.kv.fkPriceListId = priceListId;
     json.kv.createInvoice = createInvoice;
-    
+
     showAddInspection();
     var data = JSON.stringify(json);
     $.ajax({
@@ -1177,7 +1177,7 @@ function filterPatientCombo(hideCombo) {
                                     .attr("class", "es-visible apd-editable-combo-li")
                                     .attr("pid", v)
                                     );
-                }else{
+                } else {
                     generalActionOnPatientFilter();
                 }
             }
@@ -1296,6 +1296,15 @@ function  setCustomSelectValue(e) {
     console.log("done beee")
 }
 
+function progresBarStart() {
+    console.log($('#popupnav').html());
+    $('#popupnav').attr("style","width = '100%'");
+    document.getElementById("popupnav").style.width = "100%";
+}
+
+function progresBarStop() {
+    document.getElementById("popupnav").style.width = "0%";
+}
 
 
 (function ($) {
@@ -1331,3 +1340,5 @@ function  setCustomSelectValue(e) {
         }
     });
 })(jQuery);
+
+

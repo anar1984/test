@@ -1426,18 +1426,22 @@ function clearForm(formId, actionType) {
 
 function menuListeners(arg) {
     $(document).on("click", '.megamenu li,.megamenu_', function (e) {
-
+//        $('.apd-page').hide();
+        $('.page-content').html("");
+        progresBarStart();
         var id = $(this).attr('page_id');
         //call manual functions
         menuListenerActivies(id);
-        $('.apd-page').hide();
-        $('#' + id).show();
+        
+//        $('#' + id).show();
+        progresBarStop();
     });
 }
 
 function menuListenerActivies(page_id) {
 //execute page loader
     loadRemotePage(page_id);
+     
 //    var func = $('#' + page_id).find('.apd-task-page-loader').attr('onclick');
 //    eval(func);
     $('#' + page_id).find('.apd-task-page-loader').click();
@@ -1592,32 +1596,35 @@ function fillModuleForAppointment() {
 
 
 function loadRemotePage(pageid) {
-    Pace.restart();
-    Pace.track(function () {
-        var json = {kv: {}};
-        json.kv["page"] = pageid;
-        var data = JSON.stringify(json);
-        console.log("hey");
+//    Pace.restart();
+
+    var json = {kv: {}};
+    json.kv["page"] = pageid;
+    var data = JSON.stringify(json);
+//    console.log("hey");
 //    $.blockUI();
 
-        $.ajax({
-            url: "api/post/srv/serviceCrGetPage",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: false,
-            success: function (res) {
-                isResultRedirect(JSON.stringify(res));
-                var obj = res.kv.body;
-                $('.page-content').html(obj);
-                console.log("end of blocking");
-            },
-            error: function (res, status) {
+    $.ajax({
+        url: "api/post/srv/serviceCrGetPage",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            isResultRedirect(JSON.stringify(res));
+            var obj = res.kv.body;
+            $('.page-content').html(obj);
+//            console.log("end of blocking");
+//            progresBarStop();
+        },
+        error: function (res, status) {
+            $('.page-content').html(getMessage('somethingww'));
 //            alert(getMessage('somethingww'));
-            }
-        });
+//            progresBarStop();
+        }
     });
+
 
 //    $.unblockUI();
 }

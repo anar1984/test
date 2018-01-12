@@ -395,7 +395,7 @@ function loadTable(var_tablename, data) {
     json.kv['startLimit'] = 0;
     json.kv['endLimit'] = global_var.default_per_page;
     var data = JSON.stringify(json);
-   
+    progresBarStart();
     $.ajax({
         url: "api/post/" + list_url,
         type: "POST",
@@ -416,8 +416,10 @@ function loadTable(var_tablename, data) {
                 }
             }
             $(".youtube").YouTubeModal({autoplay: 0, width: 640, height: 480});
+             progresBarStop();
         },
         error: function (res, status) {
+             progresBarStop();
             alert(getMessage('somethingww'));
         }
     });

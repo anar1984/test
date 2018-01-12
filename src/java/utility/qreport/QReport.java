@@ -5,6 +5,7 @@
  */
 package utility.qreport;
 
+import j2html.TagCreator;
 import java.sql.Connection;
 import label.CoreLabel;
 import module.cr.CrModel;
@@ -28,6 +29,13 @@ import utility.QUtility;
 import utility.SessionManager;
 import utility.sqlgenerator.DBConnection;
 import utility.sqlgenerator.EntityManager;
+import static j2html.TagCreator.*;
+import j2html.tags.ContainerTag;
+import j2html.tags.Tag;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import module.cr.entity.EntityCrInspectionList;
 
 /**
  *
@@ -42,14 +50,15 @@ public class QReport {
             conn = new DBConnection().getConnection();
             conn.setAutoCommit(false);
             SessionManager.setConnection(Thread.currentThread().getId(), conn);
-            SessionManager.setDomain(SessionManager.getCurrentThreadId(), "apd_23gemsb");
+            SessionManager.setDomain(SessionManager.getCurrentThreadId(), "apd_15i55c3");
+            SessionManager.setUserId(SessionManager.getCurrentThreadId(), "201710281154580751");
+            SessionManager.setCompanyId(SessionManager.getCurrentThreadId(), "201710221851270308");
 
-            QReportCarrier rc = new QReportCarrier();
-            rc.setReportId("201711071606260935");
-            rc.setSessionId("201711010545120104");
-            rc.Patient.setPatientInfoById("201708221705210595");
+            Carrier carrier = new Carrier();
+            carrier.setValue(EntityCrInspectionList.INSPECTION_CODE, "201801111208540030");
+            Carrier c = CrModel.getInspectionList(carrier);
 
-            String st = getReport(rc);
+            setInspectionTagAll(null, c);
 //            System.out.println(st);
 
             conn.commit();
@@ -181,7 +190,9 @@ mobile2,telephone1,telephone2,email1,email2,country,city,postIndex,description
             String data = element.hasAttr("data") ? element.attr("data") : "";
             String code = element.hasAttr("code") ? element.attr("code") : "";
 
-            if (type.trim().equals("patient")) {
+            if (type.trim().equals("all")) {
+                setInspectionTagAll(element, c);
+            } else if (type.trim().equals("patient")) {
                 setInspectionTagPatientInfo(element, data, rcarrier);
             } else if (type.trim().equals("attribute")) {
                 setInspectionTagAttributeInfo(element, data, code, c);
@@ -207,6 +218,58 @@ mobile2,telephone1,telephone2,email1,email2,country,city,postIndex,description
             String val1 = c.getValue(tn, 0, "doctorFullname").toString();
             element.html(val1);
         }
+    }
+
+    private static void setInspectionTagAll(Element element, Carrier c) throws QException {
+        Map<String, String> ls = new HashMap<>();
+        Map<String, String> lsnm = new HashMap<>();
+        String tn = CoreLabel.RESULT_SET;
+        int rc = c.getTableRowCount(tn);
+
+        String tblln = "<table border=\"1px\" cellspacing=\"1\" cellpadding=\"1\" "
+                + "style=\"border-collapse:collapse;width: 100%\">";
+        for (int i = 0; i < rc; i++) {
+            String fkSubmoduleId = c.getValue(tn, i, "fkSubmoduleId").toString();
+            String submoduleName = c.getValue(tn, i, "submoduleName").toString();
+            String fval = c.getValue(tn, i, "finalValue").toString();
+            String attrName = c.getValue(tn, i, "attributeName").toString();
+
+            if (fval.trim().length() == 0) {
+                continue;
+            }
+
+            lsnm.put(fkSubmoduleId, submoduleName);
+
+            String tdln = "<tr>";
+            tdln += "<td>";
+            tdln += attrName;
+            tdln += "</td>";
+            tdln += "<td>";
+            tdln += fval;
+            tdln += "</td>";
+            tdln += "</tr>";
+            tdln += ls.getOrDefault(fkSubmoduleId, "");
+
+            ls.put(fkSubmoduleId, tdln);
+        }
+
+        String bdln = "";
+//        for (int k=0;k<ls.size();k++){
+        Set<String> s5 = ls.keySet();
+        for (String s : s5) {
+            bdln += "<tr><td colspan='2'>";
+            bdln +="<h3>";
+            bdln += lsnm.get(s);
+            bdln += "</h3>";
+            bdln += "</td></tr>";
+            bdln += ls.getOrDefault(s, "<tr></tr>");
+        }
+
+        tblln += bdln;
+        tblln += "</table>";
+        element.html(tblln);
+        System.out.println("table tag>>>" + tblln);
+
     }
 
     private static void setInspectionTagPrivateAttributeInfo(Element element, String data,

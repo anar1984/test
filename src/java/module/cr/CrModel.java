@@ -189,13 +189,13 @@ public class CrModel {
         for (String page : pagelist) {
             try {
                 if (QUtility.hasPermission(page)) {
-                    System.out.println("permission yoxlanildi >>>"+page);
+                    System.out.println("permission yoxlanildi >>>" + page);
                     c.setValue("page", getStaticHtmlPageBody(page));
                     CacheUtil.putCache(SessionManager.getCurrentCompanyId() + "||"
                             + SessionManager.getCurrentUserId() + "||" + page, c);
                 }
             } catch (QException ex) {
-                System.out.println("page error on >>>>"+page);
+                System.out.println("page error on >>>>" + page);
                 Logger.getLogger(CrModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -3084,9 +3084,11 @@ public class CrModel {
         String st = "";
         try {
             String keys[] = carrier.getKeys();
-
+            System.out.println("filter value>>" + filterValue);
             for (String k : keys) {
+
                 String val = carrier.getValue(k).toString();
+                System.out.println("attr key-val>>" + k + "-" + val);
                 if (val == null) {
                     continue;
                 }
@@ -3106,15 +3108,26 @@ public class CrModel {
     public static Carrier getInspectionList(Carrier carrier) throws QException {
         Carrier cIns = new Carrier();
         try {
+            String sLimit = carrier.getValue("startLimit").toString();
+            String eLimit = carrier.getValue("endLimit").toString();
+            
+            carrier.removeKey("startLimit");
+            carrier.removeKey("endLimit");
+            
             Carrier cprSex = QUtility.getListItem("sex",
                     carrier.getValue("sexName").toString());
             String sex = carrier.getValue("sexName").toString().length() > 0
                     ? convertArrayToFilterLine(cprSex.getKeys())
                     : "";
 
-            Carrier cAttr = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_ATTRIBUTE);//getAttributeList(carrier);
+//            Carrier cAttr = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_ATTRIBUTE);//getAttributeList(carrier);
+//            String fkAttributeIds = carrier.getValue("attributeName").toString().length() > 0
+//                    ? getIdsForInspectionList(cAttr, carrier.getValue("attributeName").toString())
+//                    : "";
+            Carrier cAttr = getAttributeList(carrier);
+            Carrier crpAttr = cAttr.getKVFromTable(CoreLabel.RESULT_SET,"id", "attributeName");
             String fkAttributeIds = carrier.getValue("attributeName").toString().length() > 0
-                    ? getIdsForInspectionList(cAttr, carrier.getValue("attributeName").toString())
+                    ? cAttr.getValueLine(CoreLabel.RESULT_SET)
                     : "";
 
             Carrier crPA = getPrivateAttributeListLine4Inspection(carrier);
@@ -3139,7 +3152,7 @@ public class CrModel {
                     ? CoreLabel.IN + crPS.getValueLine(CoreLabel.RESULT_SET)
                     : "";
 
-            System.out.println(" submodue private tids==" + tids);
+//            System.out.println(" submodue private tids==" + tids);
             fkSubmoduleIds += tids;
 
             Carrier cModule = CacheUtil.getFromCache(CacheUtil.CACHE_KEY_MODULE);
@@ -3149,6 +3162,8 @@ public class CrModel {
 
             EntityCrInspectionList ent = new EntityCrInspectionList();
             EntityManager.mapCarrierToEntity(carrier, ent);
+            ent.setStartLimit(sLimit);
+            ent.setEndLimit(eLimit);
             ent.setSex(sex);
             ent.setFkModuleId(fkModuleIds);
             ent.setFkSubmoduleId(fkSubmoduleIds);
@@ -3162,8 +3177,7 @@ public class CrModel {
 
             cIns.mergeCarrier(tnIns, "sex", "sexName", cprSex);
 
-            cIns.mergeCarrier(tnIns, new String[]{"fkAttributeId", "LANG"},
-                    "attributeName", cAttr, true);
+            cIns.mergeCarrier(tnIns, "fkAttributeId", "attributeName", crpAttr, true);
             cIns.mergeCarrier(tnIns, "fkPrivateSubmoduleAttributeId",
                     "attributeName", crpPA, true);
 
@@ -3842,7 +3856,14 @@ public class CrModel {
             //
             Carrier c = new Carrier();
             c.fromJson(json);
-            c = getModuleList4Combo(c);
+            c.setValue("01", "Diagnosses");
+            c.setValue("2", "Diagnosses");
+            c.setValue("3", "Diagnosses");
+            c.setValue("4", "Diagnosses");
+            c.setValue("5", "Diagnosses");
+            c.setValue("6", "Diagnosses");
+            getIdsForInspectionList(c, "\"Diagnos  4\"");
+
 //
 //            c.setServiceName(servicename);
 //            c.fromJson(json);

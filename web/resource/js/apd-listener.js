@@ -1432,7 +1432,7 @@ function menuListeners(arg) {
         var id = $(this).attr('page_id');
         //call manual functions
         menuListenerActivies(id);
-        
+
 //        $('#' + id).show();
         progresBarStop();
     });
@@ -1441,7 +1441,7 @@ function menuListeners(arg) {
 function menuListenerActivies(page_id) {
 //execute page loader
     loadRemotePage(page_id);
-     
+
 //    var func = $('#' + page_id).find('.apd-task-page-loader').attr('onclick');
 //    eval(func);
     $('#' + page_id).find('.apd-task-page-loader').click();
@@ -1885,6 +1885,11 @@ function reportComboListeners() {
             success: function (res) {
                 isResultRedirect(JSON.stringify(res));
                 var rhtml = res.tbl[0].r[0].reportHtml;
+//                var res = "<!doctype html><html><head><title>Print</title></head><body onload=\"print();\">" + rhtml + "</body></html>";
+//                newWin = window.open("");
+//                newWin.document.write(res);
+//                newWin.print();
+//                newWin.close();
                 var oPrntWin = window.open("", "_blank", "width=1100,height=1140,left=30,top=30,menubar=yes,toolbar=no,location=no,scrollbars=yes");
                 oPrntWin.document.open();
                 oPrntWin.document.write("<!doctype html><html><head><title>Print</title></head><body onload=\"print();\">" + rhtml + "</body></html>");
@@ -1929,6 +1934,11 @@ function reportPaymentComboListeners() {
             success: function (res) {
                 isResultRedirect(JSON.stringify(res));
                 var rhtml = res.tbl[0].r[0].reportHtml;
+//                var res = "<!doctype html><html><head><title>Print</title></head><body onload=\"print();\">" + rhtml + "</body></html>";
+//                newWin = window.open("");
+//                newWin.document.write(res);
+//                newWin.print();
+//                newWin.close();
                 var oPrntWin = window.open("", "_blank", "width=1100,height=1140,left=30,top=30,menubar=yes,toolbar=no,location=no,scrollbars=yes");
                 oPrntWin.document.open();
                 oPrntWin.document.write("<!doctype html><html><head><title>Print</title></head><body onload=\"print();\">" + rhtml + "</body></html>");

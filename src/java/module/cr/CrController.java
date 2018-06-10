@@ -1782,15 +1782,29 @@ public class CrController {
     public static Carrier importModule(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController("general", cp.hasValue(carrier, "fileUrl"));
-         return carrier;
+        return carrier;
     }
-    
+
     public static Carrier getSubmoduleListByModuleId(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController("general", cp.hasValue(carrier, "fkModuleId"));
-         return carrier;
+        return carrier;
     }
-    
-   
+
+    public Carrier getCompanyPaymentOwnList(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    public Carrier forgotPwdPersonal(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    public Carrier forgotDomainCompany(Carrier carrier) throws QException {
+        return carrier;
+    }
+
+    public Carrier forgotPwdCompany(Carrier carrier) throws QException {
+        return carrier;
+    }
 
 }

@@ -378,6 +378,11 @@ public class CrModel {
         String tn = carrier.getValue("itemCode").toString()
                 + SessionManager.getCurrentLang();
         int rc = resultCarrier.getTableRowCount(tn);
+        if (rc == 0) {
+            tn = carrier.getValue("itemCode").toString()
+                    + "ENG";
+            rc = resultCarrier.getTableRowCount(tn);
+        }
 
         for (int i = 0; i < rc; i++) {
             crResult.setValue(CoreLabel.RESULT_SET, i, "itemKey",
@@ -540,7 +545,10 @@ public class CrModel {
             String oldUsername = "";
             String newUsername = carrier.getValue("username").toString();
 
-            carrier.removeKey("password");
+            if (carrier.getValue("password").toString().trim().length() == 0) {
+                carrier.removeKey("password");
+            }
+
             EntityCrUser ent = new EntityCrUser();
             ent.setId(carrier.getValue(EntityCrPerson.ID).toString());
             EntityManager.select(ent);
@@ -548,6 +556,7 @@ public class CrModel {
             EntityManager.mapCarrierToEntity(carrier, ent, false);
             EntityManager.update(ent);
 
+            updateTempUserInfo(ent);
             updateCompanyUsername(oldUsername, newUsername);
             addPermissionsToUserOnUpdate(carrier, ent.getId());
 
@@ -576,6 +585,32 @@ public class CrModel {
 
         if (c.getTableRowCount(ent.toTableName()) > 0) {
             ent.setPersonUsername(newUsername);
+            EntityManager.update(ent);
+        }
+    }
+
+    private static void updateTempUserInfo(EntityCrUser userEnt)
+            throws QException {
+
+        String fkUserId = userEnt.getId();
+
+        if (fkUserId.trim().length() == 0) {
+            return;
+        }
+
+        EntityCrTempUser ent = new EntityCrTempUser();
+        ent.setTgUserId(fkUserId);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        Carrier c = EntityManager.select(ent);
+        String id = ent.getId();
+
+        if (c.getTableRowCount(ent.toTableName()) > 0) {
+            Carrier tc = new Carrier();
+            EntityManager.mapEntityToCarrier(userEnt, tc, true);
+            EntityManager.mapCarrierToEntity(tc, ent, true);
+            ent.setTgUserId(fkUserId);
+            ent.setId(id);
             EntityManager.update(ent);
         }
     }
@@ -2973,6 +3008,10 @@ public class CrModel {
                     ? key.split("_")[1] : "";
             String val = k.trim().length() > 0 ? carrier.getValue(key).toString() : "";
 
+            if (val.trim().length() == 0) {
+                continue;
+            }
+
             if (k.trim().length() > 0) {
                 EntityCrInspection ent = new EntityCrInspection();
                 ent.setFkPatientId(fkPatientId);
@@ -3110,10 +3149,10 @@ public class CrModel {
         try {
             String sLimit = carrier.getValue("startLimit").toString();
             String eLimit = carrier.getValue("endLimit").toString();
-            
+
             carrier.removeKey("startLimit");
             carrier.removeKey("endLimit");
-            
+
             Carrier cprSex = QUtility.getListItem("sex",
                     carrier.getValue("sexName").toString());
             String sex = carrier.getValue("sexName").toString().length() > 0
@@ -3125,7 +3164,7 @@ public class CrModel {
 //                    ? getIdsForInspectionList(cAttr, carrier.getValue("attributeName").toString())
 //                    : "";
             Carrier cAttr = getAttributeList(carrier);
-            Carrier crpAttr = cAttr.getKVFromTable(CoreLabel.RESULT_SET,"id", "attributeName");
+            Carrier crpAttr = cAttr.getKVFromTable(CoreLabel.RESULT_SET, "id", "attributeName");
             String fkAttributeIds = carrier.getValue("attributeName").toString().length() > 0
                     ? cAttr.getValueLine(CoreLabel.RESULT_SET)
                     : "";
@@ -4621,6 +4660,10 @@ public class CrModel {
             } catch (Exception e) {
                 f = false;
             }
+
+            //update TgUserId in temp_user
+            updateTempUserFkUserId(fkTempUserId, id);
+
             //activate account
             entCompany.setStatus(EntityCrCompany.CompanyStatus.ACTIVE.toString());
             entCompany.setFkUserId(id);
@@ -4641,7 +4684,21 @@ public class CrModel {
         }
     }
 
-    private static void sendActivationEmail(String fkTempUserId, String dbname, String domain) {
+    private static void updateTempUserFkUserId(String id, String tgUserId)
+            throws QException {
+        if (id.trim().length() == 0) {
+            return;
+        }
+
+        EntityCrTempUser ent = new EntityCrTempUser();
+        ent.setId(id);
+        EntityManager.select(ent);
+        ent.setTgUserId(tgUserId);
+        EntityManager.update(ent);
+    }
+
+    private static void sendActivationEmail(String fkTempUserId,
+            String dbname, String domain) {
         try {
             EntityCrTempUser ent = new EntityCrTempUser();
             ent.setDbname(dbname);
@@ -5271,6 +5328,25 @@ public class CrModel {
                 val = v;
             }
             carrier.setValue(tn, i, "ruleName", val);
+        }
+    }
+
+    private static void addLabelAsColumn(Carrier carrier, String col) throws QException {
+
+        Map<String, String> lang = new HashMap<>();
+
+        String tn = CoreLabel.RESULT_SET;
+        int rc = carrier.getTableRowCount(tn);
+        for (int i = 0; i < rc; i++) {
+            String val = carrier.getValue(tn, i, col).toString();
+            if (lang.containsKey(val)) {
+                val = lang.get(val);
+            } else {
+                String v = QUtility.getLabel(val);
+                lang.put(val, v);
+                val = v;
+            }
+            carrier.setValue(tn, i, col, val);
         }
     }
 
@@ -6165,7 +6241,10 @@ public class CrModel {
 
         addRuleLabelById(crOut);
 
-        Carrier crCompany = getCompanyList(new Carrier());
+        carrier.removeKey("startLimit");
+        carrier.removeKey("endLimit");
+        carrier.removeKey("id");
+        Carrier crCompany = getCompanyList(carrier);
         crOut.mergeCarrier(CoreLabel.RESULT_SET, "fkCompanyId",
                 crCompany, CoreLabel.RESULT_SET, "id",
                 new String[]{"companyType", "companyName", "companyStatus"});
@@ -6297,6 +6376,32 @@ public class CrModel {
         return cCompanyPayment;
     }
 
+    public static Carrier getCompanyPaymentOwnList(Carrier carrier) throws QException {
+        String paymentType = QUtility.getEntityLabel(
+                carrier.getValue("purpose").toString());
+
+        EntityCrCompanyPaymentList ent = new EntityCrCompanyPaymentList();
+        EntityManager.mapCarrierToEntity(carrier, ent);
+        ent.setFkCompanyId(SessionManager.getCurrentCompanyId());
+        ent.setPaymentTypeShortname(paymentType);
+        Carrier c = EntityManager.select(ent);
+
+        c.renameTableName(ent.toTableName(), CoreLabel.RESULT_SET);
+        c.renameTableColumn(CoreLabel.RESULT_SET,
+                EntityCrCompanyPaymentList.PAYMENT_TYPE_SHORTNAME,
+                "purpose");
+
+        addLabelAsColumn(c, "purpose");
+
+        c.addTableSequence(CoreLabel.RESULT_SET,
+                EntityManager.getListSequenceByKey("getCompanyPaymentOwnList"));
+
+        c.addTableRowCount(CoreLabel.RESULT_SET,
+                EntityManager.getRowCount(ent) + 1);
+
+        return c;
+    }
+
     public static Carrier isPersonalUsernameExist(Carrier carrier) throws QException {
         EntityCrCompany ent = new EntityCrCompany();
         ent.setDeepWhere(false);
@@ -6335,10 +6440,31 @@ public class CrModel {
         } else {
             ent.setPassword(newPwd);
             EntityManager.update(ent);
+            changePwdInTempUser(ent.getId(), ent.getPassword());
             carrier.setValue("res", QUtility.getLabel("passwordChangedSuccesfully"));
         }
 
         return carrier;
+    }
+
+    private static void changePwdInTempUser(String fkUserId, String pwd)
+            throws QException {
+
+        if (fkUserId.trim().length() == 0) {
+            return;
+        }
+
+        EntityCrTempUser ent = new EntityCrTempUser();
+        ent.setTgUserId(fkUserId);
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        Carrier c = EntityManager.select(ent);
+        String id = ent.getId();
+
+        if (c.getTableRowCount(ent.toTableName()) > 0) {
+            ent.setPassword(pwd);
+            EntityManager.update(ent);
+        }
     }
 
     public Carrier getOwnCompanyInfo(Carrier carrier) throws QException {
@@ -7057,6 +7183,177 @@ public class CrModel {
 
         c.renameTableName(tnSubmodule, CoreLabel.RESULT_SET);
         return c;
+    }
+
+    public Carrier forgotPwdPersonal(Carrier carrier) throws QException {
+        Carrier cr = new Carrier();
+        String email = carrier.getValue("email").toString().trim();
+        if (email.length() == 0) {
+            cr.setValue("message", "Email is not given");
+            return cr;
+        }
+
+        if (!email.contains("@") || !email.contains(".")) {
+            cr.setValue("message", "Email is not given");
+            return cr;
+        }
+
+        EntityCrTempUser userEnt = new EntityCrTempUser();
+        userEnt.setEmail1(email);
+        userEnt.setStartLimit(0);
+        userEnt.setEndLimit(0);
+        Carrier c = EntityManager.select(userEnt);
+
+        if (c.getTableRowCount(userEnt.toTableName()) == 0
+                || userEnt.getEmail1().trim().length() == 0) {
+            cr.setValue("message", "Email is not registered");
+            return cr;
+        }
+
+        EntityCrCompany ent = new EntityCrCompany();
+        ent.setFkUserId(userEnt.getTgUserId());
+        ent.setCompanyType(EntityCrCompany.CompanyType.PERSONAL.toString());
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        Carrier c1 = EntityManager.select(ent);
+
+        if (c1.getTableRowCount(ent.toTableName()) == 0) {
+            cr.setValue("message", "Email is not registered");
+            return cr;
+        }
+
+        try {
+
+            String subject = "APDVoice Password Recovery";
+            String body = "Dear " + userEnt.getUserPersonName() + " "
+                    + userEnt.getUserPersonSurname() + " "
+                    + userEnt.getUserPersonMiddlename() + "<br><br><br>";
+            body += "Login information is given below." + "<br> <br>";
+            body += "Username:" + userEnt.getUsername() + "<br>  ";
+            body += "Password:" + userEnt.getPassword() + "<br> <br>";
+            body += "APDVoice support team:" + "<br> <br> <br>";
+
+            MailSender.send(userEnt.getEmail1(), subject, body);
+            System.out.println("activation mail sent to " + userEnt.getEmail1());
+        } catch (Exception e) {
+//            System.out.println("excepiton oldu");
+        }
+
+        cr.setValue("message", "Email is sent.");
+        return cr;
+    }
+
+    public Carrier forgotDomainCompany(Carrier carrier) throws QException {
+        Carrier cr = new Carrier();
+        String email = carrier.getValue("email").toString().trim();
+        if (email.length() == 0) {
+            cr.setValue("message", "Email is not given");
+            return cr;
+        }
+
+        if (!email.contains("@") || !email.contains(".")) {
+            cr.setValue("message", "Email is not given");
+            return cr;
+        }
+
+        EntityCrTempUser userEnt = new EntityCrTempUser();
+        userEnt.setEmail1(email);
+        userEnt.setStartLimit(0);
+        userEnt.setEndLimit(0);
+        Carrier c = EntityManager.select(userEnt);
+
+        if (c.getTableRowCount(userEnt.toTableName()) == 0
+                || userEnt.getEmail1().trim().length() == 0) {
+            cr.setValue("message", "Email is not registered");
+            return cr;
+        }
+
+        EntityCrCompany ent = new EntityCrCompany();
+        ent.setFkUserId(userEnt.getTgUserId());
+        ent.setCompanyType(EntityCrCompany.CompanyType.COMPANY.toString());
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        Carrier c1 = EntityManager.select(ent);
+
+        if (c1.getTableRowCount(ent.toTableName()) == 0) {
+            cr.setValue("message", "Email is not registered");
+            return cr;
+        }
+
+        try {
+
+            String subject = "APDVoice Domain Recovery";
+            String body = "Dear " + userEnt.getUserPersonName() + " "
+                    + userEnt.getUserPersonSurname() + " "
+                    + userEnt.getUserPersonMiddlename() + "<br><br><br>";
+            body += "Login information is given below." + "<br> <br>";
+            body += "Domain:" + ent.getCompanyDomain() + "<br> <br> <br>  ";
+            body += "APDVoice support team:" + "<br> <br> <br>";
+
+            MailSender.send(userEnt.getEmail1(), subject, body);
+            System.out.println("activation mail sent to " + userEnt.getEmail1());
+        } catch (Exception e) {
+//            System.out.println("excepiton oldu");
+        }
+
+        cr.setValue("message", "Email is sent.");
+        return cr;
+    }
+
+    public Carrier forgotPwdCompany(Carrier carrier) throws QException {
+        Carrier cr = new Carrier();
+        String domain = carrier.getValue("domain").toString().trim();
+        if (domain.length() == 0) {
+            cr.setValue("message", "Domain is not given");
+            return cr;
+        }
+
+        EntityCrCompany ent = new EntityCrCompany();
+        ent.setCompanyDomain(domain);
+        ent.setCompanyType(EntityCrCompany.CompanyType.COMPANY.toString());
+        ent.setStartLimit(0);
+        ent.setEndLimit(0);
+        Carrier c1 = EntityManager.select(ent);
+
+        if (c1.getTableRowCount(ent.toTableName()) == 0) {
+            cr.setValue("message", "Domain is not registered");
+            return cr;
+        }
+
+        
+
+        EntityCrTempUser userEnt = new EntityCrTempUser();
+        userEnt.setTgUserId(ent.getFkUserId());
+        userEnt.setStartLimit(0);
+        userEnt.setEndLimit(0);
+        Carrier c = EntityManager.select(userEnt);
+
+        if (c.getTableRowCount(userEnt.toTableName()) == 0
+                || userEnt.getEmail1().trim().length() == 0) {
+            cr.setValue("message", "Domain is not registered");
+            return cr;
+        }
+
+        
+        try {
+
+            String subject = "APDVoice Password Recovery";
+            String body = "Dear " + userEnt.getUserPersonName() + " "
+                    + userEnt.getUserPersonSurname() + " "
+                    + userEnt.getUserPersonMiddlename() + "<br><br><br>";
+            body += "Login information is given below." + "<br> <br>";
+            body += "Username:" + userEnt.getUsername() + "<br>  ";
+            body += "Password:" + userEnt.getPassword() + "<br> <br>";
+            body += "APDVoice support team:" + "<br> <br> <br>";
+
+            MailSender.send(userEnt.getEmail1(), subject, body);
+            System.out.println("activation mail sent to " + userEnt.getEmail1());
+        } catch (Exception e) {
+//            System.out.println("excepiton oldu");
+        }
+
+        cr.setValue("message", "Email is sent.");
+        return cr;
     }
 
 }

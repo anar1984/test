@@ -152,63 +152,206 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-11">
-                        <a class="navbar-brand" href="www.apdvoice.com"><img class="img-responsive" 
-                                                                             src="resource/img/logo.png" alt="logo">
+                        <a class="navbar-brand" href="http://www.apdvoice.com"><img class="img-responsive" 
+                                                                                    src="resource/img/logo.png" alt="logo">
                         </a>
                     </div>
                     <div class="col-md-1" align="right">
                         <br>
-                        <select class="form-control apd-form-select-back selectpicker"  id="lang" name="lang"
-                                style="margin-bottom: 1px;" onchange="loadContentCmd(this)">
-                        </select>
+
                     </div>
                 </div>
             </div>
 
         </nav>
-        <div class="container page-content" align = "center" >
-             <br>
-            <h3 style="color:red" id="headingMsg">Sign Up Now and Use It Free for 2 Months.</h3>
-            <br>
-            <div class="row apd-page"  id="mainpage">
 
+        <div class="container page-content" align = "center1" >
+            <br>
+            <br>
+            <br>
+
+            <div class="row apd-page "  style="display: none;" id="forgotpwdpersonal">
+                <div class="form-group col-md-offset-4 col-md-4">
+                    <label class="float" qlang >Forgot Password?
+                    </label>
+                    <br>
+                    <span> 
+                        Enter your login email below. We will send you an email.
+                    </span>
+                    <input type="email" class="form-control apd-form-email" id="email1" 
+                           name="email1" placeholder=" ">
+                    <button value="SUBMIT" onclick="personal(this)">SUBMIT</button>
+                    <a href="login.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log in</a>
+                </div>
             </div>
+
+            <div class="row apd-page"  style="display: none;" id="forgotdomaincompany">
+                <div class="form-group col-md-offset-4 col-md-4">
+                    <label class="float" qlang >Forgot Domain?
+                    </label>
+                    <br>
+                    <span> 
+                        Enter your login email below. We will send you a domain name.
+                    </span>
+                    <input type="email" class="form-control apd-form-email" id="email2" 
+                           name="email2" placeholder=" ">
+                    <button value="SUBMIT" onclick="domainCompany(this)">SUBMIT</button>
+                    <a href="login.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log in</a>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br> 
+            <div class="row apd-page"   style="display: none;" id="forgotpwdcompany">
+                <div class="form-group col-md-offset-4 col-md-4">
+                    <label class="float" qlang >Forgot Password?
+                    </label>
+                    <br>
+                    <span> 
+                        Enter your domain below. We will send you an email.</span>
+                    <input type="text" class="form-control apd-form-email" id="domn" 
+                           name="domn" placeholder=" ">
+                    <button value="SUBMIT" onclick="company(this)">SUBMIT</button>
+                    <a href="login.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log in</a>
+
+                </div>
+            </div>
+
+            <div class="row apd-page"   id="prsmsgdiv" style="display: none;" >
+                <br>
+                <br>
+                <div class="form-group col-md-offset-4 col-md-4"  style="background-color: #FF851B">
+                    <label class="float"   id="prsmsg">
+                        Email is sent.
+                    </label>
+                </div>
+            </div>
+
         </div>
 
     </body>
     <script type = "text/javascript" language = "JavaScript" >
-        var lng = getUrlParameter('lang');
-        console.log(lng)
-        if (lng === 'undefined' || !lng) {
-            lng = getDefaultLang();
+        var t = getUrlParameter('t');
+        console.log(t)
+        if (t === 'undefined' || !t) {
+            t = "personal";
         }
-        setLangCombo4($('#lang'), lng);
-        $('#lang').change();
+
+        if (t === 'personal') {
+
+            $('#forgotpwdpersonal').show();
+            $('#forgotpwdcompany').hide();
+            $('#forgotdomaincompany').hide();
+        } else {
+            $('#forgotpwdpersonal').hide();
+            $('#forgotpwdcompany').show();
+            $('#forgotdomaincompany').show();
+        }
 
 
         function loadContentCmd(e) {
             loadContent($(e).val());
         }
 
-        function loadContent(lang) {
+
+
+        function personal(e) {
+            $('#prsmsgdiv').hide();
+            var email = $("#email1").val();
+            if (email === 'undefined' || !email) {
+                alert("Email is not entered.");
+                return;
+            }
+
+            if (email.indexOf("@") < 0 || email.indexOf(".") < 0) {
+                alert("Email is not correct.");
+                return;
+            }
+
             var json = {kv: {}};
-            json.kv.lang = lang;
+            json.kv.email = email;
             var data = JSON.stringify(json);
             var parts = document.location.href.split("#");
             var type = parts[parts.length - 1];
             $.ajax({
-                url: "api/post/signup/" + type,
+                url: "api/post/nasrv/serviceCrForgotPwdPersonal",
+                type: "POST",
+                data: data,
+                contentType: 'text/html',
+                success: function (res) {
+
+                    $('#prsmsgdiv').show();
+                    $('#prsmsg').empty();
+                    $('#prsmsg').html(res.kv.message);
+                },
+                error: function () {
+                    alert("Something went wrong.");
+                }
+            });
+        }
+
+
+        function company(e) {
+            $('#prsmsgdiv').hide();
+            var domn = $("#domn").val();
+            if (domn === 'undefined' || !domn) {
+                alert("Domain is not entered.");
+                return;
+            }
+
+             
+
+            var json = {kv: {}};
+            json.kv.domain = domn;
+            var data = JSON.stringify(json);
+            var parts = document.location.href.split("#");
+            var type = parts[parts.length - 1];
+            $.ajax({
+                url: "api/post/nasrv/serviceCrForgotPwdCompany",
                 type: "POST",
                 data: data,
                 contentType: 'text/html',
                 success: function (res) {
                     //console.log(JSON.stringify(data));
-                    $('#mainpage').empty();
-                    $('#mainpage').append(res);
-                    //                        init();
+                    $('#prsmsgdiv').show();
+                    $('#prsmsg').empty();
+                    $('#prsmsg').html(res.kv.message);
                 },
                 error: function () {
-//                    alert("Something went wrong. This might be caused by duplicate table.");
+                    alert("Something went wrong.");
+                }
+            });
+        }
+
+        function domainCompany(e) {
+            $('#prsmsgdiv').hide();
+            var email = $("#email2").val();
+            if (email === 'undefined' || !email) {
+                alert("Email is not entered.");
+                return;
+            }
+
+            if (email.indexOf("@") < 0 || email.indexOf(".") < 0) {
+                alert("Email is not correct.");
+                return;
+            }
+
+            var json = {kv: {}};
+            json.kv.email = email;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: "api/post/nasrv/serviceCrForgotDomainCompany",
+                type: "POST",
+                data: data,
+                contentType: 'text/html',
+                success: function (res) {
+                    //console.log(JSON.stringify(data));
+                    $('#prsmsgdiv').show();
+                    $('#prsmsg').empty();
+                    $('#prsmsg').html(res.kv.message);
+                },
+                error: function () {
+                    alert("Something went wrong.");
                 }
             });
         }

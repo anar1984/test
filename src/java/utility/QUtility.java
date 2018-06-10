@@ -201,6 +201,27 @@ public class QUtility {
         tc = tc.getKVFromTable(ent.toTableName(), "itemKey", "itemValue");
         return tc;
     }
+ 
+    public static String getEntityLabel(String itemValue4Search) throws QException {
+        if (itemValue4Search.trim().length()==0)
+            return "";
+        
+        EntityCrEntityLabel ent = new EntityCrEntityLabel();
+        ent.setDeepWhere(false);
+        ent.setLang(SessionManager.getCurrentLang());
+        ent.setDescription(itemValue4Search);
+        ent.addDeepWhereStatementField("description");
+        Carrier tc = EntityManager.select(ent);
+
+        int rc = tc.getTableRowCount(ent.toTableName());
+        String st = "___||___"+ CoreLabel.IN;
+
+        for (int i = 0; i < rc; i++) {
+            st += tc.getValue(ent.toTableName(),i,EntityCrEntityLabel.FIELD_NAME) + CoreLabel.IN;
+        }
+
+        return st;
+    }
 
     public static void main(String[] arg) throws UnsupportedEncodingException, QException, IOException {
         Connection conn = null;
@@ -529,7 +550,7 @@ public class QUtility {
 
         String arr[] = new String[c.getTableRowCount(ent.toTableName())];
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = c.getValue(ent.toTableName(),i,"itemKey").toString();
+            arr[i] = c.getValue(ent.toTableName(), i, "itemKey").toString();
         }
         return arr;
     }

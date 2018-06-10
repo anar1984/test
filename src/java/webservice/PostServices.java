@@ -184,15 +184,13 @@ public class PostServices {
             SessionManager.setCompanyId(Thread.currentThread().getId(), user.selectCompanyId());
 
             String entity = "{\"fullname\":\"" + fullname + "\"}";
-            
-            
+
             System.out.println("filpagebody");
             CrModel.fillPageBody();
-            
+
             conn.commit();
             conn.close();
-            
-            
+
             //return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 2_592_000, true)).entity(entity).build();
             return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 2_592_000, false)).entity(entity).build();
         } catch (Exception ex) {
@@ -513,7 +511,10 @@ public class PostServices {
             "serviceCrGetTermPage",
             "serviceCrIsPersonalUsernameExist",
             "serviceCrGetListItemList4ComboNali",
-            "serviceCrGetLabel"};
+            "serviceCrGetLabel",
+            "serviceCrForgotPwdPersonal",
+            "serviceCrForgotDomainCompany",
+            "serviceCrForgotPwdCompany"};
 
         if (!ArrayUtils.contains(srv, servicename)) {
             return Response.status(Response.Status.FORBIDDEN).build();

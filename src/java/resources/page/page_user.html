@@ -85,9 +85,9 @@
                                             </span>
                                         </div>
                                     </div>
-                                    
-                                     
-                                    
+
+
+
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >liUserPermissionCode</label>
                                         <select class="form-control apd-form-select" id="liUserPermissionCode"
@@ -96,9 +96,9 @@
                                                 srv_url="li/userPermissionCode">
                                         </select>
                                     </div>
-                                    
+
                                     <div class="form-group col-md-12">
-                                        
+
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >sex</label>
@@ -254,6 +254,18 @@
                                                name="username"    >
                                     </div>
 
+                                    <div class="form-group col-md-5">
+                                        <label class="float" qlang >password</label>
+                                        <input   class="form-control apd-form-input" type="text" id="password"
+                                                 name="password" disabled   >
+                                    </div>
+
+                                    <div class="form-group col-md-1">
+                                        <label class="float"></label>
+                                        <input dont_clear  class="form-control apd-form-input" type="checkbox"
+                                               id="allowToChangePassword" onclick="passwordCheck(this)">
+                                    </div>
+
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >userPersonName</label>
                                         <input type="text" class="form-control apd-form-input" id="userPersonName" 
@@ -287,10 +299,10 @@
                                         </div>
                                     </div>
 
-                                   <div class="form-group col-md-12">
-                                        
+                                    <div class="form-group col-md-12">
+
                                     </div>
-                                    
+
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >liUserPermissionCode</label>
                                         <select class="form-control apd-form-select" id="liUserPermissionCode"
@@ -299,9 +311,9 @@
                                                 srv_url="li/userPermissionCode">
                                         </select>
                                     </div>
-                                    
-                                     
-                                    
+
+
+
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >sex</label>
                                         <select class="form-control apd-form-select" id="sex" name="sex"
@@ -309,9 +321,9 @@
                                                 srv_url="li/sex" has_null>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="form-group col-md-12">
-                                        
+
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float" qlang >occupation</label>
@@ -481,6 +493,15 @@
         fillSwitchList(e, json);
     }
 
+
+    function passwordCheck(e) {
+        if ($(e).is(':checked')) {
+            $(e).closest("form").find('#password').removeAttr("disabled");
+        } else {
+            $(e).closest("form").find('#password').attr("disabled", "true");
+        }
+        $(e).closest("form").find('#password').val("");
+    }
 
 
     function fillSwitchList(parent, json) {

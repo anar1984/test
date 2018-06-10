@@ -62,13 +62,14 @@ public class AcnisUrlFilter implements Filter {
         
 //        System.out.println("web service token->>" + token);  
         
-
+ 
         if (url.trim().length()==0 || url.trim().equals("/apd1/")  || url.trim().equals("/") ){
              response.sendRedirect(request.getContextPath()+"/index.html");
         }else if (!SessionHandler.checkSession(token) && !url.contains("resource") 
                 && !url.contains("login") 
                 && !url.contains("index.html") 
                 && !url.contains("signup") 
+                && !url.contains("frgtpwd")
                 && !url.contains("/termsandco.html") 
                 && !url.contains("/nali/")
                 && !url.contains("/nasrv/")

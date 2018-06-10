@@ -143,6 +143,16 @@ var g_tbl = {
         "reload_buttion_id": "serviceCrGetCompanyPaymentList",
         "table_block": "0"
     },
+    "tbl_companypaymentown_list": {
+        "response_tn": "Response",
+        "list_url": "srv/serviceCrGetCompanyPaymentOwnList",
+        "delete_url": "",
+        "result_div_id": "companypaymentownlist",
+        "form_update_popup_id": "",
+        "form_copy_popup_id": "",
+        "reload_buttion_id": "serviceCrGetCompanyPaymentOwnList",
+        "table_block": "0"
+    },
     "tbl_company_list": {
         "response_tn": "Response",
         "list_url": "srv/serviceCrGetCompanyList",

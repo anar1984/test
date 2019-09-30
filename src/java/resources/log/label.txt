@@ -27,3 +27,6737 @@ value	ENG
 value	ENG
 orderNo	ENG
 orderNo	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+passwordChangedSuccesfully	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+insertNewModule	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+updateModule	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+Payment Type	ENG
+newPaymentType	ENG
+newPaymentType	ENG
+newPaymentType	ENG
+newPaymentType	ENG
+paymentTypeName	ENG
+paymentTypeName	ENG
+paymentTypeShortname	ENG
+paymentTypeShortname	ENG
+defaultPrice	ENG
+defaultPrice	ENG
+defaultDiscount	ENG
+defaultDiscount	ENG
+defaultPaymentPeriod	ENG
+defaultPaymentPeriod	ENG
+isPublic	ENG
+isPublic	ENG
+type	ENG
+type	ENG
+userLisenceCount	ENG
+userLisenceCount	ENG
+userLisenceMonthRange	ENG
+userLisenceMonthRange	ENG
+updatePaymentType	ENG
+updatePaymentType	ENG
+paymentTypeName	ENG
+paymentTypeName	ENG
+paymentTypeShortname	ENG
+paymentTypeShortname	ENG
+defaultPrice	ENG
+defaultPrice	ENG
+defaultDiscount	ENG
+defaultDiscount	ENG
+defaultPaymentPeriod	ENG
+defaultPaymentPeriod	ENG
+isPublic	ENG
+isPublic	ENG
+type	ENG
+type	ENG
+userLisenceCount	ENG
+userLisenceCount	ENG
+userLisenceMonthRange	ENG
+userLisenceMonthRange	ENG
+insertNewModule	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+updateModule	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+moduleMiniClinicOnRegistrationWith100PercDisc	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+moduleMiniClinicOnRegistrationWith100PercDisc	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+moduleMiniClinicOnRegistrationWith100PercDisc	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+Submodule	ENG
+submoduleUniqueId	ENG
+submoduleUniqueId	ENG
+status	ENG
+status	ENG
+submoduleType	ENG
+submoduleType	ENG
+lang	ENG
+lang	ENG
+submoduleUniqueId	ENG
+submoduleUniqueId	ENG
+status	ENG
+status	ENG
+submoduleType	ENG
+submoduleType	ENG
+lang	ENG
+lang	ENG
+Submodule	ENG
+submoduleUniqueId	ENG
+submoduleUniqueId	ENG
+status	ENG
+status	ENG
+submoduleType	ENG
+submoduleType	ENG
+lang	ENG
+lang	ENG
+submoduleUniqueId	ENG
+submoduleUniqueId	ENG
+status	ENG
+status	ENG
+submoduleType	ENG
+submoduleType	ENG
+lang	ENG
+lang	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+company	ENG
+company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+insertNewModule	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+updateModule	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+insertNewPermission	ENG
+insertNewPermission	ENG
+rules	ENG
+rules	ENG
+insertNewRule	ENG
+insertNewRule	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+assignRule2Permission	ENG
+assignRule2Permission	ENG
+rule	ENG
+rule	ENG
+permission	ENG
+permission	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+miniClinic	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+miniClinic	ENG
+access2MiniClinicModule	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+access2MiniClinicModule	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+rules	ENG
+rules	ENG
+insertNewRule	ENG
+insertNewRule	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+assignRule2Permission	ENG
+assignRule2Permission	ENG
+rule	ENG
+rule	ENG
+permission	ENG
+permission	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+insertNewPermission	ENG
+insertNewPermission	ENG
+rules	ENG
+rules	ENG
+insertNewRule	ENG
+insertNewRule	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+assignRule2Permission	ENG
+assignRule2Permission	ENG
+rule	ENG
+rule	ENG
+permission	ENG
+permission	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+company	ENG
+company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+company	ENG
+company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+usertable	ENG
+usertable	ENG
+allUserTables	ENG
+allUserTables	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG
+updateUserTable	ENG
+updateUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG
+company	ENG
+company	ENG
+companyList	ENG
+companyList	ENG
+usertable	ENG
+usertable	ENG
+allUserTables	ENG
+allUserTables	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG
+updateUserTable	ENG
+updateUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+mailCompanyActivatedSubject	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+usertable	ENG
+usertable	ENG
+allUserTables	ENG
+allUserTables	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+newUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG
+updateUserTable	ENG
+updateUserTable	ENG
+tableName	ENG
+tableName	ENG
+type	ENG
+type	ENG
+(V,T,S)	ENG
+(V,T,S)	ENG
+seqnum	ENG
+seqnum	ENG
+tableScript	ENG
+tableScript	ENG
+mailCompanyActivatedSubject	ENG
+mailCompanyActivatedSubject	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+company	ENG
+company	ENG
+companyList	ENG
+companyList	ENG
+Method 1	ENG
+Method 1	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+company	ENG
+company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+rules	ENG
+rules	ENG
+insertNewRule	ENG
+insertNewRule	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+assignRule2Permission	ENG
+assignRule2Permission	ENG
+rule	ENG
+rule	ENG
+permission	ENG
+permission	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+Method 1	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+Method 1	ENG
+Method 1	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+assignRule2PaymentType	ENG
+assignRule2PaymentType	ENG
+owner	ENG
+owner	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+rules	ENG
+rules	ENG
+insertNewRule	ENG
+insertNewRule	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+assignRule2Permission	ENG
+assignRule2Permission	ENG
+rule	ENG
+rule	ENG
+permission	ENG
+permission	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+company	ENG
+company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+Method 1	ENG
+Method 1	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+assignRule2PaymentType	ENG
+assignRule2PaymentType	ENG
+owner	ENG
+owner	ENG
+rule	ENG
+rule	ENG
+moduleMiniClinicOnRegistrationWith100PercDisc	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+company	ENG
+company	ENG
+companyList	ENG
+companyList	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+company	ENG
+company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+assignRule2PaymentType	ENG
+assignRule2PaymentType	ENG
+owner	ENG
+owner	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+moduleMiniClinicOnRegistrationWith100PercDisc	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+moduleMiniClinicOnRegistrationWith100PercDisc	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Method 1	ENG
+Method 1	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Statistics	AZE
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+Statistics	AZE
+Statistics	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+patientName	AZE
+patientName	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+patientName	AZE
+patientName	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+patientName	ENG
+patientName	ENG
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Patient ID	TUR
+Param 1	TUR
+Param 2	TUR
+id	TUR
+id	TUR
+Patient ID	TUR
+Param 1	TUR
+Param 2	TUR
+For any issue please contact with us payment@apdvoice.com	TUR
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	TUR
+Paypal	TUR
+Paypal	TUR
+Bank Tranfer	TUR
+Bank Tranfer	TUR
+For any issue please contact with us payment@apdvoice.com	TUR
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	TUR
+Assigned Submodule List	TUR
+Private Attribute	TUR
+New Submodule	TUR
+Submodule List	TUR
+New Private Attribute	TUR
+Attribute List	TUR
+Order No	TUR
+Update Submodule	TUR
+Order No	TUR
+New Private Attribute	TUR
+Value	TUR
+Order No	TUR
+Update Attribute	TUR
+Value	TUR
+Order No	TUR
+addInspectionMatrix	TUR
+addInspectionMatrix	TUR
+Kaydet	TUR
+Kapat	TUR
+Company Name	TUR
+Time Zone	TUR
+Address	TUR
+logoUrl	TUR
+logoUrl	TUR
+Required Fields	TUR
+Password	TUR
+Private Attribute	TUR
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+company	ENG
+company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+dddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+ddd	ENG
+mandatoryRulesForCompanies	ENG
+dddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+ddd	ENG
+mandatoryRulesForCompanies	ENG
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+id	ENG
+id	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+newExpense	ENG
+newExpense	ENG
+id	ENG
+id	ENG
+Paypal	ENG
+Paypal	ENG
+Bank Tranfer	ENG
+Bank Tranfer	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+listStatus	ENG
+new	ENG
+new	ENG
+addInspectionMatrix	ENG
+addInspectionMatrix	ENG
+Insert	ENG
+Close	ENG
+logoUrl	ENG
+logoUrl	ENG
+company	ENG
+company	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+newExpense	AZE
+newExpense	AZE
+id	AZE
+id	AZE
+Patient ID	AZE
+Param 1	AZE
+Param 2	AZE
+Occupation (Other)	AZE
+Paypal	AZE
+Paypal	AZE
+Bank Tranfer	AZE
+Bank Tranfer	AZE
+For any issue please contact with us payment@apdvoice.com	AZE
+For pricing list please <a href="https://www.apdvoice.com/index.php/pricing/">click here</a>	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+listStatus	AZE
+new	AZE
+new	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+addInspectionMatrix	AZE
+addInspectionMatrix	AZE
+Daxil et	AZE
+Ba?la	AZE
+Patient ID	AZE
+logoUrl	AZE
+logoUrl	AZE
+Statistics	AZE
+company	AZE
+company	AZE
+usertable	AZE
+usertable	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+permission	AZE
+rule	AZE
+rule	AZE
+role	AZE
+role	AZE
+paymentTypeAndRule	AZE
+paymentTypeAndRule	AZE
+companyAndRule	AZE
+companyAndRule	AZE
+companyPayment	AZE
+companyPayment	AZE
+Payment Type	AZE
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	ENG
+PersonalSignup	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+paymentType	ENG
+paymentType	ENG
+companyList	ENG
+companyList	ENG
+mailCompanyActivatedSubject	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Occupation (Other)	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+Occupation (Other)	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+Statistics	AZE
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+paymentType	ENG
+paymentType	ENG
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+Session List	RUS
+Patient	RUS
+Show All	RUS
+Insert New Patient	RUS
+Update Patient ?nfo	RUS
+New Session	RUS
+Finish Session	RUS
+Inspection List	RUS
+Session List	RUS
+Report	RUS
+Previous	RUS
+Next	RUS
+Insert	RUS
+Close	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Video Player	RUS
+Sound Player	RUS
+Insert New Patient	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Insert	RUS
+Close	RUS
+Update Patient	RUS
+Id	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Update	RUS
+Close	RUS
+Insert new session	RUS
+Doctor	RUS
+Patient	RUS
+Purpose	RUS
+Date	RUS
+Time (From)	RUS
+Time (To)	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Now	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+View Agenda	RUS
+Description	RUS
+Create Invoice	RUS
+New Session	RUS
+Close	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+Expense	RUS
+List	RUS
+Insert	RUS
+New Expense	RUS
+Date	RUS
+Amount	RUS
+Currency	RUS
+Purpose	RUS
+Insert	RUS
+Close	RUS
+Update Expense	RUS
+Date	RUS
+Amount	RUS
+Currency	RUS
+Purpose	RUS
+Update	RUS
+Close	RUS
+Income Report	RUS
+List	RUS
+Patient List	RUS
+Patient List	RUS
+Id	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Update	RUS
+Close	RUS
+Payment	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+Report	RUS
+New payment	RUS
+Doctor	RUS
+Patient	RUS
+Price List	RUS
+Discount	RUS
+Amount	RUS
+Currency	RUS
+Description	RUS
+Payment Status	RUS
+Insert	RUS
+Close	RUS
+Update payment	RUS
+Doctor	RUS
+Patient	RUS
+Price List	RUS
+Discount	RUS
+Amount	RUS
+Currency	RUS
+Description	RUS
+Payment Status	RUS
+Update	RUS
+Close	RUS
+Inspection Type	RUS
+Show selected submodules	RUS
+Payment Type	RUS
+Submodule	RUS
+Insert	RUS
+Close	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Submodule name	RUS
+Order No	RUS
+Insert	RUS
+Close	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+Close	RUS
+New Private Attribute	RUS
+Module	RUS
+Submodule	RUS
+Attribute Name	RUS
+Value Type	RUS
+Value	RUS
+Order No	RUS
+Description	RUS
+Update Attribute	RUS
+Module	RUS
+Submodule	RUS
+Attribute Name	RUS
+Value Type	RUS
+Value	RUS
+Order No	RUS
+Description	RUS
+Update	RUS
+Close	RUS
+New	RUS
+name	RUS
+Module Name	RUS
+Report Type	RUS
+Description	RUS
+Report HTML	RUS
+Insert	RUS
+Close	RUS
+name	RUS
+Module Name	RUS
+Report Type	RUS
+Description	RUS
+Report HTML	RUS
+Update	RUS
+Close	RUS
+Statistics	RUS
+Data	RUS
+Basic Statistics	RUS
+Figure	RUS
+Matrix List	RUS
+Field	RUS
+Statistic Result	RUS
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	RUS
+Field for Y axis	RUS
+Field for X axis	RUS
+Draw Line	RUS
+Draw Bar	RUS
+Draw Pie	RUS
+Command	RUS
+Result	RUS
+Add Inspection Matrix	RUS
+Matrix Name	RUS
+Module	RUS
+Attribute Name	RUS
+Short Name	RUS
+Add Inspection	RUS
+Attribute Name	RUS
+Short Name	RUS
+Insert	RUS
+Delete	RUS
+Close	RUS
+Update Company Info	RUS
+Company Name	RUS
+Country	RUS
+Currency	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Account	RUS
+Username	RUS
+Name	RUS
+Surname	RUS
+Middlename	RUS
+Birth Place	RUS
+Birth Date	RUS
+Sex	RUS
+Occupation	RUS
+Mobile 1	RUS
+Mobile 2	RUS
+Telephone 1	RUS
+Telephone 2	RUS
+Email 1	RUS
+Email 2	RUS
+User ?mage	RUS
+Update	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Home	RUS
+Patient	RUS
+Appointment	RUS
+Statistics	RUS
+Finance	RUS
+Payment	RUS
+Expense	RUS
+Income Report	RUS
+Profile	RUS
+Report	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Logout	RUS
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Session List	RUS
+Patient	RUS
+Show All	RUS
+Insert New Patient	RUS
+Update Patient ?nfo	RUS
+New Session	RUS
+Finish Session	RUS
+Inspection List	RUS
+Session List	RUS
+Report	RUS
+Previous	RUS
+Next	RUS
+Insert	RUS
+Close	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Video Player	RUS
+Sound Player	RUS
+Insert New Patient	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Insert	RUS
+Close	RUS
+Update Patient	RUS
+Id	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Update	RUS
+Close	RUS
+Insert new session	RUS
+Doctor	RUS
+Patient	RUS
+Purpose	RUS
+Date	RUS
+Time (From)	RUS
+Time (To)	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Now	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+View Agenda	RUS
+Description	RUS
+Create Invoice	RUS
+New Session	RUS
+Close	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+Expense	RUS
+List	RUS
+Insert	RUS
+New Expense	RUS
+Date	RUS
+Amount	RUS
+Currency	RUS
+Purpose	RUS
+Insert	RUS
+Close	RUS
+Update Expense	RUS
+Date	RUS
+Amount	RUS
+Currency	RUS
+Purpose	RUS
+Update	RUS
+Close	RUS
+Income Report	RUS
+List	RUS
+Patient List	RUS
+Patient List	RUS
+Id	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Update	RUS
+Close	RUS
+Payment	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+Report	RUS
+New payment	RUS
+Doctor	RUS
+Patient	RUS
+Price List	RUS
+Discount	RUS
+Amount	RUS
+Currency	RUS
+Description	RUS
+Payment Status	RUS
+Insert	RUS
+Close	RUS
+Update payment	RUS
+Doctor	RUS
+Patient	RUS
+Price List	RUS
+Discount	RUS
+Amount	RUS
+Currency	RUS
+Description	RUS
+Payment Status	RUS
+Update	RUS
+Close	RUS
+Inspection Type	RUS
+Show selected submodules	RUS
+Payment Type	RUS
+Submodule	RUS
+Insert	RUS
+Close	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Submodule name	RUS
+Order No	RUS
+Insert	RUS
+Close	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+Close	RUS
+New Private Attribute	RUS
+Module	RUS
+Submodule	RUS
+Attribute Name	RUS
+Value Type	RUS
+Value	RUS
+Order No	RUS
+Description	RUS
+Update Attribute	RUS
+Module	RUS
+Submodule	RUS
+Attribute Name	RUS
+Value Type	RUS
+Value	RUS
+Order No	RUS
+Description	RUS
+Update	RUS
+Close	RUS
+New	RUS
+name	RUS
+Module Name	RUS
+Report Type	RUS
+Description	RUS
+Report HTML	RUS
+Insert	RUS
+Close	RUS
+name	RUS
+Module Name	RUS
+Report Type	RUS
+Description	RUS
+Report HTML	RUS
+Update	RUS
+Close	RUS
+Statistics	RUS
+Data	RUS
+Basic Statistics	RUS
+Figure	RUS
+Matrix List	RUS
+Field	RUS
+Statistic Result	RUS
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	RUS
+Field for Y axis	RUS
+Field for X axis	RUS
+Draw Line	RUS
+Draw Bar	RUS
+Draw Pie	RUS
+Command	RUS
+Result	RUS
+Add Inspection Matrix	RUS
+Matrix Name	RUS
+Module	RUS
+Attribute Name	RUS
+Short Name	RUS
+Add Inspection	RUS
+Attribute Name	RUS
+Short Name	RUS
+Insert	RUS
+Delete	RUS
+Close	RUS
+Update Company Info	RUS
+Company Name	RUS
+Country	RUS
+Currency	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Account	RUS
+Username	RUS
+Name	RUS
+Surname	RUS
+Middlename	RUS
+Birth Place	RUS
+Birth Date	RUS
+Sex	RUS
+Occupation	RUS
+Mobile 1	RUS
+Mobile 2	RUS
+Telephone 1	RUS
+Telephone 2	RUS
+Email 1	RUS
+Email 2	RUS
+User ?mage	RUS
+Update	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Home	RUS
+Patient	RUS
+Appointment	RUS
+Statistics	RUS
+Finance	RUS
+Payment	RUS
+Expense	RUS
+Income Report	RUS
+Profile	RUS
+Report	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Logout	RUS
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Session List	RUS
+Patient	RUS
+Show All	RUS
+Insert New Patient	RUS
+Update Patient ?nfo	RUS
+New Session	RUS
+Finish Session	RUS
+Inspection List	RUS
+Session List	RUS
+Report	RUS
+Previous	RUS
+Next	RUS
+Insert	RUS
+Close	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Video Player	RUS
+Sound Player	RUS
+Insert New Patient	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Insert	RUS
+Close	RUS
+Update Patient	RUS
+Id	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Update	RUS
+Close	RUS
+Insert new session	RUS
+Doctor	RUS
+Patient	RUS
+Purpose	RUS
+Date	RUS
+Time (From)	RUS
+Time (To)	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Now	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+View Agenda	RUS
+Description	RUS
+Create Invoice	RUS
+New Session	RUS
+Close	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+Expense	RUS
+List	RUS
+Insert	RUS
+New Expense	RUS
+Date	RUS
+Amount	RUS
+Currency	RUS
+Purpose	RUS
+Insert	RUS
+Close	RUS
+Update Expense	RUS
+Date	RUS
+Amount	RUS
+Currency	RUS
+Purpose	RUS
+Update	RUS
+Close	RUS
+Income Report	RUS
+List	RUS
+Patient List	RUS
+Patient List	RUS
+Id	RUS
+Patient Name	RUS
+Patient Surname	RUS
+Middlename	RUS
+Birth Date	RUS
+Maritual Status	RUS
+Occupation	RUS
+Occupation (Other)	RUS
+Education	RUS
+Sex	RUS
+Blood Group	RUS
+Rh Factor	RUS
+City	RUS
+Update	RUS
+Close	RUS
+Payment	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+Report	RUS
+New payment	RUS
+Doctor	RUS
+Patient	RUS
+Price List	RUS
+Discount	RUS
+Amount	RUS
+Currency	RUS
+Description	RUS
+Payment Status	RUS
+Insert	RUS
+Close	RUS
+Update payment	RUS
+Doctor	RUS
+Patient	RUS
+Price List	RUS
+Discount	RUS
+Amount	RUS
+Currency	RUS
+Description	RUS
+Payment Status	RUS
+Update	RUS
+Close	RUS
+Inspection Type	RUS
+Show selected submodules	RUS
+Payment Type	RUS
+Submodule	RUS
+Insert	RUS
+Close	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Submodule name	RUS
+Order No	RUS
+Insert	RUS
+Close	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+Close	RUS
+New Private Attribute	RUS
+Module	RUS
+Submodule	RUS
+Attribute Name	RUS
+Value Type	RUS
+Value	RUS
+Order No	RUS
+Description	RUS
+Update Attribute	RUS
+Module	RUS
+Submodule	RUS
+Attribute Name	RUS
+Value Type	RUS
+Value	RUS
+Order No	RUS
+Description	RUS
+Update	RUS
+Close	RUS
+New	RUS
+name	RUS
+Module Name	RUS
+Report Type	RUS
+Description	RUS
+Report HTML	RUS
+Insert	RUS
+Close	RUS
+name	RUS
+Module Name	RUS
+Report Type	RUS
+Description	RUS
+Report HTML	RUS
+Update	RUS
+Close	RUS
+Statistics	RUS
+Data	RUS
+Basic Statistics	RUS
+Figure	RUS
+Matrix List	RUS
+Field	RUS
+Statistic Result	RUS
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	RUS
+Field for Y axis	RUS
+Field for X axis	RUS
+Draw Line	RUS
+Draw Bar	RUS
+Draw Pie	RUS
+Command	RUS
+Result	RUS
+Add Inspection Matrix	RUS
+Matrix Name	RUS
+Module	RUS
+Attribute Name	RUS
+Short Name	RUS
+Add Inspection	RUS
+Attribute Name	RUS
+Short Name	RUS
+Insert	RUS
+Delete	RUS
+Close	RUS
+Update Company Info	RUS
+Company Name	RUS
+Country	RUS
+Currency	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Account	RUS
+Username	RUS
+Name	RUS
+Surname	RUS
+Middlename	RUS
+Birth Place	RUS
+Birth Date	RUS
+Sex	RUS
+Occupation	RUS
+Mobile 1	RUS
+Mobile 2	RUS
+Telephone 1	RUS
+Telephone 2	RUS
+Email 1	RUS
+Email 2	RUS
+User ?mage	RUS
+Update	RUS
+Image Viewer	RUS
+Previous	RUS
+Next	RUS
+Home	RUS
+Patient	RUS
+Appointment	RUS
+Statistics	RUS
+Finance	RUS
+Payment	RUS
+Expense	RUS
+Income Report	RUS
+Profile	RUS
+Report	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Logout	RUS
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+paymentType	ENG
+paymentType	ENG
+insertNewModule	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+updateModule	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+paymentType	ENG
+paymentType	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Id	TUR
+<span style="opacity: 0;">_________________________ </span>	TUR
+<span style="opacity: 0;">_________________________ </span>	TUR
+<span style="opacity: 0;">_________________________ </span>	TUR
+<span style="opacity: 0;">_________________________ </span>	TUR
+Create Invoice	TUR
+New Expense	TUR
+Id	TUR
+Update payment	TUR
+Private Attribute	TUR
+New Submodule	TUR
+Submodule List	TUR
+New Private Attribute	TUR
+Attribute List	TUR
+Order No	TUR
+Update Submodule	TUR
+Order No	TUR
+New Private Attribute	TUR
+Value	TUR
+Order No	TUR
+Update Attribute	TUR
+Value	TUR
+Order No	TUR
+New	TUR
+Add Inspection Matrix	TUR
+Kaydet	TUR
+Kapat	TUR
+Company Name	TUR
+Time Zone	TUR
+Address	TUR
+Logo Url	TUR
+Required Fields	TUR
+Private Attribute	TUR
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+usertable	ENG
+usertable	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+permission	ENG
+rule	ENG
+rule	ENG
+role	ENG
+role	ENG
+paymentTypeAndRule	ENG
+paymentTypeAndRule	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+companyPayment	ENG
+companyPayment	ENG
+paymentType	ENG
+paymentType	ENG
+companyAndRule	ENG
+companyAndRule	ENG
+assignRule2Company	ENG
+assignRule2Company	ENG
+rule	ENG
+rule	ENG
+mandatoryRulesForCompanies	ENG
+reportAppointmentListWithExpenselist	ENG
+cud4Anbar	ENG
+r4Anbar	ENG
+cud4Product	ENG
+r4Product	ENG
+reportAppointmentListWithExpenselist	ENG
+r4Anbar	ENG
+cud4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4Task	ENG
+crud4Task	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskPriority	ENG
+crud4TaskPriority	ENG
+r4TaskStatus	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+crud4Project	ENG
+r4Project	ENG
+crud4Poject	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+rules	ENG
+rules	ENG
+insertNewRule	ENG
+insertNewRule	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+assignRule2Permission	ENG
+assignRule2Permission	ENG
+rule	ENG
+rule	ENG
+permission	ENG
+permission	ENG
+reportAppointmentListWithExpenselist	ENG
+r4Anbar	ENG
+cud4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+reportAppointmentListWithExpenselist	ENG
+reportAppointmentListWithExpenselist	ENG
+cud4Anbar	ENG
+r4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+crud4Task	ENG
+r4Task	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskStatus	ENG
+crud4TaskPriority	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+r4Project	ENG
+crud4Project	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+reportAppointmentListWithExpenselist	ENG
+r4Anbar	ENG
+cud4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4Task	ENG
+crud4Task	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskPriority	ENG
+crud4TaskPriority	ENG
+r4TaskStatus	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+crud4Project	ENG
+r4Project	ENG
+crud4Poject	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+reportAppointmentListWithExpenselist	ENG
+reportAppointmentListWithExpenselist	ENG
+r4Anbar	ENG
+cud4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+reportAppointmentListWithExpenselist	ENG
+r4Anbar	ENG
+cud4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4Task	ENG
+crud4Task	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskPriority	ENG
+crud4TaskPriority	ENG
+r4TaskStatus	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+crud4Project	ENG
+r4Project	ENG
+crud4Poject	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+insertNewPermission	ENG
+insertNewPermission	ENG
+rules	ENG
+rules	ENG
+insertNewRule	ENG
+insertNewRule	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+isPublic	ENG
+assignRule2Permission	ENG
+assignRule2Permission	ENG
+rule	ENG
+rule	ENG
+permission	ENG
+permission	ENG
+reportAppointmentListWithExpenselist	ENG
+r4Anbar	ENG
+cud4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+reportAppointmentListWithExpenselist	ENG
+reportAppointmentListWithExpenselist	ENG
+r4Anbar	ENG
+cud4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+ddd	ENG
+serviceCrGetReportLineList4PrintPayment	ENG
+dddd	ENG
+mandatoryRulesForCompanies	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4Task	ENG
+crud4Task	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskPriority	ENG
+crud4TaskPriority	ENG
+r4TaskStatus	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+crud4Project	ENG
+r4Project	ENG
+crud4Poject	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+reportAppointmentListWithExpenselist	ENG
+cud4Anbar	ENG
+r4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+crud4Task	ENG
+r4Task	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskStatus	ENG
+crud4TaskPriority	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+r4Project	ENG
+crud4Project	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+reportAppointmentListWithExpenselist	ENG
+cud4Anbar	ENG
+r4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+crud4Task	ENG
+r4Task	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskStatus	ENG
+crud4TaskPriority	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+r4Project	ENG
+crud4Project	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+reportAppointmentListWithExpenselist	ENG
+cud4Anbar	ENG
+r4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+crud4Task	ENG
+r4Task	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskStatus	ENG
+crud4TaskPriority	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+r4Project	ENG
+crud4Project	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+reportAppointmentListWithExpenselist	ENG
+cud4Anbar	ENG
+r4Anbar	ENG
+r4Product	ENG
+cud4Product	ENG
+mandatoryRulesForCompanies	ENG
+ddd	ENG
+crud4Task	ENG
+r4Task	ENG
+r4ProjectPermission	ENG
+crud4ProjectPermission	ENG
+finishTask	ENG
+commonTaskUser	ENG
+r4TaskCategory	ENG
+crud4TaskCategory	ENG
+r4TaskStatus	ENG
+crud4TaskPriority	ENG
+crud4TaskStatus	ENG
+r4Progress	ENG
+crud4Progress	ENG
+r4Project	ENG
+crud4Project	ENG
+r4TaskType	ENG
+crud4TaskType	ENG
+r4Network	ENG
+crud4Network	ENG
+r4RelDiscountAndPatient	ENG
+cud4RelDiscountAndPatient	ENG
+r4Discount	ENG
+cud4Discount	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Inspection Type List	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Inspection Type List	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+insertNewModule	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+updateModule	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+moduleGeneralLaboratoryOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+userLisence4CompanyOnRegistration	ENG
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+insertNewModule	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+updateModule	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+moduleGeneralLaboratoryOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+userLisence4CompanyOnRegistration	ENG
+moduleGeneralEntOnRegistrationWiyh100PercDisc	ENG
+moduleUrologyOnRegistrationWiyh100PercDisc	ENG
+moduleGeneralLaboratoryOnRegistrationWiyh100PercDisc	ENG
+userLisence4PersonalOnRegistration	ENG
+moduleApdVoiceOnRegistrationWiyh100PercDisc	ENG
+userLisence4CompanyOnRegistration	ENG
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Session List	UZB
+Patient	UZB
+Show All	UZB
+Insert New Patient	UZB
+Update Patient ?nfo	UZB
+New Session	UZB
+Finish Session	UZB
+Inspection List	UZB
+Session List	UZB
+Report	UZB
+Previous	UZB
+Next	UZB
+Insert	UZB
+Close	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Video Player	UZB
+Sound Player	UZB
+Insert New Patient	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Insert	UZB
+Close	UZB
+Update Patient	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Insert new session	UZB
+Doctor	UZB
+Patient	UZB
+Purpose	UZB
+Date	UZB
+Time (From)	UZB
+Time (To)	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Now	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+View Agenda	UZB
+Description	UZB
+Create Invoice	UZB
+New Session	UZB
+Close	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+Expense	UZB
+List	UZB
+Insert	UZB
+New Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Insert	UZB
+Close	UZB
+Update Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Update	UZB
+Close	UZB
+Income Report	UZB
+List	UZB
+Patient List	UZB
+Patient List	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Payment	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+Report	UZB
+New payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Insert	UZB
+Close	UZB
+Update payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Update	UZB
+Close	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Payment Type	UZB
+Submodule	UZB
+Insert	UZB
+Close	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Submodule name	UZB
+Order No	UZB
+Insert	UZB
+Close	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+Close	UZB
+New Private Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update	UZB
+Close	UZB
+New	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Insert	UZB
+Close	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Update	UZB
+Close	UZB
+Statistics	UZB
+Data	UZB
+Basic Statistics	UZB
+Figure	UZB
+Matrix List	UZB
+Field	UZB
+Statistic Result	UZB
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	UZB
+Field for Y axis	UZB
+Field for X axis	UZB
+Draw Line	UZB
+Draw Bar	UZB
+Draw Pie	UZB
+Command	UZB
+Result	UZB
+Add Inspection Matrix	UZB
+Matrix Name	UZB
+Module	UZB
+Attribute Name	UZB
+Short Name	UZB
+Add Inspection	UZB
+Attribute Name	UZB
+Short Name	UZB
+Insert	UZB
+Delete	UZB
+Close	UZB
+Update Company Info	UZB
+Company Name	UZB
+Country	UZB
+Currency	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Account	UZB
+Username	UZB
+Name	UZB
+Surname	UZB
+Middlename	UZB
+Birth Place	UZB
+Birth Date	UZB
+Sex	UZB
+Occupation	UZB
+Mobile 1	UZB
+Mobile 2	UZB
+Telephone 1	UZB
+Telephone 2	UZB
+Email 1	UZB
+Email 2	UZB
+User ?mage	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Home	UZB
+Patient	UZB
+Appointment	UZB
+Statistics	UZB
+Finance	UZB
+Payment	UZB
+Expense	UZB
+Income Report	UZB
+Profile	UZB
+Report	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Logout	UZB
+Session List	UZB
+Patient	UZB
+Show All	UZB
+Insert New Patient	UZB
+Update Patient ?nfo	UZB
+New Session	UZB
+Finish Session	UZB
+Inspection List	UZB
+Session List	UZB
+Report	UZB
+Previous	UZB
+Next	UZB
+Insert	UZB
+Close	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Video Player	UZB
+Sound Player	UZB
+Insert New Patient	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Insert	UZB
+Close	UZB
+Update Patient	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Insert new session	UZB
+Doctor	UZB
+Patient	UZB
+Purpose	UZB
+Date	UZB
+Time (From)	UZB
+Time (To)	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Now	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+View Agenda	UZB
+Description	UZB
+Create Invoice	UZB
+New Session	UZB
+Close	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+Expense	UZB
+List	UZB
+Insert	UZB
+New Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Insert	UZB
+Close	UZB
+Update Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Update	UZB
+Close	UZB
+Income Report	UZB
+List	UZB
+Patient List	UZB
+Patient List	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Payment	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+Report	UZB
+New payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Insert	UZB
+Close	UZB
+Update payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Update	UZB
+Close	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Payment Type	UZB
+Submodule	UZB
+Insert	UZB
+Close	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Submodule name	UZB
+Order No	UZB
+Insert	UZB
+Close	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+Close	UZB
+New Private Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update	UZB
+Close	UZB
+New	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Insert	UZB
+Close	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Update	UZB
+Close	UZB
+Statistics	UZB
+Data	UZB
+Basic Statistics	UZB
+Figure	UZB
+Matrix List	UZB
+Field	UZB
+Statistic Result	UZB
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	UZB
+Field for Y axis	UZB
+Field for X axis	UZB
+Draw Line	UZB
+Draw Bar	UZB
+Draw Pie	UZB
+Command	UZB
+Result	UZB
+Add Inspection Matrix	UZB
+Matrix Name	UZB
+Module	UZB
+Attribute Name	UZB
+Short Name	UZB
+Add Inspection	UZB
+Attribute Name	UZB
+Short Name	UZB
+Insert	UZB
+Delete	UZB
+Close	UZB
+Update Company Info	UZB
+Company Name	UZB
+Country	UZB
+Currency	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Account	UZB
+Username	UZB
+Name	UZB
+Surname	UZB
+Middlename	UZB
+Birth Place	UZB
+Birth Date	UZB
+Sex	UZB
+Occupation	UZB
+Mobile 1	UZB
+Mobile 2	UZB
+Telephone 1	UZB
+Telephone 2	UZB
+Email 1	UZB
+Email 2	UZB
+User ?mage	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Home	UZB
+Patient	UZB
+Appointment	UZB
+Statistics	UZB
+Finance	UZB
+Payment	UZB
+Expense	UZB
+Income Report	UZB
+Profile	UZB
+Report	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Logout	UZB
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Occupation (Other)	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+Occupation (Other)	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+Statistics	AZE
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Occupation (Other)	AZE
+Occupation (Other)	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+<span style="opacity: 0;">_________________________ </span>	AZE
+Occupation (Other)	AZE
+Statistics	AZE
+Data	AZE
+Basic Statistics	AZE
+Figure	AZE
+Field	AZE
+Statistic Result	AZE
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	AZE
+Field for Y axis	AZE
+Field for X axis	AZE
+Draw Line	AZE
+Draw Bar	AZE
+Draw Pie	AZE
+Command	AZE
+Result	AZE
+Statistics	AZE
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Inspection Type List	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Submodule	ENG
+submoduleUniqueId	ENG
+submoduleUniqueId	ENG
+status	ENG
+status	ENG
+submoduleType	ENG
+submoduleType	ENG
+lang	ENG
+lang	ENG
+submoduleUniqueId	ENG
+submoduleUniqueId	ENG
+status	ENG
+status	ENG
+submoduleType	ENG
+submoduleType	ENG
+lang	ENG
+lang	ENG
+Session List	UZB
+Patient	UZB
+Show All	UZB
+Insert New Patient	UZB
+Update Patient ?nfo	UZB
+New Session	UZB
+Finish Session	UZB
+Inspection List	UZB
+Session List	UZB
+Report	UZB
+Previous	UZB
+Next	UZB
+Insert	UZB
+Close	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Video Player	UZB
+Sound Player	UZB
+Insert New Patient	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Insert	UZB
+Close	UZB
+Update Patient	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Insert new session	UZB
+Doctor	UZB
+Patient	UZB
+Purpose	UZB
+Date	UZB
+Time (From)	UZB
+Time (To)	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Now	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+View Agenda	UZB
+Description	UZB
+Create Invoice	UZB
+New Session	UZB
+Close	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+Expense	UZB
+List	UZB
+Insert	UZB
+New Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Insert	UZB
+Close	UZB
+Update Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Update	UZB
+Close	UZB
+Income Report	UZB
+List	UZB
+Patient List	UZB
+Patient List	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Payment	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+Report	UZB
+New payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Insert	UZB
+Close	UZB
+Update payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Update	UZB
+Close	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Payment Type	UZB
+Submodule	UZB
+Insert	UZB
+Close	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Submodule name	UZB
+Order No	UZB
+Insert	UZB
+Close	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+Close	UZB
+New Private Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update	UZB
+Close	UZB
+New	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Insert	UZB
+Close	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Update	UZB
+Close	UZB
+Statistics	UZB
+Data	UZB
+Basic Statistics	UZB
+Figure	UZB
+Matrix List	UZB
+Field	UZB
+Statistic Result	UZB
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	UZB
+Field for Y axis	UZB
+Field for X axis	UZB
+Draw Line	UZB
+Draw Bar	UZB
+Draw Pie	UZB
+Command	UZB
+Result	UZB
+Add Inspection Matrix	UZB
+Matrix Name	UZB
+Module	UZB
+Attribute Name	UZB
+Short Name	UZB
+Add Inspection	UZB
+Attribute Name	UZB
+Short Name	UZB
+Insert	UZB
+Delete	UZB
+Close	UZB
+Update Company Info	UZB
+Company Name	UZB
+Country	UZB
+Currency	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Account	UZB
+Username	UZB
+Name	UZB
+Surname	UZB
+Middlename	UZB
+Birth Place	UZB
+Birth Date	UZB
+Sex	UZB
+Occupation	UZB
+Mobile 1	UZB
+Mobile 2	UZB
+Telephone 1	UZB
+Telephone 2	UZB
+Email 1	UZB
+Email 2	UZB
+User ?mage	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Home	UZB
+Patient	UZB
+Appointment	UZB
+Statistics	UZB
+Finance	UZB
+Payment	UZB
+Expense	UZB
+Income Report	UZB
+Profile	UZB
+Report	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Logout	UZB
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Inspection Type List	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Inspection Type List	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+code	ENG
+code	ENG
+key	ENG
+key	ENG
+lang	ENG
+lang	ENG
+parameter1	ENG
+parameter1	ENG
+parameter2	ENG
+parameter2	ENG
+parameter3	ENG
+parameter3	ENG
+parameter4	ENG
+parameter4	ENG
+parameter5	ENG
+parameter5	ENG
+insertNewModule	ENG
+insertNewModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+updateModule	ENG
+updateModule	ENG
+moduleUniqueId	ENG
+moduleUniqueId	ENG
+paymentType	ENG
+paymentType	ENG
+status	ENG
+status	ENG
+lang	ENG
+lang	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+<span style="opacity: 0;">_________________________ </span>	ENG
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Inspection Type List	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Session List	UZB
+Patient	UZB
+Show All	UZB
+Insert New Patient	UZB
+Update Patient ?nfo	UZB
+New Session	UZB
+Finish Session	UZB
+Inspection List	UZB
+Session List	UZB
+Report	UZB
+Previous	UZB
+Next	UZB
+Insert	UZB
+Close	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Video Player	UZB
+Sound Player	UZB
+Insert New Patient	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Insert	UZB
+Close	UZB
+Update Patient	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Insert new session	UZB
+Doctor	UZB
+Patient	UZB
+Purpose	UZB
+Date	UZB
+Time (From)	UZB
+Time (To)	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Now	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+View Agenda	UZB
+Description	UZB
+Create Invoice	UZB
+New Session	UZB
+Close	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+Expense	UZB
+List	UZB
+Insert	UZB
+New Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Insert	UZB
+Close	UZB
+Update Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Update	UZB
+Close	UZB
+Income Report	UZB
+List	UZB
+Patient List	UZB
+Patient List	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Payment	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+Report	UZB
+New payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Insert	UZB
+Close	UZB
+Update payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Update	UZB
+Close	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Payment Type	UZB
+Submodule	UZB
+Insert	UZB
+Close	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Submodule name	UZB
+Order No	UZB
+Insert	UZB
+Close	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+Close	UZB
+New Private Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update	UZB
+Close	UZB
+New	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Insert	UZB
+Close	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Update	UZB
+Close	UZB
+Statistics	UZB
+Data	UZB
+Basic Statistics	UZB
+Figure	UZB
+Matrix List	UZB
+Field	UZB
+Statistic Result	UZB
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	UZB
+Field for Y axis	UZB
+Field for X axis	UZB
+Draw Line	UZB
+Draw Bar	UZB
+Draw Pie	UZB
+Command	UZB
+Result	UZB
+Add Inspection Matrix	UZB
+Matrix Name	UZB
+Module	UZB
+Attribute Name	UZB
+Short Name	UZB
+Add Inspection	UZB
+Attribute Name	UZB
+Short Name	UZB
+Insert	UZB
+Delete	UZB
+Close	UZB
+Update Company Info	UZB
+Company Name	UZB
+Country	UZB
+Currency	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Account	UZB
+Username	UZB
+Name	UZB
+Surname	UZB
+Middlename	UZB
+Birth Place	UZB
+Birth Date	UZB
+Sex	UZB
+Occupation	UZB
+Mobile 1	UZB
+Mobile 2	UZB
+Telephone 1	UZB
+Telephone 2	UZB
+Email 1	UZB
+Email 2	UZB
+User ?mage	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Home	UZB
+Patient	UZB
+Appointment	UZB
+Statistics	UZB
+Finance	UZB
+Payment	UZB
+Expense	UZB
+Income Report	UZB
+Profile	UZB
+Report	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Logout	UZB
+Session List	UZB
+Patient	UZB
+Show All	UZB
+Insert New Patient	UZB
+Update Patient ?nfo	UZB
+New Session	UZB
+Finish Session	UZB
+Inspection List	UZB
+Session List	UZB
+Report	UZB
+Previous	UZB
+Next	UZB
+Insert	UZB
+Close	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Video Player	UZB
+Home	UZB
+Patient	UZB
+Appointment	UZB
+Statistics	UZB
+Finance	UZB
+Payment	UZB
+Expense	UZB
+Income Report	UZB
+Profile	UZB
+Report	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Logout	UZB
+Id	RUS
+Update	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+<span style="opacity: 0;">_________________________ </span>	RUS
+Create Invoice	RUS
+Current Password	RUS
+New Password	RUS
+Confirm New Password	RUS
+Change	RUS
+New Expense	RUS
+Update Expense	RUS
+Update	RUS
+Id	RUS
+Update	RUS
+All payments	RUS
+New payment	RUS
+Confirm Payment	RUS
+New payment	RUS
+Update payment	RUS
+Update	RUS
+Inspection Type	RUS
+Inspection Type List	RUS
+Show selected submodules	RUS
+Private Attribute	RUS
+New Submodule	RUS
+Submodule List	RUS
+New Private Attribute	RUS
+Attribute List	RUS
+Order No	RUS
+Update Submodule	RUS
+name	RUS
+Order No	RUS
+Update	RUS
+New Private Attribute	RUS
+Value	RUS
+Order No	RUS
+Update Attribute	RUS
+Value	RUS
+Order No	RUS
+Update	RUS
+New	RUS
+name	RUS
+name	RUS
+Update	RUS
+Draw Line	RUS
+Add Inspection Matrix	RUS
+????????	RUS
+???????	RUS
+Update Company Info	RUS
+Company Name	RUS
+Time Zone	RUS
+Address	RUS
+Logo Url	RUS
+Required Fields	RUS
+Update	RUS
+Account	RUS
+Update	RUS
+Update Company Info	RUS
+Inspection Type	RUS
+Private Attribute	RUS
+Account	RUS
+Change Password	RUS
+Session List	UZB
+Patient	UZB
+Show All	UZB
+Insert New Patient	UZB
+Update Patient ?nfo	UZB
+New Session	UZB
+Finish Session	UZB
+Inspection List	UZB
+Session List	UZB
+Report	UZB
+Previous	UZB
+Next	UZB
+Insert	UZB
+Close	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Video Player	UZB
+Sound Player	UZB
+Insert New Patient	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Insert	UZB
+Close	UZB
+Update Patient	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Insert new session	UZB
+Doctor	UZB
+Patient	UZB
+Purpose	UZB
+Date	UZB
+Time (From)	UZB
+Time (To)	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Now	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+View Agenda	UZB
+Description	UZB
+Create Invoice	UZB
+New Session	UZB
+Close	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+Expense	UZB
+List	UZB
+Insert	UZB
+New Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Insert	UZB
+Close	UZB
+Update Expense	UZB
+Date	UZB
+Amount	UZB
+Currency	UZB
+Purpose	UZB
+Update	UZB
+Close	UZB
+Income Report	UZB
+List	UZB
+Patient List	UZB
+Patient List	UZB
+Id	UZB
+Patient Name	UZB
+Patient Surname	UZB
+Middlename	UZB
+Birth Date	UZB
+Maritual Status	UZB
+Occupation	UZB
+Occupation (Other)	UZB
+Education	UZB
+Sex	UZB
+Blood Group	UZB
+Rh Factor	UZB
+City	UZB
+Update	UZB
+Close	UZB
+Payment	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+Report	UZB
+New payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Insert	UZB
+Close	UZB
+Update payment	UZB
+Doctor	UZB
+Patient	UZB
+Price List	UZB
+Discount	UZB
+Amount	UZB
+Currency	UZB
+Description	UZB
+Payment Status	UZB
+Update	UZB
+Close	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Payment Type	UZB
+Submodule	UZB
+Insert	UZB
+Close	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Submodule name	UZB
+Order No	UZB
+Insert	UZB
+Close	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+Close	UZB
+New Private Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update Attribute	UZB
+Module	UZB
+Submodule	UZB
+Attribute Name	UZB
+Value Type	UZB
+Value	UZB
+Order No	UZB
+Description	UZB
+Update	UZB
+Close	UZB
+New	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Insert	UZB
+Close	UZB
+name	UZB
+Module Name	UZB
+Report Type	UZB
+Description	UZB
+Report HTML	UZB
+Update	UZB
+Close	UZB
+Statistics	UZB
+Data	UZB
+Basic Statistics	UZB
+Figure	UZB
+Matrix List	UZB
+Field	UZB
+Statistic Result	UZB
+Confidence Interval Approximations, If sampling distribution of the mean follows normal distribution	UZB
+Field for Y axis	UZB
+Field for X axis	UZB
+Draw Line	UZB
+Draw Bar	UZB
+Draw Pie	UZB
+Command	UZB
+Result	UZB
+Add Inspection Matrix	UZB
+Matrix Name	UZB
+Module	UZB
+Attribute Name	UZB
+Short Name	UZB
+Add Inspection	UZB
+Attribute Name	UZB
+Short Name	UZB
+Insert	UZB
+Delete	UZB
+Close	UZB
+Update Company Info	UZB
+Company Name	UZB
+Country	UZB
+Currency	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Account	UZB
+Username	UZB
+Name	UZB
+Surname	UZB
+Middlename	UZB
+Birth Place	UZB
+Birth Date	UZB
+Sex	UZB
+Occupation	UZB
+Mobile 1	UZB
+Mobile 2	UZB
+Telephone 1	UZB
+Telephone 2	UZB
+Email 1	UZB
+Email 2	UZB
+User ?mage	UZB
+Update	UZB
+Image Viewer	UZB
+Previous	UZB
+Next	UZB
+Home	UZB
+Patient	UZB
+Appointment	UZB
+Statistics	UZB
+Finance	UZB
+Payment	UZB
+Expense	UZB
+Income Report	UZB
+Profile	UZB
+Report	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Logout	UZB
+Id	UZB
+Update	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Create Invoice	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+New Expense	UZB
+Update Expense	UZB
+Update	UZB
+Id	UZB
+Update	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+New payment	UZB
+Update payment	UZB
+Update	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Order No	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+New Private Attribute	UZB
+Value	UZB
+Order No	UZB
+Update Attribute	UZB
+Value	UZB
+Order No	UZB
+Update	UZB
+New	UZB
+name	UZB
+name	UZB
+Update	UZB
+Draw Line	UZB
+Add Inspection Matrix	UZB
+kiritish	UZB
+yopiq	UZB
+Update Company Info	UZB
+Company Name	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Account	UZB
+Update	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Id	UZB
+Update	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Create Invoice	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+New Expense	UZB
+Update Expense	UZB
+Update	UZB
+Id	UZB
+Update	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+New payment	UZB
+Update payment	UZB
+Update	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Order No	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+New Private Attribute	UZB
+Value	UZB
+Order No	UZB
+Update Attribute	UZB
+Value	UZB
+Order No	UZB
+Update	UZB
+New	UZB
+name	UZB
+name	UZB
+Update	UZB
+Draw Line	UZB
+Add Inspection Matrix	UZB
+kiritish	UZB
+yopiq	UZB
+Update Company Info	UZB
+Company Name	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Account	UZB
+Update	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Update Company Info	UZB
+Inspection Type	UZB
+Private Attribute	UZB
+Account	UZB
+Change Password	UZB
+Id	UZB
+Update	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Create Invoice	UZB
+Current Password	UZB
+New Password	UZB
+Confirm New Password	UZB
+Change	UZB
+New Expense	UZB
+Update Expense	UZB
+Update	UZB
+Id	UZB
+Update	UZB
+All payments	UZB
+New payment	UZB
+Confirm Payment	UZB
+New payment	UZB
+Update payment	UZB
+Update	UZB
+Inspection Type	UZB
+Inspection Type List	UZB
+Show selected submodules	UZB
+Private Attribute	UZB
+New Submodule	UZB
+Submodule List	UZB
+New Private Attribute	UZB
+Attribute List	UZB
+Order No	UZB
+Update Submodule	UZB
+name	UZB
+Order No	UZB
+Update	UZB
+New Private Attribute	UZB
+Value	UZB
+Order No	UZB
+Update Attribute	UZB
+Value	UZB
+Order No	UZB
+Update	UZB
+New	UZB
+name	UZB
+name	UZB
+Update	UZB
+Draw Line	UZB
+Add Inspection Matrix	UZB
+kiritish	UZB
+yopiq	UZB
+Update Company Info	UZB
+Company Name	UZB
+Time Zone	UZB
+Address	UZB
+Logo Url	UZB
+Required Fields	UZB
+Update	UZB
+Account	UZB
+Update	UZB
+Id	UZB
+Update	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+<span style="opacity: 0;">_________________________ </span>	UZB
+Create Invoice	UZB
+PersonalSignup	ENG
+PersonalSignup	ENG

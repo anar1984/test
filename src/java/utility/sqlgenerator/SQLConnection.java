@@ -132,6 +132,10 @@ public class SQLConnection {
             }
             stmt.close();
         } catch (SQLException | QException e) {
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - execSelectSql --> "+e.getMessage());
+            System.out.println("------------------------------------------------");
+            System.out.println("------------------------------------------------");
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {

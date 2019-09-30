@@ -9,7 +9,7 @@
     </thread-pools-->
     
     <!--disk-store thread-pool="defaultDiskPool" /-->
-    <persistence directory="${java.io.tmpdir}/ehcache"  />
+    <persistence directory="${java.io.tmpdir}/ehcache_apd"  />
     
     <cache alias="modelCache">
         

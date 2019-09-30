@@ -689,31 +689,31 @@ public class CrController {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrPatient.PATIENT_NAME,
                 cp.hasValue(carrier, EntityCrPatient.PATIENT_NAME));
-        carrier.addController(EntityCrPatient.PATIENT_SURNAME,
-                cp.hasValue(carrier, EntityCrPatient.PATIENT_SURNAME));
-        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
-                cp.hasValue(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
-        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
-                cp.isValueNotNull(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
-        carrier.addController(EntityCrPatient.SEX,
-                cp.hasValue(carrier, EntityCrPatient.SEX));
+//        carrier.addController(EntityCrPatient.PATIENT_SURNAME,
+//                cp.hasValue(carrier, EntityCrPatient.PATIENT_SURNAME));
+//        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
+//                cp.hasValue(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
+//        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
+//                cp.isValueNotNull(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
+//        carrier.addController(EntityCrPatient.SEX,
+//                cp.hasValue(carrier, EntityCrPatient.SEX));
         return carrier;
     }
-
+ 
     public Carrier updatePatient(Carrier carrier) throws QException {
         ControllerPool cp = new ControllerPool();
         carrier.addController(EntityCrPatient.ID,
                 cp.hasValue(carrier, EntityCrPatient.ID));
         carrier.addController(EntityCrPatient.PATIENT_NAME,
                 cp.hasValue(carrier, EntityCrPatient.PATIENT_NAME));
-        carrier.addController(EntityCrPatient.PATIENT_SURNAME,
-                cp.hasValue(carrier, EntityCrPatient.PATIENT_SURNAME));
-        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
-                cp.hasValue(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
-        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
-                cp.isValueNotNull(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
-        carrier.addController(EntityCrPatient.SEX,
-                cp.hasValue(carrier, EntityCrPatient.SEX));
+//        carrier.addController(EntityCrPatient.PATIENT_SURNAME,
+//                cp.hasValue(carrier, EntityCrPatient.PATIENT_SURNAME));
+//        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
+//                cp.hasValue(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
+//        carrier.addController(EntityCrPatient.PATIENT_BIRTH_DATE,
+//                cp.isValueNotNull(carrier, EntityCrPatient.PATIENT_BIRTH_DATE));
+//        carrier.addController(EntityCrPatient.SEX,
+//                cp.hasValue(carrier, EntityCrPatient.SEX));
         return carrier;
     }
 

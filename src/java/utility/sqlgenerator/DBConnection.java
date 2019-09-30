@@ -38,26 +38,38 @@ public class DBConnection {
         try {
             prop = new DBConfigurationProperties();
         } catch (UnsupportedEncodingException ex) {
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - DBConnection --> "+ex.getMessage());
+            System.out.println("------------------------------------------------");
+            
+            System.out.println("------------------------------------------------");
+
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(),
+                    }.getClass().getEnclosingMethod().getName(),
                     ex);
         }
         try {
             setConnection(CoreLabel.DB_PRIMARY);
             int size = Integer.valueOf(this.initialSize);
             int midSize = Integer.valueOf(this.maxIdle);
-//            System.out.println("connection qurulur");
+            System.out.println("connection qurulur");
             conn = DBConnectionPool.getConnection(this.driver, this.userName,
                     this.password, this.url, size, midSize);
-//            System.out.println("connection quruldu");
+            System.out.println("connection quruldu");
         } catch (Exception e) {
-//            System.out.println("connection ugursuz oldu");
+            System.out.println("connection ugursuz oldu");
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - DBConnection --> "+e.getMessage());
+            System.out.println("------------------------------------------------");
+        
+            System.out.println("------------------------------------------------");
+
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(),
+                    }.getClass().getEnclosingMethod().getName(),
                     e);
         }
 //        Class.forName(this.driver);
@@ -72,10 +84,16 @@ public class DBConnection {
         try {
             prop = new DBConfigurationProperties();
         } catch (UnsupportedEncodingException ex) {
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - DBConnection --> "+ex.getMessage());
+            System.out.println("------------------------------------------------");
+       
+            System.out.println("------------------------------------------------");
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-//             System.out.println("connection qurulur");
+             System.out.println("connection qurulur");
+
             setConnection(dbTypeNumber);
             conn = DBConnectionPool.getConnection(this.driver, this.userName,
                     this.password, this.url,
@@ -83,11 +101,17 @@ public class DBConnection {
                     Integer.valueOf(this.maxIdle));
 //             System.out.println("connection quruldu");
         } catch (QException e) {
-//             System.out.println("connection ugursuz oldu");
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - DBConnection --> ");
+            System.out.println("------------------------------------------------");
+            e.printStackTrace();
+            System.out.println("------------------------------------------------");
+
+             System.out.println("connection ugursuz oldu");
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(),
+                    }.getClass().getEnclosingMethod().getName(),
                     e);
         }
 //        Class.forName(this.driver);
@@ -103,10 +127,15 @@ public class DBConnection {
             }
 
         } catch (Exception e) {
+             System.out.println("------------------------------------------------");
+            System.out.println("Error - setConnection --> "+e.getMessage());
+            System.out.println("------------------------------------------------");
+             
+            System.out.println("------------------------------------------------");
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {
-            }.getClass().getEnclosingMethod().getName(),
+                    }.getClass().getEnclosingMethod().getName(),
                     e);
         }
     }
@@ -364,7 +393,7 @@ public class DBConnection {
     }
 
     public static void main(String[] arg) throws Exception {
-         
+
     }
 
     public static void closeConnection(Connection conn) {

@@ -70,7 +70,7 @@ public class SessionHandler {
                 return l > 1;
             } catch (Exception ex) {
                 logger.error("checkSession token=" + token, ex);
-                return false;   
+                return false;
             }
         }
     }
@@ -86,7 +86,6 @@ public class SessionHandler {
     }
 
     public static EntityCrUser checkLogin(String username, String password, String domain) throws Exception {
-        
 
         password = password.replaceAll("%", "").trim();
         username = username.replaceAll("%", "").trim();
@@ -95,15 +94,14 @@ public class SessionHandler {
         if (username.trim().equals("") || password.trim().equals("")) {
             throw new Exception(".Username or password is incorrect!!!!!!!!!");
         }
-        
-        
-        EntityCrUser user = new EntityCrUser(); 
+
+        EntityCrUser user = new EntityCrUser();
         user.setDeepWhere(false);
 
         if (domain.trim().length() == 0) {//personal
             //is sys admin user
             if (username.startsWith(Config.getProperty(Config.SYSADMIN_PREFIX))) {
-                return loginSysadmin(user, username, password);  
+                return loginSysadmin(user, username, password);
             } else {
                 return loginCompanyUser(user, username, password);
             }
@@ -119,46 +117,45 @@ public class SessionHandler {
 
     private static EntityCrUser loginCompany(EntityCrUser user, String username,
             String password, String domain) throws QException {
-//        System.out.println("OK - 1");
+        System.out.println("OK - 1");
         EntityCrCompany company = new EntityCrCompany();
         company.setDeepWhere(false);
         company.setCompanyDomain(domain.trim());
         Carrier cComp = EntityManager.select(company);
-//        System.out.println("OK - 2");
+        System.out.println("OK - 2");
         if (cComp.getTableRowCount(company.toTableName()) == 0) {
             System.out.println(".There is no domain such as!!!!!!!!!");
             throw new QException(".There is no domain such as!!!!!!!!!");
         }
-//        System.out.println("OK - 3");
+        System.out.println("OK - 3");
         if (company.getFkUserId().length() == 0) {
             System.out.println(".There is no domain such as for the user !!!!!!!!!");
             throw new QException(".There is no domain such as!!!!!!!!!");
         }
 
-//        System.out.println("OK - 4");
-
+        System.out.println("OK - 4");
         user = new EntityCrUser();
         user.setDeepWhere(false);
         user.setUsername(username.trim());
         user.setDbname(company.getCompanyDb());
 
         EntityManager.select(user);
-//        System.out.println("OK - 5");
+        System.out.println("OK - 5");
 //        System.out.println("passwd db->>" + user.getPassword().trim());
 //        System.out.println("passwd gui->>" + password.trim());
         if (user.getPassword().trim().equals("")
                 || !user.getPassword().trim().equals(password.trim())) {
-//            System.out.println(".Username or password is incorrect!!!!!!!!!");
-//            System.out.println("OK - 6");
+            System.out.println(".Username or password is incorrect!!!!!!!!!");
+            System.out.println("OK - 6");
 
             throw new QException(".Username or password is incorrect!!!!!!!!!");
         } else {
-//            System.out.println("OK - 7");
+            System.out.println("OK - 7");
 
             SessionManager.setDomain(Thread.currentThread().getId(), company.getCompanyDb());
             user.setDbname(company.getCompanyDb());
             user.setCompanyId(company.getId());
-//            System.out.println("OK - 8");
+            System.out.println("OK - 8");
 
             return user;
         }
@@ -174,13 +171,12 @@ public class SessionHandler {
 //        user.setPassword(password);
         user.setStartLimit(0);
         user.setEndLimit(0);
-        int rc  = EntityManager.select(user).getTableRowCount(user.toTableName());
-        
+        int rc = EntityManager.select(user).getTableRowCount(user.toTableName());
 
-        if (rc==0 || !user.getPassword().equals(password)) {
+        if (rc == 0 || !user.getPassword().equals(password)) {
             throw new QException(".Username or password is incorrect!!!!!!!!!");
         } else {
-            SessionManager.setDomain(Thread.currentThread().getId(),Config.getProperty(Config.SYSADMIN_COMPANY_DB_NAME));
+            SessionManager.setDomain(Thread.currentThread().getId(), Config.getProperty(Config.SYSADMIN_COMPANY_DB_NAME));
             user.setDbname(Config.getProperty(Config.SYSADMIN_COMPANY_DB_NAME));
             user.setCompanyId(Config.getProperty(Config.SYSADMIN_COMPANY_DB_ID));
             return user;
@@ -210,10 +206,9 @@ public class SessionHandler {
 //        user.setPassword(password);
         user.setStartLimit(0);
         user.setEndLimit(0);
-       int rc  = EntityManager.select(user).getTableRowCount(user.toTableName());
-        
+        int rc = EntityManager.select(user).getTableRowCount(user.toTableName());
 
-        if (rc==0 || !user.getPassword().equals(password)) {
+        if (rc == 0 || !user.getPassword().equals(password)) {
 //            System.out.println(".Username or password is incorrect!!!!!!!!!");
             throw new QException(".Username or password is incorrect!!!!!!!!!");
         } else {
@@ -241,7 +236,7 @@ public class SessionHandler {
             jwe.setKey(key);
             String token = jwe.getCompactSerialization();
 //            System.out.println("ok");
-            
+
             CacheUtil.putSessionCache(token, key);
             return token;
         } catch (Exception ex) {
@@ -252,15 +247,26 @@ public class SessionHandler {
     }
 
     public static boolean isLangAvailable(String lang) throws QException {
-        boolean f = true;
+        try {
+            boolean f = true;
 
-        EntityCrListItem ent = new EntityCrListItem();
-        ent.setDeepWhere(false);
-        ent.setItemCode("language");
-        ent.setItemKey(lang);
-        ent.setLang("ENG");
-        Carrier c = EntityManager.select(ent);
-        return c.getTableRowCount(ent.toTableName()) > 0;
+        
+
+            EntityCrListItem ent = new EntityCrListItem();
+            ent.setDeepWhere(false);
+            ent.setItemCode("language");
+            ent.setItemKey(lang);
+            ent.setLang("ENG");
+            Carrier c = EntityManager.select(ent);
+            return c.getTableRowCount(ent.toTableName()) > 0;
+        } catch (Exception e) {
+            
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - isLangAvailable --> "+e.getMessage());
+            System.out.println("------------------------------------------------");
+            System.out.println("------------------------------------------------");
+            return false;
+        }
 
     }
 

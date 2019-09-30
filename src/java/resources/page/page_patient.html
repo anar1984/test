@@ -220,7 +220,7 @@
                             <label qlang>id</label>
                             <input class="form-control apd-form-input" type="type" id="id" name="id" placeholder="Patient Code"  >
                         </div>
-                       <div class="form-group col-md-4">
+                        <div class="form-group col-md-4">
                             <label qlang>patientName</label>
                             <input class="form-control apd-form-input" type="text" id="patientName"
                                    name="patientName" placeholder=" "  >
@@ -235,11 +235,11 @@
                             <input type="text" class="form-control apd-form-input" id="patientMiddleName" 
                                    name="patientMiddleName" placeholder="">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label qlang>patientBirthPlace</label>
-                            <input type="text" class="form-control apd-form-input" id="patientBirthPlace" 
-                                   name="patientBirthPlace" placeholder="">
-                        </div>
+                        <!--                        <div class="form-group col-md-4">
+                                                    <label qlang>patientBirthPlace</label>
+                                                    <input type="text" class="form-control apd-form-input" id="patientBirthPlace" 
+                                                           name="patientBirthPlace" placeholder="">
+                                                </div>-->
 
                         <div class="form-group col-md-4">
                             <label class="float" qlang  qlang >patientBirthDate</label>
@@ -249,7 +249,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
-                        </div>
+                        </div> 
                         <div class="form-group col-md-4">
                             <label qlang>maritualStatus</label>
                             <select class="form-control apd-form-select-back" id="maritualStatus" name="maritualStatus"
@@ -259,8 +259,8 @@
                             </select>
 
                         </div>
-                        <div class="form-group col-md-12">
-                        </div>
+                        <!--                        <div class="form-group col-md-12">
+                                                </div>-->
 
                         <div class="form-group col-md-4">
                             <label qlang>occupation</label>
@@ -270,9 +270,10 @@
                                     has_other="1"
                                     srv_url="li/occupation">
                             </select>
-
+                            <div class="form-group col-md-12">
+                            </div>
                         </div>
-                        <br>
+                        <!--                        <br>-->
                         <div class="form-group col-md-4">
                             <label qlang>occupationOther</label>
                             <input type="text" class="form-control apd-form-input" id="occupationOther" 
@@ -288,8 +289,8 @@
                                     srv_url="li/educationType">
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
-                        </div>
+                        <!--                        <div class="form-group col-md-12">
+                                                </div>-->
                         <div class="form-group col-md-4">
                             <label qlang>sex</label>
                             <select class="form-control apd-form-select-back" id="sex" name="sex"
@@ -297,6 +298,8 @@
                                     select_text="itemValue" select_value="itemKey" 
                                     srv_url="li/sex">
                             </select>
+                        </div>
+                        <div class="form-group col-md-12">
                         </div>
                         <div class="form-group col-md-4">
                             <label qlang>bloodGroup</label>
@@ -314,73 +317,73 @@
                                     srv_url="li/rhFactor">
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
-                            <br>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label qlang>mobile1</label>
-                            <input type="text" class="form-control apd-form-input" id="mobile1" 
-                                   name="mobile1" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label qlang>mobile2</label>
-                            <input type="text" class="form-control apd-form-input" id="mobile2" 
-                                   name="mobile2" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label qlang>telephone1</label>
-                            <input type="text" class="form-control apd-form-input" id="telephone1" 
-                                   name="telephone1" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label qlang>telephone2</label>
-                            <input type="text" class="form-control apd-form-input" id="telephone2" 
-                                   name="telephone2" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label qlang>email1</label>
-                            <input type="email" class="form-control apd-form-email" id="email1" 
-                                   name="email1" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label qlang>email2</label>
-                            <input type="email" class="form-control apd-form-email" id="email2" 
-                                   name="email2" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label qlang>country</label>
-                            <input type="text" class="form-control apd-form-input" id="country" 
-                                   name="country" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-3">
+                        <!--                        <div class="form-group col-md-12">
+                                                    <br>
+                                                </div>-->
+                        <!--                        <div class="form-group col-md-3">
+                                                    <label qlang>mobile1</label>
+                                                    <input type="text" class="form-control apd-form-input" id="mobile1" 
+                                                           name="mobile1" placeholder=" ">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label qlang>mobile2</label>
+                                                    <input type="text" class="form-control apd-form-input" id="mobile2" 
+                                                           name="mobile2" placeholder=" ">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label qlang>telephone1</label>
+                                                    <input type="text" class="form-control apd-form-input" id="telephone1" 
+                                                           name="telephone1" placeholder=" ">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label qlang>telephone2</label>
+                                                    <input type="text" class="form-control apd-form-input" id="telephone2" 
+                                                           name="telephone2" placeholder=" ">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label qlang>email1</label>
+                                                    <input type="email" class="form-control apd-form-email" id="email1" 
+                                                           name="email1" placeholder=" ">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label qlang>email2</label>
+                                                    <input type="email" class="form-control apd-form-email" id="email2" 
+                                                           name="email2" placeholder=" ">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label qlang>country</label>
+                                                    <input type="text" class="form-control apd-form-input" id="country" 
+                                                           name="country" placeholder=" ">
+                                                </div>-->
+                        <div class="form-group col-md-4">
                             <label qlang>city</label>
                             <input type="text" class="form-control apd-form-input" id="city" 
                                    name="city" placeholder=" ">
                         </div>
-                        <div class="form-group col-md-3">
-                            <label qlang>postIndex</label>
-                            <input type="text" class="form-control apd-form-input" id="postIndex" 
-                                   name="postIndex" placeholder=" ">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label qlang>isActive</label>
-                            <select class="form-control apd-form-select-back" id="isActive" name="isActive"
-                                    async="true" has_null="1"
-                                    select_text="itemValue" select_value="itemKey" 
-                                    srv_url="li/pa">
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label qlang>description</label>
-                            <textarea class="form-control apd-form-textarea" id="description" 
-                                      name="description" placeholder=""></textarea>
-                        </div> 
-                        <div class="form-group col-md-6">
-                            <label qlang>addressLine</label>
-                            <textarea class="form-control apd-form-textarea" id="addressLine" 
-                                      name="addressLine" placeholder=""></textarea>
-                        </div>
-                        
+                        <!--                        <div class="form-group col-md-3">
+                                                    <label qlang>postIndex</label>
+                                                    <input type="text" class="form-control apd-form-input" id="postIndex" 
+                                                           name="postIndex" placeholder=" ">
+                                                </div>-->
+                        <!--                        <div class="form-group col-md-3">
+                                                    <label qlang>isActive</label>
+                                                    <select class="form-control apd-form-select-back" id="isActive" name="isActive"
+                                                            async="true" has_null="1"
+                                                            select_text="itemValue" select_value="itemKey" 
+                                                            srv_url="li/pa">
+                                                    </select>
+                                                </div>-->
+                        <!--                        <div class="form-group col-md-6">
+                                                    <label qlang>description</label>
+                                                    <textarea class="form-control apd-form-textarea" id="description" 
+                                                              name="description" placeholder=""></textarea>
+                                                </div> -->
+                        <!--                        <div class="form-group col-md-6">
+                                                    <label qlang>addressLine</label>
+                                                    <textarea class="form-control apd-form-textarea" id="addressLine" 
+                                                              name="addressLine" placeholder=""></textarea>
+                                                </div>-->
+
                         <div class="form-group col-md-12" align="right">
                             <button type="button" class="btn btn-default apd-form-btn" apd-clear-form-data="false" qlang>update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal"  role="button" qlang>close</button>

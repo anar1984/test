@@ -29,3 +29,6 @@ page_changepwd
 page_test
 page_updatecompany
 page_privateattribute
+page_companypaymentown
+page_paymentmethod
+page_updateprofile

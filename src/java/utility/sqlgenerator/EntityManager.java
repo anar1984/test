@@ -132,6 +132,12 @@ public class EntityManager {
             carrier = coreSelect(entity, tablename, databaseNumber);
             return carrier;
         } catch (Exception ex) {
+             
+            
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - select --> "+ex.getMessage());
+            System.out.println("------------------------------------------------");
+            System.out.println("------------------------------------------------");
             throw new QException(new Object() {
             }.getClass().getEnclosingClass().getName(),
                     new Object() {

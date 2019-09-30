@@ -292,7 +292,8 @@ public class Carrier implements Serializable {
 //                    ex.printStackTrace();
 //                }
             } else //tables
-             if (!tableNames.containsKey(tname)) {
+            {
+                if (!tableNames.containsKey(tname)) {
                     tableNames.put(tname, "");
                     int rowCount = 0, colCount = 0;
                     String[] colNames = null;
@@ -321,6 +322,7 @@ public class Carrier implements Serializable {
                         }
                     }
                 }
+            }
         }
 //        System.out.println("================================\n");
     }
@@ -620,8 +622,7 @@ public class Carrier implements Serializable {
                     keyElemets.setText(this.getValue(tname).toString());
                     mapKey.addContent(keyElemets);
                 } else //tables
-                {
-                    if (!tableNames.containsKey(tname)) {
+                 if (!tableNames.containsKey(tname)) {
                         tableNames.put(tname, "");
 
                         tableElemets = new Element("table");
@@ -648,7 +649,6 @@ public class Carrier implements Serializable {
                         }
                         mapTable.addContent(tableElemets);
                     }
-                }
             }
             doc.getRootElement().addContent(mapKey);
             doc.getRootElement().addContent(mapTable);
@@ -693,8 +693,7 @@ public class Carrier implements Serializable {
                     keyElemets.setText(this.getValue(tname).toString());
                     mapKey.addContent(keyElemets);
                 } else //tables
-                {
-                    if (!tableNames.containsKey(tname)) {
+                 if (!tableNames.containsKey(tname)) {
                         tableNames.put(tname, "");
 
                         tableElemets = new Element("table");
@@ -721,7 +720,6 @@ public class Carrier implements Serializable {
                         }
                         mapTable.addContent(tableElemets);
                     }
-                }
             }
             doc.getRootElement().addContent(mapKey);
             doc.getRootElement().addContent(mapTable);
@@ -1319,8 +1317,8 @@ public class Carrier implements Serializable {
             EntityCrInspectionMatrix entInsMat = new EntityCrInspectionMatrix();
             entInsMat.setFkParentId(this.getMatrixId());
             Carrier cInsMat = EntityManager.select(entInsMat);
-            Carrier cprInsMat = cInsMat.getKeyValuesPairFromTable(
-                    entInsMat.toTableName(), "fkSubmoduleAttributeId", "shortName");
+//            Carrier cprInsMat = cInsMat.getKeyValuesPairFromTable(
+//                    entInsMat.toTableName(), "fkSubmoduleAttributeId", "shortName");
 //            String saIds = cInsMat.getValueLine(entInsMat.toTableName(), "fkSubmoduleAttributeId");
 
 //            EntityCrSubmoduleAttribute entSA = new EntityCrSubmoduleAttribute();
@@ -1373,12 +1371,13 @@ public class Carrier implements Serializable {
         int rowCount = this.getTableRowCount(tablename);
         String[] colNames = this.getTableColumnNames(tablename);
         Carrier carrier = getColNamesDefination(colNames);
+//        System.out.println("xml---> " + carrier.toXML());
         try {
 
             //set column name
             JSONArray array1 = new JSONArray();
-            ArrayList dateList = new ArrayList();
-            ArrayList timeList = new ArrayList();
+//            ArrayList dateList = new ArrayList();
+//            ArrayList timeList = new ArrayList();
             for (int j = 0; j < colNames.length; j++) {
                 JSONObject jsonRow1 = new JSONObject();
                 String s = colNames[j] + SessionManager.getCurrentLang();
@@ -1386,7 +1385,10 @@ public class Carrier implements Serializable {
                 String type = carrier.getValue(s, 0, "labelType").toString();
 
                 type = type.length() > 0 ? type : CoreLabel.ENTITY_LABEL_TYPE_STRING;
-                name = name.length() > 0 ? name : colNames[j];
+                name = name.length() > 0 ? name
+                        : carrier.getValue(colNames[j] + "ENG", 0, "description").toString().length() > 0
+                        ? carrier.getValue(colNames[j] + "ENG", 0, "description").toString()
+                        : colNames[j];
 
                 //is type and description exist;
 //                int idx = -1;
@@ -1444,11 +1446,11 @@ public class Carrier implements Serializable {
 //                            value = vt1;
 //                        } 
 //                    } else {
-                        value = this.getValue(tablename, i, colNames[j]).toString();
+                    value = this.getValue(tablename, i, colNames[j]).toString();
 //                    }
                     jsonRow.put(colNames[j], value);
                 }
-                array.put(jsonRow); 
+                array.put(jsonRow);
             }
             object.put("r", array);
             object.put("tn", tablename);
@@ -1632,7 +1634,6 @@ public class Carrier implements Serializable {
     public void setSession(EntityCrUser session) {
         this.session = session;
     }*/
-
     public String[] getValue(String tableName, String columnName) throws QException {
         try {
             int row = this.getTableRowCount(tableName);

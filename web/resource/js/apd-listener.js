@@ -382,8 +382,8 @@ function fileListeners() {
         var fileext = file['name'].split('.').pop();
         if (files && file) {
             var reader = new FileReader();
-            reader.onload = function (readerEvt) {
-                var binaryString = readerEvt.target.result;
+            reader.onload = function (re) {
+                var binaryString = re.target.result;
                 uploadFile(fileext, btoa(binaryString), filepicker, file_type);
             };
             reader.readAsBinaryString(file);

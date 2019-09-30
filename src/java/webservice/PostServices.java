@@ -169,8 +169,11 @@ public class PostServices {
             String domain = carrier.getValue("domain").toString();
             String lang = carrier.getValue("lang").toString();
 
+            System.out.println("done-1");
             lang = SessionHandler.isLangAvailable(lang) ? lang : "ENG";
+            System.out.println("done-2");
             EntityCrUser user = SessionHandler.checkLogin(usename, password, domain);
+            System.out.println("done-3");
             user.setLang(lang);
             user.setDomain(user.selectDbname());
 
@@ -194,6 +197,11 @@ public class PostServices {
             //return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 2_592_000, true)).entity(entity).build();
             return Response.status(Response.Status.OK).cookie(new NewCookie("apdtok", token, "/", "", "comment", 2_592_000, false)).entity(entity).build();
         } catch (Exception ex) {
+            System.out.println("------------------------------------------------");
+            System.out.println("Error - doDoPostRequestForLogin --> " + ex.getMessage());
+            System.out.println("------------------------------------------------");
+
+            System.out.println("------------------------------------------------");
             DBConnection.rollbackConnection(conn);
             System.err.println("Username Or Password is incorrect!!-");
             return Response.status(Response.Status.UNAUTHORIZED).build();
